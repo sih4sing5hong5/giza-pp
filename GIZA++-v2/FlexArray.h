@@ -19,40 +19,42 @@
   USA.
 */
 
-#ifndef CLASS_FlexArray_defined
-#define CLASS_FlexArray_defined
+#ifndef GIZAPP_UTIL_FLEXARRAY_H_
+#define GIZAPP_UTIL_FLEXARRAY_H_
 
 #include "util/array.h"
-#include <iostream>
-#include <fstream>
+#include <ostream>
 
-template<class T>
+template <class T>
 class FlexArray {
-private:
-  Array<T> p;
-  int start,End;
-public:
-  FlexArray(int _start=0,int _end=-1)
-    : p(_end-_start+1),start(_start),End(_end) {}
-  FlexArray(int _start,int _end,const T&init)
-    : p(_end-_start+1,init),start(_start),End(_end) {}
-  T&operator[](int i)
-    {return p[i-start];}
-  const T&operator[](int i)const
-    {return p[i-start];}
-  int low()const{return start;}
-  int high()const{return End;}
-  T*begin(){return conv<double>(p.begin());}
-  T*end(){return conv<double>(p.end());}
+ private:
+  Array<T> array_;
+  int start_, end_;
+
+ public:
+  FlexArray(int start = 0, int end = -1)
+      : array_(end - start + 1), start_(start), end_(end) {}
+  FlexArray(int start, int end, const T& init)
+      : array_(end - start + 1, init), start_(start), end_(end) {}
+  ~FlexArray() {}
+
+  T& operator[](int i) { return array_[i - start_]; }
+
+  const T& operator[](int i) const { return array_[i - start_]; }
+
+  int low() const {return start_; }
+  int high() const {return end_; }
+
+  T* begin() { return conv<double>(array_.begin()); }
+  T* end() { return conv<double>(array_.end()); }
 };
 
-template<class T>
-inline ostream&operator<<(ostream&out,const FlexArray<T>&x)
-{
-  for(int i=x.low();i<=x.high();++i)
+template <class T>
+inline std::ostream& operator<<(std::ostream& out, const FlexArray<T>& x) {
+  for (int i = x.low(); i <= x.high(); ++i) {
     out << i << ':' << x[i] << ';' << ' ';
+  }
   return out;
 }
 
-
-#endif
+#endif  // GIZAPP_UTIL_FLEXARRAY_H_
