@@ -19,21 +19,25 @@
   USA.
 */
 
-#ifndef FILE_SPEC_H
-#define FILE_SPEC_H
+#ifndef GIZAPP_PORT_FILE_SPEC_H_
+#define GIZAPP_PORT_FILE_SPEC_H_
 
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 
-/* This function returns a string, locally called file_spec. This
-   string is the concatenation of the date and time of execution
-   and the user who is performing the execution */
-/* Originally implemented in C by Yaser Al-Onaizan;
-   editions for C++ and formatting by Noah A. Smith, 9 July 1999 */
+namespace port {
 
-char *Get_File_Spec (){
+/*
+  This function returns a string, locally called file_spec. This
+  string is the concatenation of the date and time of execution
+  and the user who is performing the execution.
+
+  Originally implemented in C by Yaser Al-Onaizan;
+  editions for C++ and formatting by Noah A. Smith, 9 July 1999
+*/
+char *GetFileSpec(){
   struct tm *local;
   time_t t;
   char *user;
@@ -55,5 +59,6 @@ char *Get_File_Spec (){
   strcat(file_spec, user);
   return file_spec;
 }
+} // namespace port
 
-#endif
+#endif  // GIZAPP_PORT_FILE_SPEC_H_

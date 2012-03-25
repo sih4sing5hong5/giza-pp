@@ -26,7 +26,7 @@
 #include "model2.h"
 #include "model3.h"
 #include "hmm.h"
-#include "file_spec.h"
+#include "port/file_spec.h"
 #include "defs.h"
 #include "vocab.h"
 #include "Perplexity.h"
@@ -392,7 +392,7 @@ void ReadAlignment(const string&x,Vector<map< pair<int,int>,char > >&a)
 void initGlobals(void)
 {
   NODUMPS = false ;
-  Prefix = Get_File_Spec();
+  Prefix = port::GetFileSpec();
   LogFilename= Prefix + ".log";
   MAX_SENTENCE_LENGTH = MAX_SENTENCE_LENGTH_ALLOWED ;
 }
