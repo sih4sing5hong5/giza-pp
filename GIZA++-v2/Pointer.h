@@ -19,71 +19,82 @@
   USA.
 */
 
-#ifndef HEADER_Pointer_DEFINED
-#define HEADER_Pointer_DEFINED
+#ifndef GIZAPP_POINTER_H_
+#define GIZAPP_POINTER_H_
 
 #include <cassert>
 #include <ostream>
 
+// TODO: make sure this class is allowed to copying.
 template<class T>
-class SmartPointer
-{
- protected:
-  T*p;
+class SmartPointer {
  public:
-  SmartPointer(T*_p=0)
-    : p(_p) {}
+  SmartPointer(T* ptr=0) : ptr_(ptr) {}
   virtual ~SmartPointer() {}
 
-  inline T&operator*() const
-    {return *p;}
-  inline T*operator->() const
-    {return p;}
-  inline operator bool() const
-    {return p!=0;}
-  inline T*ptr() const
-    { return p; }
+  T& operator*() const { return *ptr_; }
+  T* operator->() const { return ptr_; }
+  T* ptr() const { return ptr_; }
+  operator bool() const { return ptr_ != 0; }
+
+ protected:
+  T* ptr_;
 };
-template<class T> inline ostream &operator<<(ostream&out,const SmartPointer<T>&s)
-{if( s.ptr() )return out << *s;else return out <<"nullpointer";}
 
+template<class T> inline ostream &operator<<(ostream& out,
+                                             const SmartPointer<T>& ptr) {
+  if (ptr.ptr()) {
+    return out << *ptr;
+  } else {
+    return out <<"nullpointer";
+  }
+}
 
+// TODO: make sure this class is allowed to copying.
 template<class T>
 class SmartPointerConst
 {
- protected:
-  const T*p;
  public:
-  SmartPointerConst(const T*_p=0)
-    : p(_p) {}
+  SmartPointerConst(const T* ptr = 0) : ptr_(ptr) {}
   virtual ~SmartPointerConst() {}
 
-  inline const T&operator*() const
-    {return *p;}
-  inline const T*operator->() const
-    {return p;}
-  inline operator bool() const
-    {return p!=0;}
-  inline const T*ptr() const
-    { return p; }
+  const T& operator*() const { return *ptr_; }
+  const T* operator->() const { return ptr_; }
+  const T*ptr() const { return ptr_; }
+
+  operator bool() const { return ptr_ != 0; }
+
+ protected:
+  const T* ptr_;
 };
-template<class T> inline ostream &operator<<(ostream&out,const SmartPointerConst<T>&s)
-{if( s.ptr() )return out << *s;else return out <<"nullpointer";}
+
+template<class T> inline ostream &operator<<(ostream& out,
+                                             const SmartPointerConst<T>& ptr) {
+  if (ptr.ptr()) {
+    return out << *ptr;
+  } else {
+    return out <<"nullpointer";
+  }
+}
 
 template <class T>
-class UP : public SmartPointer<T>
-{
+class UP : public SmartPointer<T> {
  public:
-  UP(T*_p=0)
-    : SmartPointer<T>(_p) {}
+  UP(T* _p=0) : SmartPointer<T>(_p) {}
+  ~UP() {}
 };
-template<class T> inline bool operator==(const UP<T>&s1,const UP<T>&s2)
-{return s1.ptr()==s2.ptr();}
-template<class T>  inline bool operator<(const UP<T>&s1,const UP<T>&s2)
-{return s1.ptr() < s2.ptr();}
-template<class T> inline int Hash(const UP<T> &wp)
-{if(wp.ptr())return Hash(*wp);else return 0;}
 
+template<class T> inline bool operator==(const UP<T>&s1,const UP<T>&s2) {
+  return s1.ptr()==s2.ptr();
+}
+
+template<class T>  inline bool operator<(const UP<T>&s1,const UP<T>&s2) {
+  return s1.ptr() < s2.ptr();
+}
+
+template<class T> inline int Hash(const UP<T> &wp) {
+  return (wp.ptr()) ? Hash(*wp) : 0;
+}
 
 template <class T>
 class UPConst : public SmartPointerConst<T>
@@ -168,4 +179,4 @@ class DELP : public SmartPointer<T>
 	return 0;
     }
 };
-#endif
+#endif  // GIZAPP_POINTER_H_
