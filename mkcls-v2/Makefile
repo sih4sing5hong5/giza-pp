@@ -31,3 +31,6 @@ mkcls: $(OBJS)
 
 remove clean:
 	-rm -f *.o mkcls
+
+TAGS:
+	find . -name \*.h -print -o -name \*.cpp -print | etags -

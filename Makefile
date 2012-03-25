@@ -8,6 +8,10 @@ gizapp:
 mkcls-v2:
 	$(MAKE) -C mkcls-v2
 
+TAGS:
+	$(MAKE) -C GIZA++-v2 TAGS
+	$(MAKE) -C mkcls-v2 TAGS
+
 clean:
 	$(MAKE) -C GIZA++-v2 clean
 	$(MAKE) -C mkcls-v2 clean
