@@ -5,11 +5,11 @@ SRC = \
 	model1.cpp \
 	model2.cpp \
 	model3.cpp \
-	getSentence.cpp \
+	sentence_handler.cpp \
 	TTables.cpp \
 	atables.cpp \
 	align_tables.cpp \
-	main.cpp \
+	giza_main.cpp \
 	NTables.cpp \
 	model2to3.cpp \
 	collCounts.cpp \

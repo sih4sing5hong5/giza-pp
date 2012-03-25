@@ -25,7 +25,7 @@
 #include "Perplexity.h"
 #include "Vector.h"
 #include "TTables.h"
-#include "getSentence.h"
+#include "sentence_handler.h"
 #include "vocab.h"
 
 extern void printHelp(void);

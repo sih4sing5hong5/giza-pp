@@ -23,19 +23,14 @@
  *                                                                           *
  * Module : getSentence                                                      *
  *                                                                           *
- * Prototypes File: getSentence.h                                            *
+ * Prototypes File: sentence_handler.h                                            *
  *                                                                           *
  * Objective: Defines clases and methods for handling I/O for the parallel   *
  *            corpus.                                                        *
  *****************************************************************************/
 
-
-
-
-
-#ifndef _sentenceHandler_h
-#define _sentenceHandler_h 1
-
+#ifndef GIZAPP_SENTENCE_HANDLER_H_
+#define GIZAPP_SENTENCE_HANDLER_H_
 
 #include <iostream>
 #include <fstream>
@@ -119,4 +114,4 @@ public:
   void setProbOfSentence(const sentPair&s,double d);
 };
 
-#endif
+#endif  // GIZAPP_SENTENCE_HANDLER_H_

@@ -38,7 +38,7 @@
 
 #include "TTables.h"
 #include "atables.h"
-#include "getSentence.h"
+#include "sentence_handler.h"
 #include "defs.h"
 #include "model2.h"
 #include "Perplexity.h"

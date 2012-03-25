@@ -20,7 +20,7 @@
 */
 
 #include <sstream>
-#include "getSentence.h"
+#include "sentence_handler.h"
 #include "TTables.h"
 #include "model1.h"
 #include "model2.h"

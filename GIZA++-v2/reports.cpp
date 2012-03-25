@@ -25,7 +25,7 @@
 #include "defs.h"
 #include "vocab.h"
 #include "Perplexity.h"
-#include "getSentence.h"
+#include "sentence_handler.h"
 #include "TTables.h"
 #include "Globals.h"
 #include "Parameter.h"

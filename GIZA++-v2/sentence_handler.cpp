@@ -21,16 +21,15 @@
 
 /* --------------------------------------------------------------------------*
  *                                                                           *
- * Module : getSentece                                                       *
+ * Module : sentence_handler                                                 *
  *                                                                           *
- * Method Definitions File: getSentence.cc                                   *
+ * Method Definitions File: sentence_handler.cpp                             *
  *                                                                           *
  * Objective: Defines clases and methods for handling I/O for the parallel   *
  *            corpus.                                                        *
  *****************************************************************************/
 
-
-#include "getSentence.h"
+#include "sentence_handler.h"
 #include <iostream>
 #include <sstream>
 #include "Parameter.h"
