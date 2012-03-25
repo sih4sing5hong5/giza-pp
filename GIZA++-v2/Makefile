@@ -153,7 +153,7 @@ plain2snt.out: plain2snt.cpp
 	$(CXX) $(LDFLAGS) -O3 -W -Wall plain2snt.cpp -o plain2snt.out
 
 snt2cooc.out: snt2cooc.cpp
-	$(CXX) $(LDFLAGS) -O3 -g -W -Wall snt2cooc.cpp -o snt2cooc.out
+	$(CXX) $(LDFLAGS) -O3 -W -Wall snt2cooc.cpp -o snt2cooc.out
 
 TAGS:
 	find . -name \*.h -print -o -name \*.cpp -print | etags -
