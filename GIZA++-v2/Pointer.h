@@ -29,7 +29,7 @@
 template<class T>
 class SmartPointer {
  public:
-  SmartPointer(T* ptr=0) : ptr_(ptr) {}
+  explicit SmartPointer(T* ptr=0) : ptr_(ptr) {}
   virtual ~SmartPointer() {}
 
   T& operator*() const { return *ptr_; }
@@ -55,7 +55,7 @@ template<class T>
 class SmartPointerConst
 {
  public:
-  SmartPointerConst(const T* ptr = 0) : ptr_(ptr) {}
+  explicit SmartPointerConst(const T* ptr = 0) : ptr_(ptr) {}
   virtual ~SmartPointerConst() {}
 
   const T& operator*() const { return *ptr_; }
@@ -80,7 +80,7 @@ template<class T> inline ostream &operator<<(ostream& out,
 template <class T>
 class UP : public SmartPointer<T> {
  public:
-  UP(T* _p=0) : SmartPointer<T>(_p) {}
+  explicit UP(T* _p=0) : SmartPointer<T>(_p) {}
   ~UP() {}
 };
 
@@ -100,9 +100,9 @@ template <class T>
 class UPConst : public SmartPointerConst<T>
 {
  public:
-  UPConst(const T*_p=0)
-    : SmartPointerConst<T>(_p) {}
+  explicit UPConst(const T*_p=0) : SmartPointerConst<T>(_p) {}
 };
+
 template<class T> inline bool operator==(const UPConst<T>&s1,const UPConst<T>&s2)
 {return s1.ptr()==s2.ptr();}
 template<class T> inline bool operator<(const UPConst<T>&s1,const UPConst<T>&s2)
@@ -115,9 +115,9 @@ template <class T>
 class MP : public SmartPointer<T>
 {
  public:
-  MP(T*_p=0)
-    : SmartPointer<T>(_p) {}
+  MP(T*_p=0) : SmartPointer<T>(_p) {}
 };
+
 template <class T> inline bool operator==(const MP<T>&s1,const MP<T>&s2)
 {assert(s1);assert(s2);return *s1==*s2;}
 template <class T> inline bool operator<(const MP<T>&s1,const MP<T>&s2)
@@ -130,9 +130,9 @@ template <class T>
 class MPConst : public SmartPointerConst<T>
 {
  public:
-  MPConst(const T*_p=0)
-    : SmartPointerConst<T>(_p) {}
+  explicit MPConst(const T*_p=0) : SmartPointerConst<T>(_p) {}
 };
+
 template <class T> inline bool operator==(const MPConst<T>&s1,const MPConst<T>&s2)
 {assert(s1);assert(s2);return *s1== *s2;}
 template <class T> inline bool operator<(const MPConst<T>&s1,const MPConst<T>&s2)
@@ -156,8 +156,7 @@ class DELP : public SmartPointer<T>
 
   ~DELP()
     { delete this->p;this->p=0;}
-  DELP(T*_p=0)
-    : SmartPointer<T>(_p) {}
+  explicit DELP(T*_p=0) : SmartPointer<T>(_p) {}
   void set(T*_p)
     {
       delete this->p;
