@@ -23,15 +23,15 @@ Vector: checked vector implementation
 
 Franz Josef Och (30/07/99)
 --*/
-#ifndef ARRAY_H_DEFINED
-#define ARRAY_H_DEFINED
+#ifndef GIZAPP_UTIL_VECTOR_H_
+#define GIZAPP_UTIL_VECTOR_H_
+
 #include "port/stl_helper.h"
 #include <algorithm>
 #include <string>
 #include <utility>
 #include <functional>
 #include <cassert>
-
 
 #ifdef NDEBUG
 
@@ -423,4 +423,4 @@ template<class T> int Vector<T>::findMin() const
 
 #endif
 
-#endif
+#endif  // GIZAPP_UTIL_VECTOR_H_

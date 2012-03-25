@@ -35,7 +35,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "Vector.h"
+#include "util/vector.h"
 #include "defs.h"
 #include "vocab.h"
 #include "Globals.h"

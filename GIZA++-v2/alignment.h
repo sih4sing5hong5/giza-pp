@@ -26,7 +26,7 @@
 */
 #ifndef alignment_h_fjo_defined
 #define alignment_h_fjo_defined
-#include "Vector.h"
+#include "util/vector.h"
 #include <cassert>
 #include "defs.h"
 #include "util/assert.h"

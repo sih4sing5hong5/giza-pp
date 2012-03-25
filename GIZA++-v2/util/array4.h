@@ -19,10 +19,11 @@
   USA.
 */
 
-#ifndef AlignmentArray4_h_DEFINED
-#define AlignmentArray4_h_DEFINED
+#ifndef GIZAPP_UTIL_ARRAY4_H_
+#define GIZAPP_UTIL_ARRAY4_H_
 
-#include "Array2.h"
+#include "util/array2.h"
+
 template<class T> class Array4
 {
  private:
@@ -74,4 +75,4 @@ template<class T> class Array4
     }
 };
 
-#endif
+#endif  // GIZAPP_UTIL_ARRAY4_H_

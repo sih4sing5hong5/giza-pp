@@ -21,12 +21,14 @@
 
 #ifndef _ntables_h
 #define _ntables_h 1
-#include "Array2.h"
-#include "Vector.h"
+
 #include <cassert>
+
 #include "defs.h"
-#include "vocab.h"
 #include "util/assert.h"
+#include "util/array2.h"
+#include "util/vector.h"
+#include "vocab.h"
 #include "Globals.h"
 
 extern double NTablesFactorGraphemes,NTablesFactorGeneral;

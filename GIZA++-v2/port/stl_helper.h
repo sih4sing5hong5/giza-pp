@@ -33,7 +33,6 @@ using namespace std::tr1;
 
 #include <vector>
 #include <iostream>
-#include "Array2.h"
 
 #define over_string(a,i) for(unsigned int i=0;i<a.length();i++)
 #define over_array(a,i) for(i=(a).low();i<=(a).high();i++)
@@ -71,55 +70,6 @@ inline bool prefix(const string&x,const string&y)
       return 0;
   return 1;
 }
-
-
-/*template<class T>
-int lev(const T&s1,const T&s2)
-{
-  Array2<int,vector<int> > a(s1.size()+1,s2.size()+1,1000);
-  Array2<pair<int,int>,vector<pair<int,int> > > back(s1.size()+1,s2.size()+1,pair<int,int>(0,0));
-  for(unsigned int i=0;i<=s1.size();i++)
-    for(unsigned int j=0;j<=s2.size();j++)
-      {
-	if( i==0&&j==0 )
-	  a(i,j)=0;
-	else
-	  {
-	    int aDEL=100,aINS=100,aSUB=100;
-	    if(i>0)
-	      aDEL=a(i-1,j)+1;
-	    if(j>0)
-	      aINS=a(i,j-1)+1;
-	    if(i>0&&j>0)
-	      aSUB=a(i-1,j-1)+ !(s1[i-1]==s2[j-1]);
-	    if( aSUB<=aDEL && aSUB<=aINS )
-	      {
-		a(i,j)=aSUB;
-		back(i,j)=pair<int,int>(i-1,j-1);
-	      }
-	    else if( aDEL<=aSUB && aDEL<=aINS )
-	      {
-		a(i,j)=aDEL;
-		back(i,j)=pair<int,int>(i-1,j);
-	      }
-	    else
-	      {
-		a(i,j)=aINS;
-		back(i,j)=pair<int,int>(i,j-1);
-	      }
-	  }
-      }
-  return a(s1.size(),s2.size());
-}
-
-template<class T>
-float rel_lev(const T&s1,const T&s2)
-{
-  if( s1.size()==0 )
-    return s2.size()==0;
-  else
-    return min(1.0,lev(s1,s2)/(double)s1.size());
-}*/
 
 template<class V> int Hash(const pair<V,V>&a)
 { return Hash(a.first)+13001*Hash(a.second); }

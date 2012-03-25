@@ -21,9 +21,10 @@
 
 #ifndef transpair_model5_h_fjo_defined
 #define transpair_model5_h_fjo_defined
-#include "Array2.h"
+
 #include "defs.h"
-#include "Vector.h"
+#include "util/array2.h"
+#include "util/vector.h"
 #include "NTables.h"
 #include "atables.h"
 #include "TTables.h"

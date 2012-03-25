@@ -21,9 +21,9 @@
 
 #ifndef HMM_TABLES_H_ASDF_DEFINED
 #define HMM_TABLES_H_ASDF_DEFINED
-#include "FlexArray.h"
 
-#include "Array.h"
+#include "FlexArray.h"
+#include "util/array.h"
 #include <map>
 
 template<class T>

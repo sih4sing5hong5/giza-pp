@@ -23,7 +23,7 @@
 #define _vocab_h 1
 
 #include "defs.h"
-#include "Vector.h"
+#include "util/vector.h"
 
 #include <climits>
 #include <fstream>

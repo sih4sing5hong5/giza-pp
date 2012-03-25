@@ -25,7 +25,7 @@
 #include <fstream>
 #include <map>
 #include "defs.h"
-#include "Vector.h"
+#include "util/vector.h"
 
 extern float PROB_SMOOTH;
 extern bool Verbose, Log, Peg, Transfer, Transfer2to3, useDict ;

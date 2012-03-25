@@ -24,8 +24,8 @@
 
 #ifndef NO_TRAINING
 
-#include "Array.h"
-#include "Array2.h"
+#include "util/array.h"
+#include "util/array2.h"
 
 class HMMNetwork
 {

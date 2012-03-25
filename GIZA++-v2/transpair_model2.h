@@ -23,7 +23,7 @@
 #define transpair_model2_defined_h
 
 #include "defs.h"
-#include "Vector.h"
+#include "util/vector.h"
 #include "NTables.h"
 #include "atables.h"
 #include "TTables.h"

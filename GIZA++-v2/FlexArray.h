@@ -21,12 +21,13 @@
 
 #ifndef CLASS_FlexArray_defined
 #define CLASS_FlexArray_defined
-#include "Array.h"
+
+#include "util/array.h"
 #include <iostream>
 #include <fstream>
+
 template<class T>
-class FlexArray
-{
+class FlexArray {
 private:
   Array<T> p;
   int start,End;

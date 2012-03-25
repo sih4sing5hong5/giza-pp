@@ -39,10 +39,10 @@
 #include <functional>
 #include <map>
 #include <set>
-#include "Vector.h"
+#include "util/vector.h"
 #include <utility>
 #include <fstream>
-#include "Array4.h"
+#include "util/array4.h"
 #include "util/assert.h"
 #include "Globals.h"
 

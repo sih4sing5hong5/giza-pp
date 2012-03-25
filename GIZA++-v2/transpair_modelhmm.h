@@ -22,9 +22,9 @@
 #ifndef GIZAPP_TRANSPAIR_MODELHMM_H_
 #define GIZAPP_TRANSPAIR_MODELHMM_H_
 
-#include "Array2.h"
 #include "defs.h"
-#include "Vector.h"
+#include "util/array2.h"
+#include "util/vector.h"
 #include "NTables.h"
 #include "atables.h"
 #include "TTables.h"

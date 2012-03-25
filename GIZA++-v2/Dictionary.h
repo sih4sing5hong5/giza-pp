@@ -29,7 +29,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "Vector.h"
+#include "util/vector.h"
 
 #ifndef DICTIONARY_H
 #define DICTIONARY_H

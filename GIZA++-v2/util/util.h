@@ -25,7 +25,7 @@
 #include <ostream>
 
 #include "defs.h"
-#include "Vector.h"
+#include "util/vector.h"
 
 class Perplexity;
 class sentenceHandler;

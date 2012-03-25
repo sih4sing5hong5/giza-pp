@@ -37,7 +37,7 @@
 #include <cmath>
 #include <cstdio>
 
-#include "Vector.h"
+#include "util/vector.h"
 #include "vocab.h"
 #include "TTables.h"
 #include "sentence_handler.h"

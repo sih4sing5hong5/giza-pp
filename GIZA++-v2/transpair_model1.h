@@ -22,17 +22,17 @@
 #ifndef transpair_model1_h_fjo_defined
 #define transpair_model1_h_fjo_defined
 
+#include <cmath>
+#include <algorithm>
+
 #include "defs.h"
 #include "util/logprob.h"
-#include "Array2.h"
-#include "Vector.h"
+#include "util/array2.h"
+#include "util/vector.h"
 #include "NTables.h"
 #include "atables.h"
 #include "TTables.h"
 #include "alignment.h"
-#include <cmath>
-#include <algorithm>
-#include "Array2.h"
 #include "port/stl_helper.h"
 
 class transpair_model1

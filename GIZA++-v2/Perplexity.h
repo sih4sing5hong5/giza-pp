@@ -36,9 +36,10 @@
 
 #include <cmath>
 #include <fstream>
-#include "Vector.h"
+
 #include "defs.h"
-#include "Array2.h"
+#include "util/vector.h"
+#include "util/array2.h"
 #include "Globals.h"
 
 #define CROSS_ENTROPY_BASE 2

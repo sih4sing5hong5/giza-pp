@@ -25,8 +25,9 @@ a specified underlieing one-dimensional data-structure.
 
 Franz Josef Och (30/07/99)
 --*/
-#ifndef CLASS_Array2_DEFINED
-#define CLASS_Array2_DEFINED
+
+#ifndef GIZAPP_UTIL_ARRAY2_H_
+#define GIZAPP_UTIL_ARRAY2_H_
 
 #include "port/stl_helper.h"
 #include <string>
@@ -105,4 +106,4 @@ inline T*end(){
     }
 };
 
-#endif
+#endif  // GIZAPP_UTIL_ARRAY2_H_
