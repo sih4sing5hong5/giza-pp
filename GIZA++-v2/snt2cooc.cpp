@@ -9,6 +9,8 @@
 
 using namespace std;
 
+namespace {
+
 bool ReadVocab(const char* filename, map<string, string>& voc) {
   ifstream ifs(filename);
   if (!ifs) {
@@ -32,49 +34,21 @@ bool ReadVocab(const char* filename, map<string, string>& voc) {
   return true;
 }
 
-
-int main(int argc, char **argv) {
-  if (argc != 4 && argc != 5) {
-    cerr << "Usage: " << argv[0] << " vcb1 vcb2 snt12 \n";
-    cerr << "Converts GIZA++ snt-format into plain text.\n";
-    exit(1);
-  }
-
-  int max_elements = 0;
-  bool counts = false;
-
-  if (argc == 5) {
-    if (string(argv[4]) != "-counts") {
-      cerr << "ERROR: wrong option " << argv[5] << endl;
-    }
-    counts = true;
-    max_elements = 10000000;
-  }
-
-  ifstream t(argv[3]);
-  if (!t) {
-    cerr << "No such file or directory: " << argv[3] << endl;
-    exit(1);
-  }
-
-  map<string, string> voc1, voc2;
-
-  if (!ReadVocab(argv[1], voc1)) {
-    cerr << "Failed to read vocabulary." << endl;
-    exit(1);
-  }
-
-  if (!ReadVocab(argv[2], voc2)) {
-    cerr << "Failed to read vocabulary." << endl;
-    exit(1);
+bool ConvertSnt(const char* filename, int max_elements, bool counts,
+                const map<string, string>& voc) {
+  ifstream ifs(filename);
+  if (!ifs) {
+    cerr << "No such file or directory: " << filename << endl;
+    return false;
   }
 
   string line1, line2, line3;
-  vector<map<int,int> > vsi(voc1.size() + 1000);
+  vector<map<int,int> > vsi(voc.size() + 1000);
 
   int line_num = 0;
   int total_elements = 0;
-  while (getline(t, line1) && getline(t, line2) && getline(t, line3)) {
+
+  while (getline(ifs, line1) && getline(ifs, line2) && getline(ifs, line3)) {
     istringstream eingabe1(line1), eingabe2(line2), eingabe3(line3);
     double count;
     string word;
@@ -124,7 +98,7 @@ int main(int argc, char **argv) {
       }
       total_elements = 0;
       vsi.clear();
-      vsi.resize(voc1.size()+1000);
+      vsi.resize(voc.size()+1000);
     }
   }
   cerr << "END.\n";
@@ -137,6 +111,45 @@ int main(int argc, char **argv) {
         cout << i << " " << j->first << '\n';
       }
     }
+  }
+  return true;
+}
+
+} // namespace
+
+int main(int argc, char **argv) {
+  if (argc != 4 && argc != 5) {
+    cerr << "Usage: " << argv[0] << " vcb1 vcb2 snt12 \n";
+    cerr << "Converts GIZA++ snt-format into plain text.\n";
+    exit(1);
+  }
+
+  int max_elements = 0;
+  bool counts = false;
+
+  if (argc == 5) {
+    if (string(argv[4]) != "-counts") {
+      cerr << "ERROR: wrong option " << argv[5] << endl;
+    }
+    counts = true;
+    max_elements = 10000000;
+  }
+
+  map<string, string> voc1, voc2;
+
+  if (!ReadVocab(argv[1], voc1)) {
+    cerr << "Failed to read vocabulary." << endl;
+    exit(1);
+  }
+
+  if (!ReadVocab(argv[2], voc2)) {
+    cerr << "Failed to read vocabulary." << endl;
+    exit(1);
+  }
+
+  if (!ConvertSnt(argv[3], max_elements, counts, voc1)) {
+    cerr << "Failed to convert." << endl;
+    exit(1);
   }
 
   return 0;
