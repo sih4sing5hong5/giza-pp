@@ -343,9 +343,9 @@ int model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
 	switch(fromModel )
 	  {
 	  case 'H':
-	    viterbi_loop_with_tricks<TransPairModelHMM,const hmm>(TRAIN_ARGS,h,(void*)0);
+	    viterbi_loop_with_tricks<TransPairModelHMM,const HMM>(TRAIN_ARGS,h,(void*)0);
 	    if (testPerp && testHandler)
-	      viterbi_loop_with_tricks<TransPairModelHMM,const hmm>(TEST_ARGS, h,(void*)0);
+	      viterbi_loop_with_tricks<TransPairModelHMM,const HMM>(TEST_ARGS, h,(void*)0);
 	    break;
 	  case '3':
 	    viterbi_loop_with_tricks<transpair_model3>( TRAIN_ARGS, (void*)0,(void*)0);
@@ -360,9 +360,9 @@ int model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
 	  switch(fromModel)
 	    {
 	    case 'H':
-	      viterbi_loop_with_tricks  <TransPairModelHMM,const hmm,d4model>(TRAIN_ARGS,h,&d4m);
+	      viterbi_loop_with_tricks  <TransPairModelHMM,const HMM,d4model>(TRAIN_ARGS,h,&d4m);
 	      if (testPerp && testHandler)
-		viterbi_loop_with_tricks<TransPairModelHMM,const hmm,d4model>(TEST_ARGS, h,&d4m);
+		viterbi_loop_with_tricks<TransPairModelHMM,const HMM,d4model>(TEST_ARGS, h,&d4m);
 	      break;
 	    case '3':
 	      viterbi_loop_with_tricks<transpair_model3, void,d4model>(TRAIN_ARGS, (void*)0,&d4m);
@@ -386,9 +386,9 @@ int model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
 	  switch(fromModel)
 	    {
 	    case 'H':
-	      viterbi_loop_with_tricks<TransPairModelHMM,const hmm,d5model>(TRAIN_ARGS,h,&d5m);
+	      viterbi_loop_with_tricks<TransPairModelHMM,const HMM,d5model>(TRAIN_ARGS,h,&d5m);
 	      if (testPerp && testHandler)
-          viterbi_loop_with_tricks<TransPairModelHMM,const hmm,d5model>(TEST_ARGS, h,&d5m);
+          viterbi_loop_with_tricks<TransPairModelHMM,const HMM,d5model>(TEST_ARGS, h,&d5m);
 	      break;
 	    case '3':
 	      viterbi_loop_with_tricks<transpair_model3, void,d5model>(TRAIN_ARGS, (void*)0,&d5m);

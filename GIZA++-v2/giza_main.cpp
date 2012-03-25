@@ -452,7 +452,7 @@ double StartTraining(int&result)
    amodel<PROB>  aTable(false);
    amodel<COUNT> aCountTable(false);
    model2 m2(m1,aTable,aCountTable);
-   hmm h(m2);
+   HMM h(m2);
    model3 m3(m2);
    if(ReadTablePrefix.length() )
      {

@@ -60,7 +60,7 @@ double HMMTables<CLS,MAPPERCLASSTOSTRING>::getAlProb(int istrich,int k,int sentL
   MASSERT(k<sentLength&&k>=0);
   MASSERT(istrich<sentLength&&istrich>=-1);
   int pos=istrich-k;
-  switch(PredictionInAlignments)
+  switch(g_prediction_in_alignments)
     {
     case 0: pos=istrich-k; break;
     case 1: pos=k; break;
@@ -88,10 +88,13 @@ template<class CLS,class MAPPERCLASSTOSTRING>
 void HMMTables<CLS,MAPPERCLASSTOSTRING>::addAlCount(int istrich,int k,int sentLength,int J,CLS w1,CLS w2,int j,double value,double valuePredicted)
 {
   int pos=istrich-k;
-  switch(PredictionInAlignments)
-    {
-    case 0: pos=istrich-k; break;
-    case 1: pos=k; break;
+  switch (g_prediction_in_alignments) {
+    case 0:
+      pos=istrich-k;
+      break;
+    case 1:
+      pos=k;
+      break;
     case 2:
       pos=(k*J-j*sentLength);
       if( pos>0 ) pos+=J/2; else pos-=J/2;

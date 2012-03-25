@@ -51,6 +51,8 @@ class model2 : public model1
   amodel<COUNT>&aCountTable;
  public:
   model2(model1& m1,amodel<PROB>&,amodel<COUNT>&);
+  virtual ~model2();
+
   void initialize_table_uniformly(sentenceHandler&);
   int em_with_tricks(int);
   void load_table(const char* aname);

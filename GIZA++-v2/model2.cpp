@@ -34,6 +34,8 @@ model2::model2(model1& m,amodel<PROB>&_aTable,amodel<COUNT>&_aCountTable):
   model1(m),aTable(_aTable),aCountTable(_aCountTable)
 {  }
 
+model2::~model2() {}
+
 void model2::initialize_table_uniformly(sentenceHandler& sHandler1){
   // initialize the aTable uniformly (run this before running em_with_tricks)
   int n=0;

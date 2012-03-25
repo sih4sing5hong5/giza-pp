@@ -51,7 +51,7 @@ class Dictionary;
 
 extern int NumberOfVALIalignments;
 
-class report_info{
+class report_info {
  protected:
   Perplexity& perp;
   sentenceHandler& sHandler1;
@@ -67,10 +67,12 @@ class report_info{
 	      Perplexity* _testViterbiPerp)
     : perp(_perp),sHandler1(_sHandler1),testPerp(_testPerp),testHandler(_testHandler),trainViterbiPerp(_trainViterbiPerp),testViterbiPerp(_testViterbiPerp)
     {}
+
+  virtual ~report_info() { }
 };
 
 class model1 : public report_info{
-public:
+ public:
   string efFilename;
   vcbList&  Elist ;
   vcbList&  Flist ;
@@ -81,16 +83,20 @@ public:
   tmodel<COUNT, PROB>&tTable;
   Vector<WordEntry>& evlist ;
   Vector<WordEntry>& fvlist ;
-public:
   int ALmissing,ALtoomuch,ALeventsMissing,ALeventsToomuch;
   int ALmissingVALI,ALtoomuchVALI,ALeventsMissingVALI,ALeventsToomuchVALI;
   int ALmissingTEST,ALtoomuchTEST,ALeventsMissingTEST,ALeventsToomuchTEST;
-  model1 (const char* efname, vcbList& evcblist, vcbList& fvcblist,tmodel<COUNT, PROB>&_tTable,Perplexity& _perp,
-	      sentenceHandler& _sHandler1,
-	      Perplexity* _testPerp,
-	      sentenceHandler* _testHandler,
-	      Perplexity& _trainViterbiPerp,
-	      Perplexity* _testViterbiPerp);
+
+  model1(const char* efname, vcbList& evcblist, vcbList& fvcblist,
+         tmodel<COUNT, PROB>&_tTable,Perplexity& _perp,
+         sentenceHandler& _sHandler1,
+         Perplexity* _testPerp,
+         sentenceHandler* _testHandler,
+         Perplexity& _trainViterbiPerp,
+         Perplexity* _testViterbiPerp);
+
+  virtual ~model1();
+
   void initialize_table_uniformly(sentenceHandler& sHandler1);
   int em_with_tricks(int noIterations,
                      bool seedModel1, util::Dictionary& dictionary, bool useDict);

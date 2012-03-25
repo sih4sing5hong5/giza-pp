@@ -682,9 +682,9 @@ void model3::viterbi_loop_with_tricks<A,B,C>(Perplexity& perp, Perplexity& viter
 					     B*d4m,C*d5m);
 
 INSTANTIATE(transpair_model3, void, void);
-INSTANTIATE(TransPairModelHMM, const hmm, void);
-INSTANTIATE(TransPairModelHMM, const hmm, d4model);
-INSTANTIATE(TransPairModelHMM, const hmm, d5model);
+INSTANTIATE(TransPairModelHMM, const HMM, void);
+INSTANTIATE(TransPairModelHMM, const HMM, d4model);
+INSTANTIATE(TransPairModelHMM, const HMM, d5model);
 INSTANTIATE(transpair_model3, void,d4model);
 INSTANTIATE(transpair_model3, void,d5model);
 INSTANTIATE(transpair_model4, d4model,d4model);

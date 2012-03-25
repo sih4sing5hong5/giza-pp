@@ -28,6 +28,9 @@
 #include "defs.h"
 #include "util/vector.h"
 
+// TODO: Use only POD data. Replace string objects with const char[]
+// if it possible.
+
 extern float PROB_SMOOTH;
 extern bool Verbose, Log, Peg, Transfer, Transfer2to3, useDict ;
 extern string Prefix, LogFilename, OPath,
@@ -63,7 +66,7 @@ class vcbList;
 
 extern vcbList *globeTrainVcbList, *globfTrainVcbList;
 
-extern short PredictionInAlignments;
+extern short g_prediction_in_alignments;
 extern short SmoothHMM;
 #define VERB Verbose
 

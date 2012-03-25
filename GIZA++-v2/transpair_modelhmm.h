@@ -48,8 +48,8 @@ class TransPairModelHMM : public transpair_model2
                     const Vector<WordIndex>& fs,
                     const tmodel<COUNT, PROB>& tTable,
                     const amodel<PROB>&aTable,
-                     const amodel<PROB>&,const nmodel<PROB>&,
-                    double, double, const hmm*h);
+                    const amodel<PROB>&,const nmodel<PROB>&,
+                    double, double, const HMM* h);
   ~TransPairModelHMM();
 
   const HMMNetwork* GetHMMNetwork() const { return network_; }

@@ -24,14 +24,15 @@
 #include "util/util.h"
 #include "forward_backward.h"
 #include "parameter.h"
+#include "util/perplexity.h"
+#include "sentence_handler.h"
 
 #define CLASSIFY(i,empty,ianf) bool empty=(i>=l); unsigned int ianf=(i%l);
 #define CLASSIFY2(i,ianf) unsigned int ianf=(i%l);
 
-
-short PredictionInAlignments=0;
-short UniformEntryExit=3;
-short HMMTrainingSpecialFlags=0;
+short g_prediction_in_alignments = 0;
+short g_uniform_entry_exit = 3;
+short g_hmm_training_special_flags = 0;
 
 GLOBAL_PARAMETER2(int,ModelH_Dump_Freq,"HMM DUMP FREQUENCY","th","dump frequency of HMM",kParLevOutput,0);
 
@@ -47,28 +48,16 @@ GLOBAL_PARAMETER(short,SmoothHMM,"emSmoothHMM",
 GLOBAL_PARAMETER(double,HMMAlignmentModelSmoothFactor,"emAlSmooth",
 		 "f-b-trn: smoothing factor for HMM alignment model (can be ignored by -emSmoothHMM)",kParLevSmooth,0.2);
 
+HMM::HMM(model2& m)
+  : model2(m),
+    counts(GLOBALProbabilityForEmpty, ewordclasses, fwordclasses),
+    probs(GLOBALProbabilityForEmpty, ewordclasses, fwordclasses) {}
 
-/*template<class T>
-void smooth_standard(T*a,T*b,double p)
-{
-  int n=b-a;
-  if( n==0 )
-    return;
-  double pp=p/n;
-  for(T*i=a;i!=b;++i)
-    *i = (1.0-p)*(*i)+pp;
-}*/
+HMM::~HMM() { }
 
+void HMM::initialize_table_uniformly(sentenceHandler&) { }
 
-hmm::hmm(model2& m)
-  : model2(m),counts(GLOBALProbabilityForEmpty,ewordclasses,fwordclasses),
-    probs(GLOBALProbabilityForEmpty,ewordclasses,fwordclasses)
-{  }
-
-void hmm::initialize_table_uniformly(sentenceHandler&){}
-
-int hmm::em_with_tricks(int noIterations)
-{
+int HMM::em_with_tricks(int noIterations) {
   double minErrors=1.0;int minIter=0;
   string modelName="Hmm",shortModelName="hmm";
   int dumpFreq=ModelH_Dump_Freq;
@@ -161,22 +150,24 @@ T normalize_if_possible_with_increment(T*a,T*b,int increment)
   return sum;
 }*/
 
-void hmm::load_table(const char* aname){
+void HMM::load_table(const char* filename){
   cout << "Hmm: loading a table not implemented.\n";
+  // TODO: is this correct?
   abort();
-  ifstream anamefile(aname);
+  ifstream anamefile(filename);
   probs.readJumps(anamefile);
 }
 
-HMMNetwork *hmm::makeHMMNetwork(const Vector<WordIndex>& es,const Vector<WordIndex>&fs,bool doInit)const
-{
+HMMNetwork* HMM::makeHMMNetwork(const Vector<WordIndex>& es,
+                                const Vector<WordIndex>&fs,
+                                bool doInit) const {
   unsigned int i,j;
   unsigned int l = es.size() - 1;
   unsigned int m = fs.size() - 1;
   unsigned int I=2*l,J=m;
   int IJ=I*J;
-  bool DependencyOfJ=(CompareAlDeps&(16|8))||(PredictionInAlignments==2);
-  bool DependencyOfPrevAJ=(CompareAlDeps&(2|4))||(PredictionInAlignments==0);
+  bool DependencyOfJ=(CompareAlDeps&(16|8))||(g_prediction_in_alignments==2);
+  bool DependencyOfPrevAJ=(CompareAlDeps&(2|4))||(g_prediction_in_alignments==0);
   HMMNetwork *net = new HMMNetwork(I,J);
   fill(net->alphainit.begin(),net->alphainit.end(),0.0);
   fill(net->betainit.begin(),net->betainit.end(),0.0);
@@ -244,8 +235,8 @@ HMMNetwork *hmm::makeHMMNetwork(const Vector<WordIndex>& es,const Vector<WordInd
 	}
       else
 	{
-	  if( UniformEntryExit&2 )probs.getBetaInit(I,net->betainit);
-	  if( UniformEntryExit&1 )probs.getAlphaInit(I,net->alphainit);
+	  if(g_uniform_entry_exit&2 )probs.getBetaInit(I,net->betainit);
+	  if(g_uniform_entry_exit&1 )probs.getAlphaInit(I,net->alphainit);
 	}
     }
   MASSERT( net->alphainit.size()==I );MASSERT( net->betainit.size()==I );
@@ -256,11 +247,9 @@ HMMNetwork *hmm::makeHMMNetwork(const Vector<WordIndex>& es,const Vector<WordInd
 }
 extern float MINCOUNTINCREASE;
 
-void hmm::em_loop(Perplexity& perp, sentenceHandler& sHandler1,
-		  bool dump_alignment, const char* alignfile, Perplexity& viterbi_perp,
-		     bool test,bool doInit,int
-)
-{
+void HMM::em_loop(Perplexity& perp, sentenceHandler& sHandler1,
+                  bool dump_alignment, const char* alignfile, Perplexity& viterbi_perp,
+                  bool test,bool doInit,int) {
   WordIndex i, j, l, m ;
   double cross_entropy;
   int pair_no=0 ;
@@ -282,8 +271,8 @@ void hmm::em_loop(Perplexity& perp, sentenceHandler& sHandler1,
     Vector<WordIndex> viterbi_alignment(fs.size());
 
     unsigned int I=2*l,J=m;
-    bool DependencyOfJ=(CompareAlDeps&(16|8))||(PredictionInAlignments==2);
-    bool DependencyOfPrevAJ=(CompareAlDeps&(2|4))||(PredictionInAlignments==0);
+    bool DependencyOfJ=(CompareAlDeps&(16|8))||(g_prediction_in_alignments==2);
+    bool DependencyOfPrevAJ=(CompareAlDeps&(2|4))||(g_prediction_in_alignments==0);
     HMMNetwork *net= makeHMMNetwork(es,fs,doInit);
     Array<double> gamma;
     Array<Array2<double> > epsilon(DependencyOfJ?(m-1):1);
@@ -371,7 +360,7 @@ void hmm::em_loop(Perplexity& perp, sentenceHandler& sHandler1,
     cross_entropy+=log(max(trainProb,1e-100))+log(max(net->finalMultiply,1e-100));
     Array<int>vit;
     double viterbi_score=1.0;
-    if( (HMMTrainingSpecialFlags&1) )
+    if( (g_hmm_training_special_flags&1) )
       HMMViterbi(*net,gamma,vit);
     else
       viterbi_score=HMMRealViterbi(*net,vit);

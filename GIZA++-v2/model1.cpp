@@ -44,6 +44,8 @@ model1::model1(const char* efname, vcbList& evcblist, vcbList& fvcblist,tmodel<C
   evlist(Elist.getVocabList()), fvlist(Flist.getVocabList())
 {}
 
+model1::~model1() {}
+
 void model1::initialize_table_uniformly(sentenceHandler& sHandler1){
   WordIndex i, j;
 

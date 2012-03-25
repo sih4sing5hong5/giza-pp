@@ -59,10 +59,10 @@ public:
 
   nmodel<PROB>  nTable;
   nmodel<COUNT> nCountTable;
-  hmm*h;
+  HMM* h;
 
 public:
-  void setHMM(hmm*_h){h=_h;}
+  void setHMM(HMM*_h){h=_h;}
   model3(model2& m2);
   ~model3();
   // methods

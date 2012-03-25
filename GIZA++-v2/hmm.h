@@ -19,66 +19,68 @@
   USA.
 */
 
-#ifndef _hmm_h
-#define _hmm_h 1
-
-#include <cassert>
+#ifndef GIZAPP_HMM_H_
+#define GIZAPP_HMM_H_
 
 #include <iostream>
-#include <algorithm>
-#include <functional>
-#include <map>
-#include <set>
+#include <string>
 #include "util/vector.h"
-#include <utility>
-
-#include <fstream>
-#include <cmath>
-#include <ctime>
-
-#include "TTables.h"
-#include "atables.h"
-#include "sentence_handler.h"
 #include "defs.h"
 #include "model2.h"
-#include "util/perplexity.h"
-#include "vocab.h"
 #include "word_classes.h"
 #include "hmm_tables.h"
 
+class model3;
 class HMMNetwork;
+class Perplexity;
+class sentenceHandler;
 
-
-class hmm : public model2 {
+class HMM : public model2 {
  private:
   WordClasses ewordclasses;
   WordClasses fwordclasses;
-  HMMTables<int,WordClasses> counts,probs;
- public:
-  template<class MAPPER>
-  void makeWordClasses(const MAPPER&m1,const MAPPER&m2,string efile,string ffile)
-    {
-      ifstream estrm(efile.c_str()),fstrm(ffile.c_str());
-      if( !estrm )
-	{
-	  cerr << "ERROR: can not read " << efile << endl;
-	}
-      else
-	ewordclasses.read(estrm,m1);
-      if( !fstrm )
-	cerr << "ERROR: can not read " << ffile << endl;
-      else
-	fwordclasses.read(fstrm,m2);
-    }
-  hmm(model2&m2);
-  void initialize_table_uniformly(sentenceHandler&);
-  int em_with_tricks(int);
-  void load_table(const char* aname);
-  void em_loop(Perplexity& perp, sentenceHandler& sHandler1, bool dump_files,
-	       const char* alignfile, Perplexity&, bool test,bool doInit,int iter);
+  HMMTables<int,WordClasses> counts, probs;
 
-  HMMNetwork *makeHMMNetwork(const Vector<WordIndex>& es,const Vector<WordIndex>&fs,bool doInit)const;
+ public:
+  HMM(model2& m2);
+  ~HMM();
+
+  template<class Mapper>
+  void makeWordClasses(const Mapper& m1, const Mapper& m2,
+                       const std::string& efile, const std::string& ffile);
+
+  void initialize_table_uniformly(sentenceHandler& handler);
+
+  int em_with_tricks(int no_iterations);
+
+  // WARNING: Do not call this function. Not implemented yet.
+  void load_table(const char* filename);
+
+  void em_loop(Perplexity& perp, sentenceHandler& sHandler1, bool dump_files,
+               const char* alignfile, Perplexity&, bool test,bool doInit,int iter);
+
+  HMMNetwork *makeHMMNetwork(const Vector<WordIndex>& es,
+                             const Vector<WordIndex>&fs,
+                             bool doInit) const;
   friend class model3;
 };
 
-#endif
+template<class Mapper>
+void HMM::makeWordClasses(const Mapper& m1, const Mapper& m2,
+                          const std::string& efile, const std::string& ffile) {
+  ifstream estrm(efile.c_str()), fstrm(ffile.c_str());
+  if (!estrm) {
+    cerr << "ERROR: can not read " << efile << endl;
+  } else {
+    ewordclasses.read(estrm,m1);
+  }
+
+  if (!fstrm) {
+    cerr << "ERROR: can not read " << ffile << endl;
+  } else {
+    fwordclasses.read(fstrm,m2);
+  }
+}
+
+
+#endif  // GIZAPP_HMM_H_
