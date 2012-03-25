@@ -41,8 +41,8 @@ class SmartPointer {
   T* ptr_;
 };
 
-template<class T> inline ostream &operator<<(ostream& out,
-                                             const SmartPointer<T>& ptr) {
+template<class T> inline std::ostream &operator<<(std::ostream& out,
+                                                  const SmartPointer<T>& ptr) {
   if (ptr.ptr()) {
     return out << *ptr;
   } else {
@@ -68,8 +68,9 @@ class SmartPointerConst
   const T* ptr_;
 };
 
-template<class T> inline ostream &operator<<(ostream& out,
-                                             const SmartPointerConst<T>& ptr) {
+template<class T>
+inline std::ostream &operator<<(std::ostream& out,
+                                const SmartPointerConst<T>& ptr) {
   if (ptr.ptr()) {
     return out << *ptr;
   } else {
@@ -84,15 +85,18 @@ class UP : public SmartPointer<T> {
   ~UP() {}
 };
 
-template<class T> inline bool operator==(const UP<T>& s1, const UP<T>& s2) {
-  return s1.ptr()==s2.ptr();
+template<class T>
+inline bool operator==(const UP<T>& s1, const UP<T>& s2) {
+  return s1.ptr() == s2.ptr();
 }
 
-template<class T>  inline bool operator<(const UP<T>& s1, const UP<T>& s2) {
+template<class T>
+inline bool operator<(const UP<T>& s1, const UP<T>& s2) {
   return s1.ptr() < s2.ptr();
 }
 
-template<class T> inline int Hash(const UP<T> &wp) {
+template<class T>
+inline int Hash(const UP<T> &wp) {
   return (wp.ptr()) ? Hash(*wp) : 0;
 }
 
@@ -103,15 +107,18 @@ class UPConst : public SmartPointerConst<T> {
   ~UPConst() {}
 };
 
-template<class T> inline bool operator==(const UPConst<T>& s1, const UPConst<T>& s2) {
+template<class T>
+inline bool operator==(const UPConst<T>& s1, const UPConst<T>& s2) {
   return s1.ptr()==s2.ptr();
 }
 
-template<class T> inline bool operator<(const UPConst<T>& s1, const UPConst<T>& s2) {
+template<class T>
+inline bool operator<(const UPConst<T>& s1, const UPConst<T>& s2) {
   return s1.ptr()<s2.ptr();
 }
 
-template<class T> inline int Hash(const UPConst<T> &wp) {
+template<class T>
+inline int Hash(const UPConst<T> &wp) {
   return (wp.ptr()) ? Hash(*wp) : 0;
 }
 
@@ -141,11 +148,13 @@ class MPConst : public SmartPointerConst<T> {
   ~MPConst() {}
 };
 
-template <class T> inline bool operator==(const MPConst<T>&s1,const MPConst<T>&s2) {
+template <class T>
+inline bool operator==(const MPConst<T>&s1,const MPConst<T>&s2) {
   assert(s1); assert(s2); return *s1 == *s2;
 }
 
-template <class T> inline bool operator<(const MPConst<T>&s1,const MPConst<T>&s2){
+template <class T>
+inline bool operator<(const MPConst<T>&s1,const MPConst<T>&s2){
   assert(s1); assert(s2); return *s1 < *s2;
 }
 
