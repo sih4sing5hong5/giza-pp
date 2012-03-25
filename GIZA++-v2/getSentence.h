@@ -1,24 +1,24 @@
 /*
+  EGYPT Toolkit for Statistical Machine Translation
 
-EGYPT Toolkit for Statistical Machine Translation
-Written by Yaser Al-Onaizan, Jan Curin, Michael Jahr, Kevin Knight, John Lafferty, Dan Melamed, David Purdy, Franz Och, Noah Smith, and David Yarowsky.
+  Written by Yaser Al-Onaizan, Jan Curin, Michael Jahr, Kevin Knight, John Lafferty, Dan Melamed, David Purdy, Franz Och, Noah Smith, and David Yarowsky.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
-USA.
-
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+  USA.
 */
+
 /* --------------------------------------------------------------------------*
  *                                                                           *
  * Module : getSentence                                                      *
@@ -45,12 +45,12 @@ USA.
 #include "vocab.h"
 #include "Globals.h"
 /*----------------------- Class Prototype Definition ------------------------*
- Class Name: sentenceHandleer 
- Objective: This class is defined to handle training sentece pairs from the 
- parallel corpus. Each pair has: a target sentece, called here French; a 
+ Class Name: sentenceHandleer
+ Objective: This class is defined to handle training sentece pairs from the
+ parallel corpus. Each pair has: a target sentece, called here French; a
  source sentece, called here English sentece; and an integer number denoting
- the number of times this pair occured in trining corpus. Both source and 
- target senteces are represented as integer vector (variable size arrays), 
+ the number of times this pair occured in trining corpus. Both source and
+ target senteces are represented as integer vector (variable size arrays),
  each entry is a numeric value which is the token id for the particular token
  in the sentece.
 
@@ -94,7 +94,7 @@ inline ostream&operator<<(ostream&of,const sentPair&s)
 
 class sentenceHandler{
 public:
-  const char * inputFilename;   // parallel corpus file name, similar for all 
+  const char * inputFilename;   // parallel corpus file name, similar for all
                             // sentence pair objects
   ifstream *inputFile;     // parallel corpus file handler
   Vector<sentPair> Buffer;
@@ -120,4 +120,3 @@ public:
 };
 
 #endif
-  

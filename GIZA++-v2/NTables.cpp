@@ -1,24 +1,24 @@
 /*
+  EGYPT Toolkit for Statistical Machine Translation
 
-EGYPT Toolkit for Statistical Machine Translation
-Written by Yaser Al-Onaizan, Jan Curin, Michael Jahr, Kevin Knight, John Lafferty, Dan Melamed, David Purdy, Franz Och, Noah Smith, and David Yarowsky.
+  Written by Yaser Al-Onaizan, Jan Curin, Michael Jahr, Kevin Knight, John Lafferty, Dan Melamed, David Purdy, Franz Och, Noah Smith, and David Yarowsky.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
-USA.
-
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+  USA.
 */
+
 #include "NTables.h"
 #include <iostream>
 #include "defs.h"
@@ -29,12 +29,12 @@ GLOBAL_PARAMETER(double,NTablesFactorGraphemes,"nSmooth","smoothing for fertilit
 GLOBAL_PARAMETER(double,NTablesFactorGeneral,"nSmoothGeneral","smoothing for fertility parameters (default: 0): weight for word-independent fertility parameters",PARLEV_SMOOTH,0.0);
 
 template <class VALTYPE>
-void nmodel<VALTYPE>::printNTable(int noEW, const char* filename, 
-				  const Vector<WordEntry>& evlist, 
+void nmodel<VALTYPE>::printNTable(int noEW, const char* filename,
+				  const Vector<WordEntry>& evlist,
 				  bool actual) const
      // prints the fertility table but with actual sourcce words (not their id)
 {
-  cerr << "Dumping nTable to: " << filename <<  '\n';  
+  cerr << "Dumping nTable to: " << filename <<  '\n';
   ofstream of(filename);
   VALTYPE p ;
   WordIndex k, i ;
@@ -42,14 +42,14 @@ void nmodel<VALTYPE>::printNTable(int noEW, const char* filename,
     if (evlist[i].freq > 0){
       if (actual)
 	of << evlist[i].word << ' ' ;
-      else 
+      else
 	of << i << ' ' ;
       for( k=0; k < MAX_FERTILITY; k++){
 	p = getValue(i, k);
-	if (p <= PROB_SMOOTH) 
+	if (p <= PROB_SMOOTH)
 	  p = 0;
-	of << p << ' ';      
-      } 
+	of << p << ' ';
+      }
       of << '\n';
     }
   }

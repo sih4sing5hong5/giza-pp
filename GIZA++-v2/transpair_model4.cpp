@@ -1,25 +1,24 @@
 /*
+  Copyright (C) 2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-Copyright (C) 2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
+  This file is part of GIZA++ ( extension of GIZA ).
 
-This file is part of GIZA++ ( extension of GIZA ).
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-This program is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
-USA.
-
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+  USA.
 */
+
 #include "transpair_model4.h"
 #include "Parameter.h"
 
@@ -38,7 +37,7 @@ LogProb transpair_model4::_scoreOfMove(const alignment&a, WordIndex new_i, WordI
   else
     return 1.0;
 }
-LogProb transpair_model4::_scoreOfSwap(const alignment&a, WordIndex j1, WordIndex j2,double)const 
+LogProb transpair_model4::_scoreOfSwap(const alignment&a, WordIndex j1, WordIndex j2,double)const
 {
   LogProb a_prob=prob_of_target_and_alignment_given_source(a);
   alignment b(a);
@@ -71,7 +70,7 @@ LogProb transpair_model4::scoreOfMove(const alignment&a, WordIndex new_i, WordIn
   return change;
 }
 //increasing efficiency: no copy of alignment (calc. everything incrementally)
-LogProb transpair_model4::scoreOfSwap(const alignment&a, WordIndex j1, WordIndex j2,double thisValue)const 
+LogProb transpair_model4::scoreOfSwap(const alignment&a, WordIndex j1, WordIndex j2,double thisValue)const
 {
   WordIndex aj1=a(j1),aj2=a(j2);
   if( aj1==aj2 )
@@ -121,7 +120,7 @@ LogProb transpair_model4::prob_of_target_and_alignment_given_source_1(const alig
 LogProb transpair_model4::prob_of_target_and_alignment_given_source(const alignment&al, short distortionType,bool verb)const
 {
   LogProb total = 1.0 ;
-  static const LogProb almostZero = 1E-299 ; 
+  static const LogProb almostZero = 1E-299 ;
   if( distortionType&1 )
     {
       total *= prob_of_target_and_alignment_given_source_1(al,verb);

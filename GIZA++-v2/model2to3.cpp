@@ -1,24 +1,24 @@
 /*
+  EGYPT Toolkit for Statistical Machine Translation
 
-EGYPT Toolkit for Statistical Machine Translation
-Written by Yaser Al-Onaizan, Jan Curin, Michael Jahr, Kevin Knight, John Lafferty, Dan Melamed, David Purdy, Franz Och, Noah Smith, and David Yarowsky.
+  Written by Yaser Al-Onaizan, Jan Curin, Michael Jahr, Kevin Knight, John Lafferty, Dan Melamed, David Purdy, Franz Och, Noah Smith, and David Yarowsky.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
-USA.
-
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+  USA.
 */
+
 #include "model3.h"
 #include "utility.h"
 #include "Globals.h"
@@ -37,18 +37,18 @@ double get_sum_of_partitions(int n, int source_pos, double alpha[_MAX_FERTILITY]
   int part[_MAX_FERTILITY], mult[_MAX_FERTILITY];
 
   done = false ;
-  init = true ;    
+  init = true ;
   for (i = 0 ; i < _MAX_FERTILITY ; i++){
     part[i] = mult[i] = 0 ;
   }
-  
+
   //printf("Entering get sum of partitions\n");
   while(! done){
     total_partitions_considered++;
     if (init){
       part[1] = n ;
       mult[1] = 1 ;
-      num_parts = 1  ;  
+      num_parts = 1  ;
       init = false ;
     }
     else {
@@ -78,7 +78,7 @@ double get_sum_of_partitions(int n, int source_pos, double alpha[_MAX_FERTILITY]
 	  part[k1+1] = v ;
 	  num_parts = k1 + 1;
 	}
-      } /* of if num_parts > 1 || part[num_parts] > 1 */    
+      } /* of if num_parts > 1 || part[num_parts] > 1 */
       else {
 	done = true ;
       }
@@ -92,19 +92,19 @@ double get_sum_of_partitions(int n, int source_pos, double alpha[_MAX_FERTILITY]
 	}
       sum += prod ;
     }
-  } /* of while */  
+  } /* of while */
   if (sum < 0) sum = 0 ;
   return(sum) ;
 }
 
-void model3::estimate_t_a_d(sentenceHandler& sHandler1, Perplexity& perp, Perplexity& trainVPerp, 
-			    bool simple, bool dump_files,bool updateT) 
+void model3::estimate_t_a_d(sentenceHandler& sHandler1, Perplexity& perp, Perplexity& trainVPerp,
+			    bool simple, bool dump_files,bool updateT)
 {
   string tfile, nfile, dfile, p0file, afile, alignfile;
   WordIndex i, j, l, m, max_fertility_here, k ;
   PROB val, temp_mult[MAX_SENTENCE_LENGTH_ALLOWED][MAX_SENTENCE_LENGTH_ALLOWED];
   double cross_entropy;
-  double beta, sum, 
+  double beta, sum,
       alpha[_MAX_FERTILITY][MAX_SENTENCE_LENGTH_ALLOWED];
   double total, temp, r ;
 
@@ -131,11 +131,11 @@ void model3::estimate_t_a_d(sentenceHandler& sHandler1, Perplexity& perp, Perple
     Vector<WordIndex> viterbi_alignment(fs.size());
     l = es.size() - 1;
     m = fs.size() - 1;
-    cross_entropy = log(1.0); 
+    cross_entropy = log(1.0);
     double viterbi_score = 1 ;
     PROB word_best_score ;  // score for the best mapping of fj
     for(j = 1 ; j <= m ; j++){
-      word_best_score = 0 ;  // score for the best mapping of fj	
+      word_best_score = 0 ;  // score for the best mapping of fj
       Vector<LpPair<COUNT,PROB> *> sPtrCache(es.size(),0);
       total = 0 ;
       WordIndex best_i = 0 ;
@@ -143,17 +143,17 @@ void model3::estimate_t_a_d(sentenceHandler& sHandler1, Perplexity& perp, Perple
 	sPtrCache[i] = tTable.getPtr(es[i], fs[j]) ;
 	if (sPtrCache[i] != 0 &&  (*(sPtrCache[i])).prob > PROB_SMOOTH) // if valid pointer
 	  temp_mult[i][j]= (*(sPtrCache[i])).prob * aTable.getValue(i, j, l, m) ;
-	else 
+	else
 	  temp_mult[i][j] = PROB_SMOOTH *  aTable.getValue(i, j, l, m) ;
 	total += temp_mult[i][j] ;
 	if (temp_mult[i][j] > word_best_score){
 	    word_best_score = temp_mult[i][j] ;
 	    best_i = i ;
 	  }
-      } // end of for (i) 
+      } // end of for (i)
       viterbi_alignment[j] = best_i ;
       viterbi_score *= word_best_score ; /// total ;
-      cross_entropy += log(total) ; 
+      cross_entropy += log(total) ;
       if (total == 0){
 	  cerr << "WARNING: total is zero (TRAIN)\n";
 	  viterbi_score = 0 ;
@@ -169,7 +169,7 @@ void model3::estimate_t_a_d(sentenceHandler& sHandler1, Perplexity& perp, Perple
 	  if ( val > PROB_SMOOTH) {
 	    if( updateT )
 	      {
-		if (sPtrCache[i] != 0) 
+		if (sPtrCache[i] != 0)
 		  (*(sPtrCache[i])).count += val ;
 		else
 		  tTable.incCount(es[i], fs[j], val);
@@ -186,12 +186,12 @@ void model3::estimate_t_a_d(sentenceHandler& sHandler1, Perplexity& perp, Perple
     addAL(viterbi_alignment,sent.sentenceNo,l);
     if (!simple){
       max_fertility_here = min(WordIndex(m+1), MAX_FERTILITY);
-      for (i = 1; i <= l ; i++) { 
+      for (i = 1; i <= l ; i++) {
 	for ( k = 1; k < max_fertility_here; k++){
 	  beta = 0 ;
 	  alpha[k][i] = 0 ;
 	  for (j = 1 ; j <= m ; j++){
-	    temp =  temp_mult[i][j];	    	   
+	    temp =  temp_mult[i][j];
 	    if (temp > 0.95) temp = 0.95; // smooth to prevent under/over flow
 	    else if (temp < 0.05) temp = 0.05;
 	    beta += pow(temp/(1.0-temp), (double) k);
@@ -199,20 +199,20 @@ void model3::estimate_t_a_d(sentenceHandler& sHandler1, Perplexity& perp, Perple
 	alpha[k][i] = beta * pow((double) -1, (double) (k+1)) / (double) k ;
 	}
       }
-      for (i = 1; i <= l ; i++){ 
+      for (i = 1; i <= l ; i++){
 	r = 1;
 	for (j = 1 ; j <= m ; j++)
-	  r *= (1 - temp_mult[i][j]); 
+	  r *= (1 - temp_mult[i][j]);
 	for (k = 0  ; k <  max_fertility_here ; k++){
 	  sum = get_sum_of_partitions(k, i, alpha);
 	  temp = r * sum * count;
-	  nCountTable.getRef(es[i], k)+=temp;	  
+	  nCountTable.getRef(es[i], k)+=temp;
 	} // end of for (k ..)
       } // end of for (i == ..)
     } // end of  if (!simple)
     perp.addFactor(cross_entropy, count, l, m,1);
     trainVPerp.addFactor(log(viterbi_score), count, l, m,1);
-  } // end of while 
+  } // end of while
   sHandler1.rewind();
   cerr << "Normalizing t, a, d, n count tables now ... " ;
   if( dump_files && OutputInAachenFormat==1 )
@@ -243,7 +243,7 @@ void model3::estimate_t_a_d(sentenceHandler& sHandler1, Perplexity& perp, Perple
 	}
       }
     }
-  } // end of else (!simple) 
+  } // end of else (!simple)
   p0 = 0.95;
   p1 = 0.05;
   if (dump_files){
@@ -252,7 +252,7 @@ void model3::estimate_t_a_d(sentenceHandler& sHandler1, Perplexity& perp, Perple
     nfile = Prefix + ".n2to3" ;
     dfile = Prefix + ".d2to3" ;
     p0file = Prefix + ".p0_2to3" ;
-    
+
     if( OutputInAachenFormat==0 )
       tTable.printProbTable(tfile.c_str(),Elist.getVocabList(),Flist.getVocabList(),OutputInAachenFormat);
     aTable.printTable(afile.c_str());
@@ -275,31 +275,31 @@ void model3::estimate_t_a_d(sentenceHandler& sHandler1, Perplexity& perp, Perple
     }
 }
 
-void model3::transferSimple(/*model1& m1, model2& m2, */ sentenceHandler& sHandler1, 
+void model3::transferSimple(/*model1& m1, model2& m2, */ sentenceHandler& sHandler1,
 			    bool dump_files, Perplexity& perp, Perplexity& trainVPerp,bool updateT)
 {
-  /* 
+  /*
      This function performs simple Model 2 -> Model 3 transfer.
      It sets values for n and p without considering Model 2's ideas.
      It sets d values based on a.
   */
   time_t st, fn;
   // just inherit these from the previous models, to avoid data duplication
- 
+
   st = time(NULL);
   cerr << "==========================================================\n";
-  cerr << "\nTransfer started at: "<< ctime(&st) << '\n';  
-  
+  cerr << "\nTransfer started at: "<< ctime(&st) << '\n';
+
   cerr << "Simple tranfer of Model2 --> Model3 (i.e. estimating initial parameters of Model3 from Model2 tables)\n";
-  
+
   estimate_t_a_d(sHandler1, perp, trainVPerp, true, dump_files,updateT) ;
   fn = time(NULL) ;
   cerr << "\nTransfer: TRAIN CROSS-ENTROPY " << perp.cross_entropy()
        << " PERPLEXITY " << perp.perplexity() << '\n';
   cerr << "\nTransfer took: " << difftime(fn, st) << " seconds\n";
-  cerr << "\nTransfer Finished at: "<< ctime(&fn) << '\n';  
+  cerr << "\nTransfer Finished at: "<< ctime(&fn) << '\n';
   cerr << "==========================================================\n";
-  
+
 }
 
 
@@ -309,50 +309,50 @@ void model3::transfer(sentenceHandler& sHandler1,bool dump_files, Perplexity& pe
     transferSimple(sHandler1,dump_files,perp, trainVPerp,updateT);
   {
     time_t st, fn ;
-    
+
     st = time(NULL);
     cerr << "==========================================================\n";
-    cerr << "\nTransfer started at: "<< ctime(&st) << '\n';  
+    cerr << "\nTransfer started at: "<< ctime(&st) << '\n';
     cerr << "Transfering Model2 --> Model3 (i.e. estimating initial parameters of Model3 from Model2 tables)\n";
-    
+
     p1_count = p0_count = 0 ;
-    
+
     estimate_t_a_d(sHandler1, perp, trainVPerp, false, dump_files,updateT);
-    
-    
-    
+
+
+
     /* Below is a made-up stab at transferring t & a probs to p0/p1.
        (Method not documented in IBM paper).
        It seems to give p0 = .96, which may be right for Model 2, or may not.
        I'm commenting it out for now and hardwiring p0 = .90 as above. -Kevin
-       
+
        // compute p0, p1 counts
        Vector<LogProb> nm(Elist.uniqTokens(),0.0);
-       
+
        for(i=0; i < Elist.uniqTokens(); i++){
        for(k=1; k < MAX_FERTILITY; k++){
        nm[i] += nTable.getValue(i, k) * (LogProb) k;
        }
        }
-       
+
        LogProb mprime;
        //  sentenceHandler sHandler1(efFilename.c_str());
        //  sentPair sent ;
-       
+
        while(sHandler1.getNextSentence(sent)){
        Vector<WordIndex>& es = sent.eSent;
        Vector<WordIndex>& fs = sent.fSent;
        const float count  = sent.noOccurrences;
-       
+
        l = es.size() - 1;
        m = fs.size() - 1;
        mprime = 0 ;
        for (i = 1; i <= l ; i++){
        mprime +=  nm[es[i]] ;
        }
-       mprime = LogProb((int((double) mprime + 0.5)));  // round mprime to nearest integer 
+       mprime = LogProb((int((double) mprime + 0.5)));  // round mprime to nearest integer
        if ((mprime < m) && (2 * mprime >= m)) {
-       //      cerr << "updating both p0_count and p1_count, mprime: " << mprime << 
+       //      cerr << "updating both p0_count and p1_count, mprime: " << mprime <<
        //	"m = " << m << "\n";
        p1_count +=  (m - (double) mprime)  * count ;
        p0_count +=  (2 * (double) mprime - m)  * count ;
@@ -360,15 +360,15 @@ void model3::transfer(sentenceHandler& sHandler1,bool dump_files, Perplexity& pe
        }
        else {
        //      p1_count += 0 ;
-       //      cerr << "updating only p0_count, mprime: " << mprime << 
+       //      cerr << "updating only p0_count, mprime: " << mprime <<
        //	"m = " << m << "\n";
        p0_count +=  double(m  * count) ;
        //  cerr << "p0_count = "<<p0_count << " , p1_count = " << p1_count << endl ;
        }
        }
-       
-       // normalize p1, p0 
-       
+
+       // normalize p1, p0
+
        cerr << "p0_count = "<<p0_count << " , p1_count = " << p1_count << endl ;
        p1 = p1_count / (p1_count + p0_count ) ;
        p0 = 1 - p1;
@@ -383,16 +383,16 @@ void model3::transfer(sentenceHandler& sHandler1,bool dump_files, Perplexity& pe
        p0 = p0 - (LogProb) SMOOTH_THRESHOLD ;
        }
     */
-    
+
     fn = time(NULL) ;
     cerr << "\nTransfer: TRAIN CROSS-ENTROPY " << perp.cross_entropy()
 	 << " PERPLEXITY " << perp.perplexity() << '\n';
-    //    cerr << "tTable contains " << tTable.getHash().bucket_count() 
+    //    cerr << "tTable contains " << tTable.getHash().bucket_count()
     //	 << " buckets and  " << tTable.getHash().size() << " entries." ;
     cerr << "\nTransfer took: " << difftime(fn, st) << " seconds\n";
-    cerr << "\nTransfer Finished at: "<< ctime(&fn) << endl;  
+    cerr << "\nTransfer Finished at: "<< ctime(&fn) << endl;
     cerr << "==========================================================\n";
-    
+
   }
 
 }

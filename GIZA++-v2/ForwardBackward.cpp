@@ -1,25 +1,24 @@
 /*
+  Copyright (C) 1999,2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-Copyright (C) 1999,2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
+  This file is part of GIZA++ ( extension of GIZA ).
 
-This file is part of GIZA++ ( extension of GIZA ).
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-This program is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
-USA.
-
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+  USA.
 */
+
 #ifndef NO_TRAINING
 #include "ForwardBackward.h"
 #include "Globals.h"
@@ -42,12 +41,12 @@ double ForwardBackwardTraining(const HMMNetwork&net,Array<double>&g,Array<Array2
 	massert(cur_beta<next_beta&& &net.outProb(j,ti,ni)==alprob);
 	massert(next_node == &net.nodeProb(ni,j+1));
 	/*	if( VERB&&(*next_beta)*(*alprob)*(*next_node) )
-	  cout << "B= " << (int)(cur_beta-beta.begin()) << " += " << (*next_beta) << "(" 
+	  cout << "B= " << (int)(cur_beta-beta.begin()) << " += " << (*next_beta) << "("
 	  << next_beta-beta.begin() << ") alprob:" << (*alprob) << "  lexprob:" << (*next_node) << endl;*/
 	(*cur_beta)+=(*next_beta++)*(*alprob++)*(*next_node);
       }
     }
-  for(int i=0;i<I;i++)  
+  for(int i=0;i<I;i++)
     alpha[i]=net.getAlphainit(i)*net.nodeProb(i,0);
   double* cur_alpha=conv<double>(alpha.begin())+I;
   cur_beta=conv<double>(beta.begin())+I;
@@ -58,7 +57,7 @@ double ForwardBackwardTraining(const HMMNetwork&net,Array<double>&g,Array<Array2
 	e.resize(I,I);
 	fill(e.begin(),e.end(),0.0);
       }
-    
+
     for(int ti=0;ti<I;++ti,++cur_alpha,++cur_beta) {
       const double * prev_alpha=conv<double>(alpha.begin())+I*(j-1);
       double *cur_e= &e(ti,0);
@@ -85,7 +84,7 @@ double ForwardBackwardTraining(const HMMNetwork&net,Array<double>&g,Array<Array2
       for(const double*ep=e.begin();ep!=epe;++ep)
 	esum+=*ep;
     }
-  if( J>1 ) 
+  if( J>1 )
     esum2=esum/(J-1);
   else
     esum2=0.0;
@@ -138,14 +137,14 @@ void HMMViterbi(const HMMNetwork&net,Array<double>&g,Array<int>&vit) {
 double HMMRealViterbi(const HMMNetwork&net,Array<int>&vitar,int pegi,int pegj,bool verbose){
   const int I=net.size1(),J=net.size2(),N=I*J;
   Array<double> alpha(N,-1);
-  Array<double*> bp(N,(double*)0);  
+  Array<double*> bp(N,(double*)0);
   vitar.resize(J);
   if( J==0 )
     return 1.0;
   for(int i=0;i<I;i++)
     {
       alpha[i]=net.getAlphainit(i)*net.nodeProb(i,0);
-      if( i>I/2 ) 
+      if( i>I/2 )
 	alpha[i]=0; // only first empty word can be chosen
       bp[i]=0;
     }
@@ -234,9 +233,8 @@ double MaximumTraining(const HMMNetwork&net,Array<double>&g,Array<Array2<double>
 	      e(vitar[i],vitar[i-1])++;
 	    }
 	}
-    }    
+    }
   return ret;
 }
 
 #endif
-

@@ -1,25 +1,24 @@
 /*
+  Copyright (C) 1999,2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-Copyright (C) 1999,2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
+  This file is part of GIZA++ ( extension of GIZA ).
 
-This file is part of GIZA++ ( extension of GIZA ).
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-This program is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
-USA.
-
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+  USA.
 */
+
 #ifndef _d4tables_h_define
 #define _d4tables_h_define
 #include <math.h>
@@ -222,7 +221,7 @@ class d4model
 	  return max(PROB_SMOOTH,d4modelsmooth_factor/(m-1)+(1-d4modelsmooth_factor)*(p->second)[j-j_prev+msl].second);
 	}
     }
-    
+
   PROB getProb_bigger(WordIndex j,WordIndex j_prev,int E,int F,int l,int m)const
     {
       massert(j>=1);massert(j_prev>=1);
@@ -267,7 +266,7 @@ class d4model
 	      nParams++;
 	    }
 	}
-      cout << "D4 table contains " << nParams << " parameters.\n";      
+      cout << "D4 table contains " << nParams << " parameters.\n";
     }
    void clear()
     {
@@ -284,7 +283,7 @@ class d4model
 	    db1[i].first=0.0;
 	}
     }
- 
+
   void printProbTable(const char*fname1,const char*fname2)
     {
       ofstream out(fname1);
@@ -355,7 +354,7 @@ class d4model
 	{
 	  getline(file,line);
 	} while(line.length()&&line[0]=='#');
-      
+
       do
 	{
 	  while(line.length()==0)
@@ -379,7 +378,7 @@ class d4model
 	  iassert(str=="SUM:");
 	  if( str!="SUM:")
 	    cerr << "ERROR: string is " << str << " and not sum " << endl;
-	  
+
 	  do
 	    {
 	      int value;

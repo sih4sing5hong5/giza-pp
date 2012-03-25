@@ -1,32 +1,32 @@
 /*
+  EGYPT Toolkit for Statistical Machine Translation
 
-EGYPT Toolkit for Statistical Machine Translation
-Written by Yaser Al-Onaizan, Jan Curin, Michael Jahr, Kevin Knight, John Lafferty, Dan Melamed, David Purdy, Franz Och, Noah Smith, and David Yarowsky.
+  Written by Yaser Al-Onaizan, Jan Curin, Michael Jahr, Kevin Knight, John Lafferty, Dan Melamed, David Purdy, Franz Och, Noah Smith, and David Yarowsky.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
-USA.
-
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+  USA.
 */
+
 #ifndef _aligntables_h
 #define _aligntables_h 1
 
 #include "defs.h"
- 
+
 
 #include <cassert>
- 
+
 #include <iostream>
 #include <algorithm>
 #include <functional>
@@ -50,7 +50,7 @@ class hashmyalignment : public unary_function< Vector<WordIndex>, size_t >
 public:
   size_t operator() (const Vector<WordIndex>& key) const
     // to define the mapping function. it takes an alignment (a vector of
-    // integers) and it returns an integer value (hash key). 
+    // integers) and it returns an integer value (hash key).
     {
       WordIndex j ;
       size_t s  ;
@@ -61,7 +61,7 @@ public:
 	key_sum += (size_t) (int) pow(double(key[j]), double((j % 6)+1));
       }
       //      logmsg << " , Key value was : " <<  key_sum;
-      s = key_sum % 1000000 ;      
+      s = key_sum % 1000000 ;
       //      logmsg << " h(k) = " << s << endl ;
       return(s);
     }
@@ -70,7 +70,7 @@ public:
 class equal_to_myalignment{
   // returns true if two alignments are the same (two vectors have same enties)
 public:
-  bool operator()(const Vector<WordIndex> t1, 
+  bool operator()(const Vector<WordIndex> t1,
 		  const Vector<WordIndex> t2) const
     {WordIndex j ;
     if (t1.size() != t2.size())
@@ -80,7 +80,7 @@ public:
 	return(false);
     return(true);
     }
-    
+
 };
 
 /* ---------------- End of Class Defnition for hashmyalignment --------------*/
@@ -89,7 +89,7 @@ public:
 /* ------------------ Class Defintions for alignmodel -----------------------
  Class Name: alignmodel
  Objective: Alignments neighborhhoods (collection of alignments) are stored in
- a hash table (for easy lookup). Each alignment vector is mapped into a hash 
+ a hash table (for easy lookup). Each alignment vector is mapped into a hash
  key using the operator defined above.
  *--------------------------------------------------------------------------*/
 
@@ -108,7 +108,7 @@ public:
   bool insert(Vector<WordIndex>&, LogProb val=0.0); // add a alignmnet
  //  void setValue(Vector<WordIndex>&, LogProb val); // not needed
   LogProb getValue(Vector<WordIndex>&)const; // retrieve prob. of alignment
-  inline void clear(void){ a.clear();}; // clear hash table 
+  inline void clear(void){ a.clear();}; // clear hash table
   //  void printTable(const char* filename);
   //inline void resize(WordIndex n) {a.resize(n);}; // resize table
 

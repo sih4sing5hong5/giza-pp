@@ -1,24 +1,24 @@
 /*
+  EGYPT Toolkit for Statistical Machine Translation
 
-EGYPT Toolkit for Statistical Machine Translation
-Written by Yaser Al-Onaizan, Jan Curin, Michael Jahr, Kevin Knight, John Lafferty, Dan Melamed, David Purdy, Franz Och, Noah Smith, and David Yarowsky.
+  Written by Yaser Al-Onaizan, Jan Curin, Michael Jahr, Kevin Knight, John Lafferty, Dan Melamed, David Purdy, Franz Och, Noah Smith, and David Yarowsky.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
-USA.
-
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+  USA.
 */
+
 #include "mystl.h"
 #include "model3.h"
 #include "collCounts.h"
@@ -50,7 +50,7 @@ int PrintHillClimbWarning=0;
 int PrintZeroScoreWarning=0;
 
 
-LogProb model3::viterbi_model2(const transpair_modelhmm&ef, alignment&output, int 
+LogProb model3::viterbi_model2(const transpair_modelhmm&ef, alignment&output, int
 #ifdef STORE_HMM_ALIGNMENTS
 pair_no
 #endif
@@ -136,7 +136,7 @@ LogProb model3::_viterbi_model2(const transpair_model2&ef, alignment&output, int
 		  best_i = i ;
 		  score = temp ;
 		}
-	    } 
+	    }
 	}
       if (score == 0){
 	cerr << "WARNING: In searching for model2 best alignment\n";
@@ -149,9 +149,9 @@ LogProb model3::_viterbi_model2(const transpair_model2&ef, alignment&output, int
 	  if ((Fert[i]+1 < MAX_FERTILITY) && ((i == 0 &&  (m >= 2*(Fert[0]+1)))
 					      || (i != 0)))
 	    cerr <<"Passed fertility condition \n";
-	  else 
+	  else
 	    cerr <<"Failed fertility condition \n";
-	}	    
+	}
       }
       else
 	{
@@ -159,13 +159,13 @@ LogProb model3::_viterbi_model2(const transpair_model2&ef, alignment&output, int
 	  Fert[best_i]++;
 	}
       ss *= score;
-    } 
+    }
   if (ss <= 0){
     //cerr << ef;
     cerr << "WARNING: Model2 viterbi alignment has zero score.\n" ;
     cerr << "Here are the different elements that made this alignment probability zero \n";
     cerr << "Source length " << l << " target length " << m << '\n';
-    LogProb gg=1 ; // for debugging only ..... 
+    LogProb gg=1 ; // for debugging only .....
     for (PositionIndex j = 1 ; j <= m ; j++)if (int(j) != j_peg){
       LogProb score = 0 ;
       LogProb a = 0, t =0 ;
@@ -257,8 +257,8 @@ LogProb greedyClimb_WithIBM3Scoring(MoveSwapMatrix<TRANSPAIR>&msc2,int j_peg=-1)
 	{
 	  //msc2.ef.verboseTP=1;
 	  hereVERB=1;
-	  cerr << "ERROR: more than 30 iterations in hill-climbing: " << iused 
-	       << " improvement: " << msvec[iused].first << " value:" << msvec[iused].second 
+	  cerr << "ERROR: more than 30 iterations in hill-climbing: " << iused
+	       << " improvement: " << msvec[iused].first << " value:" << msvec[iused].second
 	       << '\n' << msc2 << '\n';
 	  for(int a=0;a<20;++a)
 	    cout << a << ' ' << msvec[a].first << ' ' << msvec[a].second << '\n';
@@ -267,7 +267,7 @@ LogProb greedyClimb_WithIBM3Scoring(MoveSwapMatrix<TRANSPAIR>&msc2,int j_peg=-1)
       if( iter>50 )
 	break;
     } while(changed);
-  return msc2.get_ef().prob_of_target_and_alignment_given_source(msc2);  
+  return msc2.get_ef().prob_of_target_and_alignment_given_source(msc2);
 }
 
 template<class TRANSPAIR>
@@ -277,7 +277,7 @@ LogProb greedyClimb(MoveSwapMatrix<TRANSPAIR>&msc2, int j_peg = -1)
     return greedyClimb_WithIBM3Scoring(msc2,j_peg);
   PositionIndex l = msc2.get_l(), m=msc2.get_m();
   int changed=0;
-  do 
+  do
     {
       HillClimbingSteps++;
       changed=0;
@@ -297,16 +297,16 @@ template<class TRANSPAIR>
 LogProb hillClimb_std(MoveSwapMatrix<TRANSPAIR>&msc2, int= -1,int j_peg = -1)
 {
   if( msc2.isLazy() )
-    return greedyClimb_WithIBM3Scoring(msc2,j_peg);                             
+    return greedyClimb_WithIBM3Scoring(msc2,j_peg);
   if( LogHillClimb>1 )
     cout << msc2 << '\n';
   PositionIndex l = msc2.get_l(), m=msc2.get_m();
   int changes=0;
   int best_change_type=-1, best_change_v1=-1, best_change_v2=-1;
-  do 
+  do
     {
       HillClimbingSteps++;
-      LogProb best_change_so_far = 1.00001 ;  
+      LogProb best_change_so_far = 1.00001 ;
       best_change_type=0;
       for (PositionIndex j = 1 ; j <= m ; j++)if (int(j) != j_peg)
 	{
@@ -323,13 +323,13 @@ LogProb hillClimb_std(MoveSwapMatrix<TRANSPAIR>&msc2, int= -1,int j_peg = -1)
 		  if( LogHillClimb )
 		    cerr << "CLIMB: " << best_change_type << " " << best_change_v1 << " " << best_change_v2 << " " << best_change_so_far << msc2 << '\n';
 		  massert(msc2.get_ef().isSubOptimal()==1);
-		} 
-	    } 
+		}
+	    }
 	  for (PositionIndex i = 0 ; i <= l ; i++)if(i != aj &&(i != 0 || (m >= 2 * (msc2.fert(0)+1))) && msc2.fert(i)+1<MAX_FERTILITY)
 	    {
 	      LogProb change = msc2.cmove(i, j);
 	      if (change > best_change_so_far)
-		{ 
+		{
 		  best_change_so_far = change ;
 		  best_change_type=2;
 		  best_change_v1=j;
@@ -337,7 +337,7 @@ LogProb hillClimb_std(MoveSwapMatrix<TRANSPAIR>&msc2, int= -1,int j_peg = -1)
 		  if( LogHillClimb )
 		    cerr << "CLIMB: " << best_change_type << " " << best_change_v1 << " " << best_change_v2 << " " << best_change_so_far << msc2 << '\n';
 		  massert(msc2.get_ef().isSubOptimal()==1);
-		} 
+		}
 	    }
 	}
       if (best_change_type==1)
@@ -391,7 +391,7 @@ bool extendCenterList(Vector<pair<MoveSwapMatrix<MODEL_TYPE>*,LogProb> >&setOfGo
       else if( i->type==3 )
 	  msc->delMove(i->b,i->a);
       else abort();
-    }   
+    }
   setOfGoodCenters.push_back(make_pair(msc,peggedAlignmentScore));
   return 1;
 }
@@ -411,8 +411,8 @@ inline bool operator<(const Als&x,const Als&y)
 {return x.v>y.v;}
 
 template<class MODEL_TYPE, class ADDITIONAL_MODEL_DATA_IN,class ADDITIONAL_MODEL_DATA_OUT>
-void model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp, sentenceHandler& sHandler1, 
-				      bool dump_files, const char* alignfile, 
+void model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp, sentenceHandler& sHandler1,
+				      bool dump_files, const char* alignfile,
 				      bool collect_counts, string model, bool final,
 				      ADDITIONAL_MODEL_DATA_IN*dm_in,
 				      ADDITIONAL_MODEL_DATA_OUT*dm_out)
@@ -436,10 +436,10 @@ void model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
       string x=alignfile+string("NBEST");
       of3= new ofstream(x.c_str());
     }
-  pair_no = 0 ; // sentence pair number 
+  pair_no = 0 ; // sentence pair number
   // for each sentence pair in the corpus
-  perp.clear() ; // clears cross_entrop & perplexity 
-  viterbiPerp.clear() ; // clears cross_entrop & perplexity 
+  perp.clear() ; // clears cross_entrop & perplexity
+  viterbiPerp.clear() ; // clears cross_entrop & perplexity
   sentPair sent ;
   int NCenter=0,NHillClimbed=0,NAlignment=0,NTotal=0,NBetterByPegging=0;
   while(sHandler1.getNextSentence(sent)){
@@ -448,9 +448,9 @@ void model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
     SentNr=sent.sentenceNo;
     Vector<WordIndex>& es = sent.eSent;
     Vector<WordIndex>& fs = sent.fSent;
-    const float count  = sent.getCount();    
+    const float count  = sent.getCount();
     if ((sent.sentenceNo % 10000) == 0)
-      cerr <<sent.sentenceNo << '\n'; 
+      cerr <<sent.sentenceNo << '\n';
     time_t sent_s = time(NULL) ;
     pair_no++ ;
     l = es.size() - 1 ;
@@ -464,7 +464,7 @@ void model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
 	for (j = 1 ; j <= m ; j++)
 	  logmsg << Flist.getVocabList()[fs[j]].word << " ";
 	logmsg << "\n";
-      } 
+      }
 
       LogProb align_total_count=0;
       alignment viterbi2alignment(l,m);
@@ -492,19 +492,19 @@ void model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
 
       for(unsigned int i=0;i<setOfGoodCenters.size();++i)
 	setOfGoodCenters[i].first->check();
-      alignments.insert(*best); 
+      alignments.insert(*best);
       if (setOfGoodCenters[bestAlignment].second <= 0){
 	if( PrintZeroScoreWarning++<100 )
 	  {
 	    cerr << "WARNING: Hill Climbing yielded a zero score viterbi alignment for the following pair:\n";
 	    cerr << alignment(*setOfGoodCenters[bestAlignment].first) ;
-	    printSentencePair(es, fs, cerr);      
+	    printSentencePair(es, fs, cerr);
 	    if(Log){
 	      logmsg << "WARNING: Hill Climbing yielded a zero score viterbi alignment for the following pair:\n";
 	      printSentencePair(es, fs, logmsg);
 	    }
 	  }
-	else if(PrintZeroScoreWarning==100) 
+	else if(PrintZeroScoreWarning==100)
 	  {
 	    cerr << "ERROR: too many zero score warnings => no additional one will be printed\n";
 	  }
@@ -521,8 +521,8 @@ void model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
 	  for(PositionIndex j=1;j<=m;j++)for(PositionIndex i=0;i<=l;i++)
 	    {
 	      nAlignment++;
-	      if( i!=(*useMatrix)(j) && (UseLinkCache==0||linkCache(i,j)==0) && 
-		  ef.get_t(i,j)>ef.get_t((*useMatrix)(j),j)*PEGGED_CUTOFF && 
+	      if( i!=(*useMatrix)(j) && (UseLinkCache==0||linkCache(i,j)==0) &&
+		  ef.get_t(i,j)>ef.get_t((*useMatrix)(j),j)*PEGGED_CUTOFF &&
 		  (i != 0 || (m >= 2 * (useMatrix->fert(0)+1))))
 		{
 		  MoveSwapMatrix<MODEL_TYPE> *BESTPEGGED=0;
@@ -573,8 +573,8 @@ void model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
 	setOfGoodCenters[i].first->check();
       if( LogPeg>1 )
 	cout << "PEGGED: " << setOfGoodCenters.size() << " HILLCLIMBED:" << nHillClimbed << " TOTAL:" << nAlignment << " alignments." << '\n';
-      int alTotal=collectCountsOverNeighborhood(setOfGoodCenters,es, fs, tTable, aCountTable, 
-						dCountTable, nCountTable, p1_count, p0_count, 
+      int alTotal=collectCountsOverNeighborhood(setOfGoodCenters,es, fs, tTable, aCountTable,
+						dCountTable, nCountTable, p1_count, p0_count,
 						align_total_count, count, collect_counts, dm_out);
       if( LogPeg>1 )
 	{
@@ -586,7 +586,7 @@ void model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
       viterbiPerp.addFactor(log(double(setOfGoodCenters[bestAlignment].second)), count, l, m,0);
       massert(log(double(setOfGoodCenters[bestAlignment].second)) <= log(double(align_total_count)));
       if (dump_files||(FEWDUMPS&&sent.sentenceNo<1000)||(final&&(ONLYALDUMPS)) )
-	printAlignToFile(es, fs, Elist.getVocabList(), Flist.getVocabList(), of2, (setOfGoodCenters[bestAlignment].first)->getAlignment(), pair_no, 
+	printAlignToFile(es, fs, Elist.getVocabList(), Flist.getVocabList(), of2, (setOfGoodCenters[bestAlignment].first)->getAlignment(), pair_no,
 			 setOfGoodCenters[bestAlignment].second);
       for(unsigned int i=0;i<setOfGoodCenters.size();++i)
 	setOfGoodCenters[i].first->check();
@@ -600,7 +600,7 @@ void model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
 	      double normalized_ascore=setOfGoodCenters[s].second;
 	      if( !msc.isCenterDeleted() )
 		als.push_back( Als(s,0,0,normalized_ascore) );
-	      
+
 	      for(WordIndex j=1;j<=m;j++)
 		for(WordIndex i=0;i<=l;i++)
 		  if( i!=msc(j)&& !msc.isDelMove(i,j) )
@@ -625,7 +625,7 @@ void model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
 		    x.doMove(als[i].a,als[i].b);
 		}
 	      if( of3&&i<PrintN )
-		printAlignToFile(es, fs, Elist.getVocabList(), Flist.getVocabList(),*of3,x.getAlignment(), pair_no, 
+		printAlignToFile(es, fs, Elist.getVocabList(), Flist.getVocabList(),*of3,x.getAlignment(), pair_no,
 				 als[i].v/sum*count);
 	      sum2+=als[i].v;
 	      if( writeNBestErrorsFile )
@@ -656,7 +656,7 @@ void model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
       if (Verbose)
 	cerr << "processing this sentence pair took : " << period
 	     << " seconds\n";
-      
+
     } /* of sentence pair E, F */
     sHandler1.rewind();
     perp.record(model);

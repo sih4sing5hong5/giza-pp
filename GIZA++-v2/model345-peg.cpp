@@ -1,25 +1,24 @@
 /*
+  Copyright (C) 2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-Copyright (C) 2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
+  This file is part of GIZA++ ( extension of GIZA ).
 
-This file is part of GIZA++ ( extension of GIZA ).
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-This program is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
-USA.
-
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+  USA.
 */
+
 #include "model3.h"
 #include "collCounts.h"
 
@@ -86,7 +85,7 @@ bool makeOneMoveSwap(const alignment&x,const alignment&y,set<OneMoveSwap>&soms)
 		{
 		  oms.type=2;oms.a=j;oms.b=positions[0];if( oms.b<oms.a)swap(oms.b,oms.a);soms.insert(oms);
 		}
-	    } 
+	    }
 	}
       else if(x(positions[0])==y(positions[1]) )
 	{
@@ -97,7 +96,7 @@ bool makeOneMoveSwap(const alignment&x,const alignment&y,set<OneMoveSwap>&soms)
 	  oms.type=2;
 	  oms.a=positions[0];
 	  oms.b=positions[1];
-	  soms.insert(oms);	  
+	  soms.insert(oms);
 	}
       else if( x(positions[1])==y(positions[0]) )
 	{
@@ -108,7 +107,7 @@ bool makeOneMoveSwap(const alignment&x,const alignment&y,set<OneMoveSwap>&soms)
 	  oms.type=2;
 	  oms.a=positions[0];
 	  oms.b=positions[1];
-	  soms.insert(oms);	  
+	  soms.insert(oms);
 	}
       oms.type=3;
       oms.a=positions[0];
@@ -136,21 +135,21 @@ bool makeOneMoveSwap(const alignment&x,const alignment&y,set<OneMoveSwap>&soms)
 	{
 	  //cout << "HERE.\n";
 	  if( x(positions[0])==y(positions[1])&&x(positions[1])==y(positions[0]) )
-	    { 
+	    {
 	      oms.type=2;oms.a=positions[0];oms.b=positions[1];
 	      if( oms.b<oms.a) swap(oms.b,oms.a);
 	      soms.insert(oms);
 	      oms.type=3;oms.a=positions[2];oms.b=x(positions[2]);soms.insert(oms);
 	    }
 	  if( x(positions[2])==y(positions[1])&&x(positions[1])==y(positions[2]) )
-	    { 
+	    {
 	      oms.type=2;oms.a=positions[2];oms.b=positions[1];
 	      if( oms.b<oms.a) swap(oms.b,oms.a);
 	      soms.insert(oms);
 	      oms.type=3;oms.a=positions[0];oms.b=x(positions[0]);soms.insert(oms);
 	    }
 	  if( x(positions[0])==y(positions[2])&&x(positions[2])==y(positions[0]) )
-	    { 
+	    {
 	      oms.type=2;oms.a=positions[0];oms.b=positions[2];
 	      if( oms.b<oms.a) swap(oms.b,oms.a);
 	      soms.insert(oms);

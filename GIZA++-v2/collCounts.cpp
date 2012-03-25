@@ -1,25 +1,24 @@
 /*
+  Copyright (C) 1999,2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-Copyright (C) 1999,2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
+  This file is part of GIZA++ ( extension of GIZA ).
 
-This file is part of GIZA++ ( extension of GIZA ).
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-This program is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
-USA.
-
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+  USA.
 */
+
 #include "alignment.h"
 #include "transpair_model3.h"
 #include <map>
@@ -66,7 +65,7 @@ int collectCountsOverNeighborhood(const MoveSwapMatrix<TRANSPAIR>&msc,LogProb as
 	  nAl++;
 	  cswap(msc(j1),j2)+=newscore;
 	  cswap(msc(j2),j1)+=newscore;
-	  negswap[j1]+=newscore; 
+	  negswap[j1]+=newscore;
 	  negswap[j2]+=newscore;
 	}
   total_count+=total_move+total_swap;
@@ -83,7 +82,7 @@ int collectCountsOverNeighborhood(const MoveSwapMatrix<TRANSPAIR>&msc,LogProb as
       else
 	if( minus1fert[i]!=0.0 )
 	  cerr << "ERROR: M1Fa: " << minus1fert[i] << ' ' << i << ' ' << msc.fert(i)<< endl;
-      if(msc.fert(i)+1<MAX_FERTILITY) 
+      if(msc.fert(i)+1<MAX_FERTILITY)
 	ncount(i,msc.fert(i)+1)+=plus1fert[i];
     }
   LogProb temp=minus1fert[0]+plus1fert[0];
@@ -94,7 +93,7 @@ int collectCountsOverNeighborhood(const MoveSwapMatrix<TRANSPAIR>&msc,LogProb as
       p1count += (minus1fert[0])*(LogProb)(msc.fert(0)-1);
       p0count += (minus1fert[0])*(LogProb)(m-2*(msc.fert(0)-1));
     }
-  else 
+  else
     if( minus1fert[0]!=0.0 )
       cerr << "ERROR: M1Fb: " << minus1fert[0] << endl;
   if(int(m)-2*(int(msc.fert(0))+1)>=0)
@@ -144,7 +143,7 @@ void _collectCountsOverNeighborhoodForSophisticatedModels(const MoveSwapMatrix<T
   Vector<char> vac(m+1,0);
   for(PositionIndex i=1;i<=l;i++)
     {
-      PositionIndex cur_j=msc.als_i[i]; 
+      PositionIndex cur_j=msc.als_i[i];
       PositionIndex prev_j=0;
       PositionIndex k=0;
       if(cur_j) { // process first word of cept
@@ -208,7 +207,7 @@ double collectCountsOverNeighborhoodForSophisticatedModels(const MoveSwapMatrix<
 	    }
 	  msc.check();
 	}
-    }      
+    }
   for(PositionIndex j1=1;j1<=m;j1++)
     for(PositionIndex j2=j1+1;j2<=m;j2++)
       if( msc(j1)!=msc(j2) && !msc.isDelSwap(j1,j2) )
@@ -254,14 +253,14 @@ int collectCountsOverNeighborhood(const Vector<pair<MoveSwapMatrix<TRANSPAIR>*,L
 	{
 	  //for(WordIndex j=1;j<=m;j++)for(WordIndex ii=0;ii<=l;ii++)
 	  //  (*smsc[i].first).cmove(ii,j);
-	  sum2+=collectCountsOverNeighborhoodForSophisticatedModels(*smsc[i].first,smsc[i].second/all_total,d4Table);    
+	  sum2+=collectCountsOverNeighborhoodForSophisticatedModels(*smsc[i].first,smsc[i].second/all_total,d4Table);
 	}
       if(!(fabs(count-sum2)<0.05))
 	cerr << "WARNING: DIFFERENT SUMS: (" << count << ") (" << sum2 << ")\n";
     }
  if( addCounts )
     {
-      for(PositionIndex i=0;i<=l;i++) 
+      for(PositionIndex i=0;i<=l;i++)
 	{
 	  for(PositionIndex j=1;j<=m;j++)
 	    {
@@ -282,12 +281,3 @@ int collectCountsOverNeighborhood(const Vector<pair<MoveSwapMatrix<TRANSPAIR>*,L
     }
  return nAl;
 }
-
-
-
-
-
-
-
-
-

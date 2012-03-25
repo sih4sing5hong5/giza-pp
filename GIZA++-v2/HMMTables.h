@@ -1,25 +1,24 @@
 /*
+  Copyright (C) 1999,2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-Copyright (C) 1999,2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
+  This file is part of GIZA++ ( extension of GIZA ).
 
-This file is part of GIZA++ ( extension of GIZA ).
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-This program is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
-USA.
-
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+  USA.
 */
+
 #ifndef HMM_TABLES_H_ASDF_DEFINED
 #define HMM_TABLES_H_ASDF_DEFINED
 #include "FlexArray.h"
@@ -77,8 +76,8 @@ template<class CLS>
 class Hash_AlDeps
 {
  public:
-  unsigned 
-    int 
+  unsigned
+    int
     operator()
     (const AlDeps<CLS>&x)
     const
@@ -90,7 +89,7 @@ class Hash_AlDeps
       if( (CompareAlDeps&8) ) { hash=hash+x.j;hash*=31;}
       if( (CompareAlDeps&16) ) { hash=hash+x.Cj;hash*=31;}
       return hash;
-      
+
     }
 };
 
@@ -122,7 +121,7 @@ class HMMTables
   Array<double>&doGetAlphaInit(int I);
   Array<double>&doGetBetaInit(int I);
   virtual double getProbabilityForEmpty()const
-    {return probabilityForEmpty;}  
+    {return probabilityForEmpty;}
   void performGISIteration(const HMMTables<CLS,MAPPERCLASSTOSTRING>*old)
     {
       cout << "OLDSIZE: " << (old?(old->alProb.size()):0) << " NEWSIZE:"<< alProb.size()<< endl;
@@ -141,7 +140,7 @@ class HMMTables
 			if( old && old->alProb.count(i->first) )
 			  op=(old->alProb.find(i->first)->second)[j];
 			//cerr << "GIS: " << j << ' ' << " OLD:"
-			//     << op << "*true:" 
+			//     << op << "*true:"
 			//     << i->second[j] << "/pred:" << alProbPredicted[i->first][j] << " -> ";
 			i->second[j]= op*(i->second[j]/alProbPredicted[i->first][j]);
 			//cerr << i->second[j] << endl;

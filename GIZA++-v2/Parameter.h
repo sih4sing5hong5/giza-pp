@@ -1,25 +1,24 @@
 /*
+  Copyright (C) 1997,1998,1999,2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-Copyright (C) 1997,1998,1999,2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
+  This file is part of GIZA++ ( extension of GIZA ).
 
-This file is part of GIZA++ ( extension of GIZA ).
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-This program is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
-USA.
-
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+  USA.
 */
+
 #ifndef PARAMETER_H_DEFINED
 #define PARAMETER_H_DEFINED
 
@@ -32,33 +31,33 @@ USA.
 #include <cstring>
 
 inline unsigned int mConvert(const string&s,unsigned int &i)
-{ 
+{
   if( strcasecmp(s.c_str(),"yes")==0 || strcasecmp(s.c_str(),"y")==0 || strcasecmp(s.c_str(),"true")==0 || strcasecmp(s.c_str(),"t")==0 ) { cerr << "TRUE\n";return i=1; }
   if( strcasecmp(s.c_str(),"no")==0 ||  strcasecmp(s.c_str(),"n")==0 ||  strcasecmp(s.c_str(),"false")==0 ||  strcasecmp(s.c_str(),"f")==0 ) { cerr << "FALSE\n";return i=0;}
-  return i=atoi(s.c_str()); 
+  return i=atoi(s.c_str());
 }
-inline int mConvert(const string&s,int &i){ 
+inline int mConvert(const string&s,int &i){
   if( strcasecmp(s.c_str(),"yes")==0 ||  strcasecmp(s.c_str(),"y")==0 ||  strcasecmp(s.c_str(),"true")==0 ||  strcasecmp(s.c_str(),"t")==0 ) { cerr << "TRUE\n";return i=1;}
   if( strcasecmp(s.c_str(),"no")==0 ||  strcasecmp(s.c_str(),"n")==0 ||  strcasecmp(s.c_str(),"false")==0 ||  strcasecmp(s.c_str(),"f")==0 ) { cerr << "FALSE\n";return i=0;}
-  return i=atoi(s.c_str()); 
+  return i=atoi(s.c_str());
 }
 inline double mConvert(const string&s,double &d) { return d=atof(s.c_str()); }
 inline double mConvert(const string&s,float &d) { return d=atof(s.c_str()); }
 inline string mConvert(const string&s,string&n) { return n=s; }
-inline bool mConvert(const string&s,bool&n) { 
+inline bool mConvert(const string&s,bool&n) {
   if( strcasecmp(s.c_str(),"yes")==0 ||  strcasecmp(s.c_str(),"y")==0 ||  strcasecmp(s.c_str(),"true")==0 ||  strcasecmp(s.c_str(),"t")==0 ) { cerr << "TRUE\n";return n=1;}
   if( strcasecmp(s.c_str(),"no")==0 ||  strcasecmp(s.c_str(),"n")==0 ||  strcasecmp(s.c_str(),"false")==0 ||  strcasecmp(s.c_str(),"f")==0 ) { cerr << "FALSE\n";return n=0;}
-  return n=atoi(s.c_str()); 
+  return n=atoi(s.c_str());
 }
-inline short mConvert(const string&s,short&n) { 
+inline short mConvert(const string&s,short&n) {
   if( strcasecmp(s.c_str(),"yes")==0 ||  strcasecmp(s.c_str(),"y")==0 ||  strcasecmp(s.c_str(),"true")==0 ||  strcasecmp(s.c_str(),"t")==0 ) { cerr << "TRUE\n";return n=1;}
   if( strcasecmp(s.c_str(),"no")==0 ||  strcasecmp(s.c_str(),"n")==0 ||  strcasecmp(s.c_str(),"false")==0 ||  strcasecmp(s.c_str(),"f")==0 ) { cerr << "FALSE\n";return n=0;}
-  return n=atoi(s.c_str()); 
+  return n=atoi(s.c_str());
 }
-inline unsigned short mConvert(const string&s,unsigned short&n) { 
+inline unsigned short mConvert(const string&s,unsigned short&n) {
   if( strcasecmp(s.c_str(),"yes")==0 ||  strcasecmp(s.c_str(),"y")==0 ||  strcasecmp(s.c_str(),"true")==0 ||  strcasecmp(s.c_str(),"t")==0 ) { cerr << "TRUE\n";return n=1;}
   if( strcasecmp(s.c_str(),"no")==0 ||  strcasecmp(s.c_str(),"n")==0 ||  strcasecmp(s.c_str(),"false")==0 ||  strcasecmp(s.c_str(),"f")==0 ) { cerr << "FALSE\n";return n=0;}
-  return n=atoi(s.c_str()); 
+  return n=atoi(s.c_str());
 }
 
 string simpleString(const string s);
@@ -86,7 +85,7 @@ class _Parameter
   virtual ~_Parameter(){};
   bool operator==(const string&s)const
     { return name== simpleString(s); }
-  void setChanged() 
+  void setChanged()
     { *ifChanged=true; }
   virtual bool setParameter(string s2,int)=0;
   virtual ostream&printAt(ostream&out)=0;
@@ -115,22 +114,22 @@ class Parameter : public _Parameter
     : _Parameter(n,b,desc,level,onlyCopy),t(&_t) {}
   virtual ~Parameter(){}
   virtual bool setParameter(string s2,int verb)
-    { 
-      T x;  
+    {
+      T x;
       if( !(*t==mConvert(s2,x)))
 	{
 	  bool printedFirst=0;
-	  if( verb>1 ) 
+	  if( verb>1 )
 	    {
 	      cout << "Parameter '"<<name <<"' changed from '"<<*t<<"' to '";
 	      printedFirst=1;
 	    }
 	  mConvert(s2,*t);
-	  if( printedFirst ) 
+	  if( printedFirst )
 	    cout << *t <<"'\n";
 	  setChanged();
 	  return 1;
-	} 
+	}
       return 0;
     }
   virtual ostream&printAt(ostream&out)

@@ -1,24 +1,24 @@
 /*
+  EGYPT Toolkit for Statistical Machine Translation
 
-EGYPT Toolkit for Statistical Machine Translation
-Written by Yaser Al-Onaizan, Jan Curin, Michael Jahr, Kevin Knight, John Lafferty, Dan Melamed, David Purdy, Franz Och, Noah Smith, and David Yarowsky.
+  Written by Yaser Al-Onaizan, Jan Curin, Michael Jahr, Kevin Knight, John Lafferty, Dan Melamed, David Purdy, Franz Och, Noah Smith, and David Yarowsky.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
-USA.
-
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+  USA.
 */
+
 #include "model3.h"
 #include "collCounts.h"
 #include "Globals.h"
@@ -37,9 +37,9 @@ GLOBAL_PARAMETER4(int,Model3_Dump_Freq,"MODEL 345 DUMP FREQUENCY","MODEL 3 DUMP 
 
 extern int Transfer_Dump_Freq;
 
-model3::model3(model2& m2) : 
-  model2(m2),dTable(true), dCountTable(true), 
-  nTable(m2.getNoEnglishWords()+1, MAX_FERTILITY), 
+model3::model3(model2& m2) :
+  model2(m2),dTable(true), dCountTable(true),
+  nTable(m2.getNoEnglishWords()+1, MAX_FERTILITY),
   nCountTable(m2.getNoEnglishWords()+1, MAX_FERTILITY),h(0)
 {}
 
@@ -60,7 +60,7 @@ void model3::load_tables(const char *nfile, const char *dfile, const char *p0fil
     }
   cout << "p0 is: " << p0 << " p1:" << p1 << '\n';
 }
-  
+
 model3::~model3()
 {
   dTable.clear();
@@ -77,7 +77,7 @@ void model3::em(int noIterations, sentenceHandler& sHandler1)
   WordIndex i, j, l, m ;
   time_t it_st, st, it_fn, fn ;
   string tfile, dfile, nfile, p0file, afile, number;
-  
+
   st = time(NULL) ;
   if (Log)
     logmsg << "\n" << "Starting Model3:  Training";
@@ -89,8 +89,8 @@ void model3::em(int noIterations, sentenceHandler& sHandler1)
     if (Log)
       logmsg << "\n" << "Model3: Iteration " << it;
     cout << "\n" << "Model3: Iteration " << it;
-    
-    // set up the names of the files where the tables will be printed 
+
+    // set up the names of the files where the tables will be printed
     int n = it;
     number = "";
     do{
@@ -113,7 +113,7 @@ void model3::em(int noIterations, sentenceHandler& sHandler1)
       Vector<WordIndex>& fs = sent.fSent;
       const float count  = sent.getCount();
       if ((sent.sentenceNo % 1000) == 0)
-      cout <<sent.sentenceNo << '\n'; 
+      cout <<sent.sentenceNo << '\n';
       Vector<WordIndex> A(fs.size(),/*-1*/0);
       Vector<WordIndex> Fert(es.size(),0);
       LogProb lcount=(LogProb)count;
@@ -122,8 +122,8 @@ void model3::em(int noIterations, sentenceHandler& sHandler1)
       WordIndex x, y ;
       all_prob = prob_of_target_given_source(tTable, fs, es);
       if (all_prob == 0)
-	cout << "\n" <<"all_prob = 0"; 
-	
+	cout << "\n" <<"all_prob = 0";
+
       for ( x = 0 ; x < pow(l+1.0, double(m)) ; x++){ // For all possible alignmets A
 	y = x ;
 	for (j = 1 ; j <= m ; j++){
@@ -156,7 +156,7 @@ void model3::em(int noIterations, sentenceHandler& sHandler1)
       } /* of looping over all alignments */
     } /* of sentence pair E, F */
     sHandler1.rewind();
-    
+
     // normalize tables
     if( OutputInAachenFormat==1 )
       tTable.printCountTable(tfile.c_str(),Elist.getVocabList(),Flist.getVocabList(),1);
@@ -165,8 +165,8 @@ void model3::em(int noIterations, sentenceHandler& sHandler1)
     dCountTable.normalize(dTable);
     nCountTable.normalize(nTable,&Elist.getVocabList());
 
-    // normalize p1 & p0 
-    
+    // normalize p1 & p0
+
     if (p1_count + p0_count != 0){
       p1 = p1_count / ( p1_count + p0_count ) ;
       p0 = 1 - p1 ;
@@ -174,7 +174,7 @@ void model3::em(int noIterations, sentenceHandler& sHandler1)
     else {
       p1 = p0 = 0 ;
     }
-    // print tables 
+    // print tables
     if( OutputInAachenFormat==0 )
       tTable.printProbTable(tfile.c_str(),Elist.getVocabList(),Flist.getVocabList(),OutputInAachenFormat);
     dTable.printTable(dfile.c_str());
@@ -184,7 +184,7 @@ void model3::em(int noIterations, sentenceHandler& sHandler1)
     of.close();
     it_fn = time(NULL) ;
     cout << "\n" << "Model3 Iteration "<<it<<" took: " << difftime(it_fn, it_st) << " seconds\n";
-    
+
   } /* of iterations */
   fn = time(NULL) ;
   cout << "\n" << "Entire Model3 Training took: " << difftime(fn, st) << " seconds\n";
@@ -192,10 +192,10 @@ void model3::em(int noIterations, sentenceHandler& sHandler1)
 
 
 
-      
-	  
-	
-	
+
+
+
+
 //-----------------------------------------------------------------------
 
 /*
@@ -218,7 +218,7 @@ void simpleModel3Test()
   Vector<char> vac(m+1,0);
   for(PositionIndex i=1;i<=l;i++)
     {
-      PositionIndex cur_j=al.als_i[i]; 
+      PositionIndex cur_j=al.als_i[i];
       cout << "LOOP: " << i << " " << cur_j << '\n';
       PositionIndex prev_j=0;
       PositionIndex k=0;
@@ -228,11 +228,11 @@ void simpleModel3Test()
 	assert(vac[cur_j]==0);
 	vac[cur_j]=1;
 	for(unsigned int q=0;q<vac.size();q++)cout << (vac[q]?'1':'0') << ' ';
-	cout << '\n';	       
+	cout << '\n';
 	cout << i << " " << cur_j << ": d1(" << vacancies(vac,cur_j) << "|" << vacancies(vac,al.get_center(prev_cept)) << "," << vac_all << "+" << -al.fert(i)<< "+" << +k << ")\n" << '\n';
 	prev_j=cur_j;
 	cur_j=al.als_j[cur_j].next;
-      } 
+      }
       while(cur_j) { // process following words of cept
 	k++;
 	vac_all--;
@@ -240,7 +240,7 @@ void simpleModel3Test()
 	int vprev=vacancies(vac,prev_j);
 	cout << "PREV: " << prev_j << '\n';
 	for(unsigned int q=0;q<vac.size();q++)cout << (vac[q]?'1':'0') << ' ';
-	cout << '\n';	       
+	cout << '\n';
 	cout << i << " " << cur_j << ": d>1(" << vacancies(vac,cur_j) << "-" << vprev << "|" << vac_all<< "+" << -al.fert(i)<< "+" << +k << ")\n" << '\n';
 	prev_j=cur_j;
 	cur_j=al.als_j[cur_j].next;
@@ -275,7 +275,7 @@ int model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
   for(int i=0;i<noIterationsModel4;++i) trainingString+='4';
   for(int i=0;i<noIterationsModel5;++i) trainingString+='5';
   for(int i=0;i<noIterationsModel6;++i) trainingString+='6';
-  
+
   cout << "\n==========================================================\n";
   cout << "Starting "<<trainingString<<":  Viterbi Training";
   if (Log){
@@ -295,12 +295,12 @@ int model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
       modelName=string("T")+fromModel+"To"+toModel;
     it_st = time(NULL);
     cout <<"\n---------------------\n"<<modelName<<": Iteration " << it<<'\n';
-    if (Log) 
+    if (Log)
       logmsg <<"\n---------------------\n"<<modelName<<": Iteration " << it<<'\n';
     dump_files = (final || ((Model3_Dump_Freq != 0) && ((it % Model3_Dump_Freq) == 0))) && !NODUMPS ;
     string d4file2;
     {
-      // set up the names of the files where the tables will be printed 
+      // set up the names of the files where the tables will be printed
       int n = it;
       number = "";
       do{
@@ -322,7 +322,7 @@ int model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
       test_alignfile = Prefix + ".tst.A3." + number ;
       p0file = Prefix + ".p0_3." + number ;
     }
-    // clear count tables 
+    // clear count tables
     //    tCountTable.clear();
     dCountTable.clear();
     aCountTable.clear();
@@ -332,7 +332,7 @@ int model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
     p0_count = p1_count = 0 ;
 
 #ifdef TRICKY_IBM3_TRAINING
-    
+
 #define TRAIN_ARGS perp,      trainViterbiPerp, sHandler1,    dump_files, alignfile.c_str(),     true,  modelName,final
 #define TEST_ARGS  *testPerp, *testViterbiPerp, *testHandler, dump_files, test_alignfile.c_str(),false, modelName,final
 
@@ -367,7 +367,7 @@ int model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
 	    case '3':
 	      viterbi_loop_with_tricks<transpair_model3, void,d4model>(TRAIN_ARGS, (void*)0,&d4m);
 	      if (testPerp && testHandler)
-		viterbi_loop_with_tricks<transpair_model3, void,d4model>( TEST_ARGS , (void*)0,&d4m);	
+		viterbi_loop_with_tricks<transpair_model3, void,d4model>( TEST_ARGS , (void*)0,&d4m);
 	      break;
 	    case '4':
 	      viterbi_loop_with_tricks<transpair_model4, d4model,d4model>(TRAIN_ARGS , &d4m,&d4m);
@@ -393,17 +393,17 @@ int model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
 	    case '3':
 	      viterbi_loop_with_tricks<transpair_model3, void,d5model>(TRAIN_ARGS, (void*)0,&d5m);
 	      if (testPerp && testHandler)
-		viterbi_loop_with_tricks<transpair_model3, void,d5model>( TEST_ARGS , (void*)0,&d5m);	
+		viterbi_loop_with_tricks<transpair_model3, void,d5model>( TEST_ARGS , (void*)0,&d5m);
 	      break;
 	    case '4':
 	      viterbi_loop_with_tricks<transpair_model4, d4model,d5model>(TRAIN_ARGS, &d4m,&d5m);
 	      if (testPerp && testHandler)
-		viterbi_loop_with_tricks<transpair_model4, d4model,d5model>( TEST_ARGS, &d4m,&d5m);	
+		viterbi_loop_with_tricks<transpair_model4, d4model,d5model>( TEST_ARGS, &d4m,&d5m);
 	      break;
 	    case '5':
 	      viterbi_loop_with_tricks<transpair_model5, d5model, d5model>(TRAIN_ARGS, &d5m,&d5m);
 	      if (testPerp && testHandler)
-		viterbi_loop_with_tricks<transpair_model5, d5model, d5model>( TEST_ARGS, &d5m,&d5m);	
+		viterbi_loop_with_tricks<transpair_model5, d5model, d5model>( TEST_ARGS, &d5m,&d5m);
 	      break;
 	    default: abort();
 	    }
@@ -420,22 +420,22 @@ int model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
       break;
       default: abort();
       }
-    
+
 #else
-    viterbi_loop(perp, trainViterbiPerp, sHandler1, dump_files, 
+    viterbi_loop(perp, trainViterbiPerp, sHandler1, dump_files,
 		 alignfile.c_str(), true, model);
     if (testPerp && testHandler)
-      viterbi_loop(*testPerp, *testViterbiPerp, *testHandler, 
+      viterbi_loop(*testPerp, *testViterbiPerp, *testHandler,
 		   dump_files, test_alignfile.c_str(), false, model);
- 
-#endif		 
+
+#endif
     if( errorsAL()<minErrors )
       {
 	minErrors=errorsAL();
         minIter=it;
       }
 
-    // now normalize count tables 
+    // now normalize count tables
     if( dump_files&&OutputInAachenFormat==1 )
       tTable.printCountTable(tfile.c_str(),Elist.getVocabList(),Flist.getVocabList(),1);
     tTable.normalizeTable(Elist, Flist);
@@ -443,13 +443,13 @@ int model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
     dCountTable.normalize(dTable);
     nCountTable.normalize(nTable,&Elist.getVocabList());
 
-    //    cout << "tTable contains " << 
+    //    cout << "tTable contains " <<
     //      tTable.getHash().bucket_count() << " buckets and "<<
     //tTable.getHash().size() << " entries.\n";
-    
-    // normalize p1 & p0 
-    
-   cout << "p0_count is " << p0_count << " and p1 is " << p1_count << "; "; 
+
+    // normalize p1 & p0
+
+   cout << "p0_count is " << p0_count << " and p1 is " << p1_count << "; ";
       if(P0!=-1.0)
       {
 	p0 = P0;
@@ -466,7 +466,7 @@ int model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
       }
     }
     cout << "p0 is " << p0 << " p1: " << p1 << '\n';
-    
+
     cout << modelName<<": TRAIN CROSS-ENTROPY " << perp.cross_entropy()
 	 << " PERPLEXITY " << perp.perplexity() << '\n';
     if (testPerp && testHandler)
@@ -490,7 +490,7 @@ int model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
 	of << p0;
 	of.close();
       }
-    
+
     it_fn = time(NULL) ;
     cout << "\n" << modelName << " Viterbi Iteration : "<<it<<  " took: " <<
       difftime(it_fn, it_st) << " seconds\n";
@@ -505,7 +505,3 @@ int model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
     minIter-=noIterationsModel4;
   return minIter;
 }
-
-
-
-

@@ -1,25 +1,24 @@
 /*
+  Copyright (C) 1998,1999,2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-Copyright (C) 1998,1999,2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
+  This file is part of GIZA++ ( extension of GIZA ).
 
-This file is part of GIZA++ ( extension of GIZA ).
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-This program is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
-USA.
-
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+  USA.
 */
+
 #include "hmm.h"
 #include "Globals.h"
 #include "utility.h"
@@ -54,7 +53,7 @@ GLOBAL_PARAMETER(double,HMMAlignmentModelSmoothFactor,"emAlSmooth",
 void smooth_standard(T*a,T*b,double p)
 {
   int n=b-a;
-  if( n==0 ) 
+  if( n==0 )
     return;
   double pp=p/n;
   for(T*i=a;i!=b;++i)
@@ -108,7 +107,7 @@ int hmm::em_with_tricks(int noIterations)
         minIter=it;
       }
     if (testPerp && testHandler)
-      em_loop(*testPerp, *testHandler, dump_files, test_alignfile.c_str(), *testViterbiPerp,  true,it==1,it); 
+      em_loop(*testPerp, *testHandler, dump_files, test_alignfile.c_str(), *testViterbiPerp,  true,it==1,it);
     if (dump_files&&OutputInAachenFormat==1)
       tTable.printCountTable(tfile.c_str(),Elist.getVocabList(),Flist.getVocabList(),1);
     tTable.normalizeTable(Elist, Flist);
@@ -118,13 +117,13 @@ int hmm::em_with_tricks(int noIterations)
 	 << " PERPLEXITY " << perp.perplexity() << '\n';
      if (testPerp && testHandler)
        cout << modelName << ": ("<<it<<") TEST CROSS-ENTROPY " << (*testPerp).cross_entropy()
-	    << " PERPLEXITY " << (*testPerp).perplexity() 
+	    << " PERPLEXITY " << (*testPerp).perplexity()
 	    << '\n';
      cout << modelName << ": ("<<it<<") VITERBI TRAIN CROSS-ENTROPY " << trainViterbiPerp.cross_entropy()
 	 << " PERPLEXITY " << trainViterbiPerp.perplexity() << '\n';
     if (testPerp && testHandler)
        cout << modelName << ": ("<<it<<") VITERBI TEST CROSS-ENTROPY " << testViterbiPerp->cross_entropy()
-	    << " PERPLEXITY " << testViterbiPerp->perplexity() 
+	    << " PERPLEXITY " << testViterbiPerp->perplexity()
 	    << '\n';
     if (dump_files){
       if( OutputInAachenFormat==0)
@@ -136,10 +135,10 @@ int hmm::em_with_tricks(int noIterations)
     it_fn = time(NULL) ;
     cout << "\n" << modelName << " Iteration: " << it<< " took: " <<
       difftime(it_fn, it_st) << " seconds\n";
-  } // end of iterations 
+  } // end of iterations
   fn = time(NULL) ;
   cout << endl << "Entire " << modelName << " Training took: " << difftime(fn, st) << " seconds\n";
-  //cout << "tTable contains " << tTable.getHash().bucket_count() 
+  //cout << "tTable contains " << tTable.getHash().bucket_count()
   //     << " buckets and  " << tTable.getHash().size() << " entries." ;
   cout << "==========================================================\n";
   return minIter;
@@ -186,7 +185,7 @@ HMMNetwork *hmm::makeHMMNetwork(const Vector<WordIndex>& es,const Vector<WordInd
     {
       for(i=1;i<=l;i++)
 	net->n(i-1,j-1)=tTable.getProb(es[i], fs[j]) ;
-      double emptyContribution=0;  
+      double emptyContribution=0;
       emptyContribution=tTable.getProb(es[0],fs[j]) ;
       for(i=1;i<=l;i++)
 	net->n(i+l-1,j-1)=emptyContribution;
@@ -212,7 +211,7 @@ HMMNetwork *hmm::makeHMMNetwork(const Vector<WordIndex>& es,const Vector<WordInd
 	for(unsigned int i2=0;i2<I;i2++) {
 	  CLASSIFY(i2,empty_i2,i2real);
 	  net->e[j](i1,i2)	    = al[i2real];
-	  
+
 	  if( empty_i2 )
 	    if(i1real!=i2real)
 	      {
@@ -258,9 +257,9 @@ HMMNetwork *hmm::makeHMMNetwork(const Vector<WordIndex>& es,const Vector<WordInd
 }
 extern float MINCOUNTINCREASE;
 
-void hmm::em_loop(Perplexity& perp, sentenceHandler& sHandler1, 
-		  bool dump_alignment, const char* alignfile, Perplexity& viterbi_perp, 
-		     bool test,bool doInit,int 
+void hmm::em_loop(Perplexity& perp, sentenceHandler& sHandler1,
+		  bool dump_alignment, const char* alignfile, Perplexity& viterbi_perp,
+		     bool test,bool doInit,int
 )
 {
   WordIndex i, j, l, m ;
@@ -340,7 +339,7 @@ void hmm::em_loop(Perplexity& perp, sentenceHandler& sHandler1,
 			  {
 			    counts.addAlCount(i_befreal,ireal,l,m,ewordclasses.getClass(es[1+i_befreal]),
 					      frenchClass ,jj+1,*ep * mult,0.0);
-			    np0c+=*ep * mult; 
+			    np0c+=*ep * mult;
 			  }
 			massert( &epsilon[jj](i,i_bef)== ep);
 		      }
@@ -391,7 +390,7 @@ void hmm::em_loop(Perplexity& perp, sentenceHandler& sHandler1,
     delete net;net=0;
     if (dump_alignment||(FEWDUMPS&&sent.getSentenceNo()<1000) )
       printAlignToFile(es, fs, Elist.getVocabList(), Flist.getVocabList(), of2, viterbi_alignment, sent.getSentenceNo(), viterbi_score);
-    addAL(viterbi_alignment,sent.getSentenceNo(),l);    
+    addAL(viterbi_alignment,sent.getSentenceNo(),l);
     pair_no++;
   } /* of while */
   sHandler1.rewind();
@@ -402,4 +401,3 @@ void hmm::em_loop(Perplexity& perp, sentenceHandler& sHandler1,
 
 #include "HMMTables.cpp"
 template class HMMTables<int,WordClasses>;
- 

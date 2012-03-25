@@ -1,25 +1,24 @@
 /*
+  Copyright (C) 2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-Copyright (C) 2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
+  This file is part of GIZA++ ( extension of GIZA ).
 
-This file is part of GIZA++ ( extension of GIZA ).
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-This program is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
-USA.
-
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+  USA.
 */
+
 #ifndef transpair_model1_h_fjo_defined
 #define transpair_model1_h_fjo_defined
 //#include "logprob.h"
@@ -36,7 +35,7 @@ USA.
 #include "Array2.h"
 #include "mystl.h"
 
-class transpair_model1 
+class transpair_model1
 {
  public:
   bool verboseTP;
@@ -91,7 +90,7 @@ class transpair_model1
       int old_i=a(j);
       return (t(new_i, j) /t(old_i, j));
     }
-  LogProb scoreOfSwap(const alignment&a, WordIndex j1, WordIndex j2,double=-1.0)const 
+  LogProb scoreOfSwap(const alignment&a, WordIndex j1, WordIndex j2,double=-1.0)const
     {
       WordIndex i1=a(j1), i2=a(j2);
       return (t(i2, j1)/t(i1, j1))*(t(i1, j2)/t(i2, j2));

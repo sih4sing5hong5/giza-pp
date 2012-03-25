@@ -1,7 +1,8 @@
-/* ---------------------------------------------------------------- */
-/* Copyright 1998 (c) by RWTH Aachen - Lehrstuhl fuer Informatik VI */
-/* Franz Josef Och                                                  */
-/* ---------------------------------------------------------------- */
+/*
+  Copyright 1998 (c) by RWTH Aachen - Lehrstuhl fuer Informatik VI
+  Franz Josef Och
+*/
+
 #ifndef MY_STL_H_DEFINED
 #define MY_STL_H_DEFINED
 
@@ -58,7 +59,7 @@ inline double verfProb(int n1,int n2)
   if( n1==1 )return prob*n1mult;
   else if( n1==2 )return prob*n2mult;
   else if( n1==3 )return prob*n3mult;
-  else 
+  else
   return prob;
 }
 
@@ -121,15 +122,15 @@ float rel_lev(const T&s1,const T&s2)
     return min(1.0,lev(s1,s2)/(double)s1.size());
 }*/
 
-template<class V> int Hash(const pair<V,V>&a) 
+template<class V> int Hash(const pair<V,V>&a)
 { return Hash(a.first)+13001*Hash(a.second); }
 
 template<class T1,class T2>
 ostream& operator<<(ostream &out,const pair<T1,T2> &ir)
-{ 
+{
   out << "(" << ir.first << "," << ir.second << ")";
   return out;
-} 
+}
 
 inline int Hash(const string& s)
 {
@@ -189,7 +190,7 @@ public:
   bool defined(const A&a) const
     { return find(a)!=this->end(); }
   const B&operator[](const A&a)const
-    { 
+    {
       typename MY_HASH_BASE::const_iterator pos=find(a);
       if( pos==this->end() )
 	return init;
@@ -197,7 +198,7 @@ public:
 	return pos->second;
     }
   B&operator[](const A&a)
-    { 
+    {
       typename MY_HASH_BASE::iterator pos=find(a);
       if( pos==this->end() )
 	{
@@ -242,7 +243,7 @@ bool operator==(const leda_h_array<A,B>&p1,const leda_h_array<A,B>&p2)
     if( !( p1[v]==p2[v]) ) return 0;
   forall_defined_h(A,B,v,p2)
     if( !( p1[v]==p2[v]) ) return 0;
-  return 1; 
+  return 1;
 }
 
 template<class T>
@@ -295,7 +296,7 @@ template<class T>
 void smooth_standard(T*a,T*b,double p)
 {
   int n=b-a;
-  if( n==0 ) 
+  if( n==0 )
     return;
   double pp=p/n;
   for(T*i=a;i!=b;++i)

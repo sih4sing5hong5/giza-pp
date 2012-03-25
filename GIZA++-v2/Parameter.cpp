@@ -1,25 +1,24 @@
 /*
+  Copyright (C) 1997,1998,1999,2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-Copyright (C) 1997,1998,1999,2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
+  This file is part of GIZA++ ( extension of GIZA ).
 
-This file is part of GIZA++ ( extension of GIZA ).
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-This program is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
-USA.
-
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+  USA.
 */
+
 #include "Parameter.h"
 #include <fstream>
 #include <unistd.h>
@@ -49,7 +48,7 @@ bool writeParameters(ofstream&of,const ParSet&parset,int level)
 	      of << path << '/';
 	    }
 	  if( ParameterPathPrefix.length()&&(*i)->isFilename()&&s.length()&&s[0]!='/' )
-	    of << ParameterPathPrefix << '/'; 
+	    of << ParameterPathPrefix << '/';
 	  (*i)->printValue(of);
 	  of << endl;
 	}
@@ -72,7 +71,7 @@ bool readParameters(ifstream&f,const ParSet&parset,int verb,int level)
   return 1;
 }
 
- 
+
 bool makeSetCommand(string _s1,string s2,const ParSet&parset,int verb,int level)
 {
   ParPtr anf;

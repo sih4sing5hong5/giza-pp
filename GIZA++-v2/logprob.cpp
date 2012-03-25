@@ -1,23 +1,21 @@
 /*
+  EGYPT Toolkit for Statistical Machine Translation
+  Written by Yaser Al-Onaizan, Jan Curin, Michael Jahr, Kevin Knight, John Lafferty, Dan Melamed, David Purdy, Franz Och, Noah Smith, and David Yarowsky.
 
-EGYPT Toolkit for Statistical Machine Translation
-Written by Yaser Al-Onaizan, Jan Curin, Michael Jahr, Kevin Knight, John Lafferty, Dan Melamed, David Purdy, Franz Och, Noah Smith, and David Yarowsky.
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-This program is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
-USA.
-
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+  USA.
 */
 
 //  Routines to perform integer exponential arithmetic.
@@ -76,20 +74,20 @@ int LogProb::Initialize()
   int i;
   std::cerr << "Building integer logs conversion tables\n";
   ntof[0] = 0 ;
-  
-  for (i=nmin+1; i<=nmax; ++i) 
+
+  for (i=nmin+1; i<=nmax; ++i)
     {
       double x = i;
       ntof[i-nmin] = exp(x*logb2);
-      
+
     }
-  for (i=tblbnd; i<=0; ++i) 
+  for (i=tblbnd; i<=0; ++i)
     {
       double x = 1.0 + pow(b, i);
       addtbl[i-tblbnd] = round(log(x)/logb2);
     }
   double sqrtb = exp(0.5*logb2);
-  for (i=0; i<=-tblbnd; ++i) 
+  for (i=0; i<=-tblbnd; ++i)
     {
       double x = sqrtb * pow(b, i) - 1.0;
       subtbl[i] = round(log(x)/logb2);
@@ -129,8 +127,8 @@ void LogProb::FreeTables()
 
 
 // Subtract two logarithm numbers. Use the following method:
-// b**n - b**m = b**m( b**(n-m) - 1 ), assuming n >= m. 
-LogProb& LogProb::operator-=(const LogProb &subs) 
+// b**n - b**m = b**m( b**(n-m) - 1 ), assuming n >= m.
+LogProb& LogProb::operator-=(const LogProb &subs)
 {
   if (subs.logr == zeron)
     return *this;
@@ -150,5 +148,3 @@ LogProb& LogProb::operator-=(const LogProb &subs)
   logr = subs.logr + subtbl[a];
   return *this;
 }
-
-

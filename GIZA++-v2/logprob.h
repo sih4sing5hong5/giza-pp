@@ -1,24 +1,24 @@
 /*
+  EGYPT Toolkit for Statistical Machine Translation
 
-EGYPT Toolkit for Statistical Machine Translation
-Written by Yaser Al-Onaizan, Jan Curin, Michael Jahr, Kevin Knight, John Lafferty, Dan Melamed, David Purdy, Franz Och, Noah Smith, and David Yarowsky.
+  Written by Yaser Al-Onaizan, Jan Curin, Michael Jahr, Kevin Knight, John Lafferty, Dan Melamed, David Purdy, Franz Och, Noah Smith, and David Yarowsky.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
-USA.
-
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+  USA.
 */
+
 #ifndef _LOGPROB_H
 #define _LOGPROB_H
 
@@ -40,7 +40,7 @@ public:
   double base2() const {
     return (logr * logb2 / log(2));
   }
-  
+
   // Constructors
   LogProb() : logr(zeron) {}
   LogProb(const LogProb &obj) : logr(obj.logr) {}
@@ -57,14 +57,14 @@ public:
 
   LogProb &operator=(const LogProb &obj) { logr = obj.logr; return *this; }
   int operator!() const { return logr == zeron; }
-  
+
   // iostream friend specifications
   friend std::ostream& operator<<(std::ostream& os, const LogProb &obj);
   friend std::istream& operator>>(std::istream& is, LogProb &obj);
   friend std::ostream& operator<<=(std::ostream& os, const LogProb &obj);
   friend std::istream& operator>>=(std::istream& is, LogProb &obj);
 
-  // arithmetic operators 
+  // arithmetic operators
   LogProb &operator+=(const LogProb &add)   // logr2 = logb ( b**logr2 + b**logr1 )
     // Add two numbers represented as logarithms. Use the following method:
     //   b**n + b**m = b**n(1 + b**(m-n)), assuming n >= m.
@@ -108,7 +108,7 @@ public:
 	return result;
     }
   LogProb &operator*=(const LogProb &mul) // logr2 += logr1
-    { 
+    {
       if ((logr == zeron) || (mul.logr == zeron))
 	logr = zeron;
       else
@@ -134,7 +134,7 @@ public:
     { LogProb result(*this); result -= l; return result; }
   LogProb power(const int n) const // logr2 = logr1 * int
     { LogProb result(*this); result.logr *= n; return result; }
-  
+
   // Conditional operators
   int operator<(const LogProb &obj)  const { return logr <  obj.logr; }
   int operator<=(const LogProb &obj) const { return logr <= obj.logr; }
@@ -148,11 +148,11 @@ public:
   int operator>=(double d) const { return ((double)*this) >= d; }
   int operator==(double d) const { return ((double)*this) == d; }
   int operator!=(double d) const { return ((double)*this) != d; }
-  
+
 
   LogProb &SetZero() { logr = zeron; return *this; } // representation of 0,
   LogProb &SetOne() { logr = onen; return *this; }   // 1, and
-  LogProb &SetInf() { logr = infn; return *this; }   // inf in logarithm domain 
+  LogProb &SetInf() { logr = infn; return *this; }   // inf in logarithm domain
 
 private:
   int logr;			// a representation of logarithm
@@ -164,7 +164,7 @@ private:
   static const  int    tblbnd;
   static const  int    zeron, onen, infn;  // zero, one, and inf in log domain
   static const  int    max_2byte_integer, min_2byte_integer;
-  
+
   // Arithmetic computation Tables
   static double *ntof;
   static int   *addtbl;
@@ -214,4 +214,3 @@ inline std::istream &operator>>=(std::istream& is, LogProb &obj)
 }
 
 #endif
-

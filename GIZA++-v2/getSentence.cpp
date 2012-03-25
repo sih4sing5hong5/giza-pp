@@ -1,24 +1,24 @@
 /*
+  EGYPT Toolkit for Statistical Machine Translation
 
-EGYPT Toolkit for Statistical Machine Translation
-Written by Yaser Al-Onaizan, Jan Curin, Michael Jahr, Kevin Knight, John Lafferty, Dan Melamed, David Purdy, Franz Och, Noah Smith, and David Yarowsky.
+  Written by Yaser Al-Onaizan, Jan Curin, Michael Jahr, Kevin Knight, John Lafferty, Dan Melamed, David Purdy, Franz Och, Noah Smith, and David Yarowsky.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
-USA.
-
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+  USA.
 */
+
 /* --------------------------------------------------------------------------*
  *                                                                           *
  * Module : getSentece                                                       *
@@ -44,9 +44,9 @@ GLOBAL_PARAMETER(double,ManlexMAX_MULTIPLICITY,"manlexMAX_MULTIPLICITY","",PARLE
 GLOBAL_PARAMETER(double,Manlexfactor1,"manlexfactor1","",PARLEV_EM,0.0);
 GLOBAL_PARAMETER(double,Manlexfactor2,"manlexfactor2","",PARLEV_EM,0.0);
 
-sentenceHandler::sentenceHandler(const char*  filename, vcbList* elist, 
+sentenceHandler::sentenceHandler(const char*  filename, vcbList* elist,
 				 vcbList*  flist) : realCount(0)
-  // This method is the constructor of the class, it also intitializes the 
+  // This method is the constructor of the class, it also intitializes the
   // sentence pair sequential number (count) to zero.
 
 {
@@ -72,8 +72,8 @@ sentenceHandler::sentenceHandler(const char*  filename, vcbList* elist,
     while (getNextSentence(s, elist, flist))
       {
 	totalPairs1++;
-	totalPairs2+=s.realCount; 
-	// NOTE: this value might change during training 
+	totalPairs2+=s.realCount;
+	// NOTE: this value might change during training
 	// for words from the manual dictionary, yet this is ignored!
 
 	if( s.noOcc<0 )
@@ -93,9 +93,9 @@ void sentenceHandler::rewind()
 {
   currentSentence = 0;
   readflag = false ;
-  if (!allInMemory || 
+  if (!allInMemory ||
       !(Buffer.size() >= 1 && Buffer[currentSentence].sentenceNo == 1)){
-    // check if the buffer doe not already has the first chunk of pairs 
+    // check if the buffer doe not already has the first chunk of pairs
     if (Buffer.size() > 0)
       cerr << ' ' <<  Buffer[currentSentence].sentenceNo << '\n';
     //    totalPairs = 0 ;
@@ -112,7 +112,7 @@ void sentenceHandler::rewind()
   }
 }
 
-  
+
 bool sentenceHandler::getNextSentence(sentPair& sent, vcbList* elist, vcbList* flist)
 {
   sentPair s ;
@@ -120,7 +120,7 @@ bool sentenceHandler::getNextSentence(sentPair& sent, vcbList* elist, vcbList* f
     cerr << "Attempting to read from the end of corpus, rewinding\n";
     rewind();
     return(false);
-  } 
+  }
   if (currentSentence >= noSentInBuffer){
     if (allInMemory)
       return(false);
@@ -164,7 +164,7 @@ bool sentenceHandler::getNextSentence(sentPair& sent, vcbList* elist, vcbList* f
       noSentInBuffer++;
     }
     if (inputFile->eof()){
-      allInMemory = (Buffer.size() >= 1 && 
+      allInMemory = (Buffer.size() >= 1 &&
 		     Buffer[currentSentence].sentenceNo == 1) ;
       if (allInMemory)
 	cout << "Corpus fits in memory, corpus has: " << Buffer.size() <<
@@ -189,16 +189,16 @@ bool sentenceHandler::getNextSentence(sentPair& sent, vcbList* elist, vcbList* f
   return true ;
 }
 bool sentenceHandler::readNextSentence(sentPair& sent)
-  /* This method reads in a new pair of sentences, each pair is read from the 
-     corpus file as line triples. The first line the no of times this line 
-     pair occured in the corpus, the second line is the source sentence and 
+  /* This method reads in a new pair of sentences, each pair is read from the
+     corpus file as line triples. The first line the no of times this line
+     pair occured in the corpus, the second line is the source sentence and
      the third is the target sentence. The sentences are represented by a space
      separated positive integer token ids. */
 {
 
   string line;
   bool fail(false) ;
-  
+
   sent.clear();
   if (getline(*inputFile, line)){
     istringstream buffer(line);
@@ -228,8 +228,8 @@ bool sentenceHandler::readNextSentence(sentPair& sent)
   if (getline(*inputFile, line)){
     istringstream buffer(line);
     WordIndex w;  // w is a local variabe for token id
-    sent.eSent.push_back(0); // each source word is assumed to have 0 == 
-    // a null word (id 0) at the begining of the sentence. 
+    sent.eSent.push_back(0); // each source word is assumed to have 0 ==
+    // a null word (id 0) at the begining of the sentence.
     while(buffer>>w){ // read source sentece , word by word .
       if (sent.eSent.size() < MAX_SENTENCE_LENGTH)
 	sent.eSent.push_back(w);
@@ -271,11 +271,11 @@ bool sentenceHandler::readNextSentence(sentPair& sent)
     sent.noOcc = 0 ;
     sent.realCount=0;
     return(false);
-  }  
+  }
   if( sent.eSent.size()==1||sent.fSent.size()==1 )
     cerr << "ERROR: Forbidden zero sentence length " << sent.sentenceNo << endl;
   sent.sentenceNo = ++pair_no;
-  if(pair_no % 100000 == 0) 
+  if(pair_no % 100000 == 0)
     cout << "[sent:" << sent.sentenceNo  << "]"<< '\n';
   return true;
 }
@@ -320,7 +320,7 @@ void sentenceHandler::setProbOfSentence(const sentPair&s,double d)
 		  if( oldProbs[i]<1e-5 )
 		    (*realCount)[oldPairs[i].getSentenceNo()-1]=1.0;
 		  else
-		    (*realCount)[oldPairs[i].getSentenceNo()-1]=lambda*oldProbs[i]/(1-exp(-lambda*oldProbs[i]));		    
+		    (*realCount)[oldPairs[i].getSentenceNo()-1]=lambda*oldProbs[i]/(1-exp(-lambda*oldProbs[i]));
 		}
 	      oldPairs.clear();
 	      oldProbs.clear();
@@ -332,9 +332,3 @@ void sentenceHandler::setProbOfSentence(const sentPair&s,double d)
 }
 
 /* ------------- End of Method Definition of Class sentenceHandler ----------*/
-
-
-
-
-
-

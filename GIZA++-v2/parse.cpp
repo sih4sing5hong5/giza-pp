@@ -1,22 +1,22 @@
 /*
+  EGYPT Toolkit for Statistical Machine Translation
 
-EGYPT Toolkit for Statistical Machine Translation
-Written by Yaser Al-Onaizan, Jan Curin, Michael Jahr, Kevin Knight, John Lafferty, Dan Melamed, David Purdy, Franz Och, Noah Smith, and David Yarowsky.
+  Written by Yaser Al-Onaizan, Jan Curin, Michael Jahr, Kevin Knight, John Lafferty, Dan Melamed, David Purdy, Franz Och, Noah Smith, and David Yarowsky.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
-USA.
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+  USA.
 
 */
 
@@ -37,18 +37,18 @@ extern bool ONLYALDUMPS;
 
 void parseConfigFile (char * fname )
   // This functions reads in the configuration file to set up some run-time
-  // parameters. The parameters are global variables that are defined in 
+  // parameters. The parameters are global variables that are defined in
   // main.cc and used all over the place in the program
   // The format of the configuration file can be explained in the following way
   // FORMAT:
   // the character '\n' separates lines ..
-  // lines that start with "//" (skipping over white spaces are considered 
+  // lines that start with "//" (skipping over white spaces are considered
   // as comments and will be ignored.
-  // Any other line is considered as an attribute setting instruction and it 
+  // Any other line is considered as an attribute setting instruction and it
   // is divided into haves (separated by a colon ":"). The first half is the
   // attribute value which consists of the concatenation of all non-white space
   // tokens before the colon. These tokens will have spaces eseparating them.
-  // The attribute vlue is the first token after the colon (any thing after 
+  // The attribute vlue is the first token after the colon (any thing after
   // it will be ignored ;
   // For example :
   // if the configuration file has the following entry:
@@ -68,7 +68,7 @@ void parseConfigFile (char * fname )
   }
 
   cout << "The following options are from the config file and will be overwritten by any command line options.\n";
-  
+
   while(getline(Config_File, line)){
 
     istringstream buffer(line);
@@ -78,7 +78,7 @@ void parseConfigFile (char * fname )
       attrib = word ;
       while((buffer >> word) && (word != ":")){
 	attrib += " " + word ;
-      }      
+      }
       if(!(buffer >> attribval))
 	{
 	  istringstream buffer2(line);
@@ -88,7 +88,7 @@ void parseConfigFile (char * fname )
 
       // This# is where (1) the configuration file is defined and
       //               (2) parsing of its attributes occurs.
-      
+
       if(attrib == "t FILE"){
 	t_Filename = attribval;
 	cout << "\tt file:  " << t_Filename << '\n';
@@ -133,10 +133,10 @@ void parseArguments(int argc, char *argv[])
     if( strlen(argv[arg])>2 && argv[arg][0]=='-' && argv[arg][1]=='-' )
       {
 	if( !makeSetCommand(argv[arg]+1,"1",getGlobalParSet(),2))
-	  cerr << "WARNING: ignoring unrecognized option:  "<< argv[arg] << '\n' ;  
+	  cerr << "WARNING: ignoring unrecognized option:  "<< argv[arg] << '\n' ;
       }
     else if( arg+1<argc && !makeSetCommand(argv[arg],argv[arg+1],getGlobalParSet(),2))
-      cerr << "WARNING: ignoring unrecognized option:  "<< argv[arg] << '\n' ;  
+      cerr << "WARNING: ignoring unrecognized option:  "<< argv[arg] << '\n' ;
     else
       {
 	arg++;
@@ -148,4 +148,3 @@ void parseArguments(int argc, char *argv[])
   LogFilename = (OPath + LogFilename);
   printGIZAPars(cout);
 }
-
