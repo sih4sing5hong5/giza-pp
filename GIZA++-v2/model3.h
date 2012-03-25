@@ -33,10 +33,10 @@
 #include <ctime>
 #include <fstream>
 #include <cmath>
-// #include "move_swap_matrix.h"
-#include "TTables.h"
+
+#include "ttables.h"
 #include "atables.h"
-#include "NTables.h"
+#include "ntables.h"
 #include "sentence_handler.h"
 #include "defs.h"
 #include "model2.h"
@@ -45,7 +45,7 @@
 #include "transpair_modelhmm.h"
 #include "alignment.h"
 #include "vocab.h"
-#include "D4Tables.h"
+#include "d4tables.h"
 #include "align_tables.h"
 
 class model3 : public model2

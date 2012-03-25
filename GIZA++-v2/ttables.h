@@ -21,17 +21,16 @@
 
 /* --------------------------------------------------------------------------*
  *                                                                           *
- * Module : TTables                                                          *
+ * Module : ttables                                                          *
  *                                                                           *
- * Prototypes File: TTables.h                                               *
+ * Prototypes File: ttables.h                                               *
  *                                                                           *
  * Objective: Defines clases and methods for handling I/O for Probability &  *
  *            Count tables and also alignment tables                         *
  *****************************************************************************/
 
-#ifndef _ttables_h
-#define _ttables_h 1
-
+#ifndef GIZAPP_TTABLES_H_
+#define GIZAPP_TTABLES_H_
 
 #include "defs.h"
 #include "vocab.h"
@@ -60,7 +59,6 @@
 /*----------- Defnition of Hash Function for class tmodel ------- -----------*/
 
 typedef pair<WordIndex, WordIndex> wordPairIds;
-
 
 class hashpair : public unary_function< pair<WordIndex, WordIndex>, size_t >
 {
@@ -131,12 +129,12 @@ const T*mbinary_search(const T*x,const T*y,unsigned int val)
     return mbinary_search(x,mid,val);
   else
     return mbinary_search(mid,y,val);
-
 }
 
 template <class COUNT, class PROB>
-class tmodel{
+class tmodel {
   typedef LpPair<COUNT, PROB> CPPair;
+
  public:
   int noEnglishWords;  // total number of unique source words
   int noFrenchWords;   // total number of unique target words
@@ -221,6 +219,7 @@ public:
       cout << "There are " << count << " " << count2 << " entries in table" << '\n';
     }
 
+  ~tmodel() {}
 
   /*  tmodel(const string&fn)
     {
@@ -410,4 +409,4 @@ public:
 
 #endif
 
-#endif
+#endif  // GIZAPP_TTABLES_H_

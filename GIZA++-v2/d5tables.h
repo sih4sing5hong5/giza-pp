@@ -19,10 +19,11 @@
   USA.
 */
 
-#ifndef _d5tables_h_define
-#define _d5tables_h_define
+#ifndef GIZAPP_D5TABLES_H_
+#define GIZAPP_D5TABLES_H_
+
 #include <math.h>
-#include "D4Tables.h"
+#include "d4tables.h"
 
 extern float d5modelsmooth_countoffset;
 extern float d5modelsmooth_factor;
@@ -228,4 +229,4 @@ class d5model
     }
 };
 
-#endif
+#endif  // GIZAPP_D5TABLES_H_

@@ -19,8 +19,8 @@
   USA.
 */
 
-#ifndef _ntables_h
-#define _ntables_h 1
+#ifndef GIZAPP_NTABLES_H_
+#define GIZAPP_NTABLES_H_
 
 #include <cassert>
 
@@ -144,4 +144,4 @@ class nmodel
 
 };
 
-#endif
+#endif  // GIZAPP_NTABLES_H_

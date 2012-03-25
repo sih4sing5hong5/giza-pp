@@ -19,7 +19,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
 USA.
 
 */
-#include "TTables.h"
+
+#include "ttables.h"
 #include "parameter.h"
 
 GLOBAL_PARAMETER(float,PROB_CUTOFF,"PROB CUTOFF","Probability cutoff threshold for lexicon probabilities",kParLevOptheur,1e-7);

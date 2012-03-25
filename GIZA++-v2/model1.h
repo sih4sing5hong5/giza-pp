@@ -40,7 +40,7 @@
 #include "util/util.h"
 #include "util/vector.h"
 #include "vocab.h"
-#include "TTables.h"
+#include "ttables.h"
 #include "sentence_handler.h"
 #include "util/perplexity.h"
 #include "vocab.h"

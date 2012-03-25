@@ -36,7 +36,7 @@
 #include <cmath>
 #include <ctime>
 
-#include "TTables.h"
+#include "ttables.h"
 #include "atables.h"
 #include "sentence_handler.h"
 #include "defs.h"

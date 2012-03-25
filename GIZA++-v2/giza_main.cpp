@@ -21,7 +21,7 @@
 
 #include <sstream>
 #include "sentence_handler.h"
-#include "TTables.h"
+#include "ttables.h"
 #include "model1.h"
 #include "model2.h"
 #include "model3.h"
@@ -34,8 +34,8 @@
 #include "util/util.h"
 #include "parameter.h"
 #include "util/assert.h"
-#include "D4Tables.h"
-#include "D5Tables.h"
+#include "d4tables.h"
+#include "d5tables.h"
 #include "transpair_model4.h"
 #include "transpair_model5.h"
 

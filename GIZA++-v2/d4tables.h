@@ -19,8 +19,8 @@
   USA.
 */
 
-#ifndef _d4tables_h_define
-#define _d4tables_h_define
+#ifndef GIZAPP_D4TABLES_H_
+#define GIZAPP_D4TABLES_H_
 
 #include <math.h>
 #include "word_classes.h"
@@ -457,4 +457,4 @@ class d4model
     }
 };
 
-#endif
+#endif  // GIZAPP_D4TABLES_H_

@@ -19,7 +19,7 @@
   USA.
 */
 
-#include "NTables.h"
+#include "ntables.h"
 #include <iostream>
 #include "defs.h"
 #include <fstream>

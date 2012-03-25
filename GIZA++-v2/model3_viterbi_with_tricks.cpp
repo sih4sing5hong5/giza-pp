@@ -24,7 +24,7 @@
 #include "model3.h"
 #include "util/util.h"
 #include "globals.h"
-#include "D5Tables.h"
+#include "d5tables.h"
 #include "forward_backward.h"
 #include "transpair_model5.h"
 #include "transpair_modelhmm.h"

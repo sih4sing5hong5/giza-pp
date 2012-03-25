@@ -25,11 +25,11 @@
 #include "defs.h"
 #include "util/array2.h"
 #include "util/vector.h"
-#include "NTables.h"
+#include "ntables.h"
 #include "atables.h"
-#include "TTables.h"
+#include "ttables.h"
 #include "alignment.h"
-#include "D4Tables.h"
+#include "d4tables.h"
 #include "transpair_model3.h"
 
 extern double factorial(int n);

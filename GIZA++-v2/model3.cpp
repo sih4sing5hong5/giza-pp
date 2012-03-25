@@ -23,7 +23,7 @@
 #include "coll_counts.h"
 #include "globals.h"
 #include "util/util.h"
-#include "D5Tables.h"
+#include "d5tables.h"
 #include "transpair_model5.h"
 #include "transpair_modelhmm.h"
 #include "parameter.h"

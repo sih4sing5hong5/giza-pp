@@ -60,11 +60,11 @@ LIBOBJECTS = \
 	model2.o \
 	model3.o \
 	sentence_handler.o \
-	TTables.o \
+	ttables.o \
 	atables.o \
 	align_tables.o \
 	giza_main.o \
-	NTables.o \
+	ntables.o \
 	model2to3.o \
 	coll_counts.o \
 	alignment.o \

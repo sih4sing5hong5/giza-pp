@@ -24,7 +24,7 @@
 #include "alignment.h"
 #include "transpair_model3.h"
 #include "move_swap_matrix.h"
-#include "D5Tables.h"
+#include "d5tables.h"
 #include "transpair_model5.h"
 #include "transpair_modelhmm.h"
 #include "parameter.h"
