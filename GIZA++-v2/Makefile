@@ -76,7 +76,7 @@ LIBOBJECTS = \
 	parse.o \
 	model3_viterbi.o \
 	model3_viterbi_with_tricks.o \
-	Dictionary.o \
+	dictionary.o \
 	model345-peg.o \
 	hmm.o \
 	HMMTables.o \

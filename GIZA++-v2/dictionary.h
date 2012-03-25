@@ -26,24 +26,31 @@
   9 August 1999
 */
 
-#include <iostream>
-#include <fstream>
+#ifndef GIZAPP_UTIL_DICTIONARY_H_
+#define GIZAPP_UTIL_DICTIONARY_H_
 
 #include "util/vector.h"
 
-#ifndef DICTIONARY_H
-#define DICTIONARY_H
+namespace util {
 
-class Dictionary{
- private:
-  Vector<int> pairs[2];
-  int currval;
-  int currindexmin;
-  int currindexmax;
-  bool dead;
+class Dictionary {
  public:
-  Dictionary(const char *);
-  bool indict(int, int);
-};
+  explicit Dictionary(const char* filename);
+  Dictionary();
+  ~Dictionary();
 
-#endif
+  bool Open(const char* filename);
+  bool indict(int, int);
+
+  bool IsOK() const { return !is_dead_; }
+
+ private:
+  bool is_dead_;
+  int cur_val_;
+  int cur_index_min_;
+  int cur_index_max_;
+  Vector<int> pairs_[2];
+};
+} // namespace util
+
+#endif  // GIZAPP_UTIL_DICTIONARY_H_

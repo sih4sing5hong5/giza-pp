@@ -30,7 +30,7 @@
 #include "defs.h"
 #include "vocab.h"
 #include "util/perplexity.h"
-#include "Dictionary.h"
+#include "dictionary.h"
 #include "util/util.h"
 #include "parameter.h"
 #include "util/assert.h"
@@ -429,10 +429,10 @@ double StartTraining(int&result)
   g_lambda = double(fTrainVcbList.totalVocab()) / (eTrainVcbList.totalVocab()-corpus->getTotalNoPairs2());
   cout << "= " << g_lambda << '\n';
   // load dictionary
-  Dictionary *dictionary;
+  util::Dictionary *dictionary;
   useDict = !dictionary_Filename.empty();
-  if (useDict) dictionary = new Dictionary(dictionary_Filename.c_str());
-  else dictionary = new Dictionary("");
+  if (useDict) dictionary = new util::Dictionary(dictionary_Filename.c_str());
+  else dictionary = new util::Dictionary("");
   int minIter=0;
 #ifdef BINARY_SEARCH_FOR_TTABLE
   if( CoocurrenceFile.length()==0 )

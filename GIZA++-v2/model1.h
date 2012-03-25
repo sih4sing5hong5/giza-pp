@@ -44,7 +44,7 @@
 #include "sentence_handler.h"
 #include "util/perplexity.h"
 #include "vocab.h"
-#include "Dictionary.h"
+#include "dictionary.h"
 
 extern int NumberOfVALIalignments;
 
@@ -90,7 +90,7 @@ public:
 	      Perplexity* _testViterbiPerp);
   void initialize_table_uniformly(sentenceHandler& sHandler1);
   int em_with_tricks(int noIterations,
-		      bool seedModel1, Dictionary& dictionary, bool useDict);
+                     bool seedModel1, util::Dictionary& dictionary, bool useDict);
   void load_table(const char* tname);
   void readVocabFile(const char* fname, Vector<WordEntry>& vlist, int& vsize,
 		     int& total);
@@ -103,7 +103,7 @@ public:
   inline tmodel<COUNT, PROB>& getTTable(void) {return tTable;};
   inline string& getEFFilename(void) {return efFilename;};
  private:
-  void em_loop(int it,Perplexity& perp, sentenceHandler& sHandler1, bool seedModel1, bool , const char*, Dictionary& dictionary, bool useDict,
+  void em_loop(int it,Perplexity& perp, sentenceHandler& sHandler1, bool seedModel1, bool , const char*, util::Dictionary& dictionary, bool useDict,
 	       Perplexity& viterbiperp, bool=false);
   friend class model2;
   friend class hmm;

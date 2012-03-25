@@ -62,7 +62,7 @@ void model1::initialize_table_uniformly(sentenceHandler& sHandler1){
 
 
 int model1::em_with_tricks(int noIterations, /*Perplexity& perp, sentenceHandler& sHandler1, */
-			    bool seedModel1, Dictionary& dictionary, bool useDict /*Perplexity* testPerp, sentenceHandler* testHandler,
+			    bool seedModel1, util::Dictionary& dictionary, bool useDict /*Perplexity* testPerp, sentenceHandler* testHandler,
 										     Perplexity& trainViterbiPerp, Perplexity* testViterbiPerp */ )
 {
   double minErrors=1.0;int minIter=0;
@@ -139,7 +139,7 @@ void model1::load_table(const char* tname){
 
 extern float MINCOUNTINCREASE;
 void model1::em_loop(int it,Perplexity& perp, sentenceHandler& sHandler1, bool seedModel1,
-		     bool dump_alignment, const char* alignfile, Dictionary& dict, bool useDict, Perplexity& viterbi_perp, bool test)
+		     bool dump_alignment, const char* alignfile, util::Dictionary& dict, bool useDict, Perplexity& viterbi_perp, bool test)
 {
   WordIndex i, j, l, m ;
   double cross_entropy;

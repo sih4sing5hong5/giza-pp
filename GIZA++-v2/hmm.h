@@ -43,7 +43,7 @@
 #include "model2.h"
 #include "util/perplexity.h"
 #include "vocab.h"
-#include "WordClasses.h"
+#include "word_classes.h"
 #include "HMMTables.h"
 
 class HMMNetwork;

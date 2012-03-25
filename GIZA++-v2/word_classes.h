@@ -19,14 +19,14 @@
   USA.
 */
 
-#ifndef WordClasses_h_DEFINED
-#define WordClasses_h_DEFINED
+#ifndef GIZAPP_WORD_CLASSES_H_
+#define GIZAPP_WORD_CLASSES_H_
+
 #include <map>
 #include <string>
 #include <set>
 
-class WordClasses
-{
+class WordClasses {
  private:
   map<string,string> Sw2c;
   map<string,int> Sc2int;
@@ -92,4 +92,4 @@ class WordClasses
     }
 };
 
-#endif
+#endif  // GIZAPP_WORD_CLASSES_H_
