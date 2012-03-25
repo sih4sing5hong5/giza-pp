@@ -85,8 +85,6 @@ void amodel<VALTYPE>::printTable(const char *filename) const
       }
 }
 
-extern short NoEmptyWord;
-
 template <class VALTYPE>
 void amodel<VALTYPE>::readTable(const char *filename)
 {
@@ -115,5 +113,4 @@ void amodel<VALTYPE>::readTable(const char *filename)
     setValue(w, x, l, m, prob);
 }
 
-template class amodel<COUNT> ; 
-//template class amodel<PROB> ; 
+template class amodel<COUNT>;

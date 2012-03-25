@@ -65,13 +65,6 @@ extern short NoEmptyWord;
   
   *--------------------------------------------------------------------------*/
 
-inline int Mabs(int a)
-{
-  if(a<0)
-    return -a;
-  else
-    return a;
-}
 
 template <class VALTYPE>
 class amodel
