@@ -1,0 +1,6 @@
+- Add LIBOBJECTS to Makefile
+  - Remove dependencies.
+- Add unit tests to make code refactoring easier and find bugs.
+- Rename files appropriately to keep consistency.
+- Introduce namespace 'gizapp'.
+- Reduce header dependencies.
