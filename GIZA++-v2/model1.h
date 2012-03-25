@@ -44,7 +44,10 @@
 #include "sentence_handler.h"
 #include "util/perplexity.h"
 #include "vocab.h"
-#include "dictionary.h"
+
+namespace util {
+class Dictionary;
+} // namespace util
 
 extern int NumberOfVALIalignments;
 

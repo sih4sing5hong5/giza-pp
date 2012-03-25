@@ -22,6 +22,7 @@
 #include "model1.h"
 #include "globals.h"
 #include "util/util.h"
+#include "util/dictionary.h"
 #include "parameter.h"
 
 extern short NoEmptyWord;

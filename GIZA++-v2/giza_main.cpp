@@ -30,7 +30,7 @@
 #include "defs.h"
 #include "vocab.h"
 #include "util/perplexity.h"
-#include "dictionary.h"
+#include "util/dictionary.h"
 #include "util/util.h"
 #include "parameter.h"
 #include "util/assert.h"

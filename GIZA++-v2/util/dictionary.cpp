@@ -29,7 +29,7 @@
   9 August 1999
 */
 
-#include "dictionary.h"
+#include "util/dictionary.h"
 
 #include <iostream>
 #include <fstream>

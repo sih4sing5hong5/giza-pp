@@ -51,6 +51,7 @@ DATE = `date +%d-%m-%Y`
 
 LIBOBJECTS = \
 	util/assert.o \
+	util/dictionary.o \
 	util/logprob.o \
 	util/perplexity.o \
 	util/util.o \
@@ -76,7 +77,6 @@ LIBOBJECTS = \
 	parse.o \
 	model3_viterbi.o \
 	model3_viterbi_with_tricks.o \
-	dictionary.o \
 	model345-peg.o \
 	hmm.o \
 	HMMTables.o \
