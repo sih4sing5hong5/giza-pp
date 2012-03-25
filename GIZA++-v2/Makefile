@@ -69,8 +69,9 @@ LIBOBJECTS = \
 	vocab.o \
 	MoveSwapMatrix.o \
 	transpair_model3.o \
-	transpair_model5.o \
 	transpair_model4.o \
+	transpair_model5.o \
+	transpair_modelhmm.o \
 	utility.o \
 	parse.o \
 	reports.o \

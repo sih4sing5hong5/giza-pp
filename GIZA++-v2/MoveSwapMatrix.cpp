@@ -224,7 +224,8 @@ void MoveSwapMatrix<TRANSPAIR>::doSwap(WordIndex _j1, WordIndex _j2)
 #include "transpair_model4.h"
 #include "transpair_model5.h"
 #include "transpair_modelhmm.h"
+
 template class MoveSwapMatrix<transpair_model3>;
 template class MoveSwapMatrix<transpair_model4>;
 template class MoveSwapMatrix<transpair_model5>;
-template class MoveSwapMatrix<transpair_modelhmm>;
+template class MoveSwapMatrix<TransPairModelHMM>;

@@ -26,10 +26,12 @@
 #include "utility.h"
 #include "Globals.h"
 #include "D5Tables.h"
+#include "forward_backward.h"
 #include "transpair_model5.h"
 #include "transpair_modelhmm.h"
 #include "util/assert.h"
 #include "Parameter.h"
+
 
 GLOBAL_PARAMETER(float,PrintN,"nbestalignments","for printing the n best alignments",PARLEV_OUTPUT,0);
 
@@ -51,7 +53,7 @@ int PrintHillClimbWarning=0;
 int PrintZeroScoreWarning=0;
 
 
-LogProb model3::viterbi_model2(const transpair_modelhmm&ef, alignment&output, int
+LogProb model3::viterbi_model2(const TransPairModelHMM&ef, alignment&output, int
 #ifdef STORE_HMM_ALIGNMENTS
 pair_no
 #endif
@@ -68,11 +70,11 @@ pair_no
     {
       output=viterbis[pair_no].first;
       ret=viterbis[pair_no].second;
-      MASSERT( ret==HMMRealViterbi(*ef.net,vit,i_peg-1,j_peg-1)*ef.net->finalMultiply );
+      MASSERT( ret==HMMRealViterbi(*ef.GetHMMNetwork(),vit,i_peg-1,j_peg-1)*ef.GetHMMNetwork()->finalMultiply );
     }
   else
     {
-      ret=HMMRealViterbi(*ef.net,vit,i_peg-1,j_peg-1)*ef.net->finalMultiply;
+      ret=HMMRealViterbi(*ef.GetHMMNetwork(),vit,i_peg-1,j_peg-1)*ef.GetHMMNetwork()->finalMultiply;
       for(int j=1;j<=m;j++)
 	{
 	  if( vit[j-1]+1>l )
@@ -88,7 +90,7 @@ pair_no
 	}
     }
 #else
-  ret=HMMRealViterbi(*ef.net,vit,i_peg-1,j_peg-1)*ef.net->finalMultiply;
+  ret=HMMRealViterbi(*ef.GetHMMNetwork(),vit,i_peg-1,j_peg-1)*ef.GetHMMNetwork()->finalMultiply;
   for(int j=1;j<=m;j++)
     {
       if( vit[j-1]+1>l )
@@ -196,7 +198,7 @@ LogProb model3::viterbi_model2(const transpair_model3&ef, alignment&output, int 
 {
   if( h&&UseHMMViterbiAlignmentIfPossible )
     {
-      transpair_modelhmm efhmm(ef.E,ef.F,tTable,aTable,dTable,nTable,0.0,0.0,h);
+      TransPairModelHMM efhmm(ef.E,ef.F,tTable,aTable,dTable,nTable,0.0,0.0,h);
       LogProb ret=viterbi_model2(efhmm,output,pair_no,i_peg,j_peg);
       MASSERT(output.valid());
       return ret;
@@ -681,9 +683,9 @@ void model3::viterbi_loop_with_tricks<A,B,C>(Perplexity& perp, Perplexity& viter
 					     B*d4m,C*d5m);
 
 INSTANTIATE(transpair_model3, void, void);
-INSTANTIATE(transpair_modelhmm, const hmm, void);
-INSTANTIATE(transpair_modelhmm, const hmm, d4model);
-INSTANTIATE(transpair_modelhmm, const hmm, d5model);
+INSTANTIATE(TransPairModelHMM, const hmm, void);
+INSTANTIATE(TransPairModelHMM, const hmm, d4model);
+INSTANTIATE(TransPairModelHMM, const hmm, d5model);
 INSTANTIATE(transpair_model3, void,d4model);
 INSTANTIATE(transpair_model3, void,d5model);
 INSTANTIATE(transpair_model4, d4model,d4model);

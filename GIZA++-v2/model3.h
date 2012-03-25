@@ -117,7 +117,7 @@ private:
 				   LogProb , float count);
   LogProb viterbi_model2(const transpair_model3&ef,   alignment&output, int pair_no,int i_peg = -1 , int j_peg = -1 )const;
   LogProb _viterbi_model2(const transpair_model2&ef,   alignment&output, int i_peg = -1 , int j_peg = -1 )const;
-  LogProb viterbi_model2(const transpair_modelhmm&ef, alignment&output, int pair_no,int i_peg = -1 , int j_peg = -1 )const;
+  LogProb viterbi_model2(const TransPairModelHMM&ef, alignment&output, int pair_no,int i_peg = -1 , int j_peg = -1 )const;
 
  private:
   void estimate_t_a_d(sentenceHandler& sHandler1, Perplexity& perp1, Perplexity& perp2,bool simple, bool dump_files,bool updateT);
