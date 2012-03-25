@@ -18,11 +18,12 @@
   USA.
 */
 
-/*--
-Vector: checked vector implementation
+/*
+  Vector: checked vector implementation
 
-Franz Josef Och (30/07/99)
---*/
+  Franz Josef Och (30/07/99)
+*/
+
 #ifndef GIZAPP_UTIL_VECTOR_H_
 #define GIZAPP_UTIL_VECTOR_H_
 

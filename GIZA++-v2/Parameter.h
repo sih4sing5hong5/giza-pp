@@ -22,13 +22,14 @@
 #ifndef PARAMETER_H_DEFINED
 #define PARAMETER_H_DEFINED
 
-#include "port/stl_helper.h"
 #include <set>
-#include "Pointer.h"
 #include <string>
-#include "Globals.h"
 #include <fstream>
 #include <cstring>
+
+#include "port/stl_helper.h"
+#include "Globals.h"
+#include "util/pointer.h"
 
 inline unsigned int mConvert(const string&s,unsigned int &i)
 {

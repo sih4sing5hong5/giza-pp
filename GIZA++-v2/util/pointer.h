@@ -19,8 +19,8 @@
   USA.
 */
 
-#ifndef GIZAPP_POINTER_H_
-#define GIZAPP_POINTER_H_
+#ifndef GIZAPP_UTIL_POINTER_H_
+#define GIZAPP_UTIL_POINTER_H_
 
 #include <cassert>
 #include <ostream>
@@ -199,4 +199,4 @@ class DELP : public SmartPointer<T> {
  private:
   DELP(const DELP<T>&);
 };
-#endif  // GIZAPP_POINTER_H_
+#endif  // GIZAPP_UTIL_POINTER_H_
