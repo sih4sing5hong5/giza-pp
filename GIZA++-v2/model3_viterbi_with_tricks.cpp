@@ -19,7 +19,7 @@
   USA.
 */
 
-#include "mystl.h"
+#include "port/stl_helper.h"
 #include "model3.h"
 #include "collCounts.h"
 #include "utility.h"

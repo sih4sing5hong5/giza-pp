@@ -28,7 +28,7 @@ Franz Josef Och (30/07/99)
 #ifndef CLASS_Array2_DEFINED
 #define CLASS_Array2_DEFINED
 
-#include "mystl.h"
+#include "port/stl_helper.h"
 #include <string>
 #include <vector>
 

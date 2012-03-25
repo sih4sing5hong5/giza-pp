@@ -25,7 +25,7 @@ Franz Josef Och (30/07/99)
 --*/
 #ifndef ARRAY_H_DEFINED
 #define ARRAY_H_DEFINED
-#include "mystl.h"
+#include "port/stl_helper.h"
 #include <algorithm>
 #include <string>
 #include <utility>

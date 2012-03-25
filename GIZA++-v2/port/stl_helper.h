@@ -3,8 +3,8 @@
   Franz Josef Och
 */
 
-#ifndef MY_STL_H_DEFINED
-#define MY_STL_H_DEFINED
+#ifndef GIZAPP_PORT_STL_HELPER_H_
+#define GIZAPP_PORT_STL_HELPER_H_
 
 #include <string>
 using namespace std;
@@ -327,4 +327,4 @@ T *conv(T*x)
   return x;
 }
 
-#endif
+#endif  // GIZAPP_PORT_STL_HELPER_H_
