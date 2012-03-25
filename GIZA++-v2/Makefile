@@ -50,7 +50,7 @@ OBJ_DIR =
 DATE = `date +%d-%m-%Y`
 
 LIBOBJECTS = \
-  Parameter.o \
+	Parameter.o \
 	myassert.o \
 	Perplexity.o \
 	model1.o \
