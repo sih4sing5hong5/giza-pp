@@ -29,7 +29,7 @@
 #include "port/file_spec.h"
 #include "defs.h"
 #include "vocab.h"
-#include "Perplexity.h"
+#include "perplexity.h"
 #include "Dictionary.h"
 #include "util/util.h"
 #include "parameter.h"

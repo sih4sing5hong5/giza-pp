@@ -19,7 +19,7 @@
   USA.
 */
 
-/* Perplexity.h
+/* perplexity.h
  * ============
  * Mike Jahr, 7/15/99
  * Machine Translation group, WS99
@@ -31,8 +31,8 @@
  * of models.
  */
 
-#ifndef _PERPLEXITY_H
-#define _PERPLEXITY_H
+#ifndef GIZAPP_PERPLEXITY_H_
+#define GIZAPP_PERPLEXITY_H_
 
 #include <cmath>
 #include <fstream>
@@ -105,5 +105,4 @@ class Perplexity {
 					 ostream&, int, int, bool);
 };
 
-
-#endif
+#endif  // GIZAPP_PERPLEXITY_H_

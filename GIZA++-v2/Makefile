@@ -54,7 +54,7 @@ LIBOBJECTS = \
 	util/logprob.o \
 	util/util.o \
 	parameter.o \
-	Perplexity.o \
+	perplexity.o \
 	model1.o \
 	model2.o \
 	model3.o \

@@ -40,7 +40,7 @@
 #include "sentence_handler.h"
 #include "defs.h"
 #include "model2.h"
-#include "Perplexity.h"
+#include "perplexity.h"
 #include "transpair_model3.h"
 #include "transpair_modelhmm.h"
 #include "alignment.h"

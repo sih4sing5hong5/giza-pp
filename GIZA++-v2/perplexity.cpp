@@ -31,7 +31,7 @@
  * of models.
  */
 
-#include "Perplexity.h"
+#include "perplexity.h"
 
 void Perplexity::record(string model){
   modelid.push_back(model);

@@ -41,7 +41,7 @@
 #include "sentence_handler.h"
 #include "defs.h"
 #include "model1.h"
-#include "Perplexity.h"
+#include "perplexity.h"
 #include "vocab.h"
 
 class model2 : public model1

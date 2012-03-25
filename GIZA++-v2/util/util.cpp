@@ -24,7 +24,7 @@
 #include <set>
 
 #include "vocab.h"
-#include "Perplexity.h"
+#include "perplexity.h"
 #include "sentence_handler.h"
 #include "TTables.h"
 #include "globals.h"
