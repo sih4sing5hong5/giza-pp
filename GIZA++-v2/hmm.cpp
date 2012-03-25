@@ -22,7 +22,6 @@
 #include "hmm.h"
 #include "globals.h"
 #include "util/util.h"
-#include "HMMTables.h"
 #include "forward_backward.h"
 #include "parameter.h"
 
@@ -399,5 +398,5 @@ void hmm::em_loop(Perplexity& perp, sentenceHandler& sHandler1,
   errorReportAL(cout,"HMM");
 }
 
-#include "HMMTables.cpp"
-template class HMMTables<int,WordClasses>;
+#include "hmm_tables.cpp"
+template class HMMTables<int, WordClasses>;

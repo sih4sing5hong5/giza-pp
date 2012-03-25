@@ -44,12 +44,12 @@
 #include "util/perplexity.h"
 #include "vocab.h"
 #include "word_classes.h"
-#include "HMMTables.h"
+#include "hmm_tables.h"
 
 class HMMNetwork;
 
-class hmm : public model2
-{
+
+class hmm : public model2 {
  private:
   WordClasses ewordclasses;
   WordClasses fwordclasses;

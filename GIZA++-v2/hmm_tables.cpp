@@ -20,8 +20,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
 USA.
 
 */
-#include "HMMTables.h"
+#include "hmm_tables.h"
+
 #include <fstream>
+
 #include "globals.h"
 #include "parameter.h"
 #include "util/math.h"
@@ -174,5 +176,7 @@ HMMTables<CLS,MAPPERCLASSTOSTRING>::  HMMTables(double _probForEmpty,const MAPPE
   mapper1(&m1),
   mapper2(&m2)
 {}
+
 template<class CLS,class MAPPERCLASSTOSTRING>
 HMMTables<CLS,MAPPERCLASSTOSTRING>::~HMMTables() {}
+
