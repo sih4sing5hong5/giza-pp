@@ -32,7 +32,7 @@
 #include "Perplexity.h"
 #include "Dictionary.h"
 #include "util/util.h"
-#include "Parameter.h"
+#include "parameter.h"
 #include "util/assert.h"
 #include "D4Tables.h"
 #include "D5Tables.h"

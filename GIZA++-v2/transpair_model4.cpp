@@ -20,7 +20,7 @@
 */
 
 #include "transpair_model4.h"
-#include "Parameter.h"
+#include "parameter.h"
 
 GLOBAL_PARAMETER(float,d4modelsmooth_factor,"model4SmoothFactor","smooting parameter for alignment probabilities in Model 4",kParLevSmooth,0.2);
 

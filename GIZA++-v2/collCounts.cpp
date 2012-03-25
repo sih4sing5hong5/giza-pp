@@ -27,7 +27,7 @@
 #include "D5Tables.h"
 #include "transpair_model5.h"
 #include "transpair_modelhmm.h"
-#include "Parameter.h"
+#include "parameter.h"
 
 extern float COUNTINCREASE_CUTOFF_AL;
 // unifies collectCountsOverAlignments and findAlignmentNeighborhood FJO-20/07/99

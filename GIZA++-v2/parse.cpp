@@ -31,7 +31,7 @@
 #include "D4Tables.h"
 #include "D5Tables.h"
 #include "atables.h"
-#include "Parameter.h"
+#include "parameter.h"
 
 extern bool ONLYALDUMPS;
 

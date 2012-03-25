@@ -23,7 +23,7 @@
 #include <iostream>
 #include "defs.h"
 #include <fstream>
-#include "Parameter.h"
+#include "parameter.h"
 
 GLOBAL_PARAMETER(double,NTablesFactorGraphemes,"nSmooth","smoothing for fertility parameters (good value: 64): weight for wordlength-dependent fertility parameters",kParLevSmooth,64.0);
 GLOBAL_PARAMETER(double,NTablesFactorGeneral,"nSmoothGeneral","smoothing for fertility parameters (default: 0): weight for word-independent fertility parameters",kParLevSmooth,0.0);

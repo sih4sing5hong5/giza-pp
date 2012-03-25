@@ -20,7 +20,7 @@
 */
 
 #include "transpair_model5.h"
-#include "Parameter.h"
+#include "parameter.h"
 
 int m5scorefound=0,m5scorenotfound=0;
 

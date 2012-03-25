@@ -22,7 +22,7 @@
 #include "atables.h"
 #include "globals.h"
 #include "util/assert.h"
-#include "Parameter.h"
+#include "parameter.h"
 
 GLOBAL_PARAMETER(bool, CompactADTable, "compactadtable", "1: only 3-dimensional alignment table for IBM-2 and IBM-3", kParLevModels, 1);
 GLOBAL_PARAMETER(float, amodel_smooth_factor, "model23SmoothFactor", "smoothing parameter for IBM-2/3 (interpolation with constant)", kParLevSmooth, 0.0);

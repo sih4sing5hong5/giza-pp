@@ -22,7 +22,7 @@ USA.
 #include "model2.h"
 #include "globals.h"
 #include "util/util.h"
-#include "Parameter.h"
+#include "parameter.h"
 #include "defs.h"
 
 extern short NoEmptyWord;

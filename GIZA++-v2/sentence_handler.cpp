@@ -34,7 +34,7 @@
 #include <cmath>
 #include <iostream>
 #include <sstream>
-#include "Parameter.h"
+#include "parameter.h"
 #include "errno.h"
 
 int PrintedTooLong=0;

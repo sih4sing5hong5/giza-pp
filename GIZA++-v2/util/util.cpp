@@ -28,7 +28,7 @@
 #include "sentence_handler.h"
 #include "TTables.h"
 #include "globals.h"
-#include "Parameter.h"
+#include "parameter.h"
 
 void generatePerplexityReport(const Perplexity& trainperp,
                               const Perplexity& testperp,

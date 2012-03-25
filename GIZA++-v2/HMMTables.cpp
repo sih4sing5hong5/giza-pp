@@ -23,7 +23,7 @@ USA.
 #include "HMMTables.h"
 #include <fstream>
 #include "globals.h"
-#include "Parameter.h"
+#include "parameter.h"
 #include "util/math.h"
 
 template<class CLS,class MAPPERCLASSTOSTRING>

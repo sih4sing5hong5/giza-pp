@@ -53,7 +53,7 @@ LIBOBJECTS = \
 	util/assert.o \
 	util/logprob.o \
 	util/util.o \
-	Parameter.o \
+	parameter.o \
 	Perplexity.o \
 	model1.o \
 	model2.o \

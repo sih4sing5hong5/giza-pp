@@ -24,7 +24,7 @@
 #include "util/util.h"
 #include "HMMTables.h"
 #include "forward_backward.h"
-#include "Parameter.h"
+#include "parameter.h"
 
 #define CLASSIFY(i,empty,ianf) bool empty=(i>=l); unsigned int ianf=(i%l);
 #define CLASSIFY2(i,ianf) unsigned int ianf=(i%l);

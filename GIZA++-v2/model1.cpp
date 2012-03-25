@@ -22,7 +22,7 @@
 #include "model1.h"
 #include "globals.h"
 #include "util/util.h"
-#include "Parameter.h"
+#include "parameter.h"
 
 extern short NoEmptyWord;
 extern int VerboseSentence;

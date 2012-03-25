@@ -19,7 +19,7 @@
   USA.
 */
 
-#include "Parameter.h"
+#include "parameter.h"
 
 #include <fstream>
 #include <unistd.h>

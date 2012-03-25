@@ -26,7 +26,7 @@
 #include "D5Tables.h"
 #include "transpair_model5.h"
 #include "transpair_modelhmm.h"
-#include "Parameter.h"
+#include "parameter.h"
 
 #define TRICKY_IBM3_TRAINING
 

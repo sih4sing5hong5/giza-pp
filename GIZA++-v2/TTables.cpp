@@ -20,7 +20,7 @@ USA.
 
 */
 #include "TTables.h"
-#include "Parameter.h"
+#include "parameter.h"
 
 GLOBAL_PARAMETER(float,PROB_CUTOFF,"PROB CUTOFF","Probability cutoff threshold for lexicon probabilities",kParLevOptheur,1e-7);
 GLOBAL_PARAMETER2(float, COUNTINCREASE_CUTOFF,"COUNTINCREASE CUTOFF","countCutoff","Counts increment cutoff threshold",kParLevOptheur,1e-6);
