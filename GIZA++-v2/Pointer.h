@@ -80,15 +80,15 @@ template<class T> inline ostream &operator<<(ostream& out,
 template <class T>
 class UP : public SmartPointer<T> {
  public:
-  explicit UP(T* _p=0) : SmartPointer<T>(_p) {}
+  explicit UP(T* ptr=0) : SmartPointer<T>(ptr) {}
   ~UP() {}
 };
 
-template<class T> inline bool operator==(const UP<T>&s1,const UP<T>&s2) {
+template<class T> inline bool operator==(const UP<T>& s1, const UP<T>& s2) {
   return s1.ptr()==s2.ptr();
 }
 
-template<class T>  inline bool operator<(const UP<T>&s1,const UP<T>&s2) {
+template<class T>  inline bool operator<(const UP<T>& s1, const UP<T>& s2) {
   return s1.ptr() < s2.ptr();
 }
 
@@ -97,85 +97,97 @@ template<class T> inline int Hash(const UP<T> &wp) {
 }
 
 template <class T>
-class UPConst : public SmartPointerConst<T>
-{
+class UPConst : public SmartPointerConst<T> {
  public:
-  explicit UPConst(const T*_p=0) : SmartPointerConst<T>(_p) {}
+  explicit UPConst(const T* ptr=0) : SmartPointerConst<T>(ptr) {}
+  ~UPConst() {}
 };
 
-template<class T> inline bool operator==(const UPConst<T>&s1,const UPConst<T>&s2)
-{return s1.ptr()==s2.ptr();}
-template<class T> inline bool operator<(const UPConst<T>&s1,const UPConst<T>&s2)
-{return s1.ptr()<s2.ptr();}
-template<class T> inline int Hash(const UPConst<T> &wp)
-{if(wp.ptr())return Hash(*wp);else return 0;}
+template<class T> inline bool operator==(const UPConst<T>& s1, const UPConst<T>& s2) {
+  return s1.ptr()==s2.ptr();
+}
 
+template<class T> inline bool operator<(const UPConst<T>& s1, const UPConst<T>& s2) {
+  return s1.ptr()<s2.ptr();
+}
+
+template<class T> inline int Hash(const UPConst<T> &wp) {
+  return (wp.ptr()) ? Hash(*wp) : 0;
+}
 
 template <class T>
-class MP : public SmartPointer<T>
-{
+class MP : public SmartPointer<T> {
  public:
-  MP(T*_p=0) : SmartPointer<T>(_p) {}
+  MP(T* ptr = 0) : SmartPointer<T>(ptr) {}
+  ~MP() {}
 };
 
-template <class T> inline bool operator==(const MP<T>&s1,const MP<T>&s2)
-{assert(s1);assert(s2);return *s1==*s2;}
-template <class T> inline bool operator<(const MP<T>&s1,const MP<T>&s2)
-{assert(s1);assert(s2);return *s1 < *s2;}
-template <class T> inline int Hash(const MP<T> &wp)
-{if(wp.ptr())return Hash(*wp);else return 0;}
+template <class T> inline bool operator==(const MP<T>& s1, const MP<T>& s2) {
+  assert(s1); assert(s2); return *s1 == *s2;
+}
 
+template <class T> inline bool operator<(const MP<T>& s1, const MP<T>& s2) {
+  assert(s1); assert(s2); return *s1 < *s2;
+}
+
+template <class T> inline int Hash(const MP<T> &wp) {
+  return (wp.ptr()) ? Hash(*wp) : 0;
+}
 
 template <class T>
-class MPConst : public SmartPointerConst<T>
-{
+class MPConst : public SmartPointerConst<T> {
  public:
-  explicit MPConst(const T*_p=0) : SmartPointerConst<T>(_p) {}
+  explicit MPConst(const T* ptr = 0) : SmartPointerConst<T>(ptr) {}
+  ~MPConst() {}
 };
 
-template <class T> inline bool operator==(const MPConst<T>&s1,const MPConst<T>&s2)
-{assert(s1);assert(s2);return *s1== *s2;}
-template <class T> inline bool operator<(const MPConst<T>&s1,const MPConst<T>&s2)
-{assert(s1);assert(s2);return *s1 < *s2;}
-template <class T> inline int Hash(const MPConst<T> &wp)
-{if(wp.ptr())return Hash(*wp);else return 0;}
+template <class T> inline bool operator==(const MPConst<T>&s1,const MPConst<T>&s2) {
+  assert(s1); assert(s2); return *s1 == *s2;
+}
 
+template <class T> inline bool operator<(const MPConst<T>&s1,const MPConst<T>&s2){
+  assert(s1); assert(s2); return *s1 < *s2;
+}
+
+template <class T> inline int Hash(const MPConst<T> &wp) {
+  return (wp.ptr()) ? Hash(*wp) : 0;
+}
 
 template <class T>
-class DELP : public SmartPointer<T>
-{
- private:
-  DELP(const DELP<T>&x);
+class DELP : public SmartPointer<T> {
  public:
-  const DELP<T>&operator=(DELP<T>&x)
-  {
-    delete this->p;
-    this->p=x.p;x.p=0;
+  explicit DELP(T* ptr = 0) : SmartPointer<T>(ptr) {}
+
+  ~DELP() {
+    delete this->ptr_;
+    this->ptr_ = 0;
+  }
+
+  const DELP<T>&operator=(DELP<T>& x) {
+    delete this->ptr_;
+    this->ptr_ = x.ptr_;
+    x.ptr_ = 0;
     return *this;
   }
 
-  ~DELP()
-    { delete this->p;this->p=0;}
-  explicit DELP(T*_p=0) : SmartPointer<T>(_p) {}
-  void set(T*_p)
-    {
-      delete this->p;
-      this->p=_p;
-    }
-  friend bool operator==(const DELP<T>&s1,const DELP<T>&s2)
-    {
-      return *(s1.p)== *(s2.p);
-    }
-  friend bool operator<(const DELP<T>&s1,const DELP<T>&s2)
-    {
-      return *(s1.p) < *(s2.p);
-    }
-  friend inline int Hash(const DELP<T> &wp)
-    {
-      if(wp.p)
-	return Hash(*wp.p);
-      else
-	return 0;
-    }
+  void set(T* p) {
+    delete this->ptr_;
+    this->ptr_ = p;
+  }
+
+  friend bool operator==(const DELP<T>&s1,const DELP<T>&s2) {
+    return *(s1.ptr_)== *(s2.ptr_);
+  }
+
+  friend bool operator<(const DELP<T>&s1,const DELP<T>&s2) {
+    return *(s1.ptr_) < *(s2.ptr_);
+  }
+
+  friend inline int Hash(const DELP<T> &wp) {
+    return (wp.ptr_) ? Hash(*wp.ptr_) : 0;
+  }
+
+ private:
+  DELP(const DELP<T>&x);
 };
 #endif  // GIZAPP_POINTER_H_
