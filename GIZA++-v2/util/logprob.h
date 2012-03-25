@@ -30,9 +30,31 @@
 #include <math.h>
 #include <algorithm>
 
+#include "defs.h"
+
 //#define  MAX(A,B) ((A) > (B) ? (A) : (B))
 //#define  MIN(A,B) ((A) > (B) ? (B) : (A))
 
+class LogProb {
+ private:
+  double x ;
+ public:
+  LogProb():x(0){}
+  LogProb(double y):x(y){}
+  LogProb(float y):x(y){}
+  LogProb(int y):x(y){}
+  LogProb(WordIndex y):x(y) { }
+  operator double() const {return x;}
+  LogProb operator *= (double y) { x *= y ; return *this;}
+  LogProb operator *= (LogProb y) { x *= y.x ; return *this;}
+  LogProb operator /= (double y) { x /= y ; return *this;}
+  LogProb operator /= (LogProb y) { x /= y.x ; return *this;}
+  LogProb operator += (double y) { x += y ; return *this;}
+  LogProb operator += (LogProb y) { x += y.x ; return *this;}
+};
+
+// NOTE: Temporary fix. Will be deleted.
+namespace internal {
 
 class LogProb {
 public:
@@ -212,5 +234,7 @@ inline std::istream &operator>>=(std::istream& is, LogProb &obj)
   is.read((char *)&obj.logr, sizeof(obj.logr));
   return is;
 }
+
+} // namespace internal
 
 #endif

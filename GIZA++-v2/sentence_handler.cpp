@@ -30,6 +30,8 @@
  *****************************************************************************/
 
 #include "sentence_handler.h"
+
+#include <cmath>
 #include <iostream>
 #include <sstream>
 #include "Parameter.h"

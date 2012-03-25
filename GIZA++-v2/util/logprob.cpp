@@ -28,6 +28,10 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+
+namespace internal {
+
+
 double *LogProb::ntof  = NULL; // Tables will be initialized
 int   *LogProb::addtbl = NULL; // in Initialize function.
 int   *LogProb::subtbl = NULL; //
@@ -148,3 +152,5 @@ LogProb& LogProb::operator-=(const LogProb &subs)
   logr = subs.logr + subtbl[a];
   return *this;
 }
+
+} // namespace internal

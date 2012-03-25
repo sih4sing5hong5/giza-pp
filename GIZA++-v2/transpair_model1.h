@@ -21,10 +21,10 @@
 
 #ifndef transpair_model1_h_fjo_defined
 #define transpair_model1_h_fjo_defined
-//#include "logprob.h"
+
 #include "defs.h"
+#include "util/logprob.h"
 #include "Array2.h"
-#include "defs.h"
 #include "Vector.h"
 #include "NTables.h"
 #include "atables.h"
