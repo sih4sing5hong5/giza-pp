@@ -22,9 +22,8 @@
 #ifndef HMM_TABLES_H_ASDF_DEFINED
 #define HMM_TABLES_H_ASDF_DEFINED
 
-#include "FlexArray.h"
-#include "util/array.h"
 #include <map>
+#include "util/flex_array.h"
 
 template<class T>
 T normalize_if_possible(T*a,T*b)
