@@ -9,14 +9,14 @@ modify it under the terms of the GNU General Public License
 as published by the Free Software Foundation; either version 2
 of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, 
+This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
 USA.
 
 */
@@ -24,6 +24,7 @@ USA.
 #include <fstream>
 #include "Globals.h"
 #include "Parameter.h"
+#include "util/math.h"
 
 template<class CLS,class MAPPERCLASSTOSTRING>
 void HMMTables<CLS,MAPPERCLASSTOSTRING>::writeJumps(ostream&out) const
@@ -61,7 +62,7 @@ double HMMTables<CLS,MAPPERCLASSTOSTRING>::getAlProb(int istrich,int k,int sentL
     {
     case 0: pos=istrich-k; break;
     case 1: pos=k; break;
-    case 2: 
+    case 2:
       pos=(k*J-j*sentLength);
       if( pos>0 ) pos+=J/2; else pos-=J/2;
       pos/=J;
@@ -77,7 +78,7 @@ double HMMTables<CLS,MAPPERCLASSTOSTRING>::getAlProb(int istrich,int k,int sentL
     {
       if( iter>0&&iter<5000 )
       	cout << "WARNING: Not found: " << ' ' << J << ' ' << sentLength << '\n';;
-     return 1.0/(2*sentLength-1); 
+     return 1.0/(2*sentLength-1);
     }
 }
 
@@ -100,7 +101,7 @@ void HMMTables<CLS,MAPPERCLASSTOSTRING>::addAlCount(int istrich,int k,int sentLe
 
   {
     typename map<AlDeps<CLS>,FlexArray<double> >::iterator p=alProb.find(deps);
-    if( p==alProb.end() ) 
+    if( p==alProb.end() )
       {
 	if( (CompareAlDeps&1)==0 )
 	  p=alProb.insert(make_pair(deps,FlexArray<double> (-MAX_SENTENCE_LENGTH,MAX_SENTENCE_LENGTH,0.0))).first;
@@ -113,7 +114,7 @@ void HMMTables<CLS,MAPPERCLASSTOSTRING>::addAlCount(int istrich,int k,int sentLe
   if( valuePredicted )
     {
       typename map<AlDeps<CLS>,FlexArray<double> >::iterator p=alProbPredicted.find(deps);
-      if( p==alProbPredicted.end() ) 
+      if( p==alProbPredicted.end() )
 	{
 	  if( (CompareAlDeps&1)==0 )
 	    p=alProbPredicted.insert(make_pair(deps,FlexArray<double> (-MAX_SENTENCE_LENGTH,MAX_SENTENCE_LENGTH,0.0))).first;
@@ -167,8 +168,8 @@ bool HMMTables<CLS,MAPPERCLASSTOSTRING>::getBetaInit(int I,Array<double>&x)const
 }
 
 template<class CLS,class MAPPERCLASSTOSTRING>
-HMMTables<CLS,MAPPERCLASSTOSTRING>::  HMMTables(double _probForEmpty,const MAPPERCLASSTOSTRING&m1,const MAPPERCLASSTOSTRING&m2): 
-  probabilityForEmpty(mfabs(_probForEmpty)),
+HMMTables<CLS,MAPPERCLASSTOSTRING>::  HMMTables(double _probForEmpty,const MAPPERCLASSTOSTRING&m1,const MAPPERCLASSTOSTRING&m2):
+    probabilityForEmpty(util::mfabs(_probForEmpty)),
   updateProbabilityForEmpty(_probForEmpty<0.0),
   mapper1(&m1),
   mapper2(&m2)

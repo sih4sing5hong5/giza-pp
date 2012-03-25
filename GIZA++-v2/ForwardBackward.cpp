@@ -24,8 +24,7 @@
 #include "Globals.h"
 #include "myassert.h"
 #include "HMMTables.h"
-#include "mymath.h"
-
+#include "util/math.h"
 
 double ForwardBackwardTraining(const HMMNetwork&net,Array<double>&g,Array<Array2<double> >&E){
   const int I=net.size1(),J=net.size2(),N=I*J;
@@ -88,15 +87,15 @@ double ForwardBackwardTraining(const HMMNetwork&net,Array<double>&g,Array<Array2
     esum2=esum/(J-1);
   else
     esum2=0.0;
-  if(!(esum2==0.0||mfabs(esum2-bsum)/bsum<1e-3*I))
+  if(!(esum2==0.0||util::mfabs(esum2-bsum)/bsum<1e-3*I))
     cout << "ERROR2: " << esum2 <<" " <<bsum << " " << esum << net << endl;
   double * sumptr=conv<double>(sum.begin());
   double* ge=conv<double>(g.end());
   for(double* gp=conv<double>(g.begin());gp!=ge;gp+=I)
     {
       *sumptr++=normalize_if_possible(gp,gp+I);
-      if(bsum && !(mfabs((*(sumptr-1)-bsum)/bsum)<1e-3*I))
-	cout << "ERROR: " << *(sumptr-1) << " " << bsum << " " << mfabs((*(sumptr-1)-bsum)/bsum) << ' ' << I << ' ' << J << endl;
+      if(bsum && !(util::mfabs((*(sumptr-1)-bsum)/bsum)<1e-3*I))
+	cout << "ERROR: " << *(sumptr-1) << " " << bsum << " " << util::mfabs((*(sumptr-1)-bsum)/bsum) << ' ' << I << ' ' << J << endl;
     }
   for(unsigned int j=0;j<(unsigned int)E.size();j++)
     {

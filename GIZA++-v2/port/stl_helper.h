@@ -33,7 +33,6 @@ using namespace std::tr1;
 
 #include <vector>
 #include <iostream>
-#include "mymath.h"
 #include "Array2.h"
 
 #define over_string(a,i) for(unsigned int i=0;i<a.length();i++)

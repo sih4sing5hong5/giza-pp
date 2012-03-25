@@ -25,7 +25,6 @@
 
 #include "Array.h"
 #include <map>
-#include "mymath.h"
 
 template<class T>
 T normalize_if_possible(T*a,T*b)

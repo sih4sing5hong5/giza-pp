@@ -18,8 +18,6 @@
   USA.
 */
 
-#include "mymath.h"
-
 double factorial(int n)
 {
   double  f=1;
