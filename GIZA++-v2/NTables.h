@@ -42,7 +42,7 @@ class nmodel
     {}
   VALTYPE getValue(int w, unsigned int n)const
     {
-      massert(w!=0);
+      MASSERT(w!=0);
       if(n>=ntab.getLen2())
 	return 0.0;
       else

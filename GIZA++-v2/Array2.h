@@ -31,6 +31,7 @@ Franz Josef Och (30/07/99)
 #include "port/stl_helper.h"
 #include <string>
 #include <vector>
+#include <cassert>
 
 template<class T, class Y=vector<T> > class Array2
 {

@@ -59,16 +59,16 @@ class d5model
 			    PositionIndex l, PositionIndex m,
 			    PositionIndex vacancies_total)
   {
-    massert(vacancies_j>0);
-    massert(vacancies_total>0);
-    //massert(vacancies_jp<=vacancies_total);
-    massert(vacancies_j <=vacancies_total);
-    massert(vacancies_total<=m);
+    MASSERT(vacancies_j>0);
+    MASSERT(vacancies_total>0);
+    //MASSERT(vacancies_jp<=vacancies_total);
+    MASSERT(vacancies_j <=vacancies_total);
+    MASSERT(vacancies_total<=m);
     m4_key key(M5_Dependencies,l,m,F,0,0,vacancies_jp,vacancies_total);
     map<m4_key,Vpff,compare1 >::iterator p=D1.find(key);
     if(p==D1.end())
       p=D1.insert(make_pair(key,Vpff(vacancies_total+1,make_pair(0,UNSEENPROB)))).first; // !!! constrain length
-    massert(p!=D1.end());
+    MASSERT(p!=D1.end());
     return (p->second)[vacancies_j].first;
   }
   COUNT &getCountRef_bigger (PositionIndex vacancies_j,
@@ -76,26 +76,26 @@ class d5model
 			     PositionIndex l, PositionIndex m,
 			     PositionIndex vacancies_total)
   {
-    massert(vacancies_j>0);
-    massert(vacancies_total>0);
-    massert (vacancies_jp <= vacancies_j);
-    massert (vacancies_j-vacancies_jp <= vacancies_total);
+    MASSERT(vacancies_j>0);
+    MASSERT(vacancies_total>0);
+    MASSERT (vacancies_jp <= vacancies_j);
+    MASSERT (vacancies_j-vacancies_jp <= vacancies_total);
     m4_key key(M5_Dependencies,l,m,F,0,0,-1,vacancies_total);
     map<m4_key,Vpff,compareb1 >::iterator p=Db1.find(key);
     if(p==Db1.end())
       p=Db1.insert(make_pair(key,Vpff(vacancies_total+1,make_pair(0,UNSEENPROB)))).first; // !!! constrain length
-    massert(p!=Db1.end());
+    MASSERT(p!=Db1.end());
     return (p->second)[vacancies_j - vacancies_jp].first;
   }
   PROB getProb_first (PositionIndex vacancies_j, PositionIndex vacancies_jp,
 		       int F, PositionIndex l, PositionIndex m,
 		       PositionIndex vacancies_total) const
   {
-    massert(vacancies_j>0);
-    massert(vacancies_total>0);
-    //massert(vacancies_jp<=vacancies_total);
-    massert(vacancies_j <=vacancies_total);
-    massert(vacancies_total<=m);
+    MASSERT(vacancies_j>0);
+    MASSERT(vacancies_total>0);
+    //MASSERT(vacancies_jp<=vacancies_total);
+    MASSERT(vacancies_j <=vacancies_total);
+    MASSERT(vacancies_total<=m);
     m4_key key(M5_Dependencies,l,m,F,0,0,vacancies_jp,vacancies_total);
     map<m4_key,Vpff,compare1 >::const_iterator p=D1.find(key);
     if( p==D1.end() )
@@ -107,10 +107,10 @@ class d5model
 			int F, PositionIndex l, PositionIndex m,
 			PositionIndex vacancies_total) const
   {
-    massert(vacancies_j>0);
-    massert(vacancies_total>0);
-    massert (vacancies_jp <= vacancies_j);
-    massert (vacancies_j-vacancies_jp <= vacancies_total);
+    MASSERT(vacancies_j>0);
+    MASSERT(vacancies_total>0);
+    MASSERT(vacancies_jp <= vacancies_j);
+    MASSERT(vacancies_j-vacancies_jp <= vacancies_total);
     m4_key key(M5_Dependencies,l,m,F,0,0,-1,vacancies_total);
     map<m4_key,Vpff,compareb1 >::const_iterator p=Db1.find(key);
     if(p==Db1.end())

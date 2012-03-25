@@ -19,6 +19,7 @@
   USA.
 */
 
+#include <cassert>
 #include "port/stl_helper.h"
 #include "model3.h"
 #include "collCounts.h"
@@ -67,7 +68,7 @@ pair_no
     {
       output=viterbis[pair_no].first;
       ret=viterbis[pair_no].second;
-      massert( ret==HMMRealViterbi(*ef.net,vit,i_peg-1,j_peg-1)*ef.net->finalMultiply );
+      MASSERT( ret==HMMRealViterbi(*ef.net,vit,i_peg-1,j_peg-1)*ef.net->finalMultiply );
     }
   else
     {
@@ -78,11 +79,11 @@ pair_no
 	    output.set(j,0);
 	  else
 	    output.set(j,vit[j-1]+1);
-	  massert( (j==j_peg&&int(output(j))==i_peg) || j_peg!=j);
+	  MASSERT( (j==j_peg&&int(output(j))==i_peg) || j_peg!=j);
 	}
       if( i_peg==-1 && j_peg==-1 )
 	{
-	  iassert(viterbis.size()==pair_no);
+	  IASSERT(viterbis.size()==pair_no);
 	  viterbis.push_back(make_pair(output,ret));
 	}
     }
@@ -94,12 +95,12 @@ pair_no
 	output.set(j,0);
       else
 	output.set(j,vit[j-1]+1);
-      massert( (j==j_peg&&int(output(j))==i_peg) || j_peg!=j);
+      MASSERT( (j==j_peg&&int(output(j))==i_peg) || j_peg!=j);
       }
 #endif
-  massert( j_peg==-1 || int(output(j_peg))==i_peg );
+  MASSERT( j_peg==-1 || int(output(j_peg))==i_peg );
   if( j_peg!=-1 )
-    massert(int(output(j_peg))==i_peg);
+    MASSERT(int(output(j_peg))==i_peg);
   if( output.valid() )
     return ret;
   else
@@ -188,7 +189,7 @@ LogProb model3::_viterbi_model2(const transpair_model2&ef, alignment&output, int
     for(PositionIndex i = 0 ; i <= l ; i++)
       cerr << "Fert["<<i<<"] selected " << Fert[i] << '\n';
   }
-  massert(output.valid());
+  MASSERT(output.valid());
   return ss;
 }
 LogProb model3::viterbi_model2(const transpair_model3&ef, alignment&output, int pair_no,int i_peg , int j_peg )const
@@ -197,7 +198,7 @@ LogProb model3::viterbi_model2(const transpair_model3&ef, alignment&output, int 
     {
       transpair_modelhmm efhmm(ef.E,ef.F,tTable,aTable,dTable,nTable,0.0,0.0,h);
       LogProb ret=viterbi_model2(efhmm,output,pair_no,i_peg,j_peg);
-      massert(output.valid());
+      MASSERT(output.valid());
       return ret;
     }
   return _viterbi_model2(ef,output,i_peg,j_peg);
@@ -322,7 +323,7 @@ LogProb hillClimb_std(MoveSwapMatrix<TRANSPAIR>&msc2, int= -1,int j_peg = -1)
 		  best_change_v2=j1;
 		  if( LogHillClimb )
 		    cerr << "CLIMB: " << best_change_type << " " << best_change_v1 << " " << best_change_v2 << " " << best_change_so_far << msc2 << '\n';
-		  massert(msc2.get_ef().isSubOptimal()==1);
+		  MASSERT(msc2.get_ef().isSubOptimal()==1);
 		}
 	    }
 	  for (PositionIndex i = 0 ; i <= l ; i++)if(i != aj &&(i != 0 || (m >= 2 * (msc2.fert(0)+1))) && msc2.fert(i)+1<MAX_FERTILITY)
@@ -336,7 +337,7 @@ LogProb hillClimb_std(MoveSwapMatrix<TRANSPAIR>&msc2, int= -1,int j_peg = -1)
 		  best_change_v2=i;
 		  if( LogHillClimb )
 		    cerr << "CLIMB: " << best_change_type << " " << best_change_v1 << " " << best_change_v2 << " " << best_change_so_far << msc2 << '\n';
-		  massert(msc2.get_ef().isSubOptimal()==1);
+		  MASSERT(msc2.get_ef().isSubOptimal()==1);
 		}
 	    }
 	}
@@ -539,7 +540,7 @@ void model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
 		      alignment pegAlignment(l,m);
 		      peggedAlignmentScore=viterbi_model2(ef,pegAlignment,pair_no-1,i,j);
 		      BESTPEGGED = new MoveSwapMatrix<MODEL_TYPE>(ef,pegAlignment);
-		      massert( pegAlignment(j)==i );
+		      MASSERT( pegAlignment(j)==i );
 		    }
 		  if(UseLinkCache)
 		    for(unsigned int j=1;j<=m;j++)
@@ -579,12 +580,12 @@ void model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
       if( LogPeg>1 )
 	{
 	  cout << "ALL: " << alTotal << " from " << pow(float(l+1),float(m)) << '\n';
-	  massert(alTotal<=pow(double(l+1),double(m)));
+	  MASSERT(alTotal<=pow(double(l+1),double(m)));
 	}
       NCenter+=setOfGoodCenters.size();NHillClimbed+=nHillClimbed;NAlignment+=nAlignment;NTotal+=alTotal;
       perp.addFactor(log(double(align_total_count)), count, l, m,0);
       viterbiPerp.addFactor(log(double(setOfGoodCenters[bestAlignment].second)), count, l, m,0);
-      massert(log(double(setOfGoodCenters[bestAlignment].second)) <= log(double(align_total_count)));
+      MASSERT(log(double(setOfGoodCenters[bestAlignment].second)) <= log(double(align_total_count)));
       if (dump_files||(FEWDUMPS&&sent.sentenceNo<1000)||(final&&(ONLYALDUMPS)) )
 	printAlignToFile(es, fs, Elist.getVocabList(), Flist.getVocabList(), of2, (setOfGoodCenters[bestAlignment].first)->getAlignment(), pair_no,
 			 setOfGoodCenters[bestAlignment].second);

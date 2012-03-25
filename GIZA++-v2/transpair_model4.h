@@ -59,7 +59,7 @@ class transpair_model4 : public transpair_model3
 	      for(unsigned int j2=0;j2<=m;++j2)
 		{
 		  pf(j1,j2)=d4m.getProb_first_withiterator(j1,j2,m,ci);
-		  massert(pf(j1,j2)==d4m.getProb_first(j1,j2,d4m.ewordclasses.getClass(get_es(i)),d4m.fwordclasses.getClass(get_fs(j1)),l,m));
+		  MASSERT(pf(j1,j2)==d4m.getProb_first(j1,j2,d4m.ewordclasses.getClass(get_es(i)),d4m.fwordclasses.getClass(get_fs(j1)),l,m));
 		}
 	    }
 	}

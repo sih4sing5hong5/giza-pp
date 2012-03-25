@@ -72,7 +72,7 @@ class MoveSwapMatrix : public alignment
     }
   void delSwap(WordIndex x, WordIndex y)
     {
-      massert(y>x);
+      MASSERT(y>x);
       delswap(x,y)=1;
       delswap(y,x)=1;
     }
@@ -82,13 +82,13 @@ class MoveSwapMatrix : public alignment
     }
   bool isDelSwap(WordIndex x, WordIndex y)const
     {
-      massert(y>x);
+      MASSERT(y>x);
       return DoViterbiTraining||delswap(x,y);
     }
   LogProb cmove(WordIndex x, WordIndex y)const
     {
-      massert( get_al(y)!=x );
-      massert( delmove(x,y)==0 );
+      MASSERT( get_al(y)!=x );
+      MASSERT( delmove(x,y)==0 );
       if( lazyEvaluation )
 	return ef.scoreOfMove(*this,x,y);
       else
@@ -98,14 +98,14 @@ class MoveSwapMatrix : public alignment
     }
   LogProb cswap(WordIndex x, WordIndex y)const
     {
-      massert(x<y);
-      massert(delswap(x,y)==0);
-      massert(get_al(x)!=get_al(y));
+      MASSERT(x<y);
+      MASSERT(delswap(x,y)==0);
+      MASSERT(get_al(x)!=get_al(y));
       if( lazyEvaluation )
 	return ef.scoreOfSwap(*this,x,y);
       else
 	{
-	  massert(y>x);
+	  MASSERT(y>x);
 	  return _cswap(x, y);
 	}
     }

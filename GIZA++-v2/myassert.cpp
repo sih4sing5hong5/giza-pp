@@ -1,20 +1,17 @@
-#include "port/stl_helper.h"
-#include <iostream>
 #include "myassert.h"
 
-#ifndef STANDARD_ASSERT
-void myerror(int line,const char *file,const char *expression)
-{
-  cerr << "(general.h):Assertion failed: '" << expression <<  "' ::: b "
-    << file << ":" << line << endl;
-  cout << "(general.h):Assertion failed: '" << expression <<  "' ::: b "
-    << file << ":" << line << endl;
+#include "port/stl_helper.h"
+#include <iostream>
+
+namespace util {
+
+void Logging::myerror(int line,const char *file,const char *expression) {
+  std::cerr << "Assertion failed: '" << expression <<  "' ::: b "
+            << file << ":" << line << std::endl;
 }
-void imyerror(int line,const char *file,const char *expression)
-{
-  cerr << "Error: '" << expression <<  "' ::: in Source " << file
-    << ":" << line << endl;
+void Logging::imyerror(int line,const char *file,const char *expression) {
+  std::cerr << "Error: '" << expression <<  "' ::: in Source " << file
+            << ":" << line << std::endl;
 }
 
-#endif
-
+} // namespace util

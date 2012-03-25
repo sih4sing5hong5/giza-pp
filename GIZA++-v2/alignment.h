@@ -82,9 +82,9 @@ class alignment
   void set(PositionIndex j, PositionIndex aj)
     {
       PositionIndex old_aj=a[j];
-      massert(j<a.size());massert(aj<f.size());
-      massert(old_aj<f.size());massert(f[old_aj]>0);
-      massert(j>0);
+      MASSERT(j<a.size());MASSERT(aj<f.size());
+      MASSERT(old_aj<f.size());MASSERT(f[old_aj]>0);
+      MASSERT(j>0);
       positionSum[old_aj]-=j;
       // ausfuegen
       PositionIndex prev=als_j[j].prev;
@@ -120,28 +120,28 @@ class alignment
     {return a ;}
   PositionIndex get_al(PositionIndex j)const
     {
-      massert(j<a.size());
+      MASSERT(j<a.size());
       return a[j];
     }
   PositionIndex operator()(PositionIndex j)const
     {
-      massert(j<a.size());
+      MASSERT(j<a.size());
       return a[j];
     }
   PositionIndex fert(PositionIndex i)const
     {
-      massert(i<f.size());
+      MASSERT(i<f.size());
       return f[i];
     }
   PositionIndex get_head(PositionIndex i)const
     {
-      massert( als_i[i]==_get_head(i) );
+      MASSERT( als_i[i]==_get_head(i) );
       return als_i[i];
     }
   PositionIndex get_center(PositionIndex i)const
     {
       if( i==0 )return 0;
-      massert(((positionSum[i]+f[i]-1)/f[i]==_get_center(i)));
+      MASSERT(((positionSum[i]+f[i]-1)/f[i]==_get_center(i)));
       return (positionSum[i]+f[i]-1)/f[i];
     }
   PositionIndex _get_head(PositionIndex i)const
@@ -155,7 +155,7 @@ class alignment
   PositionIndex _get_center(PositionIndex i)const
     {
       if( i==0 )return 0;
-      massert(fert(i));
+      MASSERT(fert(i));
       PositionIndex sum=0;
       for(PositionIndex j=1;j<=m;j++)
 	if( a[j]==i )
@@ -185,13 +185,13 @@ class alignment
       //assert( als_j[j].prev==k );
       //assert(k);
       //return k;
-      massert(als_j[j].prev==0||a[als_j[j].prev]==a[j]);
+      MASSERT(als_j[j].prev==0||a[als_j[j].prev]==a[j]);
       return als_j[j].prev;
     }
   friend ostream &operator<<(ostream&out, const alignment&a);
   friend bool operator==(const alignment&a, const alignment&b)
     {
-      massert(a.a.size()==b.a.size());
+      MASSERT(a.a.size()==b.a.size());
       for(PositionIndex j=1;j<=a.get_m();j++)
 	if(a(j)!=b(j))
 	  return 0;
@@ -199,7 +199,7 @@ class alignment
     }
   friend bool operator<(const alignment&x, const alignment&y)
     {
-      massert(x.get_m()==y.get_m());
+      MASSERT(x.get_m()==y.get_m());
       for(PositionIndex j=1;j<=x.get_m();j++)
 	if( x(j)<y(j) )
 	  return 1;
@@ -209,7 +209,7 @@ class alignment
     }
   friend int differences(const alignment&x, const alignment&y){
     int count=0;
-    massert(x.get_m()==y.get_m());
+    MASSERT(x.get_m()==y.get_m());
     for(PositionIndex j=1;j<=x.get_m();j++)
       count += (x(j)!=y(j));
     return count;

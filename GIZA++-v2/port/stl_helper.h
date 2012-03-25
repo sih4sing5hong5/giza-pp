@@ -46,8 +46,8 @@ extern double n1mult,n2mult,n3mult;
 
 inline double realProb(int n1,int n2)
 {
-  massert(n1<=n2);
-  iassert(n1>=0&&n2>0);
+  MASSERT(n1<=n2);
+  IASSERT(n1>=0&&n2>0);
   if(n2==0)n2=1;
   return ((double)n1)/(double)n2;
 }

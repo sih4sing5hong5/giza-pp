@@ -83,17 +83,17 @@ class amodel {
   ~amodel() {}
 
   VALTYPE get(WordIndex aj, WordIndex j, WordIndex l, WordIndex m) const {
-    massert( (!is_distortion) || aj<=m );massert( (!is_distortion) || j<=l );massert( (!is_distortion) || aj!=0 );
-    massert( is_distortion    || aj<=l );massert( is_distortion    || j<=m );massert( (is_distortion) || j!=0 );
-    massert( l<MaxSentLength );massert( m<MaxSentLength );
+    MASSERT( (!is_distortion) || aj<=m );MASSERT( (!is_distortion) || j<=l );MASSERT( (!is_distortion) || aj!=0 );
+    MASSERT( is_distortion    || aj<=l );MASSERT( is_distortion    || j<=m );MASSERT( (is_distortion) || j!=0 );
+    MASSERT( l<MaxSentLength );MASSERT( m<MaxSentLength );
     return a.get(aj, j, (CompactADTable&&is_distortion)?MaxSentLength:(l+1),(CompactADTable&&!is_distortion)?MaxSentLength:(m+1));
   }
 
   VALTYPE&getRef(WordIndex aj, WordIndex j, WordIndex l, WordIndex m)
     {
-      massert( (!is_distortion) || aj<=m );massert( (!is_distortion) || j<=l );
-      massert( is_distortion    || aj<=l );massert( is_distortion    || j<=m );massert( (is_distortion) || j!=0 );
-      massert( l<MaxSentLength );massert( m<MaxSentLength );
+      MASSERT( (!is_distortion) || aj<=m );MASSERT( (!is_distortion) || j<=l );
+      MASSERT( is_distortion    || aj<=l );MASSERT( is_distortion    || j<=m );MASSERT( (is_distortion) || j!=0 );
+      MASSERT( l<MaxSentLength );MASSERT( m<MaxSentLength );
       return a(aj, j, (CompactADTable&&is_distortion)?MaxSentLength:(l+1),(CompactADTable&&!is_distortion)?MaxSentLength:(m+1));
     }
   void setValue(WordIndex aj, WordIndex j, WordIndex l, WordIndex m, VALTYPE val)
@@ -137,7 +137,7 @@ class amodel {
               for (i=0;i<=L;i++) {
                 nParam++;
                 aTable.getRef(i, j, L, M)=get(i, j, L, M)/total;
-                massert(aTable.getRef(i,j,L,M)<=1.0);
+                MASSERT(aTable.getRef(i,j,L,M)<=1.0);
                 if( NoEmptyWord&&i==0 )
                   aTable.getRef(i,j,L,M)=0;
               }
@@ -153,7 +153,7 @@ class amodel {
               for (j = 1; j <= M;j++) {
                 aTable.getRef(j, i, L, M) = amodel_smooth_factor / M + (1.0-amodel_smooth_factor) * get(j, i, L, M) / total;
                 nParam++;
-                massert(aTable.getRef(j,i,L,M)<=1.0);
+                MASSERT(aTable.getRef(j,i,L,M)<=1.0);
                 if( NoEmptyWord&&i==0 )
                   aTable.getRef(j,i,L,M)=0;
               }

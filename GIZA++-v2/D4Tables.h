@@ -182,7 +182,7 @@ class d4model
 	}
       else
 	{
-	  massert((p->second)[j-j_cp+msl].second<=1.0);
+	  MASSERT((p->second)[j-j_cp+msl].second<=1.0);
 	  return max(PROB_SMOOTH,d4modelsmooth_factor/(2*m-1)+(1-d4modelsmooth_factor)*(p->second)[j-j_cp+msl].second);
 	}
     }
@@ -198,7 +198,7 @@ class d4model
 	}
       else
 	{
-	  massert((p->second)[j-j_cp+msl].second<=1.0);
+	  MASSERT((p->second)[j-j_cp+msl].second<=1.0);
 	  return max(PROB_SMOOTH,d4modelsmooth_factor/(2*m-1)+(1-d4modelsmooth_factor)*(p->second)[j-j_cp+msl].second);
 	}
     }
@@ -208,25 +208,25 @@ class d4model
     }
   PROB getProb_bigger_withiterator(WordIndex j,WordIndex j_prev,int m,const map<m4_key,Vpff,compareb1 >::const_iterator&p)const
     {
-      massert(j>=1);massert(j_prev>=1);
-      massert(j>j_prev);
-      massert(j<=msl);massert(j_prev<=msl);
+      MASSERT(j>=1);MASSERT(j_prev>=1);
+      MASSERT(j>j_prev);
+      MASSERT(j<=msl);MASSERT(j_prev<=msl);
       if(p==Db1.end())
 	{
 	  return PROB_SMOOTH;
 	}
       else
 	{
-	  massert((p->second)[j-j_prev+msl].second<=1.0 );
+	  MASSERT((p->second)[j-j_prev+msl].second<=1.0 );
 	  return max(PROB_SMOOTH,d4modelsmooth_factor/(m-1)+(1-d4modelsmooth_factor)*(p->second)[j-j_prev+msl].second);
 	}
     }
 
   PROB getProb_bigger(WordIndex j,WordIndex j_prev,int E,int F,int l,int m)const
     {
-      massert(j>=1);massert(j_prev>=1);
-      massert(j>j_prev);
-      massert(j<=msl);massert(j_prev<=msl);
+      MASSERT(j>=1);MASSERT(j_prev>=1);
+      MASSERT(j>j_prev);
+      MASSERT(j<=msl);MASSERT(j_prev<=msl);
       m4_key key(M4_Dependencies,l,m,F,E,j_prev,-1,-1);
       map<m4_key,Vpff,compareb1 >::const_iterator p=Db1.find(key);
       if(p==Db1.end())
@@ -235,7 +235,7 @@ class d4model
 	}
       else
 	{
-	  massert((p->second)[j-j_prev+msl].second<=1.0 );
+	  MASSERT((p->second)[j-j_prev+msl].second<=1.0 );
 	  return max(PROB_SMOOTH,d4modelsmooth_factor/(m-1)+(1-d4modelsmooth_factor)*(p->second)[j-j_prev+msl].second);
 	}
     }
@@ -366,16 +366,16 @@ class d4model
 	  m4_key k(M4_Dependencies,0,0,0,0,0,-1,-1);
 	  for(unsigned int i=0;i<linestr.size();i+=2)
 	    {
-	      if( linestr[i]=="l:" ){k.l=atoi(linestr[i+1].c_str());iassert(M4_Dependencies&DEP_MODEL_l);}
-	      if( linestr[i]=="m:" ){k.m=atoi(linestr[i+1].c_str());iassert(M4_Dependencies&DEP_MODEL_m);}
-	      if( linestr[i]=="F:" ){k.F=fwordclasses(linestr[i+1]);iassert(M4_Dependencies&DEP_MODEL_F);}
-	      if( linestr[i]=="E:" ){k.E=ewordclasses(linestr[i+1]);iassert(M4_Dependencies&DEP_MODEL_E);}
-	      //if( linestr[i]=="j-1:" ){k.prevj=atoi(linestr[i+1].c_str());iassert(M4_Dependencies&DEP_MODEL_pj);}
+	      if( linestr[i]=="l:" ){k.l=atoi(linestr[i+1].c_str());IASSERT(M4_Dependencies&DEP_MODEL_l);}
+	      if( linestr[i]=="m:" ){k.m=atoi(linestr[i+1].c_str());IASSERT(M4_Dependencies&DEP_MODEL_m);}
+	      if( linestr[i]=="F:" ){k.F=fwordclasses(linestr[i+1]);IASSERT(M4_Dependencies&DEP_MODEL_F);}
+	      if( linestr[i]=="E:" ){k.E=ewordclasses(linestr[i+1]);IASSERT(M4_Dependencies&DEP_MODEL_E);}
+	      //if( linestr[i]=="j-1:" ){k.prevj=atoi(linestr[i+1].c_str());IASSERT(M4_Dependencies&DEP_MODEL_pj);}
 	    }
 	  string str;
 	  double sum;
 	  file >> str >> sum;
-	  iassert(str=="SUM:");
+	  IASSERT(str=="SUM:");
 	  if( str!="SUM:")
 	    cerr << "ERROR: string is " << str << " and not sum " << endl;
 
@@ -409,10 +409,10 @@ class d4model
 	  bool sumRead=0;
 	  for(unsigned int i=0;i<linestr.size();i+=2)
 	    {
-	      if( linestr[i]=="l:" ){k.l=atoi(linestr[i+1].c_str());iassert(M4_Dependencies&DEP_MODELb_l);}
-	      else if( linestr[i]=="m:" ){k.m=atoi(linestr[i+1].c_str());iassert(M4_Dependencies&DEP_MODELb_m);}
-	      else if( linestr[i]=="F:" ){k.F=fwordclasses(linestr[i+1]);iassert(M4_Dependencies&DEP_MODELb_F);}
-	      else if( linestr[i]=="E:" ){k.E=ewordclasses(linestr[i+1]);iassert(M4_Dependencies&DEP_MODELb_E);}
+	      if( linestr[i]=="l:" ){k.l=atoi(linestr[i+1].c_str());IASSERT(M4_Dependencies&DEP_MODELb_l);}
+	      else if( linestr[i]=="m:" ){k.m=atoi(linestr[i+1].c_str());IASSERT(M4_Dependencies&DEP_MODELb_m);}
+	      else if( linestr[i]=="F:" ){k.F=fwordclasses(linestr[i+1]);IASSERT(M4_Dependencies&DEP_MODELb_F);}
+	      else if( linestr[i]=="E:" ){k.E=ewordclasses(linestr[i+1]);IASSERT(M4_Dependencies&DEP_MODELb_E);}
 	      else if( linestr[i]=="SUM:" )
 		{
 		  cerr << "Warning: obviously no dependency.\n";

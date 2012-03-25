@@ -69,7 +69,7 @@ class transpair_model1
 	      t(i,j)=1.0;
 	    else
 	      t(i,j)=1/100.0;
-	    massert( t(i,j)>=PROB_SMOOTH );
+	    MASSERT( t(i,j)>=PROB_SMOOTH );
 	  }
 }*/
   WordIndex get_l()const
@@ -77,7 +77,7 @@ class transpair_model1
   WordIndex get_m()const
     {return m;}
   const PROB&get_t(WordIndex i, WordIndex j)const
-    {massert( t(i,j)>=PROB_SMOOTH);
+    {MASSERT( t(i,j)>=PROB_SMOOTH);
     return t(i, j);}
   WordIndex get_es(int i)const {return E[i];}
   WordIndex get_fs(int j)const {return F[j];}

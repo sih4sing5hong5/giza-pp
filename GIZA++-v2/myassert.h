@@ -1,20 +1,27 @@
-#ifndef MY_ASSERT_DEFINED
-#define MY_ASSERT_DEFINED
-void myerror(int line,const char *file,const char *expression);
-void imyerror(int line,const char *file,const char *expression);
+#ifndef GIZAPP_UTIL_ASSERT_H_
+#define GIZAPP_UTIL_ASSERT_H_
 
-#define iassert(expression) do {if (!(expression)) {imyerror(__LINE__,__FILE__,#expression);}} while (0)
+namespace util {
 
-#
-#define massert(expr) do {} while(0)
+class Logging {
+ public:
+  static void myerror(int line, const char *file, const char *expression);
 
-#define vassert(expr) do {} while(0)
+  static void imyerror(int line, const char *file, const char *expression);
 
-#include <cassert>
+ private:
+  Logging() {}
+  ~Logging() {}
+};
 
-#endif
+} // namespace util
 
+#define IASSERT(expression) \
+  do {if (!(expression)) \
+    { util::Logging::imyerror(__LINE__, __FILE__, #expression);}} while (0)
 
+#define MASSERT(expr) do {} while(0)
 
+#define VASSERT(expr) do {} while(0)
 
-
+#endif  // GIZAPP_UTIL_ASSERT_H_

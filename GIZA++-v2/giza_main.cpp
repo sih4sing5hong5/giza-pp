@@ -358,7 +358,7 @@ bool readNextSent(istream&is,map< pair<int,int>,char >&s,int&number)
       map< pair<int,int>,char >::const_iterator i=s.find(pair<int,int>(n1,n2));
       if( i==s.end()||i->second=='P' )
 	s[pair<int,int>(n1,n2)]=x[0];
-      massert(x[0]=='S'||x[0]=='P');
+      MASSERT(x[0]=='S'||x[0]=='P');
       nS+= (x[0]=='S');
       nP+= (x[0]=='P');
       nO+= (!(x[0]=='S'||x[0]=='P'));
