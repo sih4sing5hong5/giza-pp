@@ -22,10 +22,10 @@
 #ifndef GIZAPP_PORT_FILE_SPEC_H_
 #define GIZAPP_PORT_FILE_SPEC_H_
 
-#include <time.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
+#include <ctime>
+#include <cstdlib>
+#include <string>
+#include <cstdio>
 
 namespace port {
 
@@ -37,27 +37,28 @@ namespace port {
   Originally implemented in C by Yaser Al-Onaizan;
   editions for C++ and formatting by Noah A. Smith, 9 July 1999
 */
-char *GetFileSpec(){
+std::string GetFileSpec() {
   struct tm *local;
   time_t t;
   char *user;
-  char time_stmp[19];
-  char *file_spec = 0;
+  char time_stmp[64];
+  std::string res;
 
   t = time(NULL);
   local = localtime(&t);
 
-  sprintf(time_stmp, "%02d-%02d-%02d.%02d%02d%02d.", local->tm_year,
-	  (local->tm_mon + 1), local->tm_mday, local->tm_hour,
-	  local->tm_min, local->tm_sec);
-  user = getenv("USER");
+  std::snprintf(time_stmp, sizeof(time_stmp), "%02d-%02d-%02d.%02d%02d%02d.",
+                local->tm_year, (local->tm_mon + 1), local->tm_mday, local->tm_hour,
+                local->tm_min, local->tm_sec);
+  res.append(time_stmp);
 
-  file_spec = (char *)malloc(sizeof(char) *
-			     (strlen(time_stmp) + strlen(user) + 1));
-  file_spec[0] = '\0';
-  strcat(file_spec, time_stmp) ;
-  strcat(file_spec, user);
-  return file_spec;
+  user = getenv("USER");
+  if (user == NULL) {
+    std::fprintf(stderr, "Unknown environment variables.");
+    std::exit(1);
+  }
+  res.append(user);
+  return res;
 }
 } // namespace port
 
