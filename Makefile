@@ -1,4 +1,3 @@
-
 .PHONY: gizapp mkcls-v2
 
 all: gizapp mkcls-v2
