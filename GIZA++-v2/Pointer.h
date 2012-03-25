@@ -33,6 +33,8 @@ class SmartPointer
  public:
   SmartPointer(T*_p=0)
     : p(_p) {}
+  virtual ~SmartPointer() {}
+
   inline T&operator*() const
     {return *p;}
   inline T*operator->() const
@@ -54,6 +56,8 @@ class SmartPointerConst
  public:
   SmartPointerConst(const T*_p=0)
     : p(_p) {}
+  virtual ~SmartPointerConst() {}
+
   inline const T&operator*() const
     {return *p;}
   inline const T*operator->() const
