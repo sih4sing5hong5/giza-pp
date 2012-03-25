@@ -21,6 +21,7 @@
 
 #ifndef transpair_modelhmm_h_fjo_defined
 #define transpair_modelhmm_h_fjo_defined
+
 #include "Array2.h"
 #include "defs.h"
 #include "Vector.h"
@@ -30,8 +31,8 @@
 #include "alignment.h"
 #include <cmath>
 #include "transpair_model2.h"
-#include "ForwardBackward.h"
 #include "hmm.h"
+#include "forward_backward.h"
 
 class transpair_modelhmm : public transpair_model2
 {

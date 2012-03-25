@@ -80,7 +80,7 @@ LIBOBJECTS = \
 	model345-peg.o \
 	hmm.o \
 	HMMTables.o \
-	ForwardBackward.o
+	forward_backward.o
 
 PROGRAMS = GIZA++ snt2plain.out plain2snt.out snt2cooc.out
 

@@ -45,7 +45,8 @@
 #include "vocab.h"
 #include "WordClasses.h"
 #include "HMMTables.h"
-#include "ForwardBackward.h"
+
+class HMMNetwork;
 
 class hmm : public model2
 {
@@ -75,6 +76,7 @@ class hmm : public model2
   void load_table(const char* aname);
   void em_loop(Perplexity& perp, sentenceHandler& sHandler1, bool dump_files,
 	       const char* alignfile, Perplexity&, bool test,bool doInit,int iter);
+
   HMMNetwork *makeHMMNetwork(const Vector<WordIndex>& es,const Vector<WordIndex>&fs,bool doInit)const;
   friend class model3;
 };

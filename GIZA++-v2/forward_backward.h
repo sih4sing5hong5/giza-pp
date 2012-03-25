@@ -19,10 +19,11 @@
   USA.
 */
 
-#ifndef NO_EM_MARKOF_ZEUGS_DEFINED
-#define NO_EM_MARKOF_ZEUGS_DEFINED
+#ifndef GIZAPP_FORWARD_BACKWARD_H_
+#define GIZAPP_FORWARD_BACKWARD_H_
+
 #ifndef NO_TRAINING
-#include "util/assert.h"
+
 #include "Array.h"
 #include "Array2.h"
 
@@ -52,10 +53,12 @@ class HMMNetwork
       return out <<"N: \n"<< x.n << endl << "E: \n" << x.e << "A:\n" << x.alphainit << "B:\n" << x.betainit << endl;
     }
 };
+
 double ForwardBackwardTraining(const HMMNetwork&mc,Array<double>&gamma,Array<Array2<double> >&epsilon);
 void HMMViterbi(const HMMNetwork&mc,Array<int>&vit);
 double HMMRealViterbi(const HMMNetwork&net,Array<int>&vit,int pegi=-1,int pegj=-1,bool verbose=0);
 double MaximumTraining(const HMMNetwork&net,Array<double>&g,Array<Array2<double> >&e);
 void HMMViterbi(const HMMNetwork&net,Array<double>&g,Array<int>&vit);
-#endif
-#endif
+
+#endif  // NO_TRAINING
+#endif  // GIZAPP_FORWARD_BACKWARD_H_

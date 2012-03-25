@@ -20,7 +20,7 @@
 */
 
 #ifndef NO_TRAINING
-#include "ForwardBackward.h"
+#include "forward_backward.h"
 #include "Globals.h"
 #include "HMMTables.h"
 #include "util/assert.h"
