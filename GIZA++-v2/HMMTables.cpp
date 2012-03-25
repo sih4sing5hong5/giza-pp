@@ -22,7 +22,7 @@ USA.
 */
 #include "HMMTables.h"
 #include <fstream>
-#include "Globals.h"
+#include "globals.h"
 #include "Parameter.h"
 #include "util/math.h"
 

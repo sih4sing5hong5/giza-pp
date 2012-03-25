@@ -28,7 +28,7 @@
 #include "Perplexity.h"
 #include "sentence_handler.h"
 #include "TTables.h"
-#include "Globals.h"
+#include "globals.h"
 #include "Parameter.h"
 
 void printHelp(void)

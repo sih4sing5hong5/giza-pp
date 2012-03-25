@@ -38,7 +38,7 @@
 #include "util/vector.h"
 #include "defs.h"
 #include "vocab.h"
-#include "Globals.h"
+#include "globals.h"
 /*----------------------- Class Prototype Definition ------------------------*
  Class Name: sentenceHandleer
  Objective: This class is defined to handle training sentece pairs from the

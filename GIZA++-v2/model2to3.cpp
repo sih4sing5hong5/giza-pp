@@ -21,7 +21,7 @@
 
 #include "model3.h"
 #include "util/util.h"
-#include "Globals.h"
+#include "globals.h"
 
 namespace {
 

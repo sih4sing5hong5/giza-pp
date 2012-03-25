@@ -40,7 +40,7 @@
 #include "defs.h"
 #include "util/vector.h"
 #include "util/array2.h"
-#include "Globals.h"
+#include "globals.h"
 
 #define CROSS_ENTROPY_BASE 2
 

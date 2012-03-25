@@ -27,7 +27,7 @@
 #include <fstream>
 #include "defs.h"
 #include "util/util.h"
-#include "Globals.h"
+#include "globals.h"
 #include "D4Tables.h"
 #include "D5Tables.h"
 #include "atables.h"

@@ -20,7 +20,7 @@ USA.
 
 */
 #include "model2.h"
-#include "Globals.h"
+#include "globals.h"
 #include "util/util.h"
 #include "Parameter.h"
 #include "defs.h"

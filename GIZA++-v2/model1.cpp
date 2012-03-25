@@ -20,7 +20,7 @@
 */
 
 #include "model1.h"
-#include "Globals.h"
+#include "globals.h"
 #include "util/util.h"
 #include "Parameter.h"
 

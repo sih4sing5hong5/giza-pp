@@ -4,3 +4,4 @@
 - Rename files appropriately to keep consistency.
 - Introduce namespace 'gizapp'.
 - Reduce header dependencies.
+- Need some abstract classes.

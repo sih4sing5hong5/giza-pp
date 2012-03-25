@@ -21,7 +21,7 @@
 
 #include "model3.h"
 #include "util/util.h"
-#include "Globals.h"
+#include "globals.h"
 
 
 LogProb model3::prob_of_target_and_alignment_given_source(Vector<WordIndex>& A,

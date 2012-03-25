@@ -20,7 +20,7 @@
 */
 
 #include "atables.h"
-#include "Globals.h"
+#include "globals.h"
 #include "util/assert.h"
 #include "Parameter.h"
 

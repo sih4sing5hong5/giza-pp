@@ -23,7 +23,7 @@
 #define _d4tables_h_define
 #include <math.h>
 #include "WordClasses.h"
-#include "Globals.h"
+#include "globals.h"
 #include "util/assert.h"
 
 extern float d4modelsmooth_factor;

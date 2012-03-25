@@ -21,7 +21,7 @@
 
 #include "model3.h"
 #include "collCounts.h"
-#include "Globals.h"
+#include "globals.h"
 #include "util/util.h"
 #include "D5Tables.h"
 #include "transpair_model5.h"

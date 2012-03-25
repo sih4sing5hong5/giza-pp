@@ -44,7 +44,7 @@
 #include <fstream>
 #include "util/array4.h"
 #include "util/assert.h"
-#include "Globals.h"
+#include "globals.h"
 
 extern bool CompactADTable;
 extern float amodel_smooth_factor;

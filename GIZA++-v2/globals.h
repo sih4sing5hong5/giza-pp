@@ -19,8 +19,9 @@
   USA.
 */
 
-#ifndef Globals_asdf_defined
-#define Globals_asdf_defined
+#ifndef GIZAPP_GLOBALS_H_
+#define GIZAPP_GLOBALS_H_
+
 #include <string>
 #include <fstream>
 #include <map>
@@ -70,4 +71,4 @@ double ErrorsInAlignment(const map< pair<int,int>,char >&reference,const Vector<
 extern Vector<map< pair<int,int>,char > > ReferenceAlignment;
 void printGIZAPars(ostream&out);
 
-#endif
+#endif  // GIZAPP_GLOBALS_H_

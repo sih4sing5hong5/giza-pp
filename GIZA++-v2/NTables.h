@@ -29,7 +29,7 @@
 #include "util/array2.h"
 #include "util/vector.h"
 #include "vocab.h"
-#include "Globals.h"
+#include "globals.h"
 
 extern double NTablesFactorGraphemes,NTablesFactorGeneral;
 

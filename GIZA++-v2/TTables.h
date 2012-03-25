@@ -48,7 +48,7 @@
 
 #include <fstream>
 
-#include "Globals.h"
+#include "globals.h"
 
 
 /* The tables defined in the following classes are defined as hash tables. For

@@ -20,7 +20,7 @@
 */
 
 #include "hmm.h"
-#include "Globals.h"
+#include "globals.h"
 #include "util/util.h"
 #include "HMMTables.h"
 #include "forward_backward.h"

@@ -28,7 +28,7 @@
 #include <cstring>
 
 #include "port/stl_helper.h"
-#include "Globals.h"
+#include "globals.h"
 #include "util/pointer.h"
 
 inline unsigned int mConvert(const string&s,unsigned int &i)
