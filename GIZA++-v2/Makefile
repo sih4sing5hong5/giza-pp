@@ -11,7 +11,21 @@ CFLAGS_DBG = -g -DDEBUG -DWORDINDEX_WITH_4_BYTE
 CFLAGS_NRM = -DWORDINDEX_WITH_4_BYTE
 CFLAGS_VDBG = -g -DDEBUG -DWORDINDEX_WITH_4_BYTE -DVDEBUG
 
-CFLAGS += $(CFLAGS_OPT) -Wall -Wno-parentheses -I.
+# These are good warnings to turn on by default
+AM_CXXFLAGS = \
+	-Wall \
+	-Wcast-align \
+	-Wcast-qual \
+	-Wconversion \
+	-Wextra \
+	-Wfloat-equal \
+	-Woverloaded-virtual \
+	-Wparentheses \
+	-Wpointer-arith \
+	-Wswitch-enum \
+	-Wwrite-strings
+
+CFLAGS += $(CFLAGS_OPT) -Wall -Wno-parentheses $(AM_CXXFLAGS) -I.
 
 TYPE =
 
