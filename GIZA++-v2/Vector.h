@@ -282,7 +282,7 @@ template<class T> class Vector
 	}
       int biggest;
       in >> biggest;
-      in >> a;
+      // in >> a;
       resize(biggest);
       for(int iv=0;iv<size();iv++)
 	{

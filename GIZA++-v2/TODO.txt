@@ -1,4 +1,4 @@
-- Add LIBOBJECTS to Makefile
+- Add LIBOBJECTS to Makefile (DONE)
   - Remove dependencies.
 - Add unit tests to make code refactoring easier and find bugs.
 - Rename files appropriately to keep consistency.
