@@ -97,7 +97,7 @@ LogProb transpair_model5::scoreOfMove(const alignment&a, WordIndex new_i, WordIn
   LogProb a_prob=thisValue;
   if( a_prob<0.0 )
     a_prob=prob_of_target_and_alignment_given_source(a,2);
-  massert(a_prob==prob_of_target_and_alignment_given_source(a,2));
+  MASSERT(a_prob==prob_of_target_and_alignment_given_source(a,2));
 
   LogProb b_prob=prob_of_target_and_alignment_given_source(b,2);
   change*=b_prob/a_prob;
@@ -114,7 +114,7 @@ LogProb transpair_model5::scoreOfSwap(const alignment&a, WordIndex j1, WordIndex
   LogProb a_prob=thisValue;
   if( a_prob<0.0 )
     a_prob=prob_of_target_and_alignment_given_source(a,2);
-  massert(a_prob==prob_of_target_and_alignment_given_source(a,2));
+  MASSERT(a_prob==prob_of_target_and_alignment_given_source(a,2));
   LogProb b_prob=prob_of_target_and_alignment_given_source(b,2);
   change*=b_prob/a_prob;
   return change;

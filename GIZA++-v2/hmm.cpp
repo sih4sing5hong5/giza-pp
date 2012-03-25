@@ -249,7 +249,7 @@ HMMNetwork *hmm::makeHMMNetwork(const Vector<WordIndex>& es,const Vector<WordInd
 	  if( UniformEntryExit&1 )probs.getAlphaInit(I,net->alphainit);
 	}
     }
-  massert( net->alphainit.size()==I );massert( net->betainit.size()==I );
+  MASSERT( net->alphainit.size()==I );MASSERT( net->betainit.size()==I );
   normalize_if_possible(conv<double>(net->alphainit.begin()),conv<double>(net->alphainit.end()));
   normalize_if_possible(conv<double>(net->betainit.begin()),conv<double>(net->betainit.end()));
   transform(net->betainit.begin(),net->betainit.end(),net->betainit.begin(),bind1st(multiplies<double>(),2*l));
@@ -341,7 +341,7 @@ void hmm::em_loop(Perplexity& perp, sentenceHandler& sHandler1,
 					      frenchClass ,jj+1,*ep * mult,0.0);
 			    np0c+=*ep * mult;
 			  }
-			massert( &epsilon[jj](i,i_bef)== ep);
+			MASSERT( &epsilon[jj](i,i_bef)== ep);
 		      }
 		  }
 	      }

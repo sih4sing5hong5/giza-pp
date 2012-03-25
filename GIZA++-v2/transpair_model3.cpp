@@ -133,7 +133,7 @@ LogProb transpair_model3::_scoreOfSwap(const alignment&a, WordIndex j1, WordInde
   LogProb a_prob=thisValue;
   if( a_prob<0.0 )
     a_prob=prob_of_target_and_alignment_given_source(a);
-  massert(a_prob==prob_of_target_and_alignment_given_source(a));
+  MASSERT(a_prob==prob_of_target_and_alignment_given_source(a));
   LogProb b_prob=prob_of_target_and_alignment_given_source(b);
   if( a_prob )
     return b_prob/a_prob;
@@ -160,7 +160,7 @@ LogProb transpair_model3::prob_of_target_and_alignment_given_source(const alignm
   for (WordIndex j = 1 ; j <= m ; j++)
     {
       total*= get_t(al(j), j) ;
-      massert( get_t(al(j), j)>=PROB_SMOOTH );
+      MASSERT(get_t(al(j), j)>=PROB_SMOOTH);
       if( verb) cerr << "IBM-3: t of " << j << " " << al(j) << ": " << get_t(al(j), j)  << " -> " << total << '\n';
       if (al(j))
 	{
@@ -185,7 +185,7 @@ void transpair_model3::computeScores(const alignment&al,vector<double>&d)const
   for (WordIndex j = 1 ; j <= m ; j++)
     {
       total3*= get_t(al(j), j) ;
-      massert( get_t(al(j), j)>=PROB_SMOOTH );
+      MASSERT( get_t(al(j), j)>=PROB_SMOOTH );
       if (al(j))
 	{
 	  total4 *= get_d(al(j), j);

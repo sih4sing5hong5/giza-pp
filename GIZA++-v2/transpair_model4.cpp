@@ -60,7 +60,7 @@ LogProb transpair_model4::scoreOfMove(const alignment&a, WordIndex new_i, WordIn
   LogProb a_prob=thisValue;
   if(a_prob<0.0 )
     a_prob=prob_of_target_and_alignment_given_source(a,2);
-  massert(a_prob==prob_of_target_and_alignment_given_source(a,2));
+  MASSERT(a_prob==prob_of_target_and_alignment_given_source(a,2));
   WordIndex old_i=a(j);
   //alignment b(a);
   const_cast<alignment&>(a).set(j,new_i);
@@ -79,7 +79,7 @@ LogProb transpair_model4::scoreOfSwap(const alignment&a, WordIndex j1, WordIndex
   LogProb a_prob=thisValue;
   if( a_prob<0.0 )
     a_prob=prob_of_target_and_alignment_given_source(a,2);
-  massert(a_prob==prob_of_target_and_alignment_given_source(a,2));
+  MASSERT(a_prob==prob_of_target_and_alignment_given_source(a,2));
 
   //alignment b(a);
   const_cast<alignment&>(a).set(j1,aj2);
@@ -133,14 +133,14 @@ LogProb transpair_model4::prob_of_target_and_alignment_given_source(const alignm
 	    {
 	      int ep=al.prev_cept(al(j));
 	      float x2=probFirst[ep](j,al.get_center(ep));
-	      massert(x2<=1.0);
+	      MASSERT(x2<=1.0);
 	      total*=x2;
 	      if( verb) cerr << "IBM-4: d=1 of " << j << ": " << x2  << " -> " << total << endl;
 	    }
 	  else
 	    {
 	      float x2=probSecond(j,al.prev_in_cept(j));
-	      massert(x2<=1.0);
+	      MASSERT(x2<=1.0);
 	      total*=x2;
 	      if( verb) cerr << "IBM-4: d>1 of " << j << ": " << x2  << " -> " << total << endl;
 	    }

@@ -37,8 +37,8 @@ double ForwardBackwardTraining(const HMMNetwork&net,Array<double>&g,Array<Array2
       const double *next_beta=conv<double>(beta.begin())+(j+1)*I;
       const double *alprob=&net.outProb(j,ti,0),*next_node=&net.nodeProb(0,j+1);
       for(int ni=0;ni<I;++ni,(next_node+=J)){
-	massert(cur_beta<next_beta&& &net.outProb(j,ti,ni)==alprob);
-	massert(next_node == &net.nodeProb(ni,j+1));
+        MASSERT(cur_beta<next_beta&& &net.outProb(j,ti,ni)==alprob);
+        MASSERT(next_node == &net.nodeProb(ni,j+1));
 	/*	if( VERB&&(*next_beta)*(*alprob)*(*next_node) )
 	  cout << "B= " << (int)(cur_beta-beta.begin()) << " += " << (*next_beta) << "("
 	  << next_beta-beta.begin() << ") alprob:" << (*alprob) << "  lexprob:" << (*next_node) << endl;*/
@@ -63,8 +63,8 @@ double ForwardBackwardTraining(const HMMNetwork&net,Array<double>&g,Array<Array2
       double this_node=net.nodeProb(ti,j);
       const double* alprob= &net.outProb(j-1,0,ti);
       for(int pi=0;pi<I;++pi,++prev_alpha,(alprob+=I)){
-	massert(prev_alpha<cur_alpha&& &net.outProb(j-1,pi,ti)==alprob);
-	massert(&e(ti,pi)==cur_e);
+        MASSERT(prev_alpha<cur_alpha&& &net.outProb(j-1,pi,ti)==alprob);
+        MASSERT(&e(ti,pi)==cur_e);
 	const double alpha_increment= *prev_alpha*(*alprob)*this_node;
 	(*cur_alpha)+=alpha_increment;
 	(*cur_e++)+=alpha_increment*(*cur_beta);
@@ -160,7 +160,7 @@ double HMMRealViterbi(const HMMNetwork&net,Array<int>&vitar,int pegi,int pegj,bo
 	double this_node=net.nodeProb(ti,j);
 	const double *alprob= &net.outProb(j-1,0,ti);
 	for(int pi=0;pi<I;++pi,++prev_alpha,(alprob+=I)){
-	  massert(prev_alpha<cur_alpha&& &net.outProb(j-1,pi,ti)==alprob);
+	  MASSERT(prev_alpha<cur_alpha&& &net.outProb(j-1,pi,ti)==alprob);
 	  const double alpha_increment= *prev_alpha*(*alprob)*this_node;
 	  if( alpha_increment> *cur_alpha )
 	    {
@@ -185,10 +185,10 @@ double HMMRealViterbi(const HMMNetwork&net,Array<int>&vitar,int pegi,int pegj,bo
     {
       cur_alpha-=I;
       vitar[j-1]=bp[vitar[j]+j*I]-cur_alpha;
-      massert(vitar[j-1]<I&&vitar[j-1]>=0);
+      MASSERT(vitar[j-1]<I&&vitar[j-1]>=0);
       j--;
     }
-  massert(j==0);
+  MASSERT(j==0);
   if( verbose )
     {
       cout << "VERB:PEG: " << pegi << ' ' << pegj << endl;

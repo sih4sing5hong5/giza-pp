@@ -35,7 +35,7 @@ MoveSwapMatrix<TRANSPAIR>::MoveSwapMatrix(const TRANSPAIR&_ef, const alignment&_
 template<class TRANSPAIR>
 void MoveSwapMatrix<TRANSPAIR>::updateJ(WordIndex j, bool useChanged,double thisValue)
 {
-  massert( lazyEvaluation==0 );
+  MASSERT(lazyEvaluation==0);
   for(WordIndex i=0;i<=l;i++)
     if( (useChanged==0||changed[i]!=changedCounter) )
       if( get_al(j)!=i )
@@ -56,7 +56,7 @@ void MoveSwapMatrix<TRANSPAIR>::updateJ(WordIndex j, bool useChanged,double this
 template<class TRANSPAIR>
 void MoveSwapMatrix<TRANSPAIR>::updateI(WordIndex i,double thisValue)
 {
-  massert( lazyEvaluation==0);
+  MASSERT( lazyEvaluation==0);
   for(WordIndex j=1;j<=m;j++)
     if( get_al(j)!=i )
       _cmove(i, j)=ef.scoreOfMove((*this), i, j,thisValue);
@@ -100,7 +100,7 @@ void MoveSwapMatrix<TRANSPAIR>::printWrongs()const{
 	  cout << ' ';
       cout << endl;
     }
-  massert(0);
+  MASSERT(0);
 }
 template<class TRANSPAIR>
 bool MoveSwapMatrix<TRANSPAIR>::isRight()const{

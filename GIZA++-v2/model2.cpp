@@ -8,14 +8,14 @@ modify it under the terms of the GNU General Public License
 as published by the Free Software Foundation; either version 2
 of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, 
+This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
 USA.
 
 */
@@ -30,7 +30,7 @@ extern short NoEmptyWord;
 
 GLOBAL_PARAMETER2(int,Model2_Dump_Freq,"MODEL 2 DUMP FREQUENCY","t2","dump frequency of Model 2",PARLEV_OUTPUT,0);
 
-model2::model2(model1& m,amodel<PROB>&_aTable,amodel<COUNT>&_aCountTable): 
+model2::model2(model1& m,amodel<PROB>&_aTable,amodel<COUNT>&_aCountTable):
   model1(m),aTable(_aTable),aCountTable(_aCountTable)
 {  }
 
@@ -91,7 +91,7 @@ int model2::em_with_tricks(int noIterations)
         minIter=it;
       }
     if (testPerp && testHandler)
-      em_loop(*testPerp, *testHandler, dump_files, test_alignfile.c_str(), *testViterbiPerp, true); 
+      em_loop(*testPerp, *testHandler, dump_files, test_alignfile.c_str(), *testViterbiPerp, true);
     if (dump_files&&OutputInAachenFormat==1)
       tTable.printCountTable(tfile.c_str(),Elist.getVocabList(),Flist.getVocabList(),1);
     tTable.normalizeTable(Elist, Flist);
@@ -100,13 +100,13 @@ int model2::em_with_tricks(int noIterations)
 	 << " PERPLEXITY " << perp.perplexity() << '\n';
      if (testPerp && testHandler)
        cout << modelName << ": ("<<it<<") TEST CROSS-ENTROPY " << (*testPerp).cross_entropy()
-	    << " PERPLEXITY " << (*testPerp).perplexity() 
+	    << " PERPLEXITY " << (*testPerp).perplexity()
 	    << '\n';
      cout << modelName << ": ("<<it<<") VITERBI TRAIN CROSS-ENTROPY " << trainViterbiPerp.cross_entropy()
 	 << " PERPLEXITY " << trainViterbiPerp.perplexity() << '\n';
     if (testPerp && testHandler)
        cout << modelName << ": ("<<it<<") VITERBI TEST CROSS-ENTROPY " << testViterbiPerp->cross_entropy()
-	    << " PERPLEXITY " << testViterbiPerp->perplexity() 
+	    << " PERPLEXITY " << testViterbiPerp->perplexity()
 	    << '\n';
     if (dump_files)
       {
@@ -116,11 +116,11 @@ int model2::em_with_tricks(int noIterations)
       }
     it_fn = time(NULL) ;
     cout << modelName << " Iteration: " << it<< " took: " << difftime(it_fn, it_st) << " seconds\n";
-  } // end of iterations 
+  } // end of iterations
   aCountTable.clear();
   fn = time(NULL) ;
   cout << endl << "Entire " << modelName << " Training took: " << difftime(fn, st) << " seconds\n";
-  //  cout << "tTable contains " << tTable.getHash().bucket_count() 
+  //  cout << "tTable contains " << tTable.getHash().bucket_count()
   //     << " buckets and  " << tTable.getHash().size() << " entries." ;
   cout << "==========================================================\n";
   return minIter;
@@ -137,12 +137,12 @@ void model2::load_table(const char* aname){
 }
 
 
-void model2::em_loop(Perplexity& perp, sentenceHandler& sHandler1, 
-		     bool dump_alignment, const char* alignfile, Perplexity& viterbi_perp, 
+void model2::em_loop(Perplexity& perp, sentenceHandler& sHandler1,
+		     bool dump_alignment, const char* alignfile, Perplexity& viterbi_perp,
 		     bool test)
 {
-  massert( aTable.is_distortion==0 );
-  massert( aCountTable.is_distortion==0 );
+  MASSERT(aTable.is_distortion==0);
+  MASSERT(aCountTable.is_distortion==0);
   WordIndex i, j, l, m ;
   double cross_entropy;
   int pair_no=0 ;
@@ -155,7 +155,7 @@ void model2::em_loop(Perplexity& perp, sentenceHandler& sHandler1,
   sentPair sent ;
 
   vector<double> ferts(evlist.size());
-  
+
   sHandler1.rewind();
   while(sHandler1.getNextSentence(sent)){
     Vector<WordIndex>& es = sent.eSent;
@@ -167,14 +167,14 @@ void model2::em_loop(Perplexity& perp, sentenceHandler& sHandler1,
     Vector<WordIndex> viterbi_alignment(fs.size());
     double viterbi_score = 1;
     for(j=1; j <= m; j++){
-      Vector<LpPair<COUNT,PROB> *> sPtrCache(es.size(),0); // cache pointers to table 
+      Vector<LpPair<COUNT,PROB> *> sPtrCache(es.size(),0); // cache pointers to table
       // entries  that map fs to all possible ei in this sentence.
       PROB denom = 0.0;
       PROB e = 0.0, word_best_score = 0;
       WordIndex best_i = 0 ; // i for which fj is best maped to ei
       for(i=0; i <= l; i++){
 	sPtrCache[i] = tTable.getPtr(es[i], fs[j]) ;
-	if (sPtrCache[i] != 0 &&(*(sPtrCache[i])).prob > PROB_SMOOTH ) 
+	if (sPtrCache[i] != 0 &&(*(sPtrCache[i])).prob > PROB_SMOOTH )
 	  e = (*(sPtrCache[i])).prob * aTable.getValue(i,j, l, m) ;
 	else e = PROB_SMOOTH * aTable.getValue(i,j, l, m);
 	denom += e ;
@@ -189,11 +189,11 @@ void model2::em_loop(Perplexity& perp, sentenceHandler& sHandler1,
       if (denom == 0){
 	if (test)
 	  cerr << "WARNING: denom is zero (TEST)\n";
-	else 
+	else
 	  cerr << "WARNING: denom is zero (TRAIN)\n";
-      }      
+      }
       if (!test){
-	if(denom > 0){	  
+	if(denom > 0){
 	  COUNT val = COUNT(so) / (COUNT) double(denom) ;
 	  for( i=0; i <= l; i++){
 	    PROB e(0.0);
@@ -203,11 +203,11 @@ void model2::em_loop(Perplexity& perp, sentenceHandler& sHandler1,
 	    e *= aTable.getValue(i,j, l, m);
 	    COUNT temp = COUNT(e) * val ;
 	    if( NoEmptyWord==0 || i!=0 )
-	      if (sPtrCache[i] != 0) 
+	      if (sPtrCache[i] != 0)
 		(*(sPtrCache[i])).count += temp ;
-	      else 	      
-		tTable.incCount(es[i], fs[j], temp);	    
-	    aCountTable.getRef(i,j, l, m)+= temp ; 
+	      else
+		tTable.incCount(es[i], fs[j], temp);
+	    aCountTable.getRef(i,j, l, m)+= temp ;
 	  } /* end of for i */
 	} // end of if (denom > 0)
       }// if (!test)

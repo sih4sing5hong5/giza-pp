@@ -55,8 +55,8 @@ void HMMTables<CLS,MAPPERCLASSTOSTRING>::readJumps(istream&)
 template<class CLS,class MAPPERCLASSTOSTRING>
 double HMMTables<CLS,MAPPERCLASSTOSTRING>::getAlProb(int istrich,int k,int sentLength,int J,CLS w1,CLS w2,int j,int iter) const
 {
-  massert(k<sentLength&&k>=0);
-  massert(istrich<sentLength&&istrich>=-1);
+  MASSERT(k<sentLength&&k>=0);
+  MASSERT(istrich<sentLength&&istrich>=-1);
   int pos=istrich-k;
   switch(PredictionInAlignments)
     {
