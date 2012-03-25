@@ -19,8 +19,9 @@
   USA.
 */
 
-#ifndef _model3_h
-#define _model3_h 1
+#ifndef GIZAPP_MODEL3_H_
+#define GIZAPP_MODEL3_H_
+
 #include <cassert>
 #include <iostream>
 #include <algorithm>
@@ -128,4 +129,4 @@ private:
 
 };
 
-#endif
+#endif  // GIZAPP_MODEL3_H_

@@ -19,8 +19,8 @@
   USA.
 */
 
-#ifndef _model1_h
-#define _model1_h 1
+#ifndef GIZAPP_MODEL1_H_
+#define GIZAPP_MODEL1_H_
 
 #include <cassert>
 
@@ -165,4 +165,4 @@ class model1 : public report_info{
     }
 };
 
-#endif
+#endif  // GIZAPP_MODEL1_H_

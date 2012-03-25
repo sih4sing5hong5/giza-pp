@@ -19,8 +19,8 @@
   USA.
 */
 
-#ifndef _model2_h
-#define _model2_h 1
+#ifndef GIZAPP_MODEL2_H_
+#define GIZAPP_MODEL2_H_
 
 #include <cassert>
 
@@ -62,4 +62,5 @@ class model2 : public model1
   friend class model3;
 };
 
-#endif
+#endif  // GIZAPP_MODEL2_H_
+
