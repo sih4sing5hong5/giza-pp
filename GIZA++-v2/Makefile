@@ -74,7 +74,6 @@ LIBOBJECTS = \
 	transpair_modelhmm.o \
 	utility.o \
 	parse.o \
-	reports.o \
 	model3_viterbi.o \
 	model3_viterbi_with_tricks.o \
 	Dictionary.o \

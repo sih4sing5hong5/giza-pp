@@ -19,24 +19,31 @@
   USA.
 */
 
-#ifndef utility_h
-#define utility_h
-#include <iostream>
-#include "Perplexity.h"
+#ifndef GIZAPP_UTIL_UTIL_H_
+#define GIZAPP_UTIL_UTIL_H_
+
+#include <ostream>
+
+#include "defs.h"
 #include "Vector.h"
-#include "TTables.h"
-#include "sentence_handler.h"
-#include "vocab.h"
+
+class Perplexity;
+class sentenceHandler;
+class vcbList;
+class WordEntry;
+
+template <class COUNT, class PROB>
+class tmodel;
 
 extern void printHelp(void);
 extern void parseConfigFile (char * fname );
 extern void parseArguments(int argc, char *argv[]);
 extern void generatePerplexityReport(const Perplexity& trainperp,
-				     const Perplexity& testperp,
-				     const Perplexity& trainVperp,
-				     const Perplexity& testVperp,
-				     ostream& of, int trainsize,
-				     int testsize, unsigned int last, bool);
+                                     const Perplexity& testperp,
+                                     const Perplexity& trainVperp,
+                                     const Perplexity& testVperp,
+                                     std::ostream& of, int trainsize,
+                                     int testsize, unsigned int last, bool);
 
 extern void  printSentencePair(Vector<WordIndex>& es, Vector<WordIndex>& fs, ostream& of);
 
@@ -49,6 +56,6 @@ extern void printAlignToFile(const Vector<WordIndex>& es,  const Vector<WordInde
 			     ostream& of2, const Vector<WordIndex>& viterbi_alignment, int pair_no,
 			     double viterbi_score);
 
-extern double factorial(int) ;
+extern double factorial(int);
 
-#endif
+#endif  // GIZAPP_UTIL_UTIL_H_
