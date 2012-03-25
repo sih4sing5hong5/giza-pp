@@ -30,7 +30,7 @@
 #include <algorithm>
 
 transpair_model3::transpair_model3(const Vector<WordIndex>&es, const Vector<WordIndex>&fs, tmodel<COUNT, PROB>&tTable, amodel<PROB>&aTable, amodel<PROB>&dTable, nmodel<PROB>&nTable, double _p1, double _p0, void*)
-  : transpair_model2(es,fs,tTable,aTable),d(es.size(), fs.size()),n(es.size(), MAX_FERTILITY+1), p0(_p0), p1(_p1)
+  : transpair_model2(es,fs,tTable,aTable),d(es.size(), fs.size()),n(es.size(), g_max_fertility+1), p0(_p0), p1(_p1)
 {
   WordIndex l=es.size()-1,m=fs.size()-1;
   for(WordIndex i=0;i<=l;i++)
@@ -39,9 +39,9 @@ transpair_model3::transpair_model3(const Vector<WordIndex>&es, const Vector<Word
 	d(i, j)=dTable.getValue(j, i, l, m);
       if( i>0 )
 	{
-	  for(WordIndex f=0;f<MAX_FERTILITY;f++)
+	  for(WordIndex f=0;f<g_max_fertility;f++)
 	    n(i, f)=nTable.getValue(es[i], f);
-	  n(i,MAX_FERTILITY)=PROB_SMOOTH;
+	  n(i,g_max_fertility)=PROB_SMOOTH;
 	}
     }
 }
@@ -102,7 +102,7 @@ ostream&operator<<(ostream&out, const transpair_model3&m)
       out << "EF-I:"<<i<<' ';
       for(WordIndex j=1;j<=m.get_m();j++)
 	out << "("<<m.t(i,j)<<","<<m.d(i,j)<<")";
-      for(WordIndex j=1;j<MAX_FERTILITY;j++)
+      for(WordIndex j=1;j<g_max_fertility;j++)
 	if( i>0 )
 	  out << "(fert:"<<m.get_fertility(i,j)<<")";
       out << '\n';

@@ -24,8 +24,8 @@
 #include "util/assert.h"
 #include "Parameter.h"
 
-GLOBAL_PARAMETER(bool, CompactADTable, "compactadtable", "1: only 3-dimensional alignment table for IBM-2 and IBM-3", PARLEV_MODELS, 1);
-GLOBAL_PARAMETER(float, amodel_smooth_factor, "model23SmoothFactor", "smoothing parameter for IBM-2/3 (interpolation with constant)", PARLEV_SMOOTH, 0.0);
+GLOBAL_PARAMETER(bool, CompactADTable, "compactadtable", "1: only 3-dimensional alignment table for IBM-2 and IBM-3", kParLevModels, 1);
+GLOBAL_PARAMETER(float, amodel_smooth_factor, "model23SmoothFactor", "smoothing parameter for IBM-2/3 (interpolation with constant)", kParLevSmooth, 0.0);
 
 template <class VALTYPE>
 void amodel<VALTYPE>::printTable(const char *filename) const {

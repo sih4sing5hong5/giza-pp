@@ -69,7 +69,7 @@ class transpair_model3 : public transpair_model2
   const PROB&get_a(WordIndex i, WordIndex j)const
     {return a(i, j);}
   const PROB&get_fertility(WordIndex i, WordIndex f)const
-    {MASSERT(i>0);return (f>=MAX_FERTILITY)?n(i, MAX_FERTILITY):n(i, f);}
+    {MASSERT(i>0);return (f>=g_max_fertility)?n(i, g_max_fertility):n(i, f);}
   int modelnr()const{return 3;}
   LogProb scoreOfAlignmentForChange(const alignment&)const
     {return -1.0; }

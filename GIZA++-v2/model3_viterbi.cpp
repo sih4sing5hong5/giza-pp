@@ -338,7 +338,7 @@ void model3::findBestAlignment(Vector<WordIndex>& es,
 	// first make sure that connecting target word at pos j to source word
 	// at  pos i will not lead to a violation on Fertility restrictions
 	// (e.g. maximum fertility for a word, max fertility for NULL word, etc)
-	if ((Fert[i]+1 < MAX_FERTILITY) && ((i == 0 &&  (m >= 2*(Fert[0]+1)))
+	if ((Fert[i]+1 < g_max_fertility) && ((i == 0 &&  (m >= 2*(Fert[0]+1)))
 					    || (i != 0))){
 	  temp = double(tTable.getProb(es[i], fs[j])) *
 	    double(aTable.getValue(i, j, l, m));
@@ -358,7 +358,7 @@ void model3::findBestAlignment(Vector<WordIndex>& es,
 	    l<<", "<<m<<") = "<< aTable.getValue(i, j, l, m) << " product " <<
 	    double(tTable.getProb(es[i], fs[j])) *
 	    double(aTable.getValue(i, j, l, m)) << '\n';
-	  if ((Fert[i]+1 < MAX_FERTILITY) && ((i == 0 &&  (m >= 2*(Fert[0]+1)))
+	  if ((Fert[i]+1 < g_max_fertility) && ((i == 0 &&  (m >= 2*(Fert[0]+1)))
 					      || (i != 0)))
 	    cerr <<"Passed fertility condition \n";
 	  else
@@ -493,7 +493,7 @@ void model3::findAlignmentsNeighborhood(Vector<WordIndex>& es,
 	}
 	for (i = 0 ; i <= l ; i++){ // all possible moves
 	  if (i != A[j]){ // make sure not to move to same position
-	    if ((Fert[i]+1 < MAX_FERTILITY) &&
+	    if ((Fert[i]+1 < g_max_fertility) &&
 		((i == 0 &&  (m >= 2*(Fert[0]+1))) || (i != 0))){
 	      // consider legal alignments only
 	      score = best_score * scoreOfMove(es, fs, A, Fert, tTable, j, i);

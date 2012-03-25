@@ -25,8 +25,8 @@
 #include <fstream>
 #include "Parameter.h"
 
-GLOBAL_PARAMETER(double,NTablesFactorGraphemes,"nSmooth","smoothing for fertility parameters (good value: 64): weight for wordlength-dependent fertility parameters",PARLEV_SMOOTH,64.0);
-GLOBAL_PARAMETER(double,NTablesFactorGeneral,"nSmoothGeneral","smoothing for fertility parameters (default: 0): weight for word-independent fertility parameters",PARLEV_SMOOTH,0.0);
+GLOBAL_PARAMETER(double,NTablesFactorGraphemes,"nSmooth","smoothing for fertility parameters (good value: 64): weight for wordlength-dependent fertility parameters",kParLevSmooth,64.0);
+GLOBAL_PARAMETER(double,NTablesFactorGeneral,"nSmoothGeneral","smoothing for fertility parameters (default: 0): weight for word-independent fertility parameters",kParLevSmooth,0.0);
 
 template <class VALTYPE>
 void nmodel<VALTYPE>::printNTable(int noEW, const char* filename,
@@ -44,7 +44,7 @@ void nmodel<VALTYPE>::printNTable(int noEW, const char* filename,
 	of << evlist[i].word << ' ' ;
       else
 	of << i << ' ' ;
-      for( k=0; k < MAX_FERTILITY; k++){
+      for( k=0; k < g_max_fertility; k++){
 	p = getValue(i, k);
 	if (p <= PROB_SMOOTH)
 	  p = 0;
@@ -75,12 +75,12 @@ void nmodel<VALTYPE>::readNTable(const char *filename){
   while(!inf.eof()){
     nFert++;
     inf >> ws >> tok;
-    if (tok > MAX_VOCAB_SIZE){
+    if (tok > kMaxVocabSize){
       cerr << "NTables:readNTable(): unrecognized token id: " << tok
     <<'\n';
     exit(-1);
   }
-    for(i = 0; i < MAX_FERTILITY; i++){
+    for(i = 0; i < g_max_fertility; i++){
       inf >> ws >> prob;
       getRef(tok, i)=prob;
     }

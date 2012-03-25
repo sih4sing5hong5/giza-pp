@@ -75,14 +75,14 @@ int collectCountsOverNeighborhood(const MoveSwapMatrix<TRANSPAIR>&msc,LogProb as
   for(PositionIndex i=1;i<=l;i++)
     {
       LogProb temp=minus1fert[i]+plus1fert[i];
-      if( msc.fert(i)<MAX_FERTILITY )
+      if( msc.fert(i)<g_max_fertility )
 	ncount(i,msc.fert(i))+=total_count-temp;
-      if(msc.fert(i)>0&&msc.fert(i)-1<MAX_FERTILITY)
+      if(msc.fert(i)>0&&msc.fert(i)-1<g_max_fertility)
 	ncount(i,msc.fert(i)-1)+=minus1fert[i];
       else
 	if( minus1fert[i]!=0.0 )
 	  cerr << "ERROR: M1Fa: " << minus1fert[i] << ' ' << i << ' ' << msc.fert(i)<< endl;
-      if(msc.fert(i)+1<MAX_FERTILITY)
+      if(msc.fert(i)+1<g_max_fertility)
 	ncount(i,msc.fert(i)+1)+=plus1fert[i];
     }
   LogProb temp=minus1fert[0]+plus1fert[0];
@@ -236,7 +236,7 @@ int collectCountsOverNeighborhood(const Vector<pair<MoveSwapMatrix<TRANSPAIR>*,L
 {
   int nAl=0;
   const PositionIndex l=es.size()-1,m=fs.size()-1;
-  Array2<LogProb,Vector<LogProb> > dtcount(l+1,m+1),ncount(l+1,MAX_FERTILITY+1);
+  Array2<LogProb,Vector<LogProb> > dtcount(l+1,m+1),ncount(l+1,g_max_fertility+1);
   LogProb p0=0,p1=0,all_total=0;
   for(unsigned int i=0;i<smsc.size();++i)
     {
@@ -273,7 +273,7 @@ int collectCountsOverNeighborhood(const Vector<pair<MoveSwapMatrix<TRANSPAIR>*,L
 		}
 	    }
 	  if( i>0 )
-	    for(PositionIndex n=0;n<MAX_FERTILITY;n++)
+	    for(PositionIndex n=0;n<g_max_fertility;n++)
 	      nCountTable.getRef(es[i],n)+=ncount(i,n)/all_total;
 	}
       p0count+=p0/all_total;

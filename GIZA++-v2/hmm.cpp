@@ -34,19 +34,19 @@ short PredictionInAlignments=0;
 short UniformEntryExit=3;
 short HMMTrainingSpecialFlags=0;
 
-GLOBAL_PARAMETER2(int,ModelH_Dump_Freq,"HMM DUMP FREQUENCY","th","dump frequency of HMM",PARLEV_OUTPUT,0);
+GLOBAL_PARAMETER2(int,ModelH_Dump_Freq,"HMM DUMP FREQUENCY","th","dump frequency of HMM",kParLevOutput,0);
 
 GLOBAL_PARAMETER(short,CompareAlDeps,"emAlignmentDependencies",
 		 "lextrain: dependencies in the HMM alignment model. "
 		 " &1: sentence length; &2: previous class; &4: previous position; "
 		 " &8: French position; &16: French class"
-		 ,PARLEV_MODELS,2);
+		 ,kParLevModels,2);
 GLOBAL_PARAMETER(double,GLOBALProbabilityForEmpty,"emProbForEmpty",
-		 "f-b-trn: probability for empty word",PARLEV_MODELS,0.4);
+		 "f-b-trn: probability for empty word",kParLevModels,0.4);
 GLOBAL_PARAMETER(short,SmoothHMM,"emSmoothHMM",
-		 "f-b-trn: smooth HMM model &1: modified counts; &2:perform smoothing with -emAlSmooth",PARLEV_SPECIAL,2);
+		 "f-b-trn: smooth HMM model &1: modified counts; &2:perform smoothing with -emAlSmooth",kParLevSpecial,2);
 GLOBAL_PARAMETER(double,HMMAlignmentModelSmoothFactor,"emAlSmooth",
-		 "f-b-trn: smoothing factor for HMM alignment model (can be ignored by -emSmoothHMM)",PARLEV_SMOOTH,0.2);
+		 "f-b-trn: smoothing factor for HMM alignment model (can be ignored by -emSmoothHMM)",kParLevSmooth,0.2);
 
 
 /*template<class T>

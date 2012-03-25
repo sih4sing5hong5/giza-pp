@@ -64,8 +64,8 @@ class nmodel
       const Vector<WordEntry>&evlist=*_evlist;
       for(unsigned int i=1;i<evlist.size();i++)
 	maxlen=max(maxlen,evlist[i].word.length());
-      Array2<COUNT,Vector<COUNT> > counts(maxlen+1,MAX_FERTILITY+1,0.0);
-      Vector<COUNT> nprob_general(MAX_FERTILITY+1,0.0);
+      Array2<COUNT,Vector<COUNT> > counts(maxlen+1,g_max_fertility+1,0.0);
+      Vector<COUNT> nprob_general(g_max_fertility+1,0.0);
       for(unsigned int i=1;i<min((unsigned int)h1,(unsigned int)evlist.size());i++)
 	{
 	  int l=evlist[i].word.length();

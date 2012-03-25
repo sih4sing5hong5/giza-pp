@@ -67,14 +67,10 @@ class hashpair : public unary_function< pair<WordIndex, WordIndex>, size_t >
 public:
   size_t operator() (const pair<WordIndex, WordIndex>& key) const
     {
-      return (size_t) MAX_W*key.first + key.second; /* hash function and it
-						       is guarnteed to have
-						       unique id for each
-						       unique pair */
+      /* hash function and it is guarnteed to have unique id for each unique pair */
+      return static_cast<size_t>(kMaxWeight) * key.first + key.second;
     }
 };
-
-
 
 /* ------------------ Class Prototype Definitions ---------------------------*
   Class Name: tmodel

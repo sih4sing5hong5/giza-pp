@@ -51,9 +51,9 @@ void vcbList::readVocabList()
       cerr << "ERROR: TOKEN ID 0 is reserved for special token NULL, in line: \n"<< line<<"\n" ;
       exit(-1);
     }
-    else if (word_id >= MAX_VOCAB_SIZE){
+    else if (word_id >= kMaxVocabSize){
       cerr << "ERROR: TOKEN ID is greater than maximum vocabulary size "
-	   << MAX_VOCAB_SIZE << " in line :\n"<< line <<"\n" ;
+	   << kMaxVocabSize << " in line :\n"<< line <<"\n" ;
       exit(-1);
     }
     else if (freq < 0){

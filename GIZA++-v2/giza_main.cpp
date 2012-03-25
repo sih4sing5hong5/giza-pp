@@ -42,42 +42,42 @@
 #define ITER_M2 0
 #define ITER_MH 5
 
-GLOBAL_PARAMETER3(int,Model1_Iterations,"Model1_Iterations","NO. ITERATIONS MODEL 1","m1","number of iterations for Model 1",PARLEV_ITER,5);
-GLOBAL_PARAMETER3(int,Model2_Iterations,"Model2_Iterations","NO. ITERATIONS MODEL 2","m2","number of iterations for Model 2",PARLEV_ITER,ITER_M2);
-GLOBAL_PARAMETER3(int,HMM_Iterations,"HMM_Iterations","mh","number of iterations for HMM alignment model","mh",              PARLEV_ITER,ITER_MH);
-GLOBAL_PARAMETER3(int,Model3_Iterations,"Model3_Iterations","NO. ITERATIONS MODEL 3","m3","number of iterations for Model 3",PARLEV_ITER,5);
-GLOBAL_PARAMETER3(int,Model4_Iterations,"Model4_Iterations","NO. ITERATIONS MODEL 4","m4","number of iterations for Model 4",PARLEV_ITER,5);
-GLOBAL_PARAMETER3(int,Model5_Iterations,"Model5_Iterations","NO. ITERATIONS MODEL 5","m5","number of iterations for Model 5",PARLEV_ITER,0);
-GLOBAL_PARAMETER3(int,Model6_Iterations,"Model6_Iterations","NO. ITERATIONS MODEL 6","m6","number of iterations for Model 6",PARLEV_ITER,0);
+GLOBAL_PARAMETER3(int,Model1_Iterations,"Model1_Iterations","NO. ITERATIONS MODEL 1","m1","number of iterations for Model 1",kParLevIter,5);
+GLOBAL_PARAMETER3(int,Model2_Iterations,"Model2_Iterations","NO. ITERATIONS MODEL 2","m2","number of iterations for Model 2",kParLevIter,ITER_M2);
+GLOBAL_PARAMETER3(int,HMM_Iterations,"HMM_Iterations","mh","number of iterations for HMM alignment model","mh",              kParLevIter,ITER_MH);
+GLOBAL_PARAMETER3(int,Model3_Iterations,"Model3_Iterations","NO. ITERATIONS MODEL 3","m3","number of iterations for Model 3",kParLevIter,5);
+GLOBAL_PARAMETER3(int,Model4_Iterations,"Model4_Iterations","NO. ITERATIONS MODEL 4","m4","number of iterations for Model 4",kParLevIter,5);
+GLOBAL_PARAMETER3(int,Model5_Iterations,"Model5_Iterations","NO. ITERATIONS MODEL 5","m5","number of iterations for Model 5",kParLevIter,0);
+GLOBAL_PARAMETER3(int,Model6_Iterations,"Model6_Iterations","NO. ITERATIONS MODEL 6","m6","number of iterations for Model 6",kParLevIter,0);
 
 
-GLOBAL_PARAMETER(float, PROB_SMOOTH,"probSmooth","probability smoothing (floor) value ",PARLEV_OPTHEUR,1e-7);
-GLOBAL_PARAMETER(float, MINCOUNTINCREASE,"minCountIncrease","minimal count increase",PARLEV_OPTHEUR,1e-7);
+GLOBAL_PARAMETER(float, PROB_SMOOTH,"probSmooth","probability smoothing (floor) value ",kParLevOptheur,1e-7);
+GLOBAL_PARAMETER(float, MINCOUNTINCREASE,"minCountIncrease","minimal count increase",kParLevOptheur,1e-7);
 
-GLOBAL_PARAMETER2(int,Transfer_Dump_Freq,"TRANSFER DUMP FREQUENCY","t2to3","output: dump of transfer from Model 2 to 3",PARLEV_OUTPUT,0);
-GLOBAL_PARAMETER2(bool,Verbose,"verbose","v","0: not verbose; 1: verbose",PARLEV_OUTPUT,0);
-GLOBAL_PARAMETER(bool,Log,"log","0: no logfile; 1: logfile",PARLEV_OUTPUT,0);
+GLOBAL_PARAMETER2(int,Transfer_Dump_Freq,"TRANSFER DUMP FREQUENCY","t2to3","output: dump of transfer from Model 2 to 3",kParLevOutput,0);
+GLOBAL_PARAMETER2(bool,Verbose,"verbose","v","0: not verbose; 1: verbose",kParLevOutput,0);
+GLOBAL_PARAMETER(bool,Log,"log","0: no logfile; 1: logfile",kParLevOutput,0);
 
 
-GLOBAL_PARAMETER(double,P0,"p0","fixed value for parameter p_0 in IBM-3/4 (if negative then it is determined in training)",PARLEV_EM,-1.0);
-GLOBAL_PARAMETER(double,M5P0,"m5p0","fixed value for parameter p_0 in IBM-5 (if negative then it is determined in training)",PARLEV_EM,-1.0);
-GLOBAL_PARAMETER3(bool,Peg,"pegging","p","DO PEGGING? (Y/N)","0: no pegging; 1: do pegging",PARLEV_EM,0);
+GLOBAL_PARAMETER(double,P0,"p0","fixed value for parameter p_0 in IBM-3/4 (if negative then it is determined in training)",kParLevEM,-1.0);
+GLOBAL_PARAMETER(double,M5P0,"m5p0","fixed value for parameter p_0 in IBM-5 (if negative then it is determined in training)",kParLevEM,-1.0);
+GLOBAL_PARAMETER3(bool,Peg,"pegging","p","DO PEGGING? (Y/N)","0: no pegging; 1: do pegging",kParLevEM,0);
 
 GLOBAL_PARAMETER(short,OldADBACKOFF,"adbackoff","",-1,0);
-GLOBAL_PARAMETER2(unsigned int,MAX_SENTENCE_LENGTH,"ml","MAX SENTENCE LENGTH","maximum sentence length",0,MAX_SENTENCE_LENGTH_ALLOWED);
+GLOBAL_PARAMETER2(unsigned int,MAX_SENTENCE_LENGTH,"ml","MAX SENTENCE LENGTH","maximum sentence length",0,kMaxAllowedSentenceLength);
 
 
-GLOBAL_PARAMETER(short, DeficientDistortionForEmptyWord,"DeficientDistortionForEmptyWord","0: IBM-3/IBM-4 as described in (Brown et al. 1993); 1: distortion model of empty word is deficient; 2: distoriton model of empty word is deficient (differently); setting this parameter also helps to avoid that during IBM-3 and IBM-4 training too many words are aligned with the empty word",PARLEV_MODELS,0);
+GLOBAL_PARAMETER(short, DeficientDistortionForEmptyWord,"DeficientDistortionForEmptyWord","0: IBM-3/IBM-4 as described in (Brown et al. 1993); 1: distortion model of empty word is deficient; 2: distoriton model of empty word is deficient (differently); setting this parameter also helps to avoid that during IBM-3 and IBM-4 training too many words are aligned with the empty word",kParLevModels,0);
 short OutputInAachenFormat=0;
-bool Transfer=TRANSFER;
+bool Transfer = kTransfer;
 bool Transfer2to3=0;
 short NoEmptyWord=0;
 bool FEWDUMPS=0;
-GLOBAL_PARAMETER(bool,ONLYALDUMPS,"ONLYALDUMPS","1: do not write any files",PARLEV_OUTPUT,0);
-GLOBAL_PARAMETER(short,CompactAlignmentFormat,"CompactAlignmentFormat","0: detailled alignment format, 1: compact alignment format ",PARLEV_OUTPUT,0);
-GLOBAL_PARAMETER2(bool,NODUMPS,"NODUMPS","NO FILE DUMPS? (Y/N)","1: do not write any files",PARLEV_OUTPUT,0);
+GLOBAL_PARAMETER(bool,ONLYALDUMPS,"ONLYALDUMPS","1: do not write any files",kParLevOutput,0);
+GLOBAL_PARAMETER(short,CompactAlignmentFormat,"CompactAlignmentFormat","0: detailled alignment format, 1: compact alignment format ",kParLevOutput,0);
+GLOBAL_PARAMETER2(bool,NODUMPS,"NODUMPS","NO FILE DUMPS? (Y/N)","1: do not write any files",kParLevOutput,0);
 
-GLOBAL_PARAMETER(WordIndex,MAX_FERTILITY,"MAX_FERTILITY","maximal fertility for fertility models",PARLEV_EM,10);
+GLOBAL_PARAMETER(WordIndex,g_max_fertility,"g_max_fertility","maximal fertility for fertility models",kParLevEM,10);
 
 Vector<map< pair<int,int>,char > > ReferenceAlignment;
 
@@ -99,7 +99,7 @@ const string str2Num(int n){
 }
 
 
-double LAMBDA=1.09;
+double g_lambda = 1.09;
 sentenceHandler *testCorpus=0,*corpus=0;
 Perplexity trainPerp, testPerp, trainViterbiPerp, testViterbiPerp ;
 
@@ -115,37 +115,37 @@ void printGIZAPars(ostream&out)
 
   out << "No. of iterations:\n-"
          "------------------\n";
-  printPars(out,getGlobalParSet(),PARLEV_ITER);
+  printPars(out,getGlobalParSet(),kParLevIter);
   out << '\n';
 
   out << "parameter for various heuristics in GIZA++ for efficient training:\n"
          "------------------------------------------------------------------\n";
-  printPars(out,getGlobalParSet(),PARLEV_OPTHEUR);
+  printPars(out,getGlobalParSet(),kParLevOptheur);
   out << '\n';
 
   out << "parameters for describing the type and amount of output:\n"
          "-----------------------------------------------------------\n";
-  printPars(out,getGlobalParSet(),PARLEV_OUTPUT);
+  printPars(out,getGlobalParSet(),kParLevOutput);
   out << '\n';
 
   out << "parameters describing input files:\n"
          "----------------------------------\n";
-  printPars(out,getGlobalParSet(),PARLEV_INPUT);
+  printPars(out,getGlobalParSet(),kParLevInput);
   out << '\n';
 
   out << "smoothing parameters:\n"
          "---------------------\n";
-  printPars(out,getGlobalParSet(),PARLEV_SMOOTH);
+  printPars(out,getGlobalParSet(),kParLevSmooth);
   out << '\n';
 
   out << "parameters modifying the models:\n"
          "--------------------------------\n";
-  printPars(out,getGlobalParSet(),PARLEV_MODELS);
+  printPars(out,getGlobalParSet(),kParLevModels);
   out << '\n';
 
   out << "parameters modifying the EM-algorithm:\n"
          "--------------------------------------\n";
-  printPars(out,getGlobalParSet(),PARLEV_EM);
+  printPars(out,getGlobalParSet(),kParLevEM);
   out << '\n';
 }
 
@@ -394,7 +394,7 @@ void initGlobals(void)
   NODUMPS = false ;
   Prefix = port::GetFileSpec();
   LogFilename= Prefix + ".log";
-  MAX_SENTENCE_LENGTH = MAX_SENTENCE_LENGTH_ALLOWED ;
+  MAX_SENTENCE_LENGTH = kMaxAllowedSentenceLength ;
 }
 
 void convert(const map< pair<int,int>,char >&reference,alignment&x)
@@ -515,8 +515,8 @@ double StartTraining(int&result)
   cout << "In source portion of the training corpus, only " << eTrainVcbList.uniqTokensInCorpus() << " unique tokens appeared\n";
   cout << "In target portion of the training corpus, only " << fTrainVcbList.uniqTokensInCorpus() << " unique tokens appeared\n";
   cout << "lambda for PP calculation in IBM-1,IBM-2,HMM:= " << double(fTrainVcbList.totalVocab()) << "/(" << eTrainVcbList.totalVocab() << "-" << corpus->getTotalNoPairs2() << ")=";
-  LAMBDA = double(fTrainVcbList.totalVocab()) / (eTrainVcbList.totalVocab()-corpus->getTotalNoPairs2());
-  cout << "= " << LAMBDA << '\n';
+  g_lambda = double(fTrainVcbList.totalVocab()) / (eTrainVcbList.totalVocab()-corpus->getTotalNoPairs2());
+  cout << "= " << g_lambda << '\n';
   // load dictionary
   Dictionary *dictionary;
   useDict = !dictionary_Filename.empty();
@@ -636,7 +636,7 @@ double StartTraining(int&result)
 	       m2.em_loop(testPerp, *testCorpus,Transfer_Dump_Freq==1&&!NODUMPS,test_alignfile.c_str(), testViterbiPerp, true);
 	     if (testCorpus)
 	       cout << "\nTransfer: TEST CROSS-ENTROPY " << testPerp.cross_entropy() << " PERPLEXITY " << testPerp.perplexity() << "\n\n";
-	     if (Transfer == TRANSFER_SIMPLE)
+	     if (Transfer == kTransferSimple)
 	       m3.transferSimple(*corpus, Transfer_Dump_Freq==1&&!NODUMPS,trainPerp, trainViterbiPerp);
 	     else
 	       m3.transfer(*corpus, Transfer_Dump_Freq==1&&!NODUMPS, trainPerp, trainViterbiPerp);
@@ -664,25 +664,25 @@ double StartTraining(int&result)
 int main(int argc, char* argv[])
 {
 #ifdef BINARY_SEARCH_FOR_TTABLE
-  getGlobalParSet().insert(new Parameter<string>("CoocurrenceFile",ParameterChangedFlag,"",CoocurrenceFile,PARLEV_SPECIAL));
+  getGlobalParSet().insert(new Parameter<string>("CoocurrenceFile",ParameterChangedFlag,"",CoocurrenceFile,kParLevSpecial));
 #endif
   getGlobalParSet().insert(new Parameter<string>("ReadTablePrefix",ParameterChangedFlag,"optimized",ReadTablePrefix,-1));
-  getGlobalParSet().insert(new Parameter<string>("S",ParameterChangedFlag,"source vocabulary file name",SourceVocabFilename,PARLEV_INPUT));
+  getGlobalParSet().insert(new Parameter<string>("S",ParameterChangedFlag,"source vocabulary file name",SourceVocabFilename,kParLevInput));
   getGlobalParSet().insert(new Parameter<string>("SOURCE VOCABULARY FILE",ParameterChangedFlag,"source vocabulary file name",SourceVocabFilename,-1));
-  getGlobalParSet().insert(new Parameter<string>("T",ParameterChangedFlag,"target vocabulary file name",TargetVocabFilename,PARLEV_INPUT));
+  getGlobalParSet().insert(new Parameter<string>("T",ParameterChangedFlag,"target vocabulary file name",TargetVocabFilename,kParLevInput));
   getGlobalParSet().insert(new Parameter<string>("TARGET VOCABULARY FILE",ParameterChangedFlag,"target vocabulary file name",TargetVocabFilename,-1));
-  getGlobalParSet().insert(new Parameter<string>("C",ParameterChangedFlag,"training corpus file name",CorpusFilename,PARLEV_INPUT));
+  getGlobalParSet().insert(new Parameter<string>("C",ParameterChangedFlag,"training corpus file name",CorpusFilename,kParLevInput));
   getGlobalParSet().insert(new Parameter<string>("CORPUS FILE",ParameterChangedFlag,"training corpus file name",CorpusFilename,-1));
-  getGlobalParSet().insert(new Parameter<string>("TC",ParameterChangedFlag,"test corpus file name",TestCorpusFilename,PARLEV_INPUT));
+  getGlobalParSet().insert(new Parameter<string>("TC",ParameterChangedFlag,"test corpus file name",TestCorpusFilename,kParLevInput));
   getGlobalParSet().insert(new Parameter<string>("TEST CORPUS FILE",ParameterChangedFlag,"test corpus file name",TestCorpusFilename,-1));
-  getGlobalParSet().insert(new Parameter<string>("d",ParameterChangedFlag,"dictionary file name",dictionary_Filename,PARLEV_INPUT));
+  getGlobalParSet().insert(new Parameter<string>("d",ParameterChangedFlag,"dictionary file name",dictionary_Filename,kParLevInput));
   getGlobalParSet().insert(new Parameter<string>("DICTIONARY",ParameterChangedFlag,"dictionary file name",dictionary_Filename,-1));
-  getGlobalParSet().insert(new Parameter<string>("l",ParameterChangedFlag,"log file name",LogFilename,PARLEV_OUTPUT));
+  getGlobalParSet().insert(new Parameter<string>("l",ParameterChangedFlag,"log file name",LogFilename,kParLevOutput));
   getGlobalParSet().insert(new Parameter<string>("LOG FILE",ParameterChangedFlag,"log file name",LogFilename,-1));
 
-  getGlobalParSet().insert(new Parameter<string>("o",ParameterChangedFlag,"output file prefix",Prefix,PARLEV_OUTPUT));
+  getGlobalParSet().insert(new Parameter<string>("o",ParameterChangedFlag,"output file prefix",Prefix,kParLevOutput));
   getGlobalParSet().insert(new Parameter<string>("OUTPUT FILE PREFIX",ParameterChangedFlag,"output file prefix",Prefix,-1));
-  getGlobalParSet().insert(new Parameter<string>("OUTPUT PATH",ParameterChangedFlag,"output path",OPath,PARLEV_OUTPUT));
+  getGlobalParSet().insert(new Parameter<string>("OUTPUT PATH",ParameterChangedFlag,"output path",OPath,kParLevOutput));
 
   time_t st1, fn;
   st1 = time(NULL);                    // starting time
@@ -706,8 +706,8 @@ int main(int argc, char* argv[])
   double errors=0.0;
   if( OldADBACKOFF!=0 )
     cerr << "WARNING: Parameter -adBackOff does not exist further; use CompactADTable instead.\n";
-  if( MAX_SENTENCE_LENGTH > MAX_SENTENCE_LENGTH_ALLOWED )
-    cerr << "ERROR: MAX_SENTENCE_LENGTH is too big " << MAX_SENTENCE_LENGTH << " > " << MAX_SENTENCE_LENGTH_ALLOWED << '\n';
+  if( MAX_SENTENCE_LENGTH > kMaxAllowedSentenceLength )
+    cerr << "ERROR: MAX_SENTENCE_LENGTH is too big " << MAX_SENTENCE_LENGTH << " > " << kMaxAllowedSentenceLength << '\n';
     errors=StartTraining(a);
   fn = time(NULL);    // finish time
   cout << '\n' << "Entire Training took: " << difftime(fn, st1) << " seconds\n";

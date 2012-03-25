@@ -25,9 +25,12 @@
 #include "defs.h"
 #include "Vector.h"
 
+#include <climits>
 #include <fstream>
 #include <sstream>
 #include <map>
+
+const unsigned int kMaxVocabSize = UINT_MAX;
 
 class WordEntry {
  public:

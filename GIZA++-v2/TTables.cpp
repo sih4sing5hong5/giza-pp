@@ -8,35 +8,35 @@ modify it under the terms of the GNU General Public License
 as published by the Free Software Foundation; either version 2
 of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, 
+This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
 USA.
- 
+
 */
 #include "TTables.h"
 #include "Parameter.h"
 
-GLOBAL_PARAMETER(float,PROB_CUTOFF,"PROB CUTOFF","Probability cutoff threshold for lexicon probabilities",PARLEV_OPTHEUR,1e-7);
-GLOBAL_PARAMETER2(float, COUNTINCREASE_CUTOFF,"COUNTINCREASE CUTOFF","countCutoff","Counts increment cutoff threshold",PARLEV_OPTHEUR,1e-6);
+GLOBAL_PARAMETER(float,PROB_CUTOFF,"PROB CUTOFF","Probability cutoff threshold for lexicon probabilities",kParLevOptheur,1e-7);
+GLOBAL_PARAMETER2(float, COUNTINCREASE_CUTOFF,"COUNTINCREASE CUTOFF","countCutoff","Counts increment cutoff threshold",kParLevOptheur,1e-6);
 
 #ifdef BINARY_SEARCH_FOR_TTABLE
 template <class COUNT, class PROB>
-void tmodel<COUNT, PROB>::printCountTable(const char *, 
-					 const Vector<WordEntry>&, 
+void tmodel<COUNT, PROB>::printCountTable(const char *,
+					 const Vector<WordEntry>&,
 					 const Vector<WordEntry>&,
 					 const bool) const
 {
 }
 
 template <class COUNT, class PROB>
-void tmodel<COUNT, PROB>::printProbTable(const char *filename, 
-					 const Vector<WordEntry>& evlist, 
+void tmodel<COUNT, PROB>::printProbTable(const char *filename,
+					 const Vector<WordEntry>& evlist,
 					 const Vector<WordEntry>& fvlist,
 					 const bool actual) const
 {
@@ -68,11 +68,11 @@ void tmodel<COUNT, PROB>::printProbTable(const char *filename,
 }
 
 template <class COUNT, class PROB>
-void tmodel<COUNT, PROB>::printProbTableInverse(const char *, 
-				   const Vector<WordEntry>&, 
-				   const Vector<WordEntry>&, 
-				   const double, 
-				   const double, 
+void tmodel<COUNT, PROB>::printProbTableInverse(const char *,
+				   const Vector<WordEntry>&,
+				   const Vector<WordEntry>&,
+				   const double,
+				   const double,
 				   const bool ) const
 {
 }
@@ -103,14 +103,14 @@ template <class COUNT, class PROB>
 void tmodel<COUNT, PROB>::readProbTable(const char *){
 }
 
-template class tmodel<COUNT,PROB> ; 
+template class tmodel<COUNT,PROB> ;
 #else
 /* ------------------ Method Definiotns for Class tmodel --------------------*/
 
 #
 template <class COUNT, class PROB>
-void tmodel<COUNT, PROB>::printCountTable(const char *filename, 
-					 const Vector<WordEntry>& evlist, 
+void tmodel<COUNT, PROB>::printCountTable(const char *filename,
+					 const Vector<WordEntry>& evlist,
 					 const Vector<WordEntry>& fvlist,
 					 const bool actual) const
      // this function dumps the t table. Each line is of the following format:
@@ -123,14 +123,14 @@ void tmodel<COUNT, PROB>::printCountTable(const char *filename,
     if ( ((*i).second).count >  COUNTINCREASE_CUTOFF)
       if (actual)
 	of <<  ((*i).second).count << ' ' << evlist[ ((*i).first).first ].word << ' ' << fvlist[((*i).first).second].word << ' ' << (*i).second.prob << '\n';
-      else 
+      else
 	of << ((*i).second).count << ' ' <<  ((*i).first).first  << ' ' << ((*i).first).second << ' ' << (*i).second.prob << '\n';
   }
 }
 
 template <class COUNT, class PROB>
-void tmodel<COUNT, PROB>::printProbTable(const char *filename, 
-					 const Vector<WordEntry>& evlist, 
+void tmodel<COUNT, PROB>::printProbTable(const char *filename,
+					 const Vector<WordEntry>& evlist,
 					 const Vector<WordEntry>& fvlist,
 					 const bool actual) const
      // this function dumps the t table. Each line is of the following format:
@@ -141,25 +141,25 @@ void tmodel<COUNT, PROB>::printProbTable(const char *filename,
   typename hash_map<wordPairIds, CPPair, hashpair, equal_to<wordPairIds> >::const_iterator i;
   for(i = ef.begin(); i != ef.end();++i)
     if( actual )
-      of << evlist[((*i).first).first].word << ' ' << 
+      of << evlist[((*i).first).first].word << ' ' <<
 	fvlist[((*i).first).second].word << ' ' << (*i).second.prob << '\n';
     else
-      of << ((*i).first).first << ' ' << ((*i).first).second << ' ' << 
+      of << ((*i).first).first << ' ' << ((*i).first).second << ' ' <<
 	(*i).second.prob << '\n';
 }
 
 template <class COUNT, class PROB>
-void tmodel<COUNT, PROB>::printProbTableInverse(const char *filename, 
-				   const Vector<WordEntry>& evlist, 
-				   const Vector<WordEntry>& fvlist, 
-				   const double, 
-				   const double, 
+void tmodel<COUNT, PROB>::printProbTableInverse(const char *filename,
+				   const Vector<WordEntry>& evlist,
+				   const Vector<WordEntry>& fvlist,
+				   const double,
+				   const double,
 				   const bool actual) const
   // this function dumps the inverse t table. Each line is of the format:
   //
   // target_word_id source_word_id p(source_word/target_word)
   //
-  // if flag "actual " is true then print actual word entries instead of 
+  // if flag "actual " is true then print actual word entries instead of
   // token ids
 {
   cerr << "Dumping the t table inverse to file: " << filename << '\n';
@@ -170,13 +170,13 @@ void tmodel<COUNT, PROB>::printProbTableInverse(const char *filename,
   WordIndex e, f ;
   int no_errors(0);
   vector<PROB> total(fvlist.size(),PROB(0)) ; // Sum over all e of P(f/e) * p(e) - needed for normalization
- 
+
   for(i = ef.begin(); i != ef.end(); i++){
     e = ((*i).first).first ;
     f = ((*i).first).second ;
-    total[f] += (PROB) evlist[e].freq * ((*i).second.prob); //add P(f/ei) * F(ei) 
+    total[f] += (PROB) evlist[e].freq * ((*i).second.prob); //add P(f/ei) * F(ei)
   }
-  
+
   for(i = ef.begin(); i != ef.end(); i++){
     e = ((*i).first).first ;
     f = ((*i).first).second ;
@@ -194,7 +194,7 @@ void tmodel<COUNT, PROB>::printProbTableInverse(const char *filename,
     }
     if (actual)
       of << fvlist[f].word << ' ' << evlist[e].word << ' ' << p_inv << '\n';
-    else 
+    else
       of << f << ' ' << e << ' ' << p_inv <<  '\n';
   }
 }
@@ -212,11 +212,11 @@ void tmodel<COUNT, PROB>::printProbTableInverse(const char *filename,
   for(i = ef.begin(); i != ef.end(); i++){
     e = ((*i).first).first ;
     f = ((*i).first).second ;
-    p_inv = ((*i).second.prob) * ratio * (PROB) evlist[e].freq / 
+    p_inv = ((*i).second.prob) * ratio * (PROB) evlist[e].freq /
       (PROB) fvlist[f].freq ;
     if (actual)
       of << fvlist[f].word << ' ' << evlist[e].word << ' ' << p_inv << '\n';
-    else 
+    else
       of << f << ' ' << e << ' ' << p_inv <<  '\n';
   }
 }
@@ -224,10 +224,10 @@ void tmodel<COUNT, PROB>::printProbTableInverse(const char *filename,
 template <class COUNT, class PROB>
 void tmodel<COUNT, PROB>::normalizeTable(const vcbList&engl, const vcbList&french, int iter)
   // normalize conditional probability P(fj/ei):
-  // i.e. make sure that Sum over all j of P(fj/e) = 1  
+  // i.e. make sure that Sum over all j of P(fj/e) = 1
   // this method reads the counts portion of the table and normalize into
   // the probability portion. Then the counts are cleared (i.e. zeroed)
-  // if the resulting probability of an entry is below a threshold, then 
+  // if the resulting probability of an entry is below a threshold, then
   // remove it .
 {
   if( iter==2 )
@@ -315,7 +315,7 @@ void tmodel<COUNT, PROB>::readProbTable(const char *filename){
   cerr << "Read " << nEntry << " entries in prob. table.\n";
 }
 
-template class tmodel<COUNT,PROB> ; 
+template class tmodel<COUNT,PROB> ;
 
 /* ---------------- End of Method Definitions of class tmodel ---------------*/
 

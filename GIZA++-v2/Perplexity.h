@@ -62,7 +62,7 @@ class Perplexity {
 	fact[m] = fact[m-1] * m ;
       for (m = 1 ; m < MAX_SENTENCE_LENGTH ; m++)
 	for (l = 1 ; l < MAX_SENTENCE_LENGTH ; l++) {
-	  (*E_M_L)(l, m) = log (pow((LAMBDA * l), double(m)) * exp(-LAMBDA * double(l)) /
+	  (*E_M_L)(l, m) = log (pow((g_lambda * l), double(m)) * exp(-g_lambda * double(l)) /
 				(fact[m])) ;
 	}
       sum = 0 ;

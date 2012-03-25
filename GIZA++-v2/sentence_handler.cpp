@@ -41,9 +41,9 @@ int PrintedTooLong=0;
 
 /* -------------- Method Defnitions for Class sentenceHandler ---------------*/
 
-GLOBAL_PARAMETER(double,ManlexMAX_MULTIPLICITY,"manlexMAX_MULTIPLICITY","",PARLEV_EM,20.0);
-GLOBAL_PARAMETER(double,Manlexfactor1,"manlexfactor1","",PARLEV_EM,0.0);
-GLOBAL_PARAMETER(double,Manlexfactor2,"manlexfactor2","",PARLEV_EM,0.0);
+GLOBAL_PARAMETER(double,ManlexMAX_MULTIPLICITY,"manlexMAX_MULTIPLICITY","",kParLevEM,20.0);
+GLOBAL_PARAMETER(double,Manlexfactor1,"manlexfactor1","",kParLevEM,0.0);
+GLOBAL_PARAMETER(double,Manlexfactor2,"manlexfactor2","",kParLevEM,0.0);
 
 sentenceHandler::sentenceHandler(const char*  filename, vcbList* elist,
 				 vcbList*  flist) : realCount(0)
@@ -130,13 +130,13 @@ bool sentenceHandler::getNextSentence(sentPair& sent, vcbList* elist, vcbList* f
     currentSentence = 0 ;
     Buffer.clear();
     cout << "Reading more sentence pairs into memory ... \n";
-    while((noSentInBuffer < TRAIN_BUFFER_SIZE) && readNextSentence(s)){
-      if ((s.fSent.size()-1) > (MAX_FERTILITY-1) * (s.eSent.size()-1)){
+    while((noSentInBuffer < kTrainBufSize) && readNextSentence(s)){
+      if ((s.fSent.size()-1) > (g_max_fertility-1) * (s.eSent.size()-1)){
 	cerr << "WARNING: The following sentence pair has source/target sentence length ration more than\n"<<
 	  "the maximum allowed limit for a source word fertility\n"<<
 	  " source length = " << s.eSent.size()-1 << " target length = " << s.fSent.size()-1 <<
 	  " ratio " << double(s.fSent.size()-1)/  (s.eSent.size()-1) << " ferility limit : " <<
-	  MAX_FERTILITY-1 << '\n';
+	  g_max_fertility-1 << '\n';
 	cerr << "Shortening sentence \n";
 	cerr << s;
 	s.eSent.resize(min(s.eSent.size(),s.fSent.size()));

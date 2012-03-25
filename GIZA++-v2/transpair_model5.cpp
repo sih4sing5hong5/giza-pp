@@ -24,7 +24,7 @@
 
 int m5scorefound=0,m5scorenotfound=0;
 
-GLOBAL_PARAMETER(float,d5modelsmooth_factor,"model5SmoothFactor","smooting parameter for distortion probabilities in Model 5 (linear interpolation with constant)",PARLEV_SMOOTH,0.1);
+GLOBAL_PARAMETER(float,d5modelsmooth_factor,"model5SmoothFactor","smooting parameter for distortion probabilities in Model 5 (linear interpolation with constant)",kParLevSmooth,0.1);
 float d5modelsmooth_countoffset=0.0;
 
 LogProb transpair_model5::_scoreOfMove(const alignment&a, WordIndex new_i, WordIndex j,double)const

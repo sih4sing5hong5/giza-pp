@@ -33,15 +33,15 @@
 #include "Parameter.h"
 
 
-GLOBAL_PARAMETER(float,PrintN,"nbestalignments","for printing the n best alignments",PARLEV_OUTPUT,0);
+GLOBAL_PARAMETER(float,PrintN,"nbestalignments","for printing the n best alignments",kParLevOutput,0);
 
 const short LogHillClimb=0,LogPeg=0;
 const short UseHMMViterbiAlignmentIfPossible=1;
 short DoViterbiTraining=0;
 
-GLOBAL_PARAMETER(int,VerboseSentence,"VerboseSentence","number of sentence for which a lot of information should be printed (negative: no output)",PARLEV_OUTPUT,-10);
-GLOBAL_PARAMETER(double,PEGGED_CUTOFF,"PEGGED_CUTOFF","relative cutoff probability for alignment-centers in pegging",PARLEV_OPTHEUR,3e-2);
-GLOBAL_PARAMETER2(float, COUNTINCREASE_CUTOFF_AL,"COUNTINCREASE CUTOFF AL","countCutoffAl","Counts increment cutoff threshold for alignments in training of fertility models",PARLEV_OPTHEUR,1e-5);
+GLOBAL_PARAMETER(int,VerboseSentence,"VerboseSentence","number of sentence for which a lot of information should be printed (negative: no output)",kParLevOutput,-10);
+GLOBAL_PARAMETER(double,PEGGED_CUTOFF,"PEGGED_CUTOFF","relative cutoff probability for alignment-centers in pegging",kParLevOptheur,3e-2);
+GLOBAL_PARAMETER2(float, COUNTINCREASE_CUTOFF_AL,"COUNTINCREASE CUTOFF AL","countCutoffAl","Counts increment cutoff threshold for alignments in training of fertility models",kParLevOptheur,1e-5);
 
 int SentNr;
 bool UseLinkCache=1;    /// optimization for pegging
@@ -131,7 +131,7 @@ LogProb model3::_viterbi_model2(const transpair_model2&ef, alignment&output, int
       LogProb score = 0 ;
       for (PositionIndex i = 0 ; i <= l ; i++)
 	{
-	  if( Fert[i]+1<MAX_FERTILITY && (i != 0 ||  m>=(2 * (Fert[0] + 1))))
+	  if( Fert[i]+1<g_max_fertility && (i != 0 ||  m>=(2 * (Fert[0] + 1))))
 	    {
 	      LogProb temp = ef.get_t(i, j) * ef.get_a(i, j);
 	      if (temp > score )
@@ -149,7 +149,7 @@ LogProb model3::_viterbi_model2(const transpair_model2&ef, alignment&output, int
 	    ef.get_t(i, j) << " atable(" << i<<", "<<j<<", "<<
 	    l<<", "<<m<<") = "<< ef.get_a(i, j) << " product " <<
 	    ef.get_t(i, j) * ef.get_a(i, j) ;
-	  if ((Fert[i]+1 < MAX_FERTILITY) && ((i == 0 &&  (m >= 2*(Fert[0]+1)))
+	  if ((Fert[i]+1 < g_max_fertility) && ((i == 0 &&  (m >= 2*(Fert[0]+1)))
 					      || (i != 0)))
 	    cerr <<"Passed fertility condition \n";
 	  else
@@ -173,7 +173,7 @@ LogProb model3::_viterbi_model2(const transpair_model2&ef, alignment&output, int
       LogProb score = 0 ;
       LogProb a = 0, t =0 ;
       for (PositionIndex i = 0 ; i <= l ; i++){
-	//	if( Debug_Fert[i]+1<MAX_FERTILITY && (i != 0 ||  m>=(2 * (Debug_Fert[0] + 1)))){
+	//	if( Debug_Fert[i]+1<g_max_fertility && (i != 0 ||  m>=(2 * (Debug_Fert[0] + 1)))){
 	  LogProb temp = ef.get_t(i, j) * ef.get_a(i, j);
 	  if (temp > score ){
 	    score = temp ;
@@ -226,7 +226,7 @@ LogProb greedyClimb_WithIBM3Scoring(MoveSwapMatrix<TRANSPAIR>&msc2,int j_peg=-1)
 	    if((aj != msc2(j1)) && (int(j1) != j_peg))
 	      msvec.push_back(pair<double,OneMoveSwap>(-msc_IBM3.cswap(j,j1),OneMoveSwap(1,j,j1)));
 	  for (PositionIndex i = 0 ; i <= l ; i++)
-	    if(i != aj &&(i != 0 || (m >= 2 * (msc2.fert(0)+1)))  && msc2.fert(i)+1<MAX_FERTILITY)
+	    if(i != aj &&(i != 0 || (m >= 2 * (msc2.fert(0)+1)))  && msc2.fert(i)+1<g_max_fertility)
 	      msvec.push_back(pair<double,OneMoveSwap>(-msc_IBM3.cmove(i,j),OneMoveSwap(2,i,j)));
 	}
       sort(msvec.begin(),msvec.end());
@@ -289,7 +289,7 @@ LogProb greedyClimb(MoveSwapMatrix<TRANSPAIR>&msc2, int j_peg = -1)
 	  WordIndex aj=msc2(j);
 	  for (PositionIndex j1 = j + 1 ; j1 <= m; j1++)if((aj != msc2(j1)) && (int(j1) != j_peg)&&msc2.cswap(j, j1) > 1.0)
 	    msc2.doSwap(j, j1), changed=1;
-	  for (PositionIndex i = 0 ; i <= l ; i++)if(i != aj &&(i != 0 || (m >= 2 * (msc2.fert(0)+1)))  && msc2.fert(i)+1<MAX_FERTILITY && msc2.cmove(i, j)>1.0)
+	  for (PositionIndex i = 0 ; i <= l ; i++)if(i != aj &&(i != 0 || (m >= 2 * (msc2.fert(0)+1)))  && msc2.fert(i)+1<g_max_fertility && msc2.cmove(i, j)>1.0)
 	    msc2.doMove(i, j), changed=1;
 	}
     } while (changed);
@@ -328,7 +328,7 @@ LogProb hillClimb_std(MoveSwapMatrix<TRANSPAIR>&msc2, int= -1,int j_peg = -1)
 		  MASSERT(msc2.get_ef().isSubOptimal()==1);
 		}
 	    }
-	  for (PositionIndex i = 0 ; i <= l ; i++)if(i != aj &&(i != 0 || (m >= 2 * (msc2.fert(0)+1))) && msc2.fert(i)+1<MAX_FERTILITY)
+	  for (PositionIndex i = 0 ; i <= l ; i++)if(i != aj &&(i != 0 || (m >= 2 * (msc2.fert(0)+1))) && msc2.fert(i)+1<g_max_fertility)
 	    {
 	      LogProb change = msc2.cmove(i, j);
 	      if (change > best_change_so_far)

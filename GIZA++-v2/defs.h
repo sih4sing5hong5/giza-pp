@@ -21,30 +21,30 @@
 #ifndef GIZAPP_DEFS_H_
 #define GIZAPP_DEFS_H_
 
-#include <climits>
-
 typedef unsigned int WordIndex;
 typedef unsigned int PositionIndex;
 typedef float PROB;
 typedef float COUNT;
 
-const int TRANSFER_SIMPLE = 1;
-const int TRANSFER = 0;
-const unsigned int MAX_SENTENCE_LENGTH_ALLOWED = 101;
-const int TRAIN_BUFFER_SIZE = 50000;
-const int MAX_W = 457979;
-const unsigned int MAX_VOCAB_SIZE = UINT_MAX;
+const int kTransfer = 0;
+const int kTransferSimple = 1;
+const int kMaxWeight = 457979;
+const int kTrainBufSize = 50000;
+const unsigned int kMaxAllowedSentenceLength = 101;
 
-const int PARLEV_ITER=1;
-const int PARLEV_OPTHEUR=2;
-const int PARLEV_OUTPUT=3;
-const int PARLEV_SMOOTH=4;
-const int PARLEV_EM=5;
-const int PARLEV_MODELS=6;
-const int PARLEV_SPECIAL=7;
-const int PARLEV_INPUT=8;
+// TODO: we might want to consider enum type.
+const int kParLevIter    = 1;
+const int kParLevOptheur = 2;
+const int kParLevOutput  = 3;
+const int kParLevSmooth  = 4;
+const int kParLevEM      = 5;
+const int kParLevModels  = 6;
+const int kParLevSpecial = 7;
+const int kParLevInput   = 8;
 
-extern WordIndex MAX_FERTILITY;
-extern double LAMBDA; // Lambda that is used to scale cross_entropy factor
+extern WordIndex g_max_fertility;
+
+// Lambda that is used to scale cross_entropy factor
+extern double g_lambda;
 
 #endif  // GIZAPP_DEFS_H_

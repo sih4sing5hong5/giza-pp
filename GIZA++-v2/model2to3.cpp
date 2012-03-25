@@ -23,9 +23,13 @@
 #include "util/util.h"
 #include "Globals.h"
 
-#define _MAX_FERTILITY 10
+namespace {
 
-double get_sum_of_partitions(int n, int source_pos, double alpha[_MAX_FERTILITY][MAX_SENTENCE_LENGTH_ALLOWED])
+const int kMaxFertility = 10;
+
+} // namespace
+
+double get_sum_of_partitions(int n, int source_pos, double alpha[kMaxFertility][kMaxAllowedSentenceLength])
 {
   int done, init ;
   double sum = 0, prod ;
@@ -34,11 +38,11 @@ double get_sum_of_partitions(int n, int source_pos, double alpha[_MAX_FERTILITY]
   WordIndex num_parts = 0  ;
   int total_partitions_considered = 0;
 
-  int part[_MAX_FERTILITY], mult[_MAX_FERTILITY];
+  int part[kMaxFertility], mult[kMaxFertility];
 
   done = false ;
   init = true ;
-  for (i = 0 ; i < _MAX_FERTILITY ; i++){
+  for (i = 0 ; i < kMaxFertility ; i++){
     part[i] = mult[i] = 0 ;
   }
 
@@ -102,10 +106,10 @@ void model3::estimate_t_a_d(sentenceHandler& sHandler1, Perplexity& perp, Perple
 {
   string tfile, nfile, dfile, p0file, afile, alignfile;
   WordIndex i, j, l, m, max_fertility_here, k ;
-  PROB val, temp_mult[MAX_SENTENCE_LENGTH_ALLOWED][MAX_SENTENCE_LENGTH_ALLOWED];
+  PROB val, temp_mult[kMaxAllowedSentenceLength][kMaxAllowedSentenceLength];
   double cross_entropy;
   double beta, sum,
-      alpha[_MAX_FERTILITY][MAX_SENTENCE_LENGTH_ALLOWED];
+      alpha[kMaxFertility][kMaxAllowedSentenceLength];
   double total, temp, r ;
 
   dCountTable.clear();
@@ -185,7 +189,7 @@ void model3::estimate_t_a_d(sentenceHandler& sHandler1, Perplexity& perp, Perple
       printAlignToFile(es, fs, Elist.getVocabList(), Flist.getVocabList(), of2, viterbi_alignment, sent.sentenceNo, viterbi_score);
     addAL(viterbi_alignment,sent.sentenceNo,l);
     if (!simple){
-      max_fertility_here = min(WordIndex(m+1), MAX_FERTILITY);
+      max_fertility_here = min(WordIndex(m+1), g_max_fertility);
       for (i = 1; i <= l ; i++) {
 	for ( k = 1; k < max_fertility_here; k++){
 	  beta = 0 ;
@@ -228,16 +232,16 @@ void model3::estimate_t_a_d(sentenceHandler& sHandler1, Perplexity& perp, Perple
     nCountTable.normalize(nTable,&Elist.getVocabList());
   else {
     for (i = 0 ; i< Elist.uniqTokens() ; i++){
-      if (0 < MAX_FERTILITY){
+      if (0 < g_max_fertility){
 	nTable.getRef(i,0)=PROB(0.2);
-	if (1 < MAX_FERTILITY){
+	if (1 < g_max_fertility){
 	  nTable.getRef(i,1)=PROB(0.65);
-	  if (2 < MAX_FERTILITY){
+	  if (2 < g_max_fertility){
 	    nTable.getRef(i,2)=PROB(0.1);
-	  if (3 < MAX_FERTILITY)
+	  if (3 < g_max_fertility)
 	    nTable.getRef(i,3)=PROB(0.04);
-	  PROB val = 0.01/(MAX_FERTILITY-4);
-	  for (k = 4 ; k < MAX_FERTILITY ; k++)
+	  PROB val = 0.01/(g_max_fertility-4);
+	  for (k = 4 ; k < g_max_fertility ; k++)
 	    nTable.getRef(i, k)=val;
 	  }
 	}
@@ -305,7 +309,7 @@ void model3::transferSimple(/*model1& m1, model2& m2, */ sentenceHandler& sHandl
 
 void model3::transfer(sentenceHandler& sHandler1,bool dump_files, Perplexity& perp, Perplexity& trainVPerp,bool updateT)
 {
-  if (Transfer == TRANSFER_SIMPLE)
+  if (Transfer == kTransferSimple)
     transferSimple(sHandler1,dump_files,perp, trainVPerp,updateT);
   {
     time_t st, fn ;
@@ -330,7 +334,7 @@ void model3::transfer(sentenceHandler& sHandler1,bool dump_files, Perplexity& pe
        Vector<LogProb> nm(Elist.uniqTokens(),0.0);
 
        for(i=0; i < Elist.uniqTokens(); i++){
-       for(k=1; k < MAX_FERTILITY; k++){
+       for(k=1; k < g_max_fertility; k++){
        nm[i] += nTable.getValue(i, k) * (LogProb) k;
        }
        }

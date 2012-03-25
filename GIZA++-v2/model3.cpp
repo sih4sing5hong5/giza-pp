@@ -30,17 +30,17 @@
 
 #define TRICKY_IBM3_TRAINING
 
-GLOBAL_PARAMETER(int,M4_Dependencies,"depm4","d_{=1}: &1:l, &2:m, &4:F, &8:E, d_{>1}&16:l, &32:m, &64:F, &128:E",PARLEV_MODELS,76);
-GLOBAL_PARAMETER(int,M5_Dependencies,"depm5","d_{=1}: &1:l, &2:m, &4:F, &8:E, d_{>1}&16:l, &32:m, &64:F, &128:E",PARLEV_MODELS,68);
-GLOBAL_PARAMETER4(int,Model3_Dump_Freq,"MODEL 345 DUMP FREQUENCY","MODEL 3 DUMP FREQUENCY","t3","t345","dump frequency of Model 3/4/5",PARLEV_OUTPUT,0);
+GLOBAL_PARAMETER(int,M4_Dependencies,"depm4","d_{=1}: &1:l, &2:m, &4:F, &8:E, d_{>1}&16:l, &32:m, &64:F, &128:E",kParLevModels,76);
+GLOBAL_PARAMETER(int,M5_Dependencies,"depm5","d_{=1}: &1:l, &2:m, &4:F, &8:E, d_{>1}&16:l, &32:m, &64:F, &128:E",kParLevModels,68);
+GLOBAL_PARAMETER4(int,Model3_Dump_Freq,"MODEL 345 DUMP FREQUENCY","MODEL 3 DUMP FREQUENCY","t3","t345","dump frequency of Model 3/4/5",kParLevOutput,0);
 
 
 extern int Transfer_Dump_Freq;
 
 model3::model3(model2& m2) :
   model2(m2),dTable(true), dCountTable(true),
-  nTable(m2.getNoEnglishWords()+1, MAX_FERTILITY),
-  nCountTable(m2.getNoEnglishWords()+1, MAX_FERTILITY),h(0)
+  nTable(m2.getNoEnglishWords()+1, g_max_fertility),
+  nCountTable(m2.getNoEnglishWords()+1, g_max_fertility),h(0)
 {}
 
 void model3::load_tables(const char *nfile, const char *dfile, const char *p0file){

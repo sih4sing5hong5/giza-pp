@@ -219,7 +219,7 @@ class alignment
       if( 2*f[0]>m )
 	return 0;
       for(unsigned int i=1;i<=l;i++)
-	if( f[i]>=MAX_FERTILITY )
+	if( f[i]>=g_max_fertility )
 	  return 0;
       return 1;
     }

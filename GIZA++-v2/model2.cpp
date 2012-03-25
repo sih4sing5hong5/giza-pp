@@ -28,7 +28,7 @@ USA.
 extern short NoEmptyWord;
 
 
-GLOBAL_PARAMETER2(int,Model2_Dump_Freq,"MODEL 2 DUMP FREQUENCY","t2","dump frequency of Model 2",PARLEV_OUTPUT,0);
+GLOBAL_PARAMETER2(int,Model2_Dump_Freq,"MODEL 2 DUMP FREQUENCY","t2","dump frequency of Model 2",kParLevOutput,0);
 
 model2::model2(model1& m,amodel<PROB>&_aTable,amodel<COUNT>&_aCountTable):
   model1(m),aTable(_aTable),aCountTable(_aCountTable)

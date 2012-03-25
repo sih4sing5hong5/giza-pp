@@ -22,7 +22,7 @@
 #include "transpair_model4.h"
 #include "Parameter.h"
 
-GLOBAL_PARAMETER(float,d4modelsmooth_factor,"model4SmoothFactor","smooting parameter for alignment probabilities in Model 4",PARLEV_SMOOTH,0.2);
+GLOBAL_PARAMETER(float,d4modelsmooth_factor,"model4SmoothFactor","smooting parameter for alignment probabilities in Model 4",kParLevSmooth,0.2);
 
 LogProb transpair_model4::_scoreOfMove(const alignment&a, WordIndex new_i, WordIndex j,double)const
 {
