@@ -20,7 +20,7 @@
 */
 
 #include "model3.h"
-#include "utility.h"
+#include "util/util.h"
 #include "Globals.h"
 
 

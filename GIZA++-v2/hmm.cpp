@@ -21,7 +21,7 @@
 
 #include "hmm.h"
 #include "Globals.h"
-#include "utility.h"
+#include "util/util.h"
 #include "HMMTables.h"
 #include "forward_backward.h"
 #include "Parameter.h"

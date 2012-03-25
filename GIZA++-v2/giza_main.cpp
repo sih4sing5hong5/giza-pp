@@ -31,7 +31,7 @@
 #include "vocab.h"
 #include "Perplexity.h"
 #include "Dictionary.h"
-#include "utility.h"
+#include "util/util.h"
 #include "Parameter.h"
 #include "util/assert.h"
 #include "D4Tables.h"

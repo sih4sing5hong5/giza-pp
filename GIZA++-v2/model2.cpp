@@ -21,7 +21,7 @@ USA.
 */
 #include "model2.h"
 #include "Globals.h"
-#include "utility.h"
+#include "util/util.h"
 #include "Parameter.h"
 #include "defs.h"
 

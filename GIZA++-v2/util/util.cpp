@@ -18,6 +18,8 @@
   USA.
 */
 
+#include "util/util.h"
+
 #include <sstream>
 #include <time.h>
 #include <set>
