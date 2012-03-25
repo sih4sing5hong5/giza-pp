@@ -30,7 +30,7 @@
 #include "Globals.h"
 #include "D4Tables.h"
 #include "D5Tables.h"
-#include "ATables.h"
+#include "atables.h"
 #include "Parameter.h"
 
 extern bool ONLYALDUMPS;

@@ -19,7 +19,7 @@
   USA.
 */
 
-#include "ATables.h"
+#include "atables.h"
 #include "Globals.h"
 #include "myassert.h"
 #include "Parameter.h"

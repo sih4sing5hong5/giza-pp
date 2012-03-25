@@ -19,7 +19,7 @@
   USA.
 */
 
-#include "AlignTables.h"
+#include "align_tables.h"
 
 bool alignmodel::insert(Vector<WordIndex>& aj, LogProb val)
 {

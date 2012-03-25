@@ -37,7 +37,7 @@
 #include <ctime>
 
 #include "TTables.h"
-#include "ATables.h"
+#include "atables.h"
 #include "getSentence.h"
 #include "defs.h"
 #include "model1.h"

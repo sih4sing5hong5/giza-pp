@@ -36,7 +36,7 @@
 #include <cmath>
 #include "MoveSwapMatrix.h"
 #include "TTables.h"
-#include "ATables.h"
+#include "atables.h"
 #include "NTables.h"
 #include "getSentence.h"
 #include "defs.h"
@@ -47,7 +47,7 @@
 #include "alignment.h"
 #include "vocab.h"
 #include "D4Tables.h"
-#include "AlignTables.h"
+#include "align_tables.h"
 
 class model3 : public model2
 {

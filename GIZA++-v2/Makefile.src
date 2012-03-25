@@ -7,8 +7,8 @@ SRC = \
 	model3.cpp \
 	getSentence.cpp \
 	TTables.cpp \
-	ATables.cpp \
-	AlignTables.cpp \
+	atables.cpp \
+	align_tables.cpp \
 	main.cpp \
 	NTables.cpp \
 	model2to3.cpp \

@@ -25,7 +25,7 @@
 #include "defs.h"
 #include "Vector.h"
 #include "NTables.h"
-#include "ATables.h"
+#include "atables.h"
 #include "TTables.h"
 #include "alignment.h"
 #include <cmath>

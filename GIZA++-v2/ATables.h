@@ -23,14 +23,14 @@
  *                                                                           *
  * Module :ATables                                                           *
  *                                                                           *
- * Prototypes File: ATables.h                                                *
+ * Prototypes File: atables.h                                                *
  *                                                                           *
  * Objective: Defines clases and methods for handling I/O for distortion  &  *
  *            alignment tables.                                              *
  *****************************************************************************/
 
-#ifndef _atables_h
-#define _atables_h 1
+#ifndef GIZAPP_ATABLES_H_
+#define GIZAPP_ATABLES_H_
 
 #include "defs.h"
 #include <cassert>
@@ -179,4 +179,4 @@ class amodel {
   void clear() { a.clear(); }
 };
 
-#endif
+#endif  // GIZAPP_ATABLES_H_
