@@ -41,7 +41,7 @@
 #include "sentence_handler.h"
 #include "defs.h"
 #include "model2.h"
-#include "perplexity.h"
+#include "util/perplexity.h"
 #include "vocab.h"
 #include "WordClasses.h"
 #include "HMMTables.h"

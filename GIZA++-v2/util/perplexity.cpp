@@ -31,10 +31,31 @@
  * of models.
  */
 
-#include "perplexity.h"
+#include "util/perplexity.h"
+#include "globals.h"
 
-void Perplexity::record(string model){
-  modelid.push_back(model);
-  perp.push_back(perplexity());
-  ce.push_back(cross_entropy());
+Perplexity::Perplexity()
+  : sum_(0.0),
+    wc_(0.0),
+    E_M_L_(new Array2<double, Vector<double> >(MAX_SENTENCE_LENGTH,MAX_SENTENCE_LENGTH)) {
+  Init();
+}
+
+Perplexity::~Perplexity() { delete E_M_L_; }
+
+void Perplexity::Init() {
+  unsigned int l, m ;
+  Vector<double> fact(MAX_SENTENCE_LENGTH, 1.0);
+  for (m = 2 ; m < MAX_SENTENCE_LENGTH; m++)
+    fact[m] = fact[m-1] * m ;
+  for (m = 1 ; m < MAX_SENTENCE_LENGTH; m++) {
+    for (l = 1 ; l < MAX_SENTENCE_LENGTH; l++) {
+      (*E_M_L_)(l, m) = std::log(
+          std::pow((g_lambda * l), double(m)) * std::exp(-g_lambda * double(l)) /
+          (fact[m])) ;
+    }
+  }
+  perp_.clear();
+  ce_.clear();
+  name_.clear();
 }

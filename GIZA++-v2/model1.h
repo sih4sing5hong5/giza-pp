@@ -42,7 +42,7 @@
 #include "vocab.h"
 #include "TTables.h"
 #include "sentence_handler.h"
-#include "perplexity.h"
+#include "util/perplexity.h"
 #include "vocab.h"
 #include "Dictionary.h"
 
