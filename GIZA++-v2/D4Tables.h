@@ -24,7 +24,7 @@
 #include <math.h>
 #include "WordClasses.h"
 #include "Globals.h"
-#include "myassert.h"
+#include "util/assert.h"
 
 extern float d4modelsmooth_factor;
 

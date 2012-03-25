@@ -21,7 +21,7 @@
 
 #include "atables.h"
 #include "Globals.h"
-#include "myassert.h"
+#include "util/assert.h"
 #include "Parameter.h"
 
 GLOBAL_PARAMETER(bool, CompactADTable, "compactadtable", "1: only 3-dimensional alignment table for IBM-2 and IBM-3", PARLEV_MODELS, 1);

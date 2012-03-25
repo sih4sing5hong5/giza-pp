@@ -22,8 +22,8 @@
 #ifndef NO_TRAINING
 #include "ForwardBackward.h"
 #include "Globals.h"
-#include "myassert.h"
 #include "HMMTables.h"
+#include "util/assert.h"
 #include "util/math.h"
 
 double ForwardBackwardTraining(const HMMNetwork&net,Array<double>&g,Array<Array2<double> >&E){

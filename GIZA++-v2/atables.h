@@ -43,7 +43,7 @@
 #include <utility>
 #include <fstream>
 #include "Array4.h"
-#include "myassert.h"
+#include "util/assert.h"
 #include "Globals.h"
 
 extern bool CompactADTable;

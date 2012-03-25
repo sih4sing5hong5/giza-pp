@@ -29,7 +29,7 @@
 #define moveswap2_costs_h_defined
 #include "alignment.h"
 #include "transpair_model3.h"
-#include "myassert.h"
+#include "util/assert.h"
 
 extern short DoViterbiTraining;
 

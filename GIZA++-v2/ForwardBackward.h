@@ -22,7 +22,7 @@
 #ifndef NO_EM_MARKOF_ZEUGS_DEFINED
 #define NO_EM_MARKOF_ZEUGS_DEFINED
 #ifndef NO_TRAINING
-#include "myassert.h"
+#include "util/assert.h"
 #include "Array.h"
 #include "Array2.h"
 

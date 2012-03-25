@@ -50,8 +50,9 @@ OBJ_DIR =
 DATE = `date +%d-%m-%Y`
 
 LIBOBJECTS = \
+	util/assert.o \
+	util/logprob.o \
 	Parameter.o \
-	myassert.o \
 	Perplexity.o \
 	model1.o \
 	model2.o \
@@ -79,8 +80,7 @@ LIBOBJECTS = \
 	model345-peg.o \
 	hmm.o \
 	HMMTables.o \
-	ForwardBackward.o \
-	util/logprob.o
+	ForwardBackward.o
 
 PROGRAMS = GIZA++ snt2plain.out plain2snt.out snt2cooc.out
 

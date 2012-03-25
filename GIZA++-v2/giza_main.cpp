@@ -33,7 +33,7 @@
 #include "Dictionary.h"
 #include "utility.h"
 #include "Parameter.h"
-#include "myassert.h"
+#include "util/assert.h"
 #include "D4Tables.h"
 #include "D5Tables.h"
 #include "transpair_model4.h"

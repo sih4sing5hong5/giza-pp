@@ -29,7 +29,7 @@
 #include "Vector.h"
 #include <cassert>
 #include "defs.h"
-#include "myassert.h"
+#include "util/assert.h"
 
 class al_struct
 {

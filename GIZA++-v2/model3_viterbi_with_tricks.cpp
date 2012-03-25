@@ -28,7 +28,7 @@
 #include "D5Tables.h"
 #include "transpair_model5.h"
 #include "transpair_modelhmm.h"
-#include "myassert.h"
+#include "util/assert.h"
 #include "Parameter.h"
 
 GLOBAL_PARAMETER(float,PrintN,"nbestalignments","for printing the n best alignments",PARLEV_OUTPUT,0);

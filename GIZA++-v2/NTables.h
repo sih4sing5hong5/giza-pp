@@ -26,7 +26,7 @@
 #include <cassert>
 #include "defs.h"
 #include "vocab.h"
-#include "myassert.h"
+#include "util/assert.h"
 #include "Globals.h"
 
 extern double NTablesFactorGraphemes,NTablesFactorGeneral;
