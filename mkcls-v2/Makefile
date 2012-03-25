@@ -8,20 +8,20 @@ OBJS = \
 	GDAOptimization.o \
 	HCOptimization.o \
 	Problem.o \
-  IterOptimization.o \
+	IterOptimization.o \
 	ProblemTest.o \
 	RRTOptimization.o \
 	MYOptimization.o \
 	SAOptimization.o \
 	TAOptimization.o \
-  Optimization.o \
+	Optimization.o \
 	KategProblemTest.o \
 	KategProblemKBC.o \
-  KategProblemWBC.o \
-  KategProblem.o \
+	KategProblemWBC.o \
+	KategProblem.o \
 	StatVar.o \
 	general.o \
-  mkcls.o
+	mkcls.o
 
 .cpp.o:
 	$(CXX) $(CFLAGS) -c $< -o $@
