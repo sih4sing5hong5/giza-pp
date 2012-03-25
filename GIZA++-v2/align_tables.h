@@ -19,8 +19,8 @@
   USA.
 */
 
-#ifndef _aligntables_h
-#define _aligntables_h 1
+#ifndef GIZAPP_ALIGN_TABLES_H_
+#define GIZAPP_ALIGN_TABLES_H_
 
 #include "defs.h"
 
@@ -115,4 +115,4 @@ public:
 };
 
 /* -------------- End of alignmode Class Definitions ------------------------*/
-#endif
+#endif  // GIZAPP_ALIGN_TABLES_H_

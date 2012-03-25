@@ -24,8 +24,9 @@
 
   Franz Josef Och (30/07/99)
 */
-#ifndef alignment_h_fjo_defined
-#define alignment_h_fjo_defined
+#ifndef GIZAPP_ALIGNMENT_H_
+#define GIZAPP_ALIGNMENT_H_
+
 #include "util/vector.h"
 #include <cassert>
 #include "defs.h"
@@ -225,4 +226,5 @@ class alignment {
     }
   friend class transpair_model5;
 };
-#endif
+
+#endif  // GIZAPP_ALIGNMENT_H_

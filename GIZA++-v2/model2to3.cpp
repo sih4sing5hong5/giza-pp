@@ -20,8 +20,12 @@
 */
 
 #include "model3.h"
+
+#include <cmath>
 #include "util/util.h"
 #include "globals.h"
+#include "util/perplexity.h"
+#include "sentence_handler.h"
 
 namespace {
 
@@ -92,7 +96,7 @@ double get_sum_of_partitions(int n, int source_pos, double alpha[kMaxFertility][
       prod = 1.0 ;
       if (n != 0)
 	for (i = 1 ; i <= num_parts ; i++){
-	  prod *= pow(alpha[part[i]][source_pos], mult[i]) / factorial(mult[i]) ;
+	  prod *= std::pow(alpha[part[i]][source_pos], mult[i]) / factorial(mult[i]) ;
 	}
       sum += prod ;
     }

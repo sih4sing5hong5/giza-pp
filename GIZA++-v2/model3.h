@@ -22,38 +22,25 @@
 #ifndef GIZAPP_MODEL3_H_
 #define GIZAPP_MODEL3_H_
 
-#include <cassert>
-#include <iostream>
-#include <algorithm>
-#include <functional>
-#include <map>
-#include <set>
-#include "util/vector.h"
-#include <utility>
-
-#include <ctime>
-#include <fstream>
-#include <cmath>
-
-#include "ttables.h"
-#include "atables.h"
-#include "ntables.h"
-#include "sentence_handler.h"
-#include "defs.h"
 #include "model2.h"
-#include "util/perplexity.h"
-#include "transpair_model3.h"
-#include "transpair_modelhmm.h"
-#include "alignment.h"
-#include "vocab.h"
-#include "d4tables.h"
-#include "align_tables.h"
+#include "ntables.h"
+#include "defs.h"
 
-class model3 : public model2
-{
-public:
-  amodel<PROB>   dTable;
-  amodel<COUNT>  dCountTable;
+class alignment;
+class alignmodel;
+class HMM;
+class LogProb;
+class Perplexity;
+class sentenceHandler;
+class transpair_model2;
+class transpair_model3;
+class TransPairModelHMM;
+
+class model3 : public model2 {
+ // TODO: should be private.
+ public:
+  amodel<PROB>  dTable;
+  amodel<COUNT> dCountTable;
 
   PROB p0,p1;
   double p0_count, p1_count ;
@@ -63,70 +50,113 @@ public:
   HMM* h;
 
 public:
-  void setHMM(HMM*_h){h=_h;}
   model3(model2& m2);
   ~model3();
+
+  void setHMM(HMM*_h) {h = _h;}
+
   // methods
-  void transfer(sentenceHandler&, bool, Perplexity&, Perplexity&,bool updateT=1);
-  void transferSimple(sentenceHandler&, bool, Perplexity&, Perplexity&,bool updateT=1);
-  void load_tables(const char *nfile, const char *dfile, const char *p0file);
+  void transfer(sentenceHandler&, bool,
+                Perplexity&,
+                Perplexity&,
+                bool updateT = true);
+
+  void transferSimple(sentenceHandler&, bool,
+                      Perplexity&, Perplexity&,
+                      bool updateT = true);
+
+  void load_tables(const char *nfile,
+                   const char *dfile,
+                   const char *p0file);
 
   void em(int, sentenceHandler&);
   int viterbi(int, int, int,int);
 
-private:
+ private:
   LogProb prob_of_special(Vector<WordIndex>&,
-			  Vector<WordIndex>&,
-			  tmodel<COUNT, PROB>&,
-			  Vector<WordIndex>&,
-			  Vector<WordIndex>&);
+                          Vector<WordIndex>&,
+                          tmodel<COUNT, PROB>&,
+                          Vector<WordIndex>&,
+                          Vector<WordIndex>&);
 
   LogProb prob_of_target_and_alignment_given_source(Vector<WordIndex>&,
-						  Vector<WordIndex>&,
-						  tmodel<COUNT, PROB>&,
-						  Vector<WordIndex>&,
-						  Vector<WordIndex>&);
+                                                    Vector<WordIndex>&,
+                                                    tmodel<COUNT, PROB>&,
+                                                    Vector<WordIndex>&,
+                                                    Vector<WordIndex>&);
   LogProb prob_of_target_given_source(tmodel<COUNT, PROB>&,
-				    Vector<WordIndex>&,
-				    Vector<WordIndex>&);
+                                      Vector<WordIndex>&,
+                                      Vector<WordIndex>&);
 
   LogProb scoreOfMove(Vector<WordIndex>&, Vector<WordIndex>&,
-		    Vector<WordIndex>&, Vector<WordIndex>&,
-		    tmodel<COUNT, PROB>&, WordIndex, WordIndex);
+                      Vector<WordIndex>&, Vector<WordIndex>&,
+                      tmodel<COUNT, PROB>&, WordIndex, WordIndex);
 
   LogProb scoreOfSwap(Vector<WordIndex>&, Vector<WordIndex>&,
-		      Vector<WordIndex>&, tmodel<COUNT, PROB>&, int, int);
+                      Vector<WordIndex>&, tmodel<COUNT, PROB>&, int, int);
 
   void hillClimb(Vector<WordIndex>&, Vector<WordIndex>&,
-		 Vector<WordIndex>&, Vector<WordIndex>&,
-		 LogProb&, tmodel<COUNT, PROB>&, int, int);
+                 Vector<WordIndex>&, Vector<WordIndex>&,
+                 LogProb&, tmodel<COUNT, PROB>&, int, int);
 
   void findBestAlignment(Vector<WordIndex>&, Vector<WordIndex>&,
-			 Vector<WordIndex>&, Vector<WordIndex>&,
-			 LogProb&,int , int);
+                         Vector<WordIndex>&, Vector<WordIndex>&,
+                         LogProb&,int , int);
 
+  void findAlignmentsNeighborhood(Vector<WordIndex>&,
+                                  Vector<WordIndex>&,
+                                  LogProb&align_total_count,
+                                  alignmodel&neighborhood,
+                                  int, int);
 
-  void findAlignmentsNeighborhood( Vector<WordIndex>&,
-				   Vector<WordIndex>&,
-				   LogProb&align_total_count,
-				   alignmodel&neighborhood,
-				   int, int);
   void collectCountsOverAlignement(const Vector<WordIndex>& es,
-				   const Vector<WordIndex>& fs,
-				   const Vector<WordIndex>&,
-				   LogProb , float count);
-  LogProb viterbi_model2(const transpair_model3&ef,   alignment&output, int pair_no,int i_peg = -1 , int j_peg = -1 )const;
-  LogProb _viterbi_model2(const transpair_model2&ef,   alignment&output, int i_peg = -1 , int j_peg = -1 )const;
-  LogProb viterbi_model2(const TransPairModelHMM&ef, alignment&output, int pair_no,int i_peg = -1 , int j_peg = -1 )const;
+                                   const Vector<WordIndex>& fs,
+                                   const Vector<WordIndex>&,
+                                   LogProb , float count);
 
- private:
-  void estimate_t_a_d(sentenceHandler& sHandler1, Perplexity& perp1, Perplexity& perp2,bool simple, bool dump_files,bool updateT);
-  void viterbi_loop(Perplexity&, Perplexity&, sentenceHandler&, bool, const char*,bool,string model);
+  LogProb viterbi_model2(const transpair_model3&ef,
+                         alignment&output,
+                         int pair_no,
+                         int i_peg = -1,
+                         int j_peg = -1 ) const;
+
+  LogProb _viterbi_model2(const transpair_model2&ef,
+                          alignment&output,
+                          int i_peg = -1,
+                          int j_peg = -1 ) const;
+
+  LogProb viterbi_model2(const TransPairModelHMM&ef,
+                         alignment&output,
+                         int pair_no,
+                         int i_peg = -1,
+                         int j_peg = -1) const;
+
+  void estimate_t_a_d(sentenceHandler& sHandler1,
+                      Perplexity& perp1,
+                      Perplexity& perp2,
+                      bool simple,
+                      bool dump_files,
+                      bool updateT);
+
+  void viterbi_loop(Perplexity&,
+                    Perplexity&,
+                    sentenceHandler&,
+                    bool,
+                    const char*,
+                    bool,
+                    string model);
 
   template<class MODEL_TYPE, class A,class B>
-  void viterbi_loop_with_tricks(Perplexity&, Perplexity&, sentenceHandler&,
-						      bool, const char*,  bool, string model, bool final,A*d4m,B*d5m);
-
+  void viterbi_loop_with_tricks(Perplexity&,
+                                Perplexity&,
+                                sentenceHandler&,
+                                bool,
+                                const char*,
+                                bool,
+                                string model,
+                                bool final,
+                                A* d4m,
+                                B* d5m);
 };
 
 #endif  // GIZAPP_MODEL3_H_

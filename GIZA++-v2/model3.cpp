@@ -20,13 +20,21 @@
 */
 
 #include "model3.h"
+
+#include "alignment.h"
+#include "align_tables.h"
 #include "coll_counts.h"
-#include "globals.h"
+#include "util/perplexity.h"
+#include "util/logprob.h"
 #include "util/util.h"
+#include "sentence_handler.h"
+#include "globals.h"
 #include "d5tables.h"
+#include "transpair_model3.h"
 #include "transpair_model5.h"
 #include "transpair_modelhmm.h"
 #include "parameter.h"
+#include "hmm.h"
 
 #define TRICKY_IBM3_TRAINING
 

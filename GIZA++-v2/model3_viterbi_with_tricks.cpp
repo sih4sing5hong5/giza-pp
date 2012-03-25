@@ -19,18 +19,24 @@
   USA.
 */
 
+#include "model3.h"
+
 #include <cassert>
 #include "port/stl_helper.h"
-#include "model3.h"
+
 #include "util/util.h"
+#include "util/perplexity.h"
+#include "util/assert.h"
+#include "align_tables.h"
 #include "globals.h"
 #include "d5tables.h"
 #include "forward_backward.h"
+#include "sentence_handler.h"
 #include "transpair_model5.h"
 #include "transpair_modelhmm.h"
-#include "util/assert.h"
 #include "parameter.h"
 #include "coll_counts.h"
+
 
 GLOBAL_PARAMETER(float,PrintN,"nbestalignments","for printing the n best alignments",kParLevOutput,0);
 

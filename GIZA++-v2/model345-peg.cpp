@@ -20,6 +20,8 @@
 */
 
 #include "model3.h"
+
+#include "alignment.h"
 #include "coll_counts.h"
 
 bool makeOneMoveSwap(const alignment&x,const alignment&y,set<OneMoveSwap>&soms)

@@ -20,9 +20,13 @@
 */
 
 #include "model3.h"
+
+#include "util/logprob.h"
+#include "util/perplexity.h"
 #include "util/util.h"
 #include "globals.h"
-
+#include "align_tables.h"
+#include "sentence_handler.h"
 
 LogProb model3::prob_of_target_and_alignment_given_source(Vector<WordIndex>& A,
 							Vector<WordIndex>& Fert,
