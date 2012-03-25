@@ -106,49 +106,6 @@ Perplexity trainPerp, testPerp, trainViterbiPerp, testViterbiPerp ;
 string ReadTablePrefix;
 
 
-void printGIZAPars(ostream&out)
-{
-  out << "general parameters:\n"
-         "-------------------\n";
-  printPars(out,getGlobalParSet(),0);
-  out << '\n';
-
-  out << "No. of iterations:\n-"
-         "------------------\n";
-  printPars(out,getGlobalParSet(),kParLevIter);
-  out << '\n';
-
-  out << "parameter for various heuristics in GIZA++ for efficient training:\n"
-         "------------------------------------------------------------------\n";
-  printPars(out,getGlobalParSet(),kParLevOptheur);
-  out << '\n';
-
-  out << "parameters for describing the type and amount of output:\n"
-         "-----------------------------------------------------------\n";
-  printPars(out,getGlobalParSet(),kParLevOutput);
-  out << '\n';
-
-  out << "parameters describing input files:\n"
-         "----------------------------------\n";
-  printPars(out,getGlobalParSet(),kParLevInput);
-  out << '\n';
-
-  out << "smoothing parameters:\n"
-         "---------------------\n";
-  printPars(out,getGlobalParSet(),kParLevSmooth);
-  out << '\n';
-
-  out << "parameters modifying the models:\n"
-         "--------------------------------\n";
-  printPars(out,getGlobalParSet(),kParLevModels);
-  out << '\n';
-
-  out << "parameters modifying the EM-algorithm:\n"
-         "--------------------------------------\n";
-  printPars(out,getGlobalParSet(),kParLevEM);
-  out << '\n';
-}
-
 const char*stripPath(const char*fullpath)
   // strip the path info from the file name
 {
@@ -418,52 +375,6 @@ void convert(const map< pair<int,int>,char >&reference,alignment&x)
       x.set(i->first.first+1,i->first.second+1);
     }
 }
-double ErrorsInAlignment(const map< pair<int,int>,char >&reference,const Vector<WordIndex>&test,int l,int&missing,int&toomuch,int&eventsMissing,int&eventsToomuch,int pair_no)
-{
-  int err=0;
-  for(unsigned int j=1;j<test.size();j++)
-    {
-      if( test[j]>0 )
-	{
-	  map< pair<int,int>,char >::const_iterator i=reference.find(make_pair(test[j]-1,j-1));
-	  if( i==reference.end() )
-	    {
-	      toomuch++;
-	      err++;
-	    }
-	  else
-	    if( !(i->second=='S' || i->second=='P'))
-	      cerr << "ERROR: wrong symbol in reference alignment '" << i->second << ' ' << int(i->second) << " no:" << pair_no<< "'\n";
-	  eventsToomuch++;
-	}
-    }
-  for(map< pair<int,int>,char >::const_iterator i=reference.begin();i!=reference.end();++i)
-    {
-      if( i->second=='S' )
-	{
-	  unsigned int J=i->first.second+1;
-	  unsigned int I=i->first.first+1;
-	  if( int(J)>=int(test.size())||int(I)>int(l)||int(J)<1||int(I)<1 )
-	    cerr << "ERROR: alignment outside of range in reference alignment" << J << " " << test.size() << " (" << I << " " << l << ") no:" << pair_no << '\n';
-	  else
-	    {
-	      if(test[J]!=I)
-		{
-		  missing++;
-		  err++;
-		}
-	    }
-	  eventsMissing++;
-	}
-    }
-  if( Verbose )
-    cout << err << " errors in sentence\n";
-  if( eventsToomuch+eventsMissing )
-    return (toomuch+missing)/(eventsToomuch+eventsMissing);
-  else
-    return 1.0;
-}
-
 
 vcbList *globeTrainVcbList,*globfTrainVcbList;
 

@@ -20,14 +20,68 @@
 */
 
 #include "Parameter.h"
+
 #include <fstream>
 #include <unistd.h>
 #include <sstream>
 
-
 bool absolutePathNames=0;
 string ParameterPathPrefix;
 bool ParameterChangedFlag=0;
+
+void printHelp(void)
+{
+  cerr << "Usage:\n\n" << Usage << '\n';
+  cerr << "Options (these override parameters set in the config file):\n\n";
+  cerr << "\t--v \t\t print verbose message, Warning this is not very descriptive and not systematic.\n";
+  cerr << "\t--NODUMPS \t Do not write any files to disk (This will over write dump frequency options).\n";
+  cerr << "\t--h[elp]\t\tprint this help\n";
+  cerr << "\t--p\t\tUse pegging when generating alignments for Model3 training.  (Default NO PEGGING)\n";
+  cerr << "\t--st\t\tto use a fixed ditribution for the fertility parameters when tranfering from model 2 to model 3 (Default complicated estimation)\n";
+  printGIZAPars(std::cout);
+}
+
+void printGIZAPars(std::ostream& out) {
+  out << "general parameters:\n"
+         "-------------------\n";
+  printPars(out, getGlobalParSet(),0);
+  out << '\n';
+
+  out << "No. of iterations:\n-"
+         "------------------\n";
+  printPars(out,getGlobalParSet(),kParLevIter);
+  out << '\n';
+
+  out << "parameter for various heuristics in GIZA++ for efficient training:\n"
+         "------------------------------------------------------------------\n";
+  printPars(out,getGlobalParSet(),kParLevOptheur);
+  out << '\n';
+
+  out << "parameters for describing the type and amount of output:\n"
+         "-----------------------------------------------------------\n";
+  printPars(out,getGlobalParSet(),kParLevOutput);
+  out << '\n';
+
+  out << "parameters describing input files:\n"
+         "----------------------------------\n";
+  printPars(out,getGlobalParSet(),kParLevInput);
+  out << '\n';
+
+  out << "smoothing parameters:\n"
+         "---------------------\n";
+  printPars(out,getGlobalParSet(),kParLevSmooth);
+  out << '\n';
+
+  out << "parameters modifying the models:\n"
+         "--------------------------------\n";
+  printPars(out,getGlobalParSet(),kParLevModels);
+  out << '\n';
+
+  out << "parameters modifying the EM-algorithm:\n"
+         "--------------------------------------\n";
+  printPars(out,getGlobalParSet(),kParLevEM);
+  out << '\n';
+}
 
 bool writeParameters(ofstream&of,const ParSet&parset,int level)
 {
@@ -107,8 +161,7 @@ bool makeSetCommand(string _s1,string s2,const ParSet&parset,int verb,int level)
   return 0;
 }
 
-ostream& printPars(ostream&of,const ParSet&parset,int level)
-{
+ostream& printPars(ostream&of,const ParSet&parset,int level) {
   if(!of)return of;
   for(ParSet::const_iterator i=parset.begin();i!=parset.end();++i)
     {
@@ -136,8 +189,8 @@ string simpleString(const string s)
 }
 
 
-ParSet&getGlobalParSet()
-{
+ParSet& getGlobalParSet() {
   static ParSet x;
   return x;
 }
+

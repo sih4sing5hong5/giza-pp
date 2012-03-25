@@ -67,8 +67,6 @@ extern short PredictionInAlignments;
 extern short SmoothHMM;
 #define VERB Verbose
 
-double ErrorsInAlignment(const map< pair<int,int>,char >&reference,const Vector<WordIndex>&test,int l,int&missing,int&toomuch,int&eventsMissing,int&eventsToomuch,int);
 extern Vector<map< pair<int,int>,char > > ReferenceAlignment;
-void printGIZAPars(ostream&out);
 
 #endif  // GIZAPP_GLOBALS_H_

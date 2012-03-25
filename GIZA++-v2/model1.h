@@ -37,6 +37,7 @@
 #include <cmath>
 #include <cstdio>
 
+#include "util/util.h"
 #include "util/vector.h"
 #include "vocab.h"
 #include "TTables.h"

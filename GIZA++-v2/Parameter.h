@@ -19,13 +19,14 @@
   USA.
 */
 
-#ifndef PARAMETER_H_DEFINED
-#define PARAMETER_H_DEFINED
+#ifndef GIZAPP_PARAMETER_H_
+#define GIZAPP_PARAMETER_H_
 
 #include <set>
 #include <string>
 #include <fstream>
 #include <cstring>
+#include <ostream>
 
 #include "port/stl_helper.h"
 #include "globals.h"
@@ -153,10 +154,13 @@ class ParSet : public set<ParPtr>
 };
 
 bool makeSetCommand(string s1,string s2,const ParSet&pars,int verb=1,int level= -1);
-ostream&printPars(ostream&out,const ParSet&pars,int level=-1);
+ostream& printPars(ostream&out,const ParSet&pars,int level=-1);
 bool writeParameters(ofstream&of,const ParSet&parset,int level=0);
 bool readParameters(ifstream&f,const ParSet&parset,int verb=2,int level=0);
-ParSet&getGlobalParSet();
+ParSet& getGlobalParSet();
+
+extern void printHelp(void);
+
 extern bool ParameterChangedFlag;
 template<class T>const T&addGlobalParameter(const char *name,const char *description,int level,T*adr,const T&init)
 {
@@ -197,4 +201,6 @@ void MakeParameterOptimizing(istream&file,string resultingParameters);
 
 void setParameterLevelName(unsigned int i,string x);
 
-#endif
+extern void printGIZAPars(std::ostream& out);
+
+#endif  // GIZAPP_PARAMETER_H_

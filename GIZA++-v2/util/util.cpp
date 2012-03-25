@@ -21,9 +21,8 @@
 #include "util/util.h"
 
 #include <sstream>
-#include <time.h>
 #include <set>
-#include "defs.h"
+
 #include "vocab.h"
 #include "Perplexity.h"
 #include "sentence_handler.h"
@@ -31,24 +30,12 @@
 #include "globals.h"
 #include "Parameter.h"
 
-void printHelp(void)
-{
-  cerr << "Usage:\n\n" << Usage << '\n';
-  cerr << "Options (these override parameters set in the config file):\n\n";
-  cerr << "\t--v \t\t print verbose message, Warning this is not very descriptive and not systematic.\n";
-  cerr << "\t--NODUMPS \t Do not write any files to disk (This will over write dump frequency options).\n";
-  cerr << "\t--h[elp]\t\tprint this help\n";
-  cerr << "\t--p\t\tUse pegging when generating alignments for Model3 training.  (Default NO PEGGING)\n";
-  cerr << "\t--st\t\tto use a fixed ditribution for the fertility parameters when tranfering from model 2 to model 3 (Default complicated estimation)\n";
-  printGIZAPars(cout);
-}
-
 void generatePerplexityReport(const Perplexity& trainperp,
-			      const Perplexity& testperp,
-			      const Perplexity& trainVperp,
-			      const Perplexity& testVperp,
-			      ostream& of, int trainsize, int testsize,
-			      bool)
+                              const Perplexity& testperp,
+                              const Perplexity& trainVperp,
+                              const Perplexity& testVperp,
+                              ostream& of, int trainsize, int testsize,
+                              bool flag)
 {
   unsigned int i, m;
   unsigned int m1 = max(trainperp.size(), testperp.size());
@@ -214,3 +201,51 @@ double factorial(int n)
     f *= i;
   return f;
 }
+
+double ErrorsInAlignment(const map< pair<int,int>,char >&reference,const Vector<WordIndex>&test,int l,int&missing,int&toomuch,int&eventsMissing,int&eventsToomuch,int pair_no)
+{
+  int err=0;
+  for(unsigned int j=1;j<test.size();j++)
+    {
+      if( test[j]>0 )
+	{
+	  map< pair<int,int>,char >::const_iterator i=reference.find(make_pair(test[j]-1,j-1));
+	  if( i==reference.end() )
+	    {
+	      toomuch++;
+	      err++;
+	    }
+	  else
+	    if( !(i->second=='S' || i->second=='P'))
+	      cerr << "ERROR: wrong symbol in reference alignment '" << i->second << ' ' << int(i->second) << " no:" << pair_no<< "'\n";
+	  eventsToomuch++;
+	}
+    }
+  for(map< pair<int,int>,char >::const_iterator i=reference.begin();i!=reference.end();++i)
+    {
+      if( i->second=='S' )
+	{
+	  unsigned int J=i->first.second+1;
+	  unsigned int I=i->first.first+1;
+	  if( int(J)>=int(test.size())||int(I)>int(l)||int(J)<1||int(I)<1 )
+	    cerr << "ERROR: alignment outside of range in reference alignment" << J << " " << test.size() << " (" << I << " " << l << ") no:" << pair_no << '\n';
+	  else
+	    {
+	      if(test[J]!=I)
+		{
+		  missing++;
+		  err++;
+		}
+	    }
+	  eventsMissing++;
+	}
+    }
+  if( Verbose )
+    cout << err << " errors in sentence\n";
+  if( eventsToomuch+eventsMissing )
+    return (toomuch+missing)/(eventsToomuch+eventsMissing);
+  else
+    return 1.0;
+}
+
+

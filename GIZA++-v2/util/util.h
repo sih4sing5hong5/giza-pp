@@ -23,6 +23,7 @@
 #define GIZAPP_UTIL_UTIL_H_
 
 #include <ostream>
+#include <map>
 
 #include "defs.h"
 #include "util/vector.h"
@@ -35,7 +36,6 @@ class WordEntry;
 template <class COUNT, class PROB>
 class tmodel;
 
-extern void printHelp(void);
 extern void parseConfigFile (char * fname );
 extern void parseArguments(int argc, char *argv[]);
 extern void generatePerplexityReport(const Perplexity& trainperp,
@@ -43,7 +43,7 @@ extern void generatePerplexityReport(const Perplexity& trainperp,
                                      const Perplexity& trainVperp,
                                      const Perplexity& testVperp,
                                      std::ostream& of, int trainsize,
-                                     int testsize, unsigned int last, bool);
+                                     int testsize, unsigned int last, bool flag);
 
 extern void  printSentencePair(Vector<WordIndex>& es, Vector<WordIndex>& fs, ostream& of);
 
@@ -52,9 +52,18 @@ extern void printOverlapReport(const tmodel<COUNT, PROB>& tTable,
 			       vcbList& trainFList, vcbList& testEList, vcbList& testFList);
 
 extern void printAlignToFile(const Vector<WordIndex>& es,  const Vector<WordIndex>& fs,
-			     const Vector<WordEntry>& evlist, const Vector<WordEntry>& fvlist,
-			     ostream& of2, const Vector<WordIndex>& viterbi_alignment, int pair_no,
-			     double viterbi_score);
+                             const Vector<WordEntry>& evlist, const Vector<WordEntry>& fvlist,
+                             std::ostream& of2, const Vector<WordIndex>& viterbi_alignment, int pair_no,
+                             double viterbi_score);
+
+extern double ErrorsInAlignment(const std::map<std::pair<int,int>,char>& reference,
+                                const Vector<WordIndex>& test,
+                                int l,
+                                int& missing,
+                                int& toomuch,
+                                int& eventsMissing,
+                                int& eventsToomuch,
+                                int pair_no);
 
 extern double factorial(int);
 
