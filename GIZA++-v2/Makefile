@@ -67,7 +67,9 @@ LIBOBJECTS = \
 	HMMTables.o \
 	ForwardBackward.o
 
-opt: GIZA++ snt2plain.out plain2snt.out snt2cooc.out
+PROGRAMS = GIZA++ snt2plain.out plain2snt.out snt2cooc.out
+
+opt: $(PROGRAMS)
 
 GIZA++: $(LIBOBJECTS)
 	$(CXX) $(CFLAGS_OPT) $(LIBOBJECTS) $(LDFLAGS) -o $@
@@ -137,9 +139,9 @@ iinstall: opt prf dbg
 	-cp GIZA++.dbg $(INSTALLDIR)/GIZA++.dbg
 
 clean:
-	-rm -f *.o $(OBJ_DIR_NRM)/*.o $(OBJ_DIR_DBG)/*.o $(OBJ_DIR_VDBG)/*.o $(OBJ_DIR_PRF)/*.o $(OBJ_DIR_OPT)/*.o
+	-rm -f $(PROGRAMS) *.o $(OBJ_DIR_NRM)/*.o $(OBJ_DIR_DBG)/*.o $(OBJ_DIR_VDBG)/*.o $(OBJ_DIR_PRF)/*.o $(OBJ_DIR_OPT)/*.o
 	-rm -rf $(OBJ_DIR_NRM) $(OBJ_DIR_DBG) $(OBJ_DIR_VDBG) $(OBJ_DIR_PRF) $(OBJ_DIR_OPT)
-	-rm -f snt2plain.out plain2snt.out snt2cooc.out GIZA++
+	-rm -fr *.dSYM
 
 backup: clean
 	tar cf - . | gzip -9 > ../GIZA++src.tar.gz
