@@ -22,28 +22,13 @@
 #ifndef GIZAPP_MODEL1_H_
 #define GIZAPP_MODEL1_H_
 
-#include <cassert>
-
-#include <iostream>
-#include <sstream>
-#include <algorithm>
-#include <functional>
-#include <map>
-#include <set>
-#include <utility>
-
-#include <ctime>
-#include <fstream>
-#include <cmath>
-#include <cstdio>
-
+#include "globals.h"
 #include "util/util.h"
 #include "util/vector.h"
 #include "vocab.h"
-#include "ttables.h"
-#include "sentence_handler.h"
-#include "util/perplexity.h"
-#include "vocab.h"
+
+class Perplexity;
+class sentenceHandler;
 
 namespace util {
 class Dictionary;
@@ -102,67 +87,75 @@ class model1 : public report_info{
                      bool seedModel1, util::Dictionary& dictionary, bool useDict);
   void load_table(const char* tname);
   void readVocabFile(const char* fname, Vector<WordEntry>& vlist, int& vsize,
-		     int& total);
-  inline Vector<WordEntry>& getEnglishVocabList(void)const {return Elist.getVocabList();};
-  inline Vector<WordEntry>& getFrenchVocabList(void)const  {return Flist.getVocabList();};
-  inline double getETotalWCount(void) const {return eTotalWCount;};
-  inline double getFTotalWCount(void) const {return fTotalWCount;};
-  inline int getNoEnglishWords(void) const  {return noEnglishWords;};
-  inline int getNoFrenchWords(void)  const {return noFrenchWords;};
-  inline tmodel<COUNT, PROB>& getTTable(void) {return tTable;};
-  inline string& getEFFilename(void) {return efFilename;};
- private:
-  void em_loop(int it,Perplexity& perp, sentenceHandler& sHandler1, bool seedModel1, bool , const char*, util::Dictionary& dictionary, bool useDict,
-	       Perplexity& viterbiperp, bool=false);
-  friend class model2;
-  friend class hmm;
- public:
-  void addAL(const Vector<WordIndex>& viterbi_alignment,int pair_no,int l)
-    {
-      if( pair_no<=int(ReferenceAlignment.size()) )
-	{
-	  //cerr << "AL: " << viterbi_alignment << " " << pair_no << endl;
-	  ErrorsInAlignment(ReferenceAlignment[pair_no-1],viterbi_alignment,l,ALmissing,ALtoomuch,ALeventsMissing,ALeventsToomuch,pair_no);
-	  if( pair_no<=NumberOfVALIalignments )
-	    ErrorsInAlignment(ReferenceAlignment[pair_no-1],viterbi_alignment,l,ALmissingVALI,ALtoomuchVALI,ALeventsMissingVALI,ALeventsToomuchVALI,pair_no);
-	  if( pair_no>NumberOfVALIalignments )
-	    ErrorsInAlignment(ReferenceAlignment[pair_no-1],viterbi_alignment,l,ALmissingTEST,ALtoomuchTEST,ALeventsMissingTEST,ALeventsToomuchTEST,pair_no);
-	}
-    }
-  void initAL()
-    {ALmissingVALI=ALtoomuchVALI=ALeventsMissingVALI=ALeventsToomuchVALI=ALmissingTEST=ALtoomuchTEST=ALeventsMissingTEST=ALeventsToomuchTEST=ALmissing=ALtoomuch=ALeventsMissing=ALeventsToomuch=0;}
-  double errorsAL()const
-    {
-      if( ALeventsMissingVALI+ALeventsToomuchVALI )
-	return (ALmissingVALI+ALtoomuchVALI)/double(ALeventsMissingVALI+ALeventsToomuchVALI);
-      else
-	return 0.0;
-    }
-  void errorReportAL(ostream&out,string m)const
-    {
-      if( ALeventsMissing+ALeventsToomuch )
-	out << "alignmentErrors (" << m << "): "
-	    << 100.0*(ALmissing+ALtoomuch)/double(ALeventsMissing+ALeventsToomuch)
-	    << " recall: " << 100.0*(1.0-ALmissing/double(ALeventsMissing))
-	    << " precision: " << 100.0*(1.0-ALtoomuch/double(ALeventsToomuch))
-	    << " (missing:" << ALmissing << "/" << ALeventsMissing << " " << ALtoomuch
-	    << " " << ALeventsToomuch << ")\n";
-      if( ALeventsMissingVALI+ALeventsToomuchVALI )
-	out << "alignmentErrors VALI (" << m << "): "
-	    << 100.0*(ALmissingVALI+ALtoomuchVALI)/double(ALeventsMissingVALI+ALeventsToomuchVALI)
-	    << " recall: " << 100.0*(1.0-ALmissingVALI/double(ALeventsMissingVALI))
-	    << " precision: " << 100.0*(1.0-ALtoomuchVALI/double(ALeventsToomuchVALI))
-	    << " (missing:" << ALmissingVALI << "/" << ALeventsMissingVALI << " " << ALtoomuchVALI
-	    << " " << ALeventsToomuchVALI << ")\n";
-      if( ALeventsMissingTEST+ALeventsToomuchTEST )
-	out << "alignmentErrors TEST(" << m << "): "
-	    << 100.0*(ALmissingTEST+ALtoomuchTEST)/double(ALeventsMissingTEST+ALeventsToomuchTEST)
-	    << " recall: " << 100.0*(1.0-ALmissingTEST/double(ALeventsMissingTEST))
-	    << " precision: " << 100.0*(1.0-ALtoomuchTEST/double(ALeventsToomuchTEST))
-	    << " (missing:" << ALmissingTEST << "/" << ALeventsMissingTEST << " " << ALtoomuchTEST
-	    << " " << ALeventsToomuchTEST << ")\n";
+                     int& total);
+  Vector<WordEntry>& getEnglishVocabList(void) const { return Elist.getVocabList();};
+  Vector<WordEntry>& getFrenchVocabList(void) const  { return Flist.getVocabList();};
+  double getETotalWCount(void) const { return eTotalWCount;};
+  double getFTotalWCount(void) const { return fTotalWCount;};
+  int getNoEnglishWords(void) const  { return noEnglishWords;};
+  int getNoFrenchWords(void)  const { return noFrenchWords;};
+  tmodel<COUNT, PROB>& getTTable(void) { return tTable;};
+  string& getEFFilename(void) { return efFilename;};
 
+  void addAL(const Vector<WordIndex>& viterbi_alignment,int pair_no,int l) {
+    if ( pair_no<=int(ReferenceAlignment.size()) ) {
+	  //cerr << "AL: " << viterbi_alignment << " " << pair_no << endl;
+      ErrorsInAlignment(ReferenceAlignment[pair_no-1],
+                        viterbi_alignment,
+                        l,
+                        ALmissing,
+                        ALtoomuch,
+                        ALeventsMissing,
+                        ALeventsToomuch,
+                        pair_no);
+
+      if (pair_no <= NumberOfVALIalignments) {
+        ErrorsInAlignment(ReferenceAlignment[pair_no-1],
+                          viterbi_alignment,
+                          l,
+                          ALmissingVALI,
+                          ALtoomuchVALI,
+                          ALeventsMissingVALI,
+                          ALeventsToomuchVALI,
+                          pair_no);
+      }
+      if (pair_no > NumberOfVALIalignments) {
+        ErrorsInAlignment(ReferenceAlignment[pair_no-1],
+                          viterbi_alignment,
+                          l,
+                          ALmissingTEST,
+                          ALtoomuchTEST,
+                          ALeventsMissingTEST,
+                          ALeventsToomuchTEST,
+                          pair_no);
+      }
     }
+  }
+
+  // TODO: WTF! clean up.
+  void initAL() {
+    ALmissingVALI=ALtoomuchVALI=ALeventsMissingVALI=ALeventsToomuchVALI=ALmissingTEST=ALtoomuchTEST=ALeventsMissingTEST=ALeventsToomuchTEST=ALmissing=ALtoomuch=ALeventsMissing=ALeventsToomuch=0;
+  }
+
+  double errorsAL () const {
+    if (ALeventsMissingVALI+ALeventsToomuchVALI)
+      return (ALmissingVALI+ALtoomuchVALI)/double(ALeventsMissingVALI+ALeventsToomuchVALI);
+    else
+      return 0.0;
+  }
+
+  void errorReportAL(ostream& out, const string& m) const;
+
+ private:
+  void em_loop(int it, Perplexity& perp,
+               sentenceHandler& sHandler1,
+               bool seedModel1,
+               bool , const char*,
+               util::Dictionary& dictionary, bool useDict,
+               Perplexity& viterbiperp, bool=false);
+
+  friend class model2;
+  friend class HMM;
 };
 
 #endif  // GIZAPP_MODEL1_H_

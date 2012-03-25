@@ -20,10 +20,12 @@
 */
 
 #include "model1.h"
-#include "globals.h"
-#include "util/util.h"
+
 #include "util/dictionary.h"
+#include "util/perplexity.h"
 #include "parameter.h"
+#include "sentence_handler.h"
+#include "ttables.h"
 
 extern short NoEmptyWord;
 extern int VerboseSentence;
@@ -283,4 +285,28 @@ void model1::em_loop(int it,Perplexity& perp, sentenceHandler& sHandler1, bool s
   perp.record("Model1");
   viterbi_perp.record("Model1");
   errorReportAL(cout, "IBM-1");
+}
+
+void model1::errorReportAL(ostream& out, const string& m) const {
+  if( ALeventsMissing+ALeventsToomuch )
+    out << "alignmentErrors (" << m << "): "
+        << 100.0*(ALmissing+ALtoomuch)/double(ALeventsMissing+ALeventsToomuch)
+        << " recall: " << 100.0*(1.0-ALmissing/double(ALeventsMissing))
+        << " precision: " << 100.0*(1.0-ALtoomuch/double(ALeventsToomuch))
+        << " (missing:" << ALmissing << "/" << ALeventsMissing << " " << ALtoomuch
+        << " " << ALeventsToomuch << ")\n";
+  if( ALeventsMissingVALI+ALeventsToomuchVALI )
+    out << "alignmentErrors VALI (" << m << "): "
+        << 100.0*(ALmissingVALI+ALtoomuchVALI)/double(ALeventsMissingVALI+ALeventsToomuchVALI)
+        << " recall: " << 100.0*(1.0-ALmissingVALI/double(ALeventsMissingVALI))
+        << " precision: " << 100.0*(1.0-ALtoomuchVALI/double(ALeventsToomuchVALI))
+        << " (missing:" << ALmissingVALI << "/" << ALeventsMissingVALI << " " << ALtoomuchVALI
+        << " " << ALeventsToomuchVALI << ")\n";
+  if( ALeventsMissingTEST+ALeventsToomuchTEST )
+    out << "alignmentErrors TEST(" << m << "): "
+        << 100.0*(ALmissingTEST+ALtoomuchTEST)/double(ALeventsMissingTEST+ALeventsToomuchTEST)
+        << " recall: " << 100.0*(1.0-ALmissingTEST/double(ALeventsMissingTEST))
+        << " precision: " << 100.0*(1.0-ALtoomuchTEST/double(ALeventsToomuchTEST))
+        << " (missing:" << ALmissingTEST << "/" << ALeventsMissingTEST << " " << ALtoomuchTEST
+        << " " << ALeventsToomuchTEST << ")\n";
 }
