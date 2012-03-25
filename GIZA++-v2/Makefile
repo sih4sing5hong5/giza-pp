@@ -66,7 +66,7 @@ LIBOBJECTS = \
 	giza_main.o \
 	NTables.o \
 	model2to3.o \
-	collCounts.o \
+	coll_counts.o \
 	alignment.o \
 	vocab.o \
 	MoveSwapMatrix.o \

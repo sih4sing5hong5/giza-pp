@@ -31,26 +31,23 @@
 #include "defs.h"
 #include "util/assert.h"
 
-class al_struct
-{
+class al_struct {
  public:
-  al_struct()
-    : prev(0),next(0){}
-  PositionIndex prev,next;
+  al_struct() : prev(0), next(0) { }
+  ~al_struct() {}
+  PositionIndex prev, next;
 };
 
-
-class alignment
-{
+class alignment {
  private:
   Vector<PositionIndex> a;
   Vector<PositionIndex> positionSum,f;
+
  public:
   Vector<PositionIndex> als_i;
   Vector<al_struct>  als_j;
   PositionIndex l,m;
-  alignment()
-    {}
+  alignment() {}
   alignment(PositionIndex _l, PositionIndex _m)
     : a(_m+1, (PositionIndex)0),
     positionSum(_l+1, (PositionIndex)0), f(_l+1, (PositionIndex)0), als_i(_l+1,0),als_j(_m+1),l(_l), m(_m)
@@ -65,6 +62,9 @@ class alignment
 	}
       als_i[0]=1;
     }
+
+  virtual ~alignment() {}
+
   PositionIndex get_l()const
     {return l;}
   PositionIndex get_m()const

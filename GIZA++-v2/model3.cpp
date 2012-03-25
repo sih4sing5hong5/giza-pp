@@ -20,7 +20,7 @@
 */
 
 #include "model3.h"
-#include "collCounts.h"
+#include "coll_counts.h"
 #include "globals.h"
 #include "util/util.h"
 #include "D5Tables.h"

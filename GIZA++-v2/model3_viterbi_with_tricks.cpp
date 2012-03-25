@@ -22,7 +22,6 @@
 #include <cassert>
 #include "port/stl_helper.h"
 #include "model3.h"
-#include "collCounts.h"
 #include "util/util.h"
 #include "globals.h"
 #include "D5Tables.h"
@@ -31,7 +30,7 @@
 #include "transpair_modelhmm.h"
 #include "util/assert.h"
 #include "parameter.h"
-
+#include "coll_counts.h"
 
 GLOBAL_PARAMETER(float,PrintN,"nbestalignments","for printing the n best alignments",kParLevOutput,0);
 
@@ -676,7 +675,7 @@ void model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
 
 
 
-#include "collCounts.cpp"
+#include "coll_counts.cpp"
 #define INSTANTIATE(A,B,C) template \
 void model3::viterbi_loop_with_tricks<A,B,C>(Perplexity& perp, Perplexity& viterbiPerp, sentenceHandler& sHandler1,  \
 					     bool dump_files, const char* alignfile,bool collect_counts, string, bool final,\

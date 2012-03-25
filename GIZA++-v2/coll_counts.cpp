@@ -19,10 +19,10 @@
   USA.
 */
 
+#include "coll_counts.h"
+
 #include "alignment.h"
 #include "transpair_model3.h"
-#include <map>
-#include "collCounts.h"
 #include "MoveSwapMatrix.h"
 #include "D5Tables.h"
 #include "transpair_model5.h"
