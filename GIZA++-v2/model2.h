@@ -22,33 +22,20 @@
 #ifndef GIZAPP_MODEL2_H_
 #define GIZAPP_MODEL2_H_
 
-#include <cassert>
-
-#include <iostream>
-#include <algorithm>
-#include <functional>
-#include <map>
-#include <set>
-#include "util/vector.h"
-#include <utility>
-
-#include <fstream>
-#include <cmath>
-#include <ctime>
+#include "model1.h"
 
 #include "ttables.h"
 #include "atables.h"
-#include "sentence_handler.h"
-#include "defs.h"
-#include "model1.h"
-#include "util/perplexity.h"
-#include "vocab.h"
+
+class Perplexity;
+class sentenceHandler;
 
 class model2 : public model1
 {
  public:
   amodel<PROB>&aTable;
   amodel<COUNT>&aCountTable;
+
  public:
   model2(model1& m1,amodel<PROB>&,amodel<COUNT>&);
   virtual ~model2();
@@ -58,7 +45,14 @@ class model2 : public model1
   void load_table(const char* aname);
   inline amodel<PROB>& getATable(void) {return aTable;};
   inline amodel<COUNT>& getACountTable(void) {return aCountTable;};
-  void em_loop(Perplexity& perp,sentenceHandler& sHandler1, bool dump_files,const char* alignfile, Perplexity&, bool test);
+
+  void em_loop(Perplexity& perp,
+               sentenceHandler& sHandler1,
+               bool dump_files,
+               const char* alignfile,
+               Perplexity&, bool test);
+
+ private:
   friend class model3;
 };
 

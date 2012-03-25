@@ -19,11 +19,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
 USA.
 
 */
+
 #include "model2.h"
-#include "globals.h"
-#include "util/util.h"
-#include "parameter.h"
+
 #include "defs.h"
+#include "parameter.h"
+#include "sentence_handler.h"
+#include "util/perplexity.h"
 
 extern short NoEmptyWord;
 
