@@ -30,39 +30,6 @@
 #include "globals.h"
 #include "parameter.h"
 
-void generatePerplexityReport(const Perplexity& trainperp,
-                              const Perplexity& testperp,
-                              const Perplexity& trainVperp,
-                              const Perplexity& testVperp,
-                              ostream& of, int trainsize, int testsize,
-                              bool flag)
-{
-  unsigned int i, m;
-  unsigned int m1 = max(trainperp.size(), testperp.size());
-  unsigned int m2 = max(trainVperp.size(), testVperp.size());
-  m = max(m1,m2);
-  of << "#trnsz\ttstsz\titer\tmodel\ttrn-pp\t\ttest-pp\t\ttrn-vit-pp\t\ttst-vit-pp\n";
-  for (i = 0 ; i <m ; i++){
-    of << trainsize << '\t' << testsize << '\t' << i<< '\t' << trainperp.modelid[i] << '\t';
-    if (i < trainperp.perp.size())
-      of << trainperp.perp[i] << "\t\t" ;
-    else
-      of << "N/A\t\t";
-    if (i<testperp.perp.size())
-      of << testperp.perp[i] << "\t\t" ;
-    else
-      of << "N/A\t\t";
-    if (i < trainVperp.perp.size())
-      of << trainVperp.perp[i] << "\t\t" ;
-    else
-      of << "N/A\t";
-    if (i< testVperp.perp.size())
-      of << testVperp.perp[i] << '\n' ;
-    else
-      of << "N/A\n";
-  }
-}
-
 void printSentencePair(Vector<WordIndex>& es,
 			Vector<WordIndex>& fs,
 			ostream& of)
@@ -248,4 +215,39 @@ double ErrorsInAlignment(const map< pair<int,int>,char >&reference,const Vector<
     return 1.0;
 }
 
+void generatePerplexityReport(const Perplexity& trainperp,
+                              const Perplexity& testperp,
+                              const Perplexity& trainVperp,
+                              const Perplexity& testVperp,
+                              ostream& of, int trainsize, int testsize,
+                              bool flag) {
+  const unsigned int m1 = max(trainperp.size(), testperp.size());
+  const unsigned int m2 = max(trainVperp.size(), testVperp.size());
+  const unsigned int m = max(m1, m2);
 
+  of << "#trnsz\ttstsz\titer\tmodel\ttrn-pp\t\ttest-pp\t\ttrn-vit-pp\t\ttst-vit-pp\n";
+
+  for (unsigned int i = 0 ; i < m; i++) {
+    of << trainsize << '\t' << testsize << '\t' << i<< '\t' << trainperp.model_id_[i] << '\t';
+    if (i < trainperp.perp_.size()) {
+      of << trainperp.perp_[i] << "\t\t";
+    } else {
+      of << "N/A\t\t";
+    }
+    if (i<testperp.perp_.size()) {
+      of << testperp.perp_[i] << "\t\t" ;
+    } else {
+      of << "N/A\t\t";
+    }
+    if (i < trainVperp.perp_.size()) {
+      of << trainVperp.perp_[i] << "\t\t" ;
+    } else {
+      of << "N/A\t";
+    }
+    if (i< testVperp.perp_.size()) {
+      of << testVperp.perp_[i] << '\n' ;
+    } else {
+      of << "N/A\n";
+    }
+  }
+}

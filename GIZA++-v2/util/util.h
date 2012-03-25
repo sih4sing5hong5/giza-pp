@@ -38,6 +38,7 @@ class tmodel;
 
 extern void parseConfigFile (char * fname );
 extern void parseArguments(int argc, char *argv[]);
+
 extern void generatePerplexityReport(const Perplexity& trainperp,
                                      const Perplexity& testperp,
                                      const Perplexity& trainVperp,
@@ -48,8 +49,8 @@ extern void generatePerplexityReport(const Perplexity& trainperp,
 extern void  printSentencePair(Vector<WordIndex>& es, Vector<WordIndex>& fs, ostream& of);
 
 extern void printOverlapReport(const tmodel<COUNT, PROB>& tTable,
-			       sentenceHandler& testHandler, vcbList& trainEList,
-			       vcbList& trainFList, vcbList& testEList, vcbList& testFList);
+                               sentenceHandler& testHandler, vcbList& trainEList,
+                               vcbList& trainFList, vcbList& testEList, vcbList& testFList);
 
 extern void printAlignToFile(const Vector<WordIndex>& es,  const Vector<WordIndex>& fs,
                              const Vector<WordEntry>& evlist, const Vector<WordEntry>& fvlist,

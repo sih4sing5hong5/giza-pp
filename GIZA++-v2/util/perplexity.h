@@ -87,6 +87,7 @@ class Perplexity {
     ce_.push_back(cross_entropy());
   }
 
+ private:
   friend void generatePerplexityReport(const Perplexity&, const Perplexity&,
                                        const Perplexity&, const Perplexity&,
                                        std::ostream&, int, int, bool);
