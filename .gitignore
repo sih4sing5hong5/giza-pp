@@ -10,3 +10,5 @@ GIZA++-v2/plain2snt.out
 GIZA++-v2/snt2cooc.out
 GIZA++-v2/snt2plain.out
 mkcls-v2/mkcls
+TAGS
+cscope.*
