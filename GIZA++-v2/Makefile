@@ -69,7 +69,7 @@ LIBOBJECTS = \
 	coll_counts.o \
 	alignment.o \
 	vocab.o \
-	MoveSwapMatrix.o \
+	move_swap_matrix.o \
 	transpair_model3.o \
 	transpair_model4.o \
 	transpair_model5.o \

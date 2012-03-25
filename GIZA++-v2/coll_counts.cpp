@@ -23,7 +23,7 @@
 
 #include "alignment.h"
 #include "transpair_model3.h"
-#include "MoveSwapMatrix.h"
+#include "move_swap_matrix.h"
 #include "D5Tables.h"
 #include "transpair_model5.h"
 #include "transpair_modelhmm.h"
