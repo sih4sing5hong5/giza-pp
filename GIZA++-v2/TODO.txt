@@ -2,6 +2,10 @@
   - Remove dependencies.
 - Add unit tests to make code refactoring easier and find bugs.
 - Rename files appropriately to keep consistency.
+- Clean up global variables.
+  - Prefix the variables with 'g_'.
+- Prefix constant with 'kXXX'.
+- Remove non-POD data from global scope.
 - Introduce namespace 'gizapp'.
 - Reduce header dependencies.
 - Need some abstract classes.
