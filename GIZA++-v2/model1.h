@@ -159,7 +159,7 @@ class Model1 : public ReportInfo {
                util::Dictionary& dictionary, bool useDict,
                Perplexity& viterbiperp, bool=false);
 
-  friend class model2;
+  friend class Model2;
   friend class HMM;
 };
 

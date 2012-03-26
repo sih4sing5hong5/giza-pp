@@ -283,7 +283,7 @@ void model3::estimate_t_a_d(sentenceHandler& sHandler1, Perplexity& perp, Perple
     }
 }
 
-void model3::transferSimple(/*model1& m1, model2& m2, */ sentenceHandler& sHandler1,
+void model3::transferSimple(/*model1& m1, Model2& m2, */ sentenceHandler& sHandler1,
 			    bool dump_files, Perplexity& perp, Perplexity& trainVPerp,bool updateT)
 {
   /*

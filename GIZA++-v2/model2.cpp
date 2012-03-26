@@ -32,12 +32,12 @@ extern short NoEmptyWord;
 
 GLOBAL_PARAMETER2(int,Model2_Dump_Freq,"MODEL 2 DUMP FREQUENCY","t2","dump frequency of Model 2",kParLevOutput,0);
 
-model2::model2(Model1& m,amodel<PROB>&_aTable,amodel<COUNT>&_aCountTable):
-  Model1(m),aTable(_aTable),aCountTable(_aCountTable) { }
+Model2::Model2(Model1& m, amodel<PROB>& _aTable, amodel<COUNT>& _aCountTable)
+    : Model1(m), aTable(_aTable), aCountTable(_aCountTable) { }
 
-model2::~model2() {}
+Model2::~Model2() {}
 
-void model2::initialize_table_uniformly(sentenceHandler& sHandler1){
+void Model2::initialize_table_uniformly(sentenceHandler& sHandler1) {
   // initialize the aTable uniformly (run this before running em_with_tricks)
   int n=0;
   sentPair sent ;
@@ -58,7 +58,7 @@ void model2::initialize_table_uniformly(sentenceHandler& sHandler1){
   }
 }
 
-int model2::em_with_tricks(int noIterations)
+int Model2::em_with_tricks(int noIterations)
 {
   double minErrors=1.0;int minIter=0;
   string modelName="Model2",shortModelName="2";
@@ -129,7 +129,7 @@ int model2::em_with_tricks(int noIterations)
   return minIter;
 }
 
-void model2::load_table(const char* aname){
+void Model2::load_table(const char* aname) {
   /* This function loads the a table from the given file; use it
      when you want to load results from previous a training without
      doing any new training.
@@ -140,7 +140,7 @@ void model2::load_table(const char* aname){
 }
 
 
-void model2::em_loop(Perplexity& perp, sentenceHandler& sHandler1,
+void Model2::em_loop(Perplexity& perp, sentenceHandler& sHandler1,
 		     bool dump_alignment, const char* alignfile, Perplexity& viterbi_perp,
 		     bool test)
 {

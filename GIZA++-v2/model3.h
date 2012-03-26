@@ -36,7 +36,7 @@ class transpair_model2;
 class transpair_model3;
 class TransPairModelHMM;
 
-class model3 : public model2 {
+class model3 : public Model2 {
  // TODO: should be private.
  public:
   amodel<PROB>  dTable;
@@ -50,7 +50,7 @@ class model3 : public model2 {
   HMM* h;
 
 public:
-  model3(model2& m2);
+  model3(Model2& m2);
   ~model3();
 
   void setHMM(HMM*_h) {h = _h;}

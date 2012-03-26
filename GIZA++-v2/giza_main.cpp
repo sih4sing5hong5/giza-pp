@@ -451,7 +451,7 @@ double StartTraining(int&result)
 	    trainViterbiPerp, &testViterbiPerp);
    amodel<PROB>  aTable(false);
    amodel<COUNT> aCountTable(false);
-   model2 m2(m1,aTable,aCountTable);
+   Model2 m2(m1,aTable,aCountTable);
    HMM h(m2);
    model3 m3(m2);
    if(ReadTablePrefix.length() )

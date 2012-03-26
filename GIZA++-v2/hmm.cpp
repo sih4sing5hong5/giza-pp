@@ -48,8 +48,8 @@ GLOBAL_PARAMETER(short,SmoothHMM,"emSmoothHMM",
 GLOBAL_PARAMETER(double,HMMAlignmentModelSmoothFactor,"emAlSmooth",
 		 "f-b-trn: smoothing factor for HMM alignment model (can be ignored by -emSmoothHMM)",kParLevSmooth,0.2);
 
-HMM::HMM(model2& m)
-  : model2(m),
+HMM::HMM(Model2& m)
+  : Model2(m),
     counts(GLOBALProbabilityForEmpty, ewordclasses, fwordclasses),
     probs(GLOBALProbabilityForEmpty, ewordclasses, fwordclasses) {}
 

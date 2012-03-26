@@ -45,8 +45,8 @@ GLOBAL_PARAMETER4(int,Model3_Dump_Freq,"MODEL 345 DUMP FREQUENCY","MODEL 3 DUMP 
 
 extern int Transfer_Dump_Freq;
 
-model3::model3(model2& m2) :
-  model2(m2),dTable(true), dCountTable(true),
+model3::model3(Model2& m2) :
+  Model2(m2),dTable(true), dCountTable(true),
   nTable(m2.getNoEnglishWords()+1, g_max_fertility),
   nCountTable(m2.getNoEnglishWords()+1, g_max_fertility),h(0)
 {}

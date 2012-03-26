@@ -35,14 +35,14 @@ class HMMNetwork;
 class Perplexity;
 class sentenceHandler;
 
-class HMM : public model2 {
+class HMM : public Model2 {
  private:
   WordClasses ewordclasses;
   WordClasses fwordclasses;
   HMMTables<int,WordClasses> counts, probs;
 
  public:
-  HMM(model2& m2);
+  HMM(Model2& m2);
   ~HMM();
 
   template<class Mapper>

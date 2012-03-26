@@ -30,21 +30,23 @@
 class Perplexity;
 class sentenceHandler;
 
-class model2 : public Model1
-{
+class Model2 : public Model1 {
  public:
-  amodel<PROB>&aTable;
-  amodel<COUNT>&aCountTable;
+  // TODO: Should be private.
+  amodel<PROB>& aTable;
+  amodel<COUNT>& aCountTable;
 
- public:
-  model2(Model1& m1,amodel<PROB>&,amodel<COUNT>&);
-  virtual ~model2();
+  Model2(Model1& m1, amodel<PROB>& _aTable, amodel<COUNT>& _aCountTable);
+  virtual ~Model2();
 
   void initialize_table_uniformly(sentenceHandler&);
+
   int em_with_tricks(int);
+
   void load_table(const char* aname);
-  inline amodel<PROB>& getATable(void) {return aTable;};
-  inline amodel<COUNT>& getACountTable(void) {return aCountTable;};
+
+  amodel<PROB>& getATable() { return aTable; }
+  amodel<COUNT>& getACountTable() { return aCountTable; }
 
   void em_loop(Perplexity& perp,
                sentenceHandler& sHandler1,
