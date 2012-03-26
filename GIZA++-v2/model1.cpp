@@ -38,8 +38,8 @@ model1::model1(const char* efname, vcbList& evcblist, vcbList& fvcblist,tmodel<C
 	      Perplexity* _testPerp,
 	      sentenceHandler* _testHandler,
 	      Perplexity& _trainViterbiPerp,
-	      Perplexity* _testViterbiPerp):
-  report_info(_perp,_sHandler1,_testPerp,_testHandler,_trainViterbiPerp,_testViterbiPerp),
+	      Perplexity* _testViterbiPerp) :
+  ReportInfo(_perp, _sHandler1, _testPerp, _testHandler, _trainViterbiPerp, _testViterbiPerp),
   efFilename(efname), Elist(evcblist), Flist(fvcblist),
   eTotalWCount(Elist.totalVocab()), fTotalWCount(Flist.totalVocab()),
   noEnglishWords(Elist.size()), noFrenchWords(Flist.size()), tTable(_tTable),

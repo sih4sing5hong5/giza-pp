@@ -36,7 +36,7 @@ class Dictionary;
 
 extern int NumberOfVALIalignments;
 
-class report_info {
+class ReportInfo {
  protected:
   Perplexity& perp;
   sentenceHandler& sHandler1;
@@ -44,19 +44,24 @@ class report_info {
   sentenceHandler* testHandler;
   Perplexity& trainViterbiPerp;
   Perplexity* testViterbiPerp;
-  report_info(Perplexity& _perp,
-	      sentenceHandler& _sHandler1,
-	      Perplexity* _testPerp,
-	      sentenceHandler* _testHandler,
-	      Perplexity& _trainViterbiPerp,
-	      Perplexity* _testViterbiPerp)
-    : perp(_perp),sHandler1(_sHandler1),testPerp(_testPerp),testHandler(_testHandler),trainViterbiPerp(_trainViterbiPerp),testViterbiPerp(_testViterbiPerp)
-    {}
 
-  virtual ~report_info() { }
+  ReportInfo(Perplexity& _perp,
+             sentenceHandler& _sHandler1,
+             Perplexity* _testPerp,
+             sentenceHandler* _testHandler,
+             Perplexity& _trainViterbiPerp,
+             Perplexity* _testViterbiPerp)
+    : perp(_perp),
+      sHandler1(_sHandler1),
+      testPerp(_testPerp),
+      testHandler(_testHandler),
+      trainViterbiPerp(_trainViterbiPerp),
+      testViterbiPerp(_testViterbiPerp) { }
+
+  virtual ~ReportInfo() { }
 };
 
-class model1 : public report_info{
+class model1 : public ReportInfo {
  public:
   string efFilename;
   vcbList&  Elist ;
