@@ -3,7 +3,7 @@
 
 TransPairModelHMM::TransPairModelHMM(const Vector<WordIndex>& es,
                                      const Vector<WordIndex>& fs,
-                                     const tmodel<COUNT, PROB>& tTable,
+                                     const TModel<COUNT, PROB>& tTable,
                                      const AModel<PROB>&aTable,
                                      const AModel<PROB>&,const nmodel<PROB>&,
                                      double, double, const HMM* h)

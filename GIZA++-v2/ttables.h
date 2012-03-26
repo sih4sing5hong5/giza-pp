@@ -68,7 +68,7 @@ public:
 };
 
 /* ------------------ Class Prototype Definitions ---------------------------*
-  Class Name: tmodel
+  Class Name: TModel
   Objective: This defines the underlying data structur for t Tables and t
   Count Tables. They are defined as a hash table. Each entry in the hash table
   is the probability (P(fj/ei) ) or count collected for ( C(fj/ei)). The
@@ -129,7 +129,7 @@ const T*mbinary_search(const T*x,const T*y,unsigned int val)
 }
 
 template <class COUNT, class PROB>
-class tmodel {
+class TModel {
   typedef LpPair<COUNT, PROB> CPPair;
 
  public:
@@ -181,7 +181,7 @@ public:
     *find(e,f)=CPPair(cval,pval);
   }
   CPPair*getPtr(int e,int f){return find(e,f);}
-  tmodel(const string&fn)
+  TModel(const string&fn)
     {
       int count=0,count2=0;
       ifstream infile2(fn.c_str());
@@ -216,9 +216,9 @@ public:
       cout << "There are " << count << " " << count2 << " entries in table" << '\n';
     }
 
-  ~tmodel() {}
+  ~TModel() {}
 
-  /*  tmodel(const string&fn)
+  /*  TModel(const string&fn)
     {
       size_t count=0;
       {
@@ -300,12 +300,10 @@ public:
   void readProbTable(const char *filename);
 };
 
-
-#else
-
+#else  // BINARY_SEARCH_FOR_TTABLE
 
 template <class COUNT, class PROB>
-class tmodel{
+class TModel {
   typedef LpPair<COUNT, PROB> CPPair;
  public:
   int noEnglishWords;  // total number of unique source words
@@ -402,8 +400,8 @@ public:
   void readProbTable(const char *filename);
   //  void readAsFertilityTable(const char *filename);
 };
-/*--------------- End of Class Definition for tmodel -----------------------*/
+/*--------------- End of Class Definition for TModel -----------------------*/
 
-#endif
+#endif  // BINARY_SEARCH_FOR_TTABLE
 
 #endif  // GIZAPP_TTABLES_H_

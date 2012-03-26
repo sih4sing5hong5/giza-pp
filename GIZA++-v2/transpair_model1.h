@@ -44,7 +44,7 @@ class transpair_model1
   Vector<WordIndex> E,F;
   void setMode(bool)
     {}
-  transpair_model1(const Vector<WordIndex>&es, const Vector<WordIndex>&fs, const tmodel<COUNT, PROB>&tTable)
+  transpair_model1(const Vector<WordIndex>&es, const Vector<WordIndex>&fs, const TModel<COUNT, PROB>&tTable)
     : verboseTP(0),t(es.size(), fs.size()),l(es.size()-1), m(fs.size()-1),E(es),F(fs)
     {
       WordIndex l=es.size()-1,m=fs.size()-1;

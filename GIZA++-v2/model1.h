@@ -70,7 +70,7 @@ class Model1 : public ReportInfo {
   double fTotalWCount ; // size of target corpus in number of words
   int noEnglishWords;
   int noFrenchWords;
-  tmodel<COUNT, PROB>&tTable;
+  TModel<COUNT, PROB>&tTable;
   Vector<WordEntry>& evlist ;
   Vector<WordEntry>& fvlist ;
   int ALmissing,ALtoomuch,ALeventsMissing,ALeventsToomuch;
@@ -78,7 +78,7 @@ class Model1 : public ReportInfo {
   int ALmissingTEST,ALtoomuchTEST,ALeventsMissingTEST,ALeventsToomuchTEST;
 
   Model1(const char* efname, VocabList& evcblist, VocabList& fvcblist,
-         tmodel<COUNT, PROB>&_tTable,Perplexity& _perp,
+         TModel<COUNT, PROB>&_tTable,Perplexity& _perp,
          SentenceHandler& _sHandler1,
          Perplexity* _testPerp,
          SentenceHandler* _testHandler,
@@ -99,7 +99,7 @@ class Model1 : public ReportInfo {
   double getFTotalWCount(void) const { return fTotalWCount;};
   int getNoEnglishWords(void) const  { return noEnglishWords;};
   int getNoFrenchWords(void)  const { return noFrenchWords;};
-  tmodel<COUNT, PROB>& getTTable(void) { return tTable;};
+  TModel<COUNT, PROB>& getTTable(void) { return tTable;};
   string& getEFFilename(void) { return efFilename;};
 
   void addAL(const Vector<WordIndex>& viterbi_alignment,int pair_no,int l) {

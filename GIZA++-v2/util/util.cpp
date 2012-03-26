@@ -101,11 +101,11 @@ void printAlignToFile(const Vector<WordIndex>& es,
     }
 }
 
-void printOverlapReport(const tmodel<COUNT, PROB>& tTable,
+void printOverlapReport(const TModel<COUNT, PROB>& tTable,
 			SentenceHandler& testHandler,  VocabList& trainEList,
 			VocabList& trainFList, VocabList& testEList, VocabList& testFList)
 {
-  set<pair<WordIndex, WordIndex> > testCoocur ;
+  set<WordIDPair> testCoocur ;
   SentencePair s ;
   /*  string unseenCoocurFile = Prefix + ".tst.unseen.cooc" ;
       ofstream of_unseenCoocur(unseenCoocurFile.c_str());
@@ -118,9 +118,9 @@ void printOverlapReport(const tmodel<COUNT, PROB>& tTable,
   while(testHandler.getNextSentence(s)){
     for (WordIndex i = 1 ; i < s.eSent.size() ; i++)
       for (WordIndex j = 1 ; j < s.fSent.size() ; j++)
-	testCoocur.insert(pair<WordIndex, WordIndex> (s.eSent[i], s.fSent[j])) ;
+	testCoocur.insert(WordIDPair(s.eSent[i], s.fSent[j])) ;
   }
-  set<pair<WordIndex, WordIndex> >::const_iterator i ;
+  set<WordIDPair>::const_iterator i ;
   for (i = testCoocur.begin() ; i != testCoocur.end() ; ++i){
     if (tTable.getProb((*i).first, (*i).second) > PROB_SMOOTH){
       seen_coocur ++ ;

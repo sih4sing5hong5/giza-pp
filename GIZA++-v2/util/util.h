@@ -34,7 +34,7 @@ class VocabList;
 class WordEntry;
 
 template <class COUNT, class PROB>
-class tmodel;
+class TModel;
 
 extern void parseConfigFile (char * fname );
 extern void parseArguments(int argc, char *argv[]);
@@ -48,7 +48,7 @@ extern void generatePerplexityReport(const Perplexity& trainperp,
 
 extern void  printSentencePair(Vector<WordIndex>& es, Vector<WordIndex>& fs, ostream& of);
 
-extern void printOverlapReport(const tmodel<COUNT, PROB>& tTable,
+extern void printOverlapReport(const TModel<COUNT, PROB>& tTable,
                                SentenceHandler& testHandler, VocabList& trainEList,
                                VocabList& trainFList, VocabList& testEList, VocabList& testFList);
 

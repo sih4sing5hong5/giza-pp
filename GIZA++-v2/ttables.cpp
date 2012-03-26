@@ -28,7 +28,7 @@ GLOBAL_PARAMETER2(float, COUNTINCREASE_CUTOFF,"COUNTINCREASE CUTOFF","countCutof
 
 #ifdef BINARY_SEARCH_FOR_TTABLE
 template <class COUNT, class PROB>
-void tmodel<COUNT, PROB>::printCountTable(const char *,
+void TModel<COUNT, PROB>::printCountTable(const char *,
 					 const Vector<WordEntry>&,
 					 const Vector<WordEntry>&,
 					 const bool) const
@@ -36,7 +36,7 @@ void tmodel<COUNT, PROB>::printCountTable(const char *,
 }
 
 template <class COUNT, class PROB>
-void tmodel<COUNT, PROB>::printProbTable(const char *filename,
+void TModel<COUNT, PROB>::printProbTable(const char *filename,
 					 const Vector<WordEntry>& evlist,
 					 const Vector<WordEntry>& fvlist,
 					 const bool actual) const
@@ -69,7 +69,7 @@ void tmodel<COUNT, PROB>::printProbTable(const char *filename,
 }
 
 template <class COUNT, class PROB>
-void tmodel<COUNT, PROB>::printProbTableInverse(const char *,
+void TModel<COUNT, PROB>::printProbTableInverse(const char *,
 				   const Vector<WordEntry>&,
 				   const Vector<WordEntry>&,
 				   const double,
@@ -78,7 +78,7 @@ void tmodel<COUNT, PROB>::printProbTableInverse(const char *,
 {
 }
 template <class COUNT, class PROB>
-void tmodel<COUNT, PROB>::normalizeTable(const VocabList&, const VocabList&, int)
+void TModel<COUNT, PROB>::normalizeTable(const VocabList&, const VocabList&, int)
 {
   for(unsigned int i=0;i<lexmat.size();++i)
     {
@@ -101,16 +101,16 @@ void tmodel<COUNT, PROB>::normalizeTable(const VocabList&, const VocabList&, int
 }
 
 template <class COUNT, class PROB>
-void tmodel<COUNT, PROB>::readProbTable(const char *){
+void TModel<COUNT, PROB>::readProbTable(const char *){
 }
 
-template class tmodel<COUNT,PROB> ;
+template class TModel<COUNT,PROB> ;
 #else
-/* ------------------ Method Definiotns for Class tmodel --------------------*/
+/* ------------------ Method Definiotns for Class TModel --------------------*/
 
 #
 template <class COUNT, class PROB>
-void tmodel<COUNT, PROB>::printCountTable(const char *filename,
+void TModel<COUNT, PROB>::printCountTable(const char *filename,
 					 const Vector<WordEntry>& evlist,
 					 const Vector<WordEntry>& fvlist,
 					 const bool actual) const
@@ -130,7 +130,7 @@ void tmodel<COUNT, PROB>::printCountTable(const char *filename,
 }
 
 template <class COUNT, class PROB>
-void tmodel<COUNT, PROB>::printProbTable(const char *filename,
+void TModel<COUNT, PROB>::printProbTable(const char *filename,
 					 const Vector<WordEntry>& evlist,
 					 const Vector<WordEntry>& fvlist,
 					 const bool actual) const
@@ -150,7 +150,7 @@ void tmodel<COUNT, PROB>::printProbTable(const char *filename,
 }
 
 template <class COUNT, class PROB>
-void tmodel<COUNT, PROB>::printProbTableInverse(const char *filename,
+void TModel<COUNT, PROB>::printProbTableInverse(const char *filename,
 				   const Vector<WordEntry>& evlist,
 				   const Vector<WordEntry>& fvlist,
 				   const double,
@@ -223,7 +223,7 @@ void tmodel<COUNT, PROB>::printProbTableInverse(const char *filename,
 }
 */
 template <class COUNT, class PROB>
-void tmodel<COUNT, PROB>::normalizeTable(const VocabList&engl, const VocabList&french, int iter)
+void TModel<COUNT, PROB>::normalizeTable(const VocabList&engl, const VocabList&french, int iter)
   // normalize conditional probability P(fj/ei):
   // i.e. make sure that Sum over all j of P(fj/e) = 1
   // this method reads the counts portion of the table and normalize into
@@ -294,7 +294,7 @@ void tmodel<COUNT, PROB>::normalizeTable(const VocabList&engl, const VocabList&f
 }
 
 template <class COUNT, class PROB>
-void tmodel<COUNT, PROB>::readProbTable(const char *filename){
+void TModel<COUNT, PROB>::readProbTable(const char *filename){
   /* This function reads the t table from a file.
      Each line is of the format:  source_word_id target_word_id p(target_word|source_word)
      This is the inverse operation of the printTable function.
@@ -316,9 +316,9 @@ void tmodel<COUNT, PROB>::readProbTable(const char *filename){
   cerr << "Read " << nEntry << " entries in prob. table.\n";
 }
 
-template class tmodel<COUNT,PROB> ;
+template class TModel<COUNT,PROB> ;
 
-/* ---------------- End of Method Definitions of class tmodel ---------------*/
+/* ---------------- End of Method Definitions of class TModel ---------------*/
 
 
 #endif

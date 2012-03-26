@@ -33,7 +33,7 @@ extern int VerboseSentence;
 GLOBAL_PARAMETER2(int,Model1_Dump_Freq,"MODEL 1 DUMP FREQUENCY","t1","dump frequency of Model 1",kParLevOutput,0);
 int NumberOfVALIalignments=100;
 
-Model1::Model1(const char* efname, VocabList& evcblist, VocabList& fvcblist,tmodel<COUNT, PROB>&_tTable,Perplexity& _perp,
+Model1::Model1(const char* efname, VocabList& evcblist, VocabList& fvcblist,TModel<COUNT, PROB>&_tTable,Perplexity& _perp,
 	      SentenceHandler& _sHandler1,
 	      Perplexity* _testPerp,
 	      SentenceHandler* _testHandler,

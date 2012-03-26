@@ -37,7 +37,7 @@ class transpair_model2 : public transpair_model1
  protected:
   Array2<PROB, Vector<PROB> > a;
  public:
-  transpair_model2(const Vector<WordIndex>&es, const Vector<WordIndex>&fs, const tmodel<COUNT, PROB>&tTable,
+  transpair_model2(const Vector<WordIndex>&es, const Vector<WordIndex>&fs, const TModel<COUNT, PROB>&tTable,
 		   const AModel<PROB>&aTable)
     : transpair_model1(es,fs,tTable),a(es.size(),fs.size())
     {

@@ -37,7 +37,7 @@ class LogProb;
 template <class T> class MoveSwapMatrix;
 template <class T> class AModel;
 template <class T> class nmodel;
-template <class COUNT, class PROB> class tmodel;
+template <class COUNT, class PROB> class TModel;
 
 class OneMoveSwap {
  public:
@@ -84,7 +84,7 @@ template<class TRANSPAIR,class MODEL>
 int collectCountsOverNeighborhood(const Vector<std::pair<MoveSwapMatrix<TRANSPAIR>*,LogProb> >&smsc,
                                   Vector<WordIndex>&es,
                                   Vector<WordIndex>&fs,
-                                  tmodel<COUNT,PROB>& tTable,
+                                  TModel<COUNT,PROB>& tTable,
                                   AModel<COUNT>& aCountTable, AModel<COUNT>& dCountTable,
                                   nmodel<COUNT>& nCountTable, double& p1count,
                                   double& p0count,

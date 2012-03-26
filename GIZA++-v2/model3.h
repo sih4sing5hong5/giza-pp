@@ -75,29 +75,29 @@ public:
  private:
   LogProb prob_of_special(Vector<WordIndex>&,
                           Vector<WordIndex>&,
-                          tmodel<COUNT, PROB>&,
+                          TModel<COUNT, PROB>&,
                           Vector<WordIndex>&,
                           Vector<WordIndex>&);
 
   LogProb prob_of_target_and_alignment_given_source(Vector<WordIndex>&,
                                                     Vector<WordIndex>&,
-                                                    tmodel<COUNT, PROB>&,
+                                                    TModel<COUNT, PROB>&,
                                                     Vector<WordIndex>&,
                                                     Vector<WordIndex>&);
-  LogProb prob_of_target_given_source(tmodel<COUNT, PROB>&,
+  LogProb prob_of_target_given_source(TModel<COUNT, PROB>&,
                                       Vector<WordIndex>&,
                                       Vector<WordIndex>&);
 
   LogProb scoreOfMove(Vector<WordIndex>&, Vector<WordIndex>&,
                       Vector<WordIndex>&, Vector<WordIndex>&,
-                      tmodel<COUNT, PROB>&, WordIndex, WordIndex);
+                      TModel<COUNT, PROB>&, WordIndex, WordIndex);
 
   LogProb scoreOfSwap(Vector<WordIndex>&, Vector<WordIndex>&,
-                      Vector<WordIndex>&, tmodel<COUNT, PROB>&, int, int);
+                      Vector<WordIndex>&, TModel<COUNT, PROB>&, int, int);
 
   void hillClimb(Vector<WordIndex>&, Vector<WordIndex>&,
                  Vector<WordIndex>&, Vector<WordIndex>&,
-                 LogProb&, tmodel<COUNT, PROB>&, int, int);
+                 LogProb&, TModel<COUNT, PROB>&, int, int);
 
   void findBestAlignment(Vector<WordIndex>&, Vector<WordIndex>&,
                          Vector<WordIndex>&, Vector<WordIndex>&,

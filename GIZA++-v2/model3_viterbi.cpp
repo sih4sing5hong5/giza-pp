@@ -31,7 +31,7 @@
 LogProb Model3::prob_of_target_and_alignment_given_source(
     Vector<WordIndex>& A,
     Vector<WordIndex>& Fert,
-    tmodel<COUNT, PROB>& tTable,
+    TModel<COUNT, PROB>& tTable,
     Vector<WordIndex>& fs,
     Vector<WordIndex>& es) {
   LogProb total = 1.0 ;
@@ -65,7 +65,7 @@ LogProb Model3::prob_of_target_and_alignment_given_source(
   return(total);
 }
 
-LogProb Model3::prob_of_target_given_source(tmodel<COUNT, PROB>& tTable,
+LogProb Model3::prob_of_target_given_source(TModel<COUNT, PROB>& tTable,
                                             Vector<WordIndex>& fs,
                                             Vector<WordIndex>& es) {
   WordIndex x, y ;
@@ -103,7 +103,7 @@ LogProb Model3::scoreOfMove(Vector<WordIndex>& es,
                             Vector<WordIndex>& fs,
                             Vector<WordIndex>& A,
                             Vector<WordIndex>& Fert,
-                            tmodel<COUNT, PROB>& tTable,
+                            TModel<COUNT, PROB>& tTable,
                             WordIndex j,
                             WordIndex i)
      // returns the scaling factor of the original score if A[j] is linked to
@@ -168,7 +168,7 @@ LogProb Model3::scoreOfMove(Vector<WordIndex>& es,
 LogProb Model3::scoreOfSwap(Vector<WordIndex>& es,
 			  Vector<WordIndex>& fs,
 			  Vector<WordIndex>& A,
-			  tmodel<COUNT, PROB>& tTable,
+			  TModel<COUNT, PROB>& tTable,
 			  int j1,
 			  int j2)
   // returns the scaling factor of the original score if the swap to
@@ -212,7 +212,7 @@ void Model3::hillClimb(Vector<WordIndex>& es,
 		       Vector<WordIndex>& A,
 		       Vector<WordIndex>& Fert,
 		       LogProb& best_score,
-		       tmodel<COUNT, PROB>& tTable,
+		       TModel<COUNT, PROB>& tTable,
 		       int = -1,
 		       int j_peg = -1)
   // Hill climbing given alignment A  .
@@ -310,7 +310,7 @@ void Model3::findBestAlignment(Vector<WordIndex>& es,
 			       Vector<WordIndex>& A,
 			       Vector<WordIndex>& Fert,
 			       LogProb& best_score,
-			       /*tmodel<COUNT, PROB>& tTable,
+			       /*TModel<COUNT, PROB>& tTable,
 				 AModel<PROB>& aTable, */
 			       int i_peg = -1 ,
 			       int j_peg = -1 )

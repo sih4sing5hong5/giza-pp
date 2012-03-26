@@ -42,7 +42,7 @@ class transpair_model4 : public transpair_model3
   Vector<Array2<double> > probFirst;
  public:
   typedef transpair_model3 simpler_transpair_model;
-  transpair_model4(const Vector<WordIndex>&es, const Vector<WordIndex>&fs, tmodel<COUNT, PROB>&tTable, AModel<PROB>&aTable, AModel<PROB>&dTable, nmodel<PROB>&nTable, double _p1, double _p0,d4model*_d4m)
+  transpair_model4(const Vector<WordIndex>&es, const Vector<WordIndex>&fs, TModel<COUNT, PROB>&tTable, AModel<PROB>&aTable, AModel<PROB>&dTable, nmodel<PROB>&nTable, double _p1, double _p0,d4model*_d4m)
     : transpair_model3(es, fs, tTable, aTable, dTable, nTable, _p1, _p0),
     d4m(*_d4m),probSecond(m+1,m+1,0.0),probFirst(l+1)
     {
