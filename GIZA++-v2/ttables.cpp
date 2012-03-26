@@ -119,7 +119,7 @@ void tmodel<COUNT, PROB>::printCountTable(const char *filename,
      // c(target_word/source_word) source_word target_word
 {
   ofstream of(filename);
-  typename hash_map<wordPairIds, CPPair, hashpair, equal_to<wordPairIds> >::const_iterator i;
+  typename hash_map<WordIDPair, CPPair, HashPair, equal_to<WordIDPair> >::const_iterator i;
   for(i = ef.begin(); i != ef.end();++i){
     if ( ((*i).second).count >  COUNTINCREASE_CUTOFF)
       if (actual)
@@ -139,7 +139,7 @@ void tmodel<COUNT, PROB>::printProbTable(const char *filename,
      // source_word target_word p(target_word/source_word)
 {
   ofstream of(filename);
-  typename hash_map<wordPairIds, CPPair, hashpair, equal_to<wordPairIds> >::const_iterator i;
+  typename hash_map<WordIDPair, CPPair, HashPair, equal_to<WordIDPair> >::const_iterator i;
   for(i = ef.begin(); i != ef.end();++i)
     if( actual )
       of << evlist[((*i).first).first].word << ' ' <<
@@ -165,7 +165,7 @@ void tmodel<COUNT, PROB>::printProbTableInverse(const char *filename,
 {
   cerr << "Dumping the t table inverse to file: " << filename << '\n';
   ofstream of(filename);
-  typename hash_map<wordPairIds, CPPair, hashpair, equal_to<wordPairIds> >::const_iterator i;
+  typename hash_map<WordIDPair, CPPair, HashPair, equal_to<WordIDPair> >::const_iterator i;
   PROB p_inv = 0 ;
   //  static const PROB ratio(double(fTotal)/eTotal);
   WordIndex e, f ;
@@ -206,7 +206,7 @@ void tmodel<COUNT, PROB>::printProbTableInverse(const char *filename,
 {
   cerr << "Dumping the t table inverse to file: " << filename << '\n';
   ofstream of(filename);
-  hash_map<wordPairIds, CPPair, hashpair, equal_to<wordPairIds> >::const_iterator i;
+  hash_map<WordIDPair, CPPair, HashPair, equal_to<WordIDPair> >::const_iterator i;
   PROB p_inv = 0 ;
   static const PROB ratio(double(fTotal)/eTotal);
   WordIndex e, f ;
@@ -241,7 +241,7 @@ void tmodel<COUNT, PROB>::normalizeTable(const VocabList&engl, const VocabList&f
   //Vector<int> nFrench(engl.uniqTokens(), 0);
   //Vector<int> nEng(french.uniqTokens(), 0);
 
-  typename hash_map<wordPairIds, CPPair, hashpair, equal_to<wordPairIds> >::const_iterator i;
+  typename hash_map<WordIDPair, CPPair, HashPair, equal_to<WordIDPair> >::const_iterator i;
   for(i = ef.begin(); i != ef.end(); i++){ // for all possible source words e
     if( iter==2 )
       total2[((*i).first).first] += (*i).second.count;
@@ -257,7 +257,7 @@ void tmodel<COUNT, PROB>::normalizeTable(const VocabList&engl, const VocabList&f
 	  cout << k << " french.uniqTokensInCorpus(): " << french.uniqTokensInCorpus() << "  nFrench[k]:"<< nFrench[k] << '\n';
 	total[k]+= total[k]*probMass/(1-probMass);
       }
-  typename hash_map<wordPairIds, CPPair, hashpair, equal_to<wordPairIds> >::iterator j, k;
+  typename hash_map<WordIDPair, CPPair, HashPair, equal_to<WordIDPair> >::iterator j, k;
   PROB p ;
   int nParams=0;
   for(j = ef.begin(); j != ef.end(); ){

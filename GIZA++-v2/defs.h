@@ -21,10 +21,14 @@
 #ifndef GIZAPP_DEFS_H_
 #define GIZAPP_DEFS_H_
 
+#include <utility>
+
 typedef unsigned int WordIndex;
 typedef unsigned int PositionIndex;
 typedef float PROB;
 typedef float COUNT;
+
+typedef std::pair<WordIndex, WordIndex> WordIDPair;
 
 const int kTransfer = 0;
 const int kTransferSimple = 1;

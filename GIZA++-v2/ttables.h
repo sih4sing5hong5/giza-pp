@@ -58,12 +58,9 @@
 
 /*----------- Defnition of Hash Function for class tmodel ------- -----------*/
 
-typedef pair<WordIndex, WordIndex> wordPairIds;
-
-class hashpair : public unary_function< pair<WordIndex, WordIndex>, size_t >
-{
+class HashPair : public unary_function<WordIDPair, size_t > {
 public:
-  size_t operator() (const pair<WordIndex, WordIndex>& key) const
+  size_t operator()(const WordIDPair& key) const
     {
       /* hash function and it is guarnteed to have unique id for each unique pair */
       return static_cast<size_t>(kMaxWeight) * key.first + key.second;
@@ -313,12 +310,12 @@ class tmodel{
  public:
   int noEnglishWords;  // total number of unique source words
   int noFrenchWords;   // total number of unique target words
-  hash_map<wordPairIds, CPPair, hashpair, equal_to<wordPairIds> > ef;
+  hash_map<WordIDPair, CPPair, HashPair, equal_to<WordIDPair> > ef;
   void erase(WordIndex e, WordIndex f)
   // In: a source and a target token ids.
   // removes the entry with that pair from table
     {
-      ef.erase(wordPairIds(e, f));
+      ef.erase(WordIDPair(e, f));
     };
 
 public:
@@ -331,13 +328,13 @@ public:
 
   // insert: add entry P(fj/ei) to the hash function, Default value is 0.0
   void insert(WordIndex e, WordIndex f, COUNT cval=0.0, PROB pval = 0.0){
-    ef[wordPairIds(e, f)].count = cval ;
-    ef[wordPairIds(e, f)].prob = pval ;
+    ef[WordIDPair(e, f)].count = cval ;
+    ef[WordIDPair(e, f)].prob = pval ;
   }
 
   // returns a reference to the word pair, if does not exists, it creates it.
   CPPair&getRe(WordIndex e, WordIndex f)
-    {return ef[wordPairIds(e, f)];}
+    {return ef[WordIDPair(e, f)];}
 
   // returns a pointer to an existing word pair. if pair does not exists,
   // the method returns the zero pointer (NULL)
@@ -345,7 +342,7 @@ public:
   CPPair*getPtr(WordIndex e, WordIndex f)
     {
       // look up this pair and return its position
-      typename hash_map<wordPairIds, CPPair, hashpair, equal_to<wordPairIds> >::iterator i = ef.find(wordPairIds(e, f));
+      typename hash_map<WordIDPair, CPPair, HashPair, equal_to<WordIDPair> >::iterator i = ef.find(WordIDPair(e, f));
       if(i != ef.end())  // if it exists, return a pointer to it.
 	return(&((*i).second));
       else return(0) ; // else return NULL pointer
@@ -356,14 +353,14 @@ public:
     // it creates it with the given value.
     {
       if( inc )
-	ef[wordPairIds(e, f)].count += inc ;
+	ef[WordIDPair(e, f)].count += inc ;
     }
 
   PROB getProb(WordIndex e, WordIndex f) const
     // read probability value for P(fj/ei) from the hash table
     // if pair does not exist, return floor value PROB_SMOOTH
     {
-      typename hash_map<wordPairIds, CPPair, hashpair, equal_to<wordPairIds> >::const_iterator i= ef.find(wordPairIds(e, f));
+      typename hash_map<WordIDPair, CPPair, HashPair, equal_to<WordIDPair> >::const_iterator i= ef.find(WordIDPair(e, f));
       if(i == ef.end())
 	return PROB_SMOOTH;
       else
@@ -373,14 +370,14 @@ public:
   COUNT getCount(WordIndex e, WordIndex f) const
     /* read count value for entry pair (fj/ei) from the hash table */
     {
-      typename hash_map<wordPairIds, CPPair, hashpair, equal_to<wordPairIds> >::const_iterator i= ef.find(wordPairIds(e, f));
+      typename hash_map<WordIDPair, CPPair, HashPair, equal_to<WordIDPair> >::const_iterator i= ef.find(WordIDPair(e, f));
       if(i == ef.end())
 	return 0;
       else
 	return ((*i).second).count;
     }
 
-  inline const hash_map<wordPairIds, CPPair, hashpair, equal_to<wordPairIds> >& getHash(void) const {return ef;};
+  inline const hash_map<WordIDPair, CPPair, HashPair, equal_to<WordIDPair> >& getHash(void) const {return ef;};
   /* get a refernece to the hash table */
   //inline void resize(WordIndex n) {ef.resize(n);};
   // to resize he hash table
