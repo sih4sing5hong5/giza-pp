@@ -40,15 +40,14 @@
 #include "transpair_model1.h"
 
 
-/* ----------------- Class Defintions for hashmyalignment --------------------
+/* ----------------- Class Defintions for AlignmentHashFunc --------------------
    Objective: This class is used to define a hash mapping function to map
    an alignment (defined as a vector of integers) into a hash key
  ----------------------------------------------------------------------------*/
 
-class hashmyalignment : public unary_function< Vector<WordIndex>, size_t >
-{
-public:
-  size_t operator() (const Vector<WordIndex>& key) const
+class AlignmentHashFunc : public unary_function<Vector<WordIndex>, size_t> {
+ public:
+  size_t operator()(const Vector<WordIndex>& key) const
     // to define the mapping function. it takes an alignment (a vector of
     // integers) and it returns an integer value (hash key).
     {
@@ -67,9 +66,9 @@ public:
     }
 };
 
-class equal_to_myalignment{
-  // returns true if two alignments are the same (two vectors have same enties)
-public:
+// Returns true if two alignments are the same (two vectors have same enties)
+class AlignmentComparator {
+ public:
   bool operator()(const Vector<WordIndex> t1,
 		  const Vector<WordIndex> t2) const
     {WordIndex j ;
@@ -80,38 +79,36 @@ public:
 	return(false);
     return(true);
     }
-
 };
 
-/* ---------------- End of Class Defnition for hashmyalignment --------------*/
+/* ---------------- End of Class Defnition for AlignmentHashFunc --------------*/
 
 
-/* ------------------ Class Defintions for alignmodel -----------------------
- Class Name: alignmodel
+/* ------------------ Class Defintions for AlignmentModel -----------------------
+ Class Name: AlignmentModel
  Objective: Alignments neighborhhoods (collection of alignments) are stored in
  a hash table (for easy lookup). Each alignment vector is mapped into a hash
  key using the operator defined above.
  *--------------------------------------------------------------------------*/
 
-class alignmodel{
+class AlignmentModel {
 private:
-  hash_map<Vector<WordIndex>, LogProb, hashmyalignment, equal_to_myalignment > a;
+  hash_map<Vector<WordIndex>, LogProb, AlignmentHashFunc, AlignmentComparator > a;
 private:
   //  void erase(Vector<WordIndex>&);
 public:
 
   // methods;
 
-  inline hash_map<Vector<WordIndex>, LogProb, hashmyalignment, equal_to_myalignment >::iterator begin(void){return a.begin();} // begining of hash
-  inline hash_map<Vector<WordIndex>, LogProb, hashmyalignment, equal_to_myalignment >::iterator end(void){return a.end();} // end of hash
-  inline const hash_map<Vector<WordIndex>, LogProb, hashmyalignment, equal_to_myalignment >& getHash() const {return a;}; // reference to hash table
+  inline hash_map<Vector<WordIndex>, LogProb, AlignmentHashFunc, AlignmentComparator >::iterator begin(void){return a.begin();} // begining of hash
+  inline hash_map<Vector<WordIndex>, LogProb, AlignmentHashFunc, AlignmentComparator >::iterator end(void){return a.end();} // end of hash
+  inline const hash_map<Vector<WordIndex>, LogProb, AlignmentHashFunc, AlignmentComparator >& getHash() const {return a;}; // reference to hash table
   bool insert(Vector<WordIndex>&, LogProb val=0.0); // add a alignmnet
  //  void setValue(Vector<WordIndex>&, LogProb val); // not needed
   LogProb getValue(Vector<WordIndex>&)const; // retrieve prob. of alignment
   inline void clear(void){ a.clear();}; // clear hash table
   //  void printTable(const char* filename);
   //inline void resize(WordIndex n) {a.resize(n);}; // resize table
-
 };
 
 /* -------------- End of alignmode Class Definitions ------------------------*/

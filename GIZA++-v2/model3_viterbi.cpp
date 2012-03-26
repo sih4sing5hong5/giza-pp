@@ -419,7 +419,7 @@ void Model3::collectCountsOverAlignement(const Vector<WordIndex>& es,
 void Model3::findAlignmentsNeighborhood(Vector<WordIndex>& es,
 					Vector<WordIndex>& fs,
 					LogProb&align_total_count,
-					alignmodel&neighborhood,
+					AlignmentModel& neighborhood,
 					int i_peg = -1,
 					int j_peg = -1
 					)
@@ -563,7 +563,7 @@ void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHan
 
       Vector<WordIndex> viterbi_alignment;
       LogProb  viterbi_score ;
-      alignmodel neighborhood;
+      AlignmentModel neighborhood;
       neighborhood.clear();
       align_total_count = 0;
       findAlignmentsNeighborhood(/*tTable, aTable,*/ /*p1_count, p0_count,*/ es, fs, align_total_count, neighborhood) ;
@@ -585,7 +585,7 @@ void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHan
       if (Log)
 	logmsg << "\nCollecting counts over found alignments, total prob: "
 	       << align_total_count <<  "\n";
-      hash_map<Vector<WordIndex>, LogProb, hashmyalignment, equal_to_myalignment >::iterator align ;
+      hash_map<Vector<WordIndex>, LogProb, AlignmentHashFunc, AlignmentComparator >::iterator align ;
       int acount = 0 ;
       if (align_total_count == 0 ){
 	cerr << " WARNINIG: For the following sentence pair : \n";

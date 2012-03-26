@@ -27,7 +27,7 @@
 #include "defs.h"
 
 class alignment;
-class alignmodel;
+class AlignmentModel;
 class HMM;
 class LogProb;
 class Perplexity;
@@ -106,7 +106,7 @@ public:
   void findAlignmentsNeighborhood(Vector<WordIndex>&,
                                   Vector<WordIndex>&,
                                   LogProb&align_total_count,
-                                  alignmodel&neighborhood,
+                                  AlignmentModel& neighborhood,
                                   int, int);
 
   void collectCountsOverAlignement(const Vector<WordIndex>& es,

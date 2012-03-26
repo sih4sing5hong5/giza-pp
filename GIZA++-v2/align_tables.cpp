@@ -21,9 +21,9 @@
 
 #include "align_tables.h"
 
-bool alignmodel::insert(Vector<WordIndex>& aj, LogProb val)
+bool AlignmentModel::insert(Vector<WordIndex>& aj, LogProb val)
 {
-  hash_map<Vector<WordIndex>, LogProb, hashmyalignment, equal_to_myalignment >::iterator i;
+  hash_map<Vector<WordIndex>, LogProb, AlignmentHashFunc, AlignmentComparator>::iterator i;
   i = a.find(aj);
   if(i != a.end() || val <= 0)
     return false ;
@@ -32,10 +32,10 @@ bool alignmodel::insert(Vector<WordIndex>& aj, LogProb val)
 }
 
 
-LogProb alignmodel::getValue(Vector<WordIndex>& align) const
+LogProb AlignmentModel::getValue(Vector<WordIndex>& align) const
 {
   const LogProb zero = 0.0 ;
-  hash_map<Vector<WordIndex>, LogProb, hashmyalignment, equal_to_myalignment >::const_iterator i;
+  hash_map<Vector<WordIndex>, LogProb, AlignmentHashFunc, AlignmentComparator>::const_iterator i;
   i = a.find(align);
   if(i == a.end())
     return zero;
