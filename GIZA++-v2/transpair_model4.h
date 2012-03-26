@@ -19,8 +19,8 @@
   USA.
 */
 
-#ifndef transpair_model4_h_fjo_defined
-#define transpair_model4_h_fjo_defined
+#ifndef GIZAPP_TRANSPAIR_MODEL4_H_
+#define GIZAPP_TRANSPAIR_MODEL4_H_
 
 #include "defs.h"
 #include "util/array2.h"
@@ -76,4 +76,4 @@ class transpair_model4 : public transpair_model3
   LogProb prob_of_target_and_alignment_given_source(const alignment&al, short distortionType=3,bool verb=0)const;
   void computeScores(const alignment&al,vector<double>&d)const;
 };
-#endif
+#endif  // GIZAPP_TRANSPAIR_MODEL4_H_

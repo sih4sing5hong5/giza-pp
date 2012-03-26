@@ -19,8 +19,8 @@
   USA.
 */
 
-#ifndef _vocab_h
-#define _vocab_h 1
+#ifndef GIZAPP_VOCAB_H_
+#define GIZAPP_VOCAB_H_
 
 #include "defs.h"
 #include "util/vector.h"
@@ -104,4 +104,4 @@ class vcbList{
 
 };
 
-#endif
+#endif  // GIZAPP_VOCAB_H_

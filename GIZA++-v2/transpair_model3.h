@@ -26,8 +26,8 @@
   Franz Josef Och (30/07/99)
 */
 
-#ifndef transpair_model3_h_fjo_defined
-#define transpair_model3_h_fjo_defined
+#ifndef GIZAPP_TRANSPAIR_MODEL3_H_
+#define GIZAPP_TRANSPAIR_MODEL3_H_
 
 #include <cmath>
 
@@ -84,4 +84,4 @@ class transpair_model3 : public transpair_model2
   bool isSubOptimal()const{return 1;}
   void computeScores(const alignment&al,vector<double>&d)const;
 };
-#endif
+#endif  // GIZAPP_TRANSPAIR_MODEL3_H_

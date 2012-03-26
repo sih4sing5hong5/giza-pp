@@ -19,8 +19,8 @@
   USA.
 */
 
-#ifndef transpair_model2_defined_h
-#define transpair_model2_defined_h
+#ifndef GIZAPP_TRANSPAIR_MODEL2_H_
+#define GIZAPP_TRANSPAIR_MODEL2_H_
 
 #include "defs.h"
 #include "util/vector.h"
@@ -48,4 +48,5 @@ class transpair_model2 : public transpair_model1
   const PROB&get_a(WordIndex i, WordIndex j)const
     {return a(i, j);}
 };
-#endif
+
+#endif  // GIZAPP_TRANSPAIR_MODEL2_H_

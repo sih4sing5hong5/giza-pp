@@ -19,8 +19,8 @@
   USA.
 */
 
-#ifndef transpair_model1_h_fjo_defined
-#define transpair_model1_h_fjo_defined
+#ifndef GIZAPP_TRANSPAIR_MODEL1_H_
+#define GIZAPP_TRANSPAIR_MODEL1_H_
 
 #include <cmath>
 #include <algorithm>
@@ -104,4 +104,5 @@ class transpair_model1
       return prob;
     }
 };
-#endif
+
+#endif  // GIZAPP_TRANSPAIR_MODEL1_H_
