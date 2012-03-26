@@ -105,7 +105,7 @@ double get_sum_of_partitions(int n, int source_pos, double alpha[kMaxFertility][
   return(sum) ;
 }
 
-void model3::estimate_t_a_d(sentenceHandler& sHandler1, Perplexity& perp, Perplexity& trainVPerp,
+void Model3::estimate_t_a_d(sentenceHandler& sHandler1, Perplexity& perp, Perplexity& trainVPerp,
 			    bool simple, bool dump_files,bool updateT)
 {
   string tfile, nfile, dfile, p0file, afile, alignfile;
@@ -283,7 +283,7 @@ void model3::estimate_t_a_d(sentenceHandler& sHandler1, Perplexity& perp, Perple
     }
 }
 
-void model3::transferSimple(/*model1& m1, Model2& m2, */ sentenceHandler& sHandler1,
+void Model3::transferSimple(/*model1& m1, Model2& m2, */ sentenceHandler& sHandler1,
 			    bool dump_files, Perplexity& perp, Perplexity& trainVPerp,bool updateT)
 {
   /*
@@ -311,7 +311,7 @@ void model3::transferSimple(/*model1& m1, Model2& m2, */ sentenceHandler& sHandl
 }
 
 
-void model3::transfer(sentenceHandler& sHandler1,bool dump_files, Perplexity& perp, Perplexity& trainVPerp,bool updateT)
+void Model3::transfer(sentenceHandler& sHandler1,bool dump_files, Perplexity& perp, Perplexity& trainVPerp,bool updateT)
 {
   if (Transfer == kTransferSimple)
     transferSimple(sHandler1,dump_files,perp, trainVPerp,updateT);

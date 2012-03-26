@@ -45,13 +45,13 @@ GLOBAL_PARAMETER4(int,Model3_Dump_Freq,"MODEL 345 DUMP FREQUENCY","MODEL 3 DUMP 
 
 extern int Transfer_Dump_Freq;
 
-model3::model3(Model2& m2) :
+Model3::Model3(Model2& m2) :
   Model2(m2),dTable(true), dCountTable(true),
   nTable(m2.getNoEnglishWords()+1, g_max_fertility),
   nCountTable(m2.getNoEnglishWords()+1, g_max_fertility),h(0)
 {}
 
-void model3::load_tables(const char *nfile, const char *dfile, const char *p0file){
+void Model3::load_tables(const char *nfile, const char *dfile, const char *p0file){
   cout << "Model3: loading n, d, p0 tables \n";
 
   nTable.readNTable(nfile);
@@ -69,7 +69,7 @@ void model3::load_tables(const char *nfile, const char *dfile, const char *p0fil
   cout << "p0 is: " << p0 << " p1:" << p1 << '\n';
 }
 
-model3::~model3()
+Model3::~Model3()
 {
   dTable.clear();
   dCountTable.clear();
@@ -78,7 +78,7 @@ model3::~model3()
 }
 
 
-void model3::em(int noIterations, sentenceHandler& sHandler1)
+void Model3::em(int noIterations, sentenceHandler& sHandler1)
 {
 
   LogProb all_prob, aprob, temp ;
@@ -263,7 +263,7 @@ void simpleModel3Test()
 
 extern short DoViterbiTraining;
 
-int model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterationsModel5,int noIterationsModel6)
+int Model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterationsModel5,int noIterationsModel6)
 {
   double minErrors=1.0;int minIter=0;
   d4model d4m(MAX_SENTENCE_LENGTH);

@@ -453,7 +453,7 @@ double StartTraining(int&result)
    amodel<COUNT> aCountTable(false);
    Model2 m2(m1,aTable,aCountTable);
    HMM h(m2);
-   model3 m3(m2);
+   Model3 m3(m2);
    if(ReadTablePrefix.length() )
      {
        string number = "final";

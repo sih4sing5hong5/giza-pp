@@ -28,12 +28,12 @@
 #include "align_tables.h"
 #include "sentence_handler.h"
 
-LogProb model3::prob_of_target_and_alignment_given_source(Vector<WordIndex>& A,
-							Vector<WordIndex>& Fert,
-							tmodel<COUNT, PROB>& tTable,
-							Vector<WordIndex>& fs,
-							Vector<WordIndex>& es)
-{
+LogProb Model3::prob_of_target_and_alignment_given_source(
+    Vector<WordIndex>& A,
+    Vector<WordIndex>& Fert,
+    tmodel<COUNT, PROB>& tTable,
+    Vector<WordIndex>& fs,
+    Vector<WordIndex>& es) {
   LogProb total = 1.0 ;
   LogProb temp = 0.0 ;
   const LogProb zero = 0.0 ;
@@ -65,11 +65,9 @@ LogProb model3::prob_of_target_and_alignment_given_source(Vector<WordIndex>& A,
   return(total);
 }
 
-LogProb model3::prob_of_target_given_source(tmodel<COUNT, PROB>& tTable,
-					  Vector<WordIndex>& fs,
-					  Vector<WordIndex>& es)
-{
-
+LogProb Model3::prob_of_target_given_source(tmodel<COUNT, PROB>& tTable,
+                                            Vector<WordIndex>& fs,
+                                            Vector<WordIndex>& es) {
   WordIndex x, y ;
   LogProb total = 0 ;
   //  WordIndex l = es.size(), m = fs.size();
@@ -101,13 +99,13 @@ LogProb model3::prob_of_target_given_source(tmodel<COUNT, PROB>& tTable,
 }
 
 
-LogProb model3::scoreOfMove(Vector<WordIndex>& es,
-			  Vector<WordIndex>& fs,
-			  Vector<WordIndex>& A,
-			  Vector<WordIndex>& Fert,
-			  tmodel<COUNT, PROB>& tTable,
-			  WordIndex j,
-			  WordIndex i)
+LogProb Model3::scoreOfMove(Vector<WordIndex>& es,
+                            Vector<WordIndex>& fs,
+                            Vector<WordIndex>& A,
+                            Vector<WordIndex>& Fert,
+                            tmodel<COUNT, PROB>& tTable,
+                            WordIndex j,
+                            WordIndex i)
      // returns the scaling factor of the original score if A[j] is linked to
      // i, no change is really made to A
      // but the score is calculated if the move is to be taken (i.e.
@@ -167,7 +165,7 @@ LogProb model3::scoreOfMove(Vector<WordIndex>& es,
 }
 
 
-LogProb model3::scoreOfSwap(Vector<WordIndex>& es,
+LogProb Model3::scoreOfSwap(Vector<WordIndex>& es,
 			  Vector<WordIndex>& fs,
 			  Vector<WordIndex>& A,
 			  tmodel<COUNT, PROB>& tTable,
@@ -209,7 +207,7 @@ LogProb model3::scoreOfSwap(Vector<WordIndex>& es,
 
 
 
-void model3::hillClimb(Vector<WordIndex>& es,
+void Model3::hillClimb(Vector<WordIndex>& es,
 		       Vector<WordIndex>& fs,
 		       Vector<WordIndex>& A,
 		       Vector<WordIndex>& Fert,
@@ -307,7 +305,7 @@ void model3::hillClimb(Vector<WordIndex>& es,
 }
 
 
-void model3::findBestAlignment(Vector<WordIndex>& es,
+void Model3::findBestAlignment(Vector<WordIndex>& es,
 			       Vector<WordIndex>& fs,
 			       Vector<WordIndex>& A,
 			       Vector<WordIndex>& Fert,
@@ -386,7 +384,7 @@ void model3::findBestAlignment(Vector<WordIndex>& es,
     logmsg << "finding best alignment : score : " << ss <<"p(f, a/e) = "<< best_score<<"\n";
 }
 
-void model3::collectCountsOverAlignement(const Vector<WordIndex>& es,
+void Model3::collectCountsOverAlignement(const Vector<WordIndex>& es,
 					 const Vector<WordIndex>& fs,
 					 const Vector<WordIndex>& A,
 					 LogProb score,
@@ -418,7 +416,7 @@ void model3::collectCountsOverAlignement(const Vector<WordIndex>& es,
 
 
 
-void model3::findAlignmentsNeighborhood(Vector<WordIndex>& es,
+void Model3::findAlignmentsNeighborhood(Vector<WordIndex>& es,
 					Vector<WordIndex>& fs,
 					LogProb&align_total_count,
 					alignmodel&neighborhood,
@@ -523,7 +521,7 @@ void model3::findAlignmentsNeighborhood(Vector<WordIndex>& es,
     } // of else best_score <= 0
 }
 
-void model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, sentenceHandler& sHandler1,
+void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, sentenceHandler& sHandler1,
 			   bool dump_files, const char* alignfile,
 			   bool collect_counts, string model )
 {

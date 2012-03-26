@@ -55,7 +55,7 @@ class Model2 : public Model1 {
                Perplexity&, bool test);
 
  private:
-  friend class model3;
+  friend class Model3;
 };
 
 #endif  // GIZAPP_MODEL2_H_

@@ -30,7 +30,7 @@
 #include "word_classes.h"
 #include "hmm_tables.h"
 
-class model3;
+class Model3;
 class HMMNetwork;
 class Perplexity;
 class sentenceHandler;
@@ -62,7 +62,7 @@ class HMM : public Model2 {
   HMMNetwork *makeHMMNetwork(const Vector<WordIndex>& es,
                              const Vector<WordIndex>&fs,
                              bool doInit) const;
-  friend class model3;
+  friend class Model3;
 };
 
 template<class Mapper>
