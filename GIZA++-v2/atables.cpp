@@ -28,7 +28,7 @@ GLOBAL_PARAMETER(bool, CompactADTable, "compactadtable", "1: only 3-dimensional 
 GLOBAL_PARAMETER(float, amodel_smooth_factor, "model23SmoothFactor", "smoothing parameter for IBM-2/3 (interpolation with constant)", kParLevSmooth, 0.0);
 
 template <class VALTYPE>
-void amodel<VALTYPE>::printTable(const char *filename) const {
+void AModel<VALTYPE>::printTable(const char *filename) const {
   if (is_distortion)
     cout << "Dumping distortion table (d) to file:" << filename <<'\n';
   else
@@ -72,7 +72,7 @@ void amodel<VALTYPE>::printTable(const char *filename) const {
 }
 
 template <class VALTYPE>
-void amodel<VALTYPE>::readTable(const char *filename) {
+void AModel<VALTYPE>::readTable(const char *filename) {
   ifstream inf(filename);
   cout << "Reading a/d table from " << filename << "\n";
   if(!inf){
@@ -88,4 +88,4 @@ void amodel<VALTYPE>::readTable(const char *filename) {
   }
 }
 
-template class amodel<COUNT>;
+template class AModel<COUNT>;

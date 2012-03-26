@@ -32,7 +32,7 @@ extern short NoEmptyWord;
 
 GLOBAL_PARAMETER2(int,Model2_Dump_Freq,"MODEL 2 DUMP FREQUENCY","t2","dump frequency of Model 2",kParLevOutput,0);
 
-Model2::Model2(Model1& m, amodel<PROB>& _aTable, amodel<COUNT>& _aCountTable)
+Model2::Model2(Model1& m, AModel<PROB>& _aTable, AModel<COUNT>& _aCountTable)
     : Model1(m), aTable(_aTable), aCountTable(_aCountTable) { }
 
 Model2::~Model2() {}

@@ -50,8 +50,8 @@ extern bool CompactADTable;
 extern float amodel_smooth_factor;
 extern short NoEmptyWord;
 
-/* ------------------- Class Defintions of amodel ---------------------------*/
-/* Class Name: amodel:
+/* ------------------- Class Defintions of AModel ---------------------------*/
+/* Class Name: AModel:
    Objective: This defines the underlying data structure for distortiont prob.
    and count tables. They are defined as a hash table. Each entry in the hash
    table is the probability (d(j/l,m,i), where j is word target position, i is
@@ -66,7 +66,7 @@ extern short NoEmptyWord;
   *--------------------------------------------------------------------------*/
 
 template <class VALTYPE>
-class amodel {
+class AModel {
  public:
   Array4<VALTYPE> a;
   bool is_distortion ;
@@ -75,12 +75,12 @@ class amodel {
 
   static float smooth_factor;
 
-  explicit amodel(bool flag)
+  explicit AModel(bool flag)
       : a(MAX_SENTENCE_LENGTH + 1, 0.0),
         is_distortion(flag),
         MaxSentLength(MAX_SENTENCE_LENGTH) { }
 
-  ~amodel() {}
+  ~AModel() {}
 
   VALTYPE get(WordIndex aj, WordIndex j, WordIndex l, WordIndex m) const {
     MASSERT( (!is_distortion) || aj<=m );MASSERT( (!is_distortion) || j<=l );MASSERT( (!is_distortion) || aj!=0 );
@@ -117,7 +117,7 @@ class amodel {
   void printTable(const char* filename) const;
 
   template <class COUNT>
-  void normalize(amodel<COUNT>& aTable) const {
+  void normalize(AModel<COUNT>& aTable) const {
     WordIndex i, j, l, m ;
     COUNT total;
     int nParam = 0;

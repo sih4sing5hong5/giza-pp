@@ -33,10 +33,10 @@ class SentenceHandler;
 class Model2 : public Model1 {
  public:
   // TODO: Should be private.
-  amodel<PROB>& aTable;
-  amodel<COUNT>& aCountTable;
+  AModel<PROB>& aTable;
+  AModel<COUNT>& aCountTable;
 
-  Model2(Model1& m1, amodel<PROB>& _aTable, amodel<COUNT>& _aCountTable);
+  Model2(Model1& m1, AModel<PROB>& _aTable, AModel<COUNT>& _aCountTable);
   virtual ~Model2();
 
   void initialize_table_uniformly(SentenceHandler&);
@@ -45,8 +45,8 @@ class Model2 : public Model1 {
 
   void load_table(const char* aname);
 
-  amodel<PROB>& getATable() { return aTable; }
-  amodel<COUNT>& getACountTable() { return aCountTable; }
+  AModel<PROB>& getATable() { return aTable; }
+  AModel<COUNT>& getACountTable() { return aCountTable; }
 
   void em_loop(Perplexity& perp,
                SentenceHandler& sHandler1,

@@ -35,7 +35,7 @@ class alignment;
 class LogProb;
 
 template <class T> class MoveSwapMatrix;
-template <class T> class amodel;
+template <class T> class AModel;
 template <class T> class nmodel;
 template <class COUNT, class PROB> class tmodel;
 
@@ -85,7 +85,7 @@ int collectCountsOverNeighborhood(const Vector<std::pair<MoveSwapMatrix<TRANSPAI
                                   Vector<WordIndex>&es,
                                   Vector<WordIndex>&fs,
                                   tmodel<COUNT,PROB>& tTable,
-                                  amodel<COUNT>& aCountTable, amodel<COUNT>& dCountTable,
+                                  AModel<COUNT>& aCountTable, AModel<COUNT>& dCountTable,
                                   nmodel<COUNT>& nCountTable, double& p1count,
                                   double& p0count,
                                   LogProb& _total,

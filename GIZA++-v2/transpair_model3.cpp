@@ -29,7 +29,7 @@
 #include "transpair_model3.h"
 #include <algorithm>
 
-transpair_model3::transpair_model3(const Vector<WordIndex>&es, const Vector<WordIndex>&fs, tmodel<COUNT, PROB>&tTable, amodel<PROB>&aTable, amodel<PROB>&dTable, nmodel<PROB>&nTable, double _p1, double _p0, void*)
+transpair_model3::transpair_model3(const Vector<WordIndex>&es, const Vector<WordIndex>&fs, tmodel<COUNT, PROB>&tTable, AModel<PROB>&aTable, AModel<PROB>&dTable, nmodel<PROB>&nTable, double _p1, double _p0, void*)
   : transpair_model2(es,fs,tTable,aTable),d(es.size(), fs.size()),n(es.size(), g_max_fertility+1), p0(_p0), p1(_p1)
 {
   WordIndex l=es.size()-1,m=fs.size()-1;

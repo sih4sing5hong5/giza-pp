@@ -449,8 +449,8 @@ double StartTraining(int&result)
   Model1 m1(CorpusFilename.c_str(), eTrainVcbList, fTrainVcbList,tTable,trainPerp,
 	    *corpus,&testPerp, testCorpus,
 	    trainViterbiPerp, &testViterbiPerp);
-   amodel<PROB>  aTable(false);
-   amodel<COUNT> aCountTable(false);
+   AModel<PROB>  aTable(false);
+   AModel<COUNT> aCountTable(false);
    Model2 m2(m1,aTable,aCountTable);
    HMM h(m2);
    Model3 m3(m2);

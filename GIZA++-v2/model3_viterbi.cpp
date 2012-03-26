@@ -311,7 +311,7 @@ void Model3::findBestAlignment(Vector<WordIndex>& es,
 			       Vector<WordIndex>& Fert,
 			       LogProb& best_score,
 			       /*tmodel<COUNT, PROB>& tTable,
-				 amodel<PROB>& aTable, */
+				 AModel<PROB>& aTable, */
 			       int i_peg = -1 ,
 			       int j_peg = -1 )
      // This finds the best Model2 alignment (i.e. no fertilities stuff) in A

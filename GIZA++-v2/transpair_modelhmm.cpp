@@ -4,8 +4,8 @@
 TransPairModelHMM::TransPairModelHMM(const Vector<WordIndex>& es,
                                      const Vector<WordIndex>& fs,
                                      const tmodel<COUNT, PROB>& tTable,
-                                     const amodel<PROB>&aTable,
-                                     const amodel<PROB>&,const nmodel<PROB>&,
+                                     const AModel<PROB>&aTable,
+                                     const AModel<PROB>&,const nmodel<PROB>&,
                                      double, double, const HMM* h)
     : transpair_model2(es,fs,tTable,aTable),
       network_(h->makeHMMNetwork(es,fs,0)) { }

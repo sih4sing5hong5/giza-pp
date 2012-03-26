@@ -64,7 +64,7 @@ class transpair_model3 : public transpair_model2
  public:
   typedef transpair_model3 simpler_transpair_model;
   transpair_model3(const Vector<WordIndex>&es, const Vector<WordIndex>&fs, tmodel<COUNT, PROB>&tTable,
-		   amodel<PROB>&aTable, amodel<PROB>&dTable, nmodel<PROB>&nTable,
+		   AModel<PROB>&aTable, AModel<PROB>&dTable, nmodel<PROB>&nTable,
 		   double _p1, double _p0, void*x=0);
   const PROB&get_d(WordIndex i, WordIndex j)const
     {return d(i, j);}

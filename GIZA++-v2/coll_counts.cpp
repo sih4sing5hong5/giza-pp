@@ -232,7 +232,7 @@ double collectCountsOverNeighborhoodForSophisticatedModels(const MoveSwapMatrix<
 }
 
 template<class TRANSPAIR,class MODEL>
-int collectCountsOverNeighborhood(const Vector<pair<MoveSwapMatrix<TRANSPAIR>*,LogProb> >&smsc,Vector<WordIndex>&es,Vector<WordIndex>&fs,tmodel<COUNT,PROB>&tTable,amodel<COUNT>&aCountTable,amodel<COUNT>&dCountTable,nmodel<COUNT>&nCountTable,double&p1count,double&p0count,LogProb&_total,float count,bool addCounts,MODEL*d4Table)
+int collectCountsOverNeighborhood(const Vector<pair<MoveSwapMatrix<TRANSPAIR>*,LogProb> >&smsc,Vector<WordIndex>&es,Vector<WordIndex>&fs,tmodel<COUNT,PROB>&tTable,AModel<COUNT>&aCountTable,AModel<COUNT>&dCountTable,nmodel<COUNT>&nCountTable,double&p1count,double&p0count,LogProb&_total,float count,bool addCounts,MODEL*d4Table)
 {
   int nAl=0;
   const PositionIndex l=es.size()-1,m=fs.size()-1;
