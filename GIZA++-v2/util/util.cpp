@@ -102,11 +102,11 @@ void printAlignToFile(const Vector<WordIndex>& es,
 }
 
 void printOverlapReport(const tmodel<COUNT, PROB>& tTable,
-			sentenceHandler& testHandler,  VocabList& trainEList,
+			SentenceHandler& testHandler,  VocabList& trainEList,
 			VocabList& trainFList, VocabList& testEList, VocabList& testFList)
 {
   set<pair<WordIndex, WordIndex> > testCoocur ;
-  sentPair s ;
+  SentencePair s ;
   /*  string unseenCoocurFile = Prefix + ".tst.unseen.cooc" ;
       ofstream of_unseenCoocur(unseenCoocurFile.c_str());
 

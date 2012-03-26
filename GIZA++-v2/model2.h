@@ -28,7 +28,7 @@
 #include "atables.h"
 
 class Perplexity;
-class sentenceHandler;
+class SentenceHandler;
 
 class Model2 : public Model1 {
  public:
@@ -39,7 +39,7 @@ class Model2 : public Model1 {
   Model2(Model1& m1, amodel<PROB>& _aTable, amodel<COUNT>& _aCountTable);
   virtual ~Model2();
 
-  void initialize_table_uniformly(sentenceHandler&);
+  void initialize_table_uniformly(SentenceHandler&);
 
   int em_with_tricks(int);
 
@@ -49,7 +49,7 @@ class Model2 : public Model1 {
   amodel<COUNT>& getACountTable() { return aCountTable; }
 
   void em_loop(Perplexity& perp,
-               sentenceHandler& sHandler1,
+               SentenceHandler& sHandler1,
                bool dump_files,
                const char* alignfile,
                Perplexity&, bool test);

@@ -29,7 +29,7 @@
 #include "util/vector.h"
 
 class Perplexity;
-class sentenceHandler;
+class SentenceHandler;
 class VocabList;
 class WordEntry;
 
@@ -49,7 +49,7 @@ extern void generatePerplexityReport(const Perplexity& trainperp,
 extern void  printSentencePair(Vector<WordIndex>& es, Vector<WordIndex>& fs, ostream& of);
 
 extern void printOverlapReport(const tmodel<COUNT, PROB>& tTable,
-                               sentenceHandler& testHandler, VocabList& trainEList,
+                               SentenceHandler& testHandler, VocabList& trainEList,
                                VocabList& trainFList, VocabList& testEList, VocabList& testFList);
 
 extern void printAlignToFile(const Vector<WordIndex>& es,  const Vector<WordIndex>& fs,

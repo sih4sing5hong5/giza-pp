@@ -521,7 +521,7 @@ void Model3::findAlignmentsNeighborhood(Vector<WordIndex>& es,
     } // of else best_score <= 0
 }
 
-void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, sentenceHandler& sHandler1,
+void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHandler& sHandler1,
 			   bool dump_files, const char* alignfile,
 			   bool collect_counts, string model )
 {
@@ -536,7 +536,7 @@ void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, sentenceHan
   // for each sentence pair in the corpus
   perp.clear() ; // clears cross_entrop & perplexity
   viterbiPerp.clear();
-  sentPair sent ;
+  SentencePair sent ;
   while(sHandler1.getNextSentence(sent)){
     Vector<WordIndex>& es = sent.eSent;
     Vector<WordIndex>& fs = sent.fSent;

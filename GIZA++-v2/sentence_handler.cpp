@@ -39,13 +39,13 @@
 
 int PrintedTooLong=0;
 
-/* -------------- Method Defnitions for Class sentenceHandler ---------------*/
+/* -------------- Method Defnitions for Class SentenceHandler ---------------*/
 
 GLOBAL_PARAMETER(double,ManlexMAX_MULTIPLICITY,"manlexMAX_MULTIPLICITY","",kParLevEM,20.0);
 GLOBAL_PARAMETER(double,Manlexfactor1,"manlexfactor1","",kParLevEM,0.0);
 GLOBAL_PARAMETER(double,Manlexfactor2,"manlexfactor2","",kParLevEM,0.0);
 
-sentenceHandler::sentenceHandler(const char*  filename, VocabList* elist,
+SentenceHandler::SentenceHandler(const char*  filename, VocabList* elist,
 				 VocabList*  flist) : realCount(0)
   // This method is the constructor of the class, it also intitializes the
   // sentence pair sequential number (count) to zero.
@@ -69,7 +69,7 @@ sentenceHandler::sentenceHandler(const char*  filename, VocabList* elist,
   bool isNegative=0;
   if (elist && flist){
     cout << "Calculating vocabulary frequencies from corpus " << filename << '\n';
-    sentPair s ;
+    SentencePair s ;
     while (getNextSentence(s, elist, flist))
       {
 	totalPairs1++;
@@ -90,7 +90,9 @@ sentenceHandler::sentenceHandler(const char*  filename, VocabList* elist,
     realCount=0;
 }
 
-void sentenceHandler::rewind()
+SentenceHandler::~SentenceHandler() {}
+
+void SentenceHandler::rewind()
 {
   currentSentence = 0;
   readflag = false ;
@@ -114,9 +116,9 @@ void sentenceHandler::rewind()
 }
 
 
-bool sentenceHandler::getNextSentence(sentPair& sent, VocabList* elist, VocabList* flist)
+bool SentenceHandler::getNextSentence(SentencePair& sent, VocabList* elist, VocabList* flist)
 {
-  sentPair s ;
+  SentencePair s ;
   if (readflag){
     cerr << "Attempting to read from the end of corpus, rewinding\n";
     rewind();
@@ -189,7 +191,7 @@ bool sentenceHandler::getNextSentence(sentPair& sent, VocabList* elist, VocabLis
     }
   return true ;
 }
-bool sentenceHandler::readNextSentence(sentPair& sent)
+bool SentenceHandler::readNextSentence(SentencePair& sent)
   /* This method reads in a new pair of sentences, each pair is read from the
      corpus file as line triples. The first line the no of times this line
      pair occured in the corpus, the second line is the source sentence and
@@ -304,7 +306,7 @@ double optimize_lambda(Vector<double>&vd)
   return lam;
 }
 
-void sentenceHandler::setProbOfSentence(const sentPair&s,double d)
+void SentenceHandler::setProbOfSentence(const SentencePair&s,double d)
 {
   if( realCount==0 )
     return;
@@ -332,4 +334,4 @@ void sentenceHandler::setProbOfSentence(const sentPair&s,double d)
     }
 }
 
-/* ------------- End of Method Definition of Class sentenceHandler ----------*/
+/* ------------- End of Method Definition of Class SentenceHandler ----------*/

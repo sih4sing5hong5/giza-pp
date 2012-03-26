@@ -55,7 +55,7 @@ HMM::HMM(Model2& m)
 
 HMM::~HMM() { }
 
-void HMM::initialize_table_uniformly(sentenceHandler&) { }
+void HMM::initialize_table_uniformly(SentenceHandler&) { }
 
 int HMM::em_with_tricks(int noIterations) {
   double minErrors=1.0;int minIter=0;
@@ -247,7 +247,7 @@ HMMNetwork* HMM::makeHMMNetwork(const Vector<WordIndex>& es,
 }
 extern float MINCOUNTINCREASE;
 
-void HMM::em_loop(Perplexity& perp, sentenceHandler& sHandler1,
+void HMM::em_loop(Perplexity& perp, SentenceHandler& sHandler1,
                   bool dump_alignment, const char* alignfile, Perplexity& viterbi_perp,
                   bool test,bool doInit,int) {
   WordIndex i, j, l, m ;
@@ -259,7 +259,7 @@ void HMM::em_loop(Perplexity& perp, sentenceHandler& sHandler1,
   // for each sentence pair in the corpus
   if (dump_alignment||FEWDUMPS )
     of2.open(alignfile);
-  sentPair sent ;
+  SentencePair sent ;
   sHandler1.rewind();
   while(sHandler1.getNextSentence(sent)){
     const Vector<WordIndex>& es = sent.get_eSent();

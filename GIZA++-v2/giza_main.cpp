@@ -100,7 +100,7 @@ const string str2Num(int n){
 
 
 double g_lambda = 1.09;
-sentenceHandler *testCorpus=0,*corpus=0;
+SentenceHandler *testCorpus=0,*corpus=0;
 Perplexity trainPerp, testPerp, trainViterbiPerp, testViterbiPerp ;
 
 string ReadTablePrefix;
@@ -401,14 +401,14 @@ double StartTraining(int&result)
   VocabList eTestVcbList(eTrainVcbList) ;
   VocabList fTestVcbList(fTrainVcbList) ;
 
-  corpus = new sentenceHandler(CorpusFilename.c_str(), &eTrainVcbList, &fTrainVcbList);
+  corpus = new SentenceHandler(CorpusFilename.c_str(), &eTrainVcbList, &fTrainVcbList);
 
   if (TestCorpusFilename == "NONE")
     TestCorpusFilename = "";
 
   if (TestCorpusFilename != ""){
     cout << "Test corpus will be read from: " << TestCorpusFilename << '\n';
-      testCorpus= new sentenceHandler(TestCorpusFilename.c_str(),
+      testCorpus= new SentenceHandler(TestCorpusFilename.c_str(),
 						       &eTestVcbList, &fTestVcbList);
       cout << " Test total # sentence pairs : " <<(*testCorpus).getTotalNoPairs1()<<" weighted:"<<(*testCorpus).getTotalNoPairs2() <<'\n';
 
@@ -469,7 +469,7 @@ double StartTraining(int&result)
        aTable.readTable(afile.c_str());
        m3.dTable.readTable(dfile.c_str());
        m3.nTable.readNTable(nfile.c_str());
-       sentPair sent ;
+       SentencePair sent ;
        double p0;
        ifstream p0f(p0file.c_str());
        p0f >> p0;
@@ -483,7 +483,7 @@ double StartTraining(int&result)
        //makeSetCommand("model5smoothfactor","0.0",getGlobalParSet(),2);
        if( corpus||testCorpus )
 	 {
-	   sentenceHandler *x=corpus;
+	   SentenceHandler *x=corpus;
 	   if(x==0)
 	     x=testCorpus;
 	   cout << "Text corpus exists.\n";

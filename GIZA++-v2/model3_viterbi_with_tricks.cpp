@@ -419,7 +419,7 @@ inline bool operator<(const Als&x,const Als&y)
 {return x.v>y.v;}
 
 template<class MODEL_TYPE, class ADDITIONAL_MODEL_DATA_IN,class ADDITIONAL_MODEL_DATA_OUT>
-void Model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp, sentenceHandler& sHandler1,
+void Model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp, SentenceHandler& sHandler1,
 				      bool dump_files, const char* alignfile,
 				      bool collect_counts, string model, bool final,
 				      ADDITIONAL_MODEL_DATA_IN*dm_in,
@@ -448,7 +448,7 @@ void Model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
   // for each sentence pair in the corpus
   perp.clear() ; // clears cross_entrop & perplexity
   viterbiPerp.clear() ; // clears cross_entrop & perplexity
-  sentPair sent ;
+  SentencePair sent ;
   int NCenter=0,NHillClimbed=0,NAlignment=0,NTotal=0,NBetterByPegging=0;
   while(sHandler1.getNextSentence(sent)){
     if( sent.eSent.size()==1||sent.fSent.size()==1 )
@@ -683,7 +683,7 @@ void Model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
 
 #include "coll_counts.cpp"
 #define INSTANTIATE(A,B,C) template \
-void Model3::viterbi_loop_with_tricks<A,B,C>(Perplexity& perp, Perplexity& viterbiPerp, sentenceHandler& sHandler1,  \
+void Model3::viterbi_loop_with_tricks<A,B,C>(Perplexity& perp, Perplexity& viterbiPerp, SentenceHandler& sHandler1,  \
 					     bool dump_files, const char* alignfile,bool collect_counts, string, bool final,\
 					     B*d4m,C*d5m);
 

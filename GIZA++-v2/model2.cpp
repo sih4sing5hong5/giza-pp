@@ -37,10 +37,10 @@ Model2::Model2(Model1& m, amodel<PROB>& _aTable, amodel<COUNT>& _aCountTable)
 
 Model2::~Model2() {}
 
-void Model2::initialize_table_uniformly(sentenceHandler& sHandler1) {
+void Model2::initialize_table_uniformly(SentenceHandler& sHandler1) {
   // initialize the aTable uniformly (run this before running em_with_tricks)
   int n=0;
-  sentPair sent ;
+  SentencePair sent ;
   sHandler1.rewind();
    while(sHandler1.getNextSentence(sent)){
     Vector<WordIndex>& es = sent.eSent;
@@ -140,7 +140,7 @@ void Model2::load_table(const char* aname) {
 }
 
 
-void Model2::em_loop(Perplexity& perp, sentenceHandler& sHandler1,
+void Model2::em_loop(Perplexity& perp, SentenceHandler& sHandler1,
 		     bool dump_alignment, const char* alignfile, Perplexity& viterbi_perp,
 		     bool test)
 {
@@ -155,7 +155,7 @@ void Model2::em_loop(Perplexity& perp, sentenceHandler& sHandler1,
   // for each sentence pair in the corpus
   if (dump_alignment||FEWDUMPS )
     of2.open(alignfile);
-  sentPair sent ;
+  SentencePair sent ;
 
   vector<double> ferts(evlist.size());
 

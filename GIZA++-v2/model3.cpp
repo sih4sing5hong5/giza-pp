@@ -78,7 +78,7 @@ Model3::~Model3()
 }
 
 
-void Model3::em(int noIterations, sentenceHandler& sHandler1)
+void Model3::em(int noIterations, SentenceHandler& sHandler1)
 {
 
   LogProb all_prob, aprob, temp ;
@@ -90,7 +90,7 @@ void Model3::em(int noIterations, sentenceHandler& sHandler1)
   if (Log)
     logmsg << "\n" << "Starting Model3:  Training";
   cout << "\n" << "Starting Model3:  Training";
-  //  sentenceHandler sHandler1(efFilename.c_str());
+  //  SentenceHandler sHandler1(efFilename.c_str());
   sHandler1.rewind();
   for(int it=1; it <= noIterations; it++){
     it_st = time(NULL) ;
@@ -115,7 +115,7 @@ void Model3::em(int noIterations, sentenceHandler& sHandler1)
     nCountTable.clear();
     p0_count = p1_count = 0 ;
     all_prob = 0 ;
-    sentPair sent ;
+    SentencePair sent ;
     while(sHandler1.getNextSentence(sent)){
       Vector<WordIndex>& es = sent.eSent;
       Vector<WordIndex>& fs = sent.fSent;

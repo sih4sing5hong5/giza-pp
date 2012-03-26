@@ -34,9 +34,9 @@ GLOBAL_PARAMETER2(int,Model1_Dump_Freq,"MODEL 1 DUMP FREQUENCY","t1","dump frequ
 int NumberOfVALIalignments=100;
 
 Model1::Model1(const char* efname, VocabList& evcblist, VocabList& fvcblist,tmodel<COUNT, PROB>&_tTable,Perplexity& _perp,
-	      sentenceHandler& _sHandler1,
+	      SentenceHandler& _sHandler1,
 	      Perplexity* _testPerp,
-	      sentenceHandler* _testHandler,
+	      SentenceHandler* _testHandler,
 	      Perplexity& _trainViterbiPerp,
 	      Perplexity* _testViterbiPerp) :
   ReportInfo(_perp, _sHandler1, _testPerp, _testHandler, _trainViterbiPerp, _testViterbiPerp),
@@ -48,12 +48,12 @@ Model1::Model1(const char* efname, VocabList& evcblist, VocabList& fvcblist,tmod
 
 Model1::~Model1() {}
 
-void Model1::initialize_table_uniformly(sentenceHandler& sHandler1){
+void Model1::initialize_table_uniformly(SentenceHandler& sHandler1){
   WordIndex i, j;
 
   cout << "Initialize tTable\n";
 
-  sentPair sent ;
+  SentencePair sent ;
   sHandler1.rewind();
   while(sHandler1.getNextSentence(sent)){
     Vector<WordIndex>& es = sent.eSent;
@@ -66,8 +66,8 @@ void Model1::initialize_table_uniformly(sentenceHandler& sHandler1){
 }
 
 
-int Model1::em_with_tricks(int noIterations, /*Perplexity& perp, sentenceHandler& sHandler1, */
-			    bool seedModel1, util::Dictionary& dictionary, bool useDict /*Perplexity* testPerp, sentenceHandler* testHandler,
+int Model1::em_with_tricks(int noIterations, /*Perplexity& perp, SentenceHandler& sHandler1, */
+			    bool seedModel1, util::Dictionary& dictionary, bool useDict /*Perplexity* testPerp, SentenceHandler* testHandler,
 										     Perplexity& trainViterbiPerp, Perplexity* testViterbiPerp */ )
 {
   double minErrors=1.0;int minIter=0;
@@ -143,7 +143,7 @@ void Model1::load_table(const char* tname){
 
 
 extern float MINCOUNTINCREASE;
-void Model1::em_loop(int it,Perplexity& perp, sentenceHandler& sHandler1, bool seedModel1,
+void Model1::em_loop(int it,Perplexity& perp, SentenceHandler& sHandler1, bool seedModel1,
 		     bool dump_alignment, const char* alignfile, util::Dictionary& dict, bool useDict, Perplexity& viterbi_perp, bool test)
 {
   WordIndex i, j, l, m ;
@@ -156,7 +156,7 @@ void Model1::em_loop(int it,Perplexity& perp, sentenceHandler& sHandler1, bool s
   if (dump_alignment||FEWDUMPS)
     of2.open(alignfile);
   PROB uniform = 1.0/noFrenchWords ;
-  sentPair sent ;
+  SentencePair sent ;
   sHandler1.rewind();
   while(sHandler1.getNextSentence(sent)){
     Vector<WordIndex>& es = sent.eSent;

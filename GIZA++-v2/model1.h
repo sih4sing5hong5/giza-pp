@@ -28,7 +28,7 @@
 #include "vocab.h"
 
 class Perplexity;
-class sentenceHandler;
+class SentenceHandler;
 
 namespace util {
 class Dictionary;
@@ -39,16 +39,16 @@ extern int NumberOfVALIalignments;
 class ReportInfo {
  protected:
   Perplexity& perp;
-  sentenceHandler& sHandler1;
+  SentenceHandler& sHandler1;
   Perplexity* testPerp;
-  sentenceHandler* testHandler;
+  SentenceHandler* testHandler;
   Perplexity& trainViterbiPerp;
   Perplexity* testViterbiPerp;
 
   ReportInfo(Perplexity& _perp,
-             sentenceHandler& _sHandler1,
+             SentenceHandler& _sHandler1,
              Perplexity* _testPerp,
-             sentenceHandler* _testHandler,
+             SentenceHandler* _testHandler,
              Perplexity& _trainViterbiPerp,
              Perplexity* _testViterbiPerp)
     : perp(_perp),
@@ -79,15 +79,15 @@ class Model1 : public ReportInfo {
 
   Model1(const char* efname, VocabList& evcblist, VocabList& fvcblist,
          tmodel<COUNT, PROB>&_tTable,Perplexity& _perp,
-         sentenceHandler& _sHandler1,
+         SentenceHandler& _sHandler1,
          Perplexity* _testPerp,
-         sentenceHandler* _testHandler,
+         SentenceHandler* _testHandler,
          Perplexity& _trainViterbiPerp,
          Perplexity* _testViterbiPerp);
 
   virtual ~Model1();
 
-  void initialize_table_uniformly(sentenceHandler& sHandler1);
+  void initialize_table_uniformly(SentenceHandler& sHandler1);
   int em_with_tricks(int noIterations,
                      bool seedModel1, util::Dictionary& dictionary, bool useDict);
   void load_table(const char* tname);
@@ -153,7 +153,7 @@ class Model1 : public ReportInfo {
 
  private:
   void em_loop(int it, Perplexity& perp,
-               sentenceHandler& sHandler1,
+               SentenceHandler& sHandler1,
                bool seedModel1,
                bool , const char*,
                util::Dictionary& dictionary, bool useDict,

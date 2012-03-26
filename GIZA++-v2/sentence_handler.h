@@ -51,7 +51,7 @@
 
  *---------------------------------------------------------------------------*/
 
-class sentPair{
+class SentencePair {
  public:
   int sentenceNo ;
   float noOcc;
@@ -60,7 +60,9 @@ class sentPair{
   Vector<WordIndex> fSent;
 
  public:
-  sentPair(){};
+  SentencePair() { }
+  ~SentencePair() { }
+
   void clear(){ eSent.clear(); fSent.clear(); noOcc=0; realCount=0; sentenceNo=0;};
   const Vector<WordIndex>&get_eSent()const
     { return eSent; }
@@ -72,7 +74,7 @@ class sentPair{
     { return realCount; }
 };
 
-inline ostream&operator<<(ostream&of,const sentPair&s)
+inline ostream&operator<<(ostream&of,const SentencePair&s)
 {
   of << "Sent No: " << s.sentenceNo << " , No. Occurrences: " << s.noOcc << '\n';
   if( s.noOcc!=s.realCount )
@@ -87,31 +89,33 @@ inline ostream&operator<<(ostream&of,const sentPair&s)
   return of;
 }
 
-class sentenceHandler{
+class SentenceHandler {
 public:
-  const char * inputFilename;   // parallel corpus file name, similar for all
-                            // sentence pair objects
-  ifstream *inputFile;     // parallel corpus file handler
-  Vector<sentPair> Buffer;
-  int noSentInBuffer ;
-  int currentSentence ;
-  int totalPairs1 ;
+  // TODO: Should be private.
+  const char * inputFilename; // parallel corpus file name, similar for all
+  ifstream *inputFile;                 // parallel corpus file handler
+  Vector<SentencePair> Buffer;          // sentence pair objects
+  int noSentInBuffer;
+  int currentSentence;
+  int totalPairs1;
   double totalPairs2;
-  bool readflag ; // true if you reach the end of file
-  bool allInMemory ;
-  int pair_no ;
+  bool readflag; // true if you reach the end of file
+  bool allInMemory;
+  int pair_no;
   Vector<double> *realCount;
-
-  Vector<sentPair> oldPairs;
+  Vector<SentencePair> oldPairs;
   Vector<double> oldProbs;
-  sentenceHandler(const char* filename, VocabList* elist=0, VocabList* flist=0);
+
+  SentenceHandler(const char* filename, VocabList* elist = 0, VocabList* flist = 0);
+  ~SentenceHandler();
+
   void rewind();
-  bool getNextSentence(sentPair&, VocabList* = 0, VocabList* = 0);  // will be defined in the definition file, this
+  bool getNextSentence(SentencePair&, VocabList* = 0, VocabList* = 0);  // will be defined in the definition file, this
   int getTotalNoPairs1()const {return totalPairs1;};
   double getTotalNoPairs2()const {return totalPairs2;};
   // method will read the next pair of sentence from memory buffer
-  bool readNextSentence(sentPair&);  // will be defined in the definition file, this
-  void setProbOfSentence(const sentPair&s,double d);
+  bool readNextSentence(SentencePair&);  // will be defined in the definition file, this
+  void setProbOfSentence(const SentencePair&s,double d);
 };
 
 #endif  // GIZAPP_SENTENCE_HANDLER_H_

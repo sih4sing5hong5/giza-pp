@@ -31,7 +31,7 @@ class alignmodel;
 class HMM;
 class LogProb;
 class Perplexity;
-class sentenceHandler;
+class SentenceHandler;
 class transpair_model2;
 class transpair_model3;
 class TransPairModelHMM;
@@ -56,12 +56,12 @@ public:
   void setHMM(HMM*_h) {h = _h;}
 
   // methods
-  void transfer(sentenceHandler&, bool,
+  void transfer(SentenceHandler&, bool,
                 Perplexity&,
                 Perplexity&,
                 bool updateT = true);
 
-  void transferSimple(sentenceHandler&, bool,
+  void transferSimple(SentenceHandler&, bool,
                       Perplexity&, Perplexity&,
                       bool updateT = true);
 
@@ -69,7 +69,7 @@ public:
                    const char *dfile,
                    const char *p0file);
 
-  void em(int, sentenceHandler&);
+  void em(int, SentenceHandler&);
   int viterbi(int, int, int,int);
 
  private:
@@ -131,7 +131,7 @@ public:
                          int i_peg = -1,
                          int j_peg = -1) const;
 
-  void estimate_t_a_d(sentenceHandler& sHandler1,
+  void estimate_t_a_d(SentenceHandler& sHandler1,
                       Perplexity& perp1,
                       Perplexity& perp2,
                       bool simple,
@@ -140,7 +140,7 @@ public:
 
   void viterbi_loop(Perplexity&,
                     Perplexity&,
-                    sentenceHandler&,
+                    SentenceHandler&,
                     bool,
                     const char*,
                     bool,
@@ -149,7 +149,7 @@ public:
   template<class MODEL_TYPE, class A,class B>
   void viterbi_loop_with_tricks(Perplexity&,
                                 Perplexity&,
-                                sentenceHandler&,
+                                SentenceHandler&,
                                 bool,
                                 const char*,
                                 bool,

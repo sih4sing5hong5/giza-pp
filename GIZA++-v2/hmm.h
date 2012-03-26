@@ -33,7 +33,7 @@
 class Model3;
 class HMMNetwork;
 class Perplexity;
-class sentenceHandler;
+class SentenceHandler;
 
 class HMM : public Model2 {
  private:
@@ -49,14 +49,14 @@ class HMM : public Model2 {
   void makeWordClasses(const Mapper& m1, const Mapper& m2,
                        const std::string& efile, const std::string& ffile);
 
-  void initialize_table_uniformly(sentenceHandler& handler);
+  void initialize_table_uniformly(SentenceHandler& handler);
 
   int em_with_tricks(int no_iterations);
 
   // WARNING: Do not call this function. Not implemented yet.
   void load_table(const char* filename);
 
-  void em_loop(Perplexity& perp, sentenceHandler& sHandler1, bool dump_files,
+  void em_loop(Perplexity& perp, SentenceHandler& sHandler1, bool dump_files,
                const char* alignfile, Perplexity&, bool test,bool doInit,int iter);
 
   HMMNetwork *makeHMMNetwork(const Vector<WordIndex>& es,

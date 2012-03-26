@@ -105,7 +105,7 @@ double get_sum_of_partitions(int n, int source_pos, double alpha[kMaxFertility][
   return(sum) ;
 }
 
-void Model3::estimate_t_a_d(sentenceHandler& sHandler1, Perplexity& perp, Perplexity& trainVPerp,
+void Model3::estimate_t_a_d(SentenceHandler& sHandler1, Perplexity& perp, Perplexity& trainVPerp,
 			    bool simple, bool dump_files,bool updateT)
 {
   string tfile, nfile, dfile, p0file, afile, alignfile;
@@ -131,7 +131,7 @@ void Model3::estimate_t_a_d(sentenceHandler& sHandler1, Perplexity& perp, Perple
   }
   if (simple) cerr <<"Using simple estimation for fertilties\n";
   sHandler1.rewind() ;
-  sentPair sent ;
+  SentencePair sent ;
   while(sHandler1.getNextSentence(sent)){
     Vector<WordIndex>& es = sent.eSent;
     Vector<WordIndex>& fs = sent.fSent;
@@ -283,7 +283,7 @@ void Model3::estimate_t_a_d(sentenceHandler& sHandler1, Perplexity& perp, Perple
     }
 }
 
-void Model3::transferSimple(/*model1& m1, Model2& m2, */ sentenceHandler& sHandler1,
+void Model3::transferSimple(/*model1& m1, Model2& m2, */ SentenceHandler& sHandler1,
 			    bool dump_files, Perplexity& perp, Perplexity& trainVPerp,bool updateT)
 {
   /*
@@ -311,7 +311,7 @@ void Model3::transferSimple(/*model1& m1, Model2& m2, */ sentenceHandler& sHandl
 }
 
 
-void Model3::transfer(sentenceHandler& sHandler1,bool dump_files, Perplexity& perp, Perplexity& trainVPerp,bool updateT)
+void Model3::transfer(SentenceHandler& sHandler1,bool dump_files, Perplexity& perp, Perplexity& trainVPerp,bool updateT)
 {
   if (Transfer == kTransferSimple)
     transferSimple(sHandler1,dump_files,perp, trainVPerp,updateT);
@@ -344,7 +344,7 @@ void Model3::transfer(sentenceHandler& sHandler1,bool dump_files, Perplexity& pe
        }
 
        LogProb mprime;
-       //  sentenceHandler sHandler1(efFilename.c_str());
+       //  SentenceHandler sHandler1(efFilename.c_str());
        //  sentPair sent ;
 
        while(sHandler1.getNextSentence(sent)){
