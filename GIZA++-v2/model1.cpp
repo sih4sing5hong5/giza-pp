@@ -33,7 +33,7 @@ extern int VerboseSentence;
 GLOBAL_PARAMETER2(int,Model1_Dump_Freq,"MODEL 1 DUMP FREQUENCY","t1","dump frequency of Model 1",kParLevOutput,0);
 int NumberOfVALIalignments=100;
 
-model1::model1(const char* efname, vcbList& evcblist, vcbList& fvcblist,tmodel<COUNT, PROB>&_tTable,Perplexity& _perp,
+Model1::Model1(const char* efname, vcbList& evcblist, vcbList& fvcblist,tmodel<COUNT, PROB>&_tTable,Perplexity& _perp,
 	      sentenceHandler& _sHandler1,
 	      Perplexity* _testPerp,
 	      sentenceHandler* _testHandler,
@@ -46,9 +46,9 @@ model1::model1(const char* efname, vcbList& evcblist, vcbList& fvcblist,tmodel<C
   evlist(Elist.getVocabList()), fvlist(Flist.getVocabList())
 {}
 
-model1::~model1() {}
+Model1::~Model1() {}
 
-void model1::initialize_table_uniformly(sentenceHandler& sHandler1){
+void Model1::initialize_table_uniformly(sentenceHandler& sHandler1){
   WordIndex i, j;
 
   cout << "Initialize tTable\n";
@@ -66,7 +66,7 @@ void model1::initialize_table_uniformly(sentenceHandler& sHandler1){
 }
 
 
-int model1::em_with_tricks(int noIterations, /*Perplexity& perp, sentenceHandler& sHandler1, */
+int Model1::em_with_tricks(int noIterations, /*Perplexity& perp, sentenceHandler& sHandler1, */
 			    bool seedModel1, util::Dictionary& dictionary, bool useDict /*Perplexity* testPerp, sentenceHandler* testHandler,
 										     Perplexity& trainViterbiPerp, Perplexity* testViterbiPerp */ )
 {
@@ -131,7 +131,7 @@ int model1::em_with_tricks(int noIterations, /*Perplexity& perp, sentenceHandler
   return minIter;
 }
 
-void model1::load_table(const char* tname){
+void Model1::load_table(const char* tname){
   /* This function loads the t table from the given file; use it
      when you want to load results from previous t training
      without doing any new training.
@@ -143,7 +143,7 @@ void model1::load_table(const char* tname){
 
 
 extern float MINCOUNTINCREASE;
-void model1::em_loop(int it,Perplexity& perp, sentenceHandler& sHandler1, bool seedModel1,
+void Model1::em_loop(int it,Perplexity& perp, sentenceHandler& sHandler1, bool seedModel1,
 		     bool dump_alignment, const char* alignfile, util::Dictionary& dict, bool useDict, Perplexity& viterbi_perp, bool test)
 {
   WordIndex i, j, l, m ;
@@ -287,7 +287,7 @@ void model1::em_loop(int it,Perplexity& perp, sentenceHandler& sHandler1, bool s
   errorReportAL(cout, "IBM-1");
 }
 
-void model1::errorReportAL(ostream& out, const string& m) const {
+void Model1::errorReportAL(ostream& out, const string& m) const {
   if( ALeventsMissing+ALeventsToomuch )
     out << "alignmentErrors (" << m << "): "
         << 100.0*(ALmissing+ALtoomuch)/double(ALeventsMissing+ALeventsToomuch)

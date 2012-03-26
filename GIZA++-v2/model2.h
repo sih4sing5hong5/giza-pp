@@ -30,14 +30,14 @@
 class Perplexity;
 class sentenceHandler;
 
-class model2 : public model1
+class model2 : public Model1
 {
  public:
   amodel<PROB>&aTable;
   amodel<COUNT>&aCountTable;
 
  public:
-  model2(model1& m1,amodel<PROB>&,amodel<COUNT>&);
+  model2(Model1& m1,amodel<PROB>&,amodel<COUNT>&);
   virtual ~model2();
 
   void initialize_table_uniformly(sentenceHandler&);
@@ -57,4 +57,3 @@ class model2 : public model1
 };
 
 #endif  // GIZAPP_MODEL2_H_
-

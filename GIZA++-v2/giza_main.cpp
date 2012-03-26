@@ -211,7 +211,7 @@ void printDecoderConfigFile()
 
 
 void printAllTables(vcbList& eTrainVcbList, vcbList& eTestVcbList,
-		    vcbList& fTrainVcbList, vcbList& fTestVcbList, model1& m1)
+		    vcbList& fTrainVcbList, vcbList& fTestVcbList, Model1& m1)
 {
   cerr << "writing Final tables to Disk \n";
   string t_inv_file = Prefix + ".ti.final" ;
@@ -446,7 +446,7 @@ double StartTraining(int&result)
   tmodel<COUNT, PROB> tTable;
 #endif
 
-  model1 m1(CorpusFilename.c_str(), eTrainVcbList, fTrainVcbList,tTable,trainPerp,
+  Model1 m1(CorpusFilename.c_str(), eTrainVcbList, fTrainVcbList,tTable,trainPerp,
 	    *corpus,&testPerp, testCorpus,
 	    trainViterbiPerp, &testViterbiPerp);
    amodel<PROB>  aTable(false);

@@ -61,7 +61,7 @@ class ReportInfo {
   virtual ~ReportInfo() { }
 };
 
-class model1 : public ReportInfo {
+class Model1 : public ReportInfo {
  public:
   string efFilename;
   vcbList&  Elist ;
@@ -77,7 +77,7 @@ class model1 : public ReportInfo {
   int ALmissingVALI,ALtoomuchVALI,ALeventsMissingVALI,ALeventsToomuchVALI;
   int ALmissingTEST,ALtoomuchTEST,ALeventsMissingTEST,ALeventsToomuchTEST;
 
-  model1(const char* efname, vcbList& evcblist, vcbList& fvcblist,
+  Model1(const char* efname, vcbList& evcblist, vcbList& fvcblist,
          tmodel<COUNT, PROB>&_tTable,Perplexity& _perp,
          sentenceHandler& _sHandler1,
          Perplexity* _testPerp,
@@ -85,7 +85,7 @@ class model1 : public ReportInfo {
          Perplexity& _trainViterbiPerp,
          Perplexity* _testViterbiPerp);
 
-  virtual ~model1();
+  virtual ~Model1();
 
   void initialize_table_uniformly(sentenceHandler& sHandler1);
   int em_with_tricks(int noIterations,

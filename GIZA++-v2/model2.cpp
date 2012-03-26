@@ -32,9 +32,8 @@ extern short NoEmptyWord;
 
 GLOBAL_PARAMETER2(int,Model2_Dump_Freq,"MODEL 2 DUMP FREQUENCY","t2","dump frequency of Model 2",kParLevOutput,0);
 
-model2::model2(model1& m,amodel<PROB>&_aTable,amodel<COUNT>&_aCountTable):
-  model1(m),aTable(_aTable),aCountTable(_aCountTable)
-{  }
+model2::model2(Model1& m,amodel<PROB>&_aTable,amodel<COUNT>&_aCountTable):
+  Model1(m),aTable(_aTable),aCountTable(_aCountTable) { }
 
 model2::~model2() {}
 
@@ -229,8 +228,3 @@ void model2::em_loop(Perplexity& perp, sentenceHandler& sHandler1,
   viterbi_perp.record("Model2");
   errorReportAL(cout,"IBM-2");
 }
-
-
-
-
-
