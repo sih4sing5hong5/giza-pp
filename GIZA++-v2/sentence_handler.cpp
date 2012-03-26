@@ -45,8 +45,8 @@ GLOBAL_PARAMETER(double,ManlexMAX_MULTIPLICITY,"manlexMAX_MULTIPLICITY","",kParL
 GLOBAL_PARAMETER(double,Manlexfactor1,"manlexfactor1","",kParLevEM,0.0);
 GLOBAL_PARAMETER(double,Manlexfactor2,"manlexfactor2","",kParLevEM,0.0);
 
-sentenceHandler::sentenceHandler(const char*  filename, vcbList* elist,
-				 vcbList*  flist) : realCount(0)
+sentenceHandler::sentenceHandler(const char*  filename, VocabList* elist,
+				 VocabList*  flist) : realCount(0)
   // This method is the constructor of the class, it also intitializes the
   // sentence pair sequential number (count) to zero.
 
@@ -114,7 +114,7 @@ void sentenceHandler::rewind()
 }
 
 
-bool sentenceHandler::getNextSentence(sentPair& sent, vcbList* elist, vcbList* flist)
+bool sentenceHandler::getNextSentence(sentPair& sent, VocabList* elist, VocabList* flist)
 {
   sentPair s ;
   if (readflag){

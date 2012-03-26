@@ -40,7 +40,7 @@ class WordEntry {
   WordEntry(string w, int f):word(w), freq(f){};
 };
 
-class vcbList{
+class VocabList {
  private:
   Vector<WordEntry> list ;
   map<string,int> s2i;
@@ -48,11 +48,19 @@ class vcbList{
   WordIndex noUniqueTokens ;
   WordIndex noUniqueTokensInCorpus ;
   const char* fname ;
+
  public:
-  vcbList(const char* f=0):list(), total(0), noUniqueTokens(0), noUniqueTokensInCorpus(0), fname(f){};
-  void setName(const char*f)
-    { fname=f; }
-  vcbList(const vcbList& a):list(a.list), total(a.total), noUniqueTokens(a.noUniqueTokens), noUniqueTokensInCorpus(0), fname(a.fname){};
+  explicit VocabList(const char* filename = 0)
+      : list(), total(0), noUniqueTokens(0),
+        noUniqueTokensInCorpus(0), fname(filename) { }
+
+  VocabList(const VocabList& a)
+      : list(a.list), total(a.total), noUniqueTokens(a.noUniqueTokens),
+        noUniqueTokensInCorpus(0), fname(a.fname) { }
+
+  ~VocabList() { }
+
+  void setName(const char* filename) { fname = filename; }
   inline WordIndex size()const {return (list.size());};
   inline WordIndex uniqTokens()const {return noUniqueTokens;};
   inline WordIndex uniqTokensInCorpus()const {return noUniqueTokensInCorpus;};

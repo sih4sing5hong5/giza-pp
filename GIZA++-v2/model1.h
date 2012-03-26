@@ -64,8 +64,8 @@ class ReportInfo {
 class Model1 : public ReportInfo {
  public:
   string efFilename;
-  vcbList&  Elist ;
-  vcbList&  Flist ;
+  VocabList&  Elist ;
+  VocabList&  Flist ;
   double eTotalWCount ; // size of source copus in number of words
   double fTotalWCount ; // size of target corpus in number of words
   int noEnglishWords;
@@ -77,7 +77,7 @@ class Model1 : public ReportInfo {
   int ALmissingVALI,ALtoomuchVALI,ALeventsMissingVALI,ALeventsToomuchVALI;
   int ALmissingTEST,ALtoomuchTEST,ALeventsMissingTEST,ALeventsToomuchTEST;
 
-  Model1(const char* efname, vcbList& evcblist, vcbList& fvcblist,
+  Model1(const char* efname, VocabList& evcblist, VocabList& fvcblist,
          tmodel<COUNT, PROB>&_tTable,Perplexity& _perp,
          sentenceHandler& _sHandler1,
          Perplexity* _testPerp,

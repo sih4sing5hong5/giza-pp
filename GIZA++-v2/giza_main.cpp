@@ -210,8 +210,8 @@ void printDecoderConfigFile()
 }
 
 
-void printAllTables(vcbList& eTrainVcbList, vcbList& eTestVcbList,
-		    vcbList& fTrainVcbList, vcbList& fTestVcbList, Model1& m1)
+void printAllTables(VocabList& eTrainVcbList, VocabList& eTestVcbList,
+		    VocabList& fTrainVcbList, VocabList& fTestVcbList, Model1& m1)
 {
   cerr << "writing Final tables to Disk \n";
   string t_inv_file = Prefix + ".ti.final" ;
@@ -376,12 +376,12 @@ void convert(const map< pair<int,int>,char >&reference,alignment&x)
     }
 }
 
-vcbList *globeTrainVcbList,*globfTrainVcbList;
+VocabList *globeTrainVcbList,*globfTrainVcbList;
 
 double StartTraining(int&result)
 {
   double errors=0.0;
-  vcbList eTrainVcbList, fTrainVcbList;
+  VocabList eTrainVcbList, fTrainVcbList;
   globeTrainVcbList=&eTrainVcbList;
   globfTrainVcbList=&fTrainVcbList;
 
@@ -398,8 +398,8 @@ double StartTraining(int&result)
   cout << "Source vocabulary list has " << eTrainVcbList.uniqTokens() << " unique tokens \n";
   cout << "Target vocabulary list has " << fTrainVcbList.uniqTokens() << " unique tokens \n";
 
-  vcbList eTestVcbList(eTrainVcbList) ;
-  vcbList fTestVcbList(fTrainVcbList) ;
+  VocabList eTestVcbList(eTrainVcbList) ;
+  VocabList fTestVcbList(fTrainVcbList) ;
 
   corpus = new sentenceHandler(CorpusFilename.c_str(), &eTrainVcbList, &fTrainVcbList);
 

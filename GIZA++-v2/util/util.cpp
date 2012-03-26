@@ -102,8 +102,8 @@ void printAlignToFile(const Vector<WordIndex>& es,
 }
 
 void printOverlapReport(const tmodel<COUNT, PROB>& tTable,
-			sentenceHandler& testHandler,  vcbList& trainEList,
-			vcbList& trainFList, vcbList& testEList, vcbList& testFList)
+			sentenceHandler& testHandler,  VocabList& trainEList,
+			VocabList& trainFList, VocabList& testEList, VocabList& testFList)
 {
   set<pair<WordIndex, WordIndex> > testCoocur ;
   sentPair s ;

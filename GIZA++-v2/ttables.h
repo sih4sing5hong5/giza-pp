@@ -299,7 +299,7 @@ public:
 			     const double eTotal,
 			     const double fTotal,
 			     const bool actual = false ) const;
-  void normalizeTable(const vcbList&engl, const vcbList&french, int iter=2);
+  void normalizeTable(const VocabList&engl, const VocabList&french, int iter=2);
   void readProbTable(const char *filename);
 };
 
@@ -399,7 +399,7 @@ public:
   // dump  inverse of t table (i.e P(ei/fj)) to the given file name,
   //  if the given flag is true then actual words are printed not token ids
 
-  void normalizeTable(const vcbList&engl, const vcbList&french, int iter=2);
+  void normalizeTable(const VocabList&engl, const VocabList&french, int iter=2);
   // to norlmalize the table i.e. make sure P(fj/ei) for all j is equal to 1
 
   void readProbTable(const char *filename);

@@ -30,7 +30,7 @@
 
 class Perplexity;
 class sentenceHandler;
-class vcbList;
+class VocabList;
 class WordEntry;
 
 template <class COUNT, class PROB>
@@ -49,8 +49,8 @@ extern void generatePerplexityReport(const Perplexity& trainperp,
 extern void  printSentencePair(Vector<WordIndex>& es, Vector<WordIndex>& fs, ostream& of);
 
 extern void printOverlapReport(const tmodel<COUNT, PROB>& tTable,
-                               sentenceHandler& testHandler, vcbList& trainEList,
-                               vcbList& trainFList, vcbList& testEList, vcbList& testFList);
+                               sentenceHandler& testHandler, VocabList& trainEList,
+                               VocabList& trainFList, VocabList& testEList, VocabList& testFList);
 
 extern void printAlignToFile(const Vector<WordIndex>& es,  const Vector<WordIndex>& fs,
                              const Vector<WordEntry>& evlist, const Vector<WordEntry>& fvlist,

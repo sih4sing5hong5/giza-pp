@@ -78,7 +78,7 @@ void tmodel<COUNT, PROB>::printProbTableInverse(const char *,
 {
 }
 template <class COUNT, class PROB>
-void tmodel<COUNT, PROB>::normalizeTable(const vcbList&, const vcbList&, int)
+void tmodel<COUNT, PROB>::normalizeTable(const VocabList&, const VocabList&, int)
 {
   for(unsigned int i=0;i<lexmat.size();++i)
     {
@@ -223,7 +223,7 @@ void tmodel<COUNT, PROB>::printProbTableInverse(const char *filename,
 }
 */
 template <class COUNT, class PROB>
-void tmodel<COUNT, PROB>::normalizeTable(const vcbList&engl, const vcbList&french, int iter)
+void tmodel<COUNT, PROB>::normalizeTable(const VocabList&engl, const VocabList&french, int iter)
   // normalize conditional probability P(fj/ei):
   // i.e. make sure that Sum over all j of P(fj/e) = 1
   // this method reads the counts portion of the table and normalize into

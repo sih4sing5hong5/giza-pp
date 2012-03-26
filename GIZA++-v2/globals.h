@@ -62,9 +62,9 @@ extern short OutputInAachenFormat;
 
 #define DEP_SUM 256
 
-class vcbList;
+class VocabList;
 
-extern vcbList *globeTrainVcbList, *globfTrainVcbList;
+extern VocabList *globeTrainVcbList, *globfTrainVcbList;
 
 extern short g_prediction_in_alignments;
 extern short SmoothHMM;

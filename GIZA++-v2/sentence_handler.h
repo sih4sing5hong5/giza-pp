@@ -104,9 +104,9 @@ public:
 
   Vector<sentPair> oldPairs;
   Vector<double> oldProbs;
-  sentenceHandler(const char* filename, vcbList* elist=0, vcbList* flist=0);
+  sentenceHandler(const char* filename, VocabList* elist=0, VocabList* flist=0);
   void rewind();
-  bool getNextSentence(sentPair&, vcbList* = 0, vcbList* = 0);  // will be defined in the definition file, this
+  bool getNextSentence(sentPair&, VocabList* = 0, VocabList* = 0);  // will be defined in the definition file, this
   int getTotalNoPairs1()const {return totalPairs1;};
   double getTotalNoPairs2()const {return totalPairs2;};
   // method will read the next pair of sentence from memory buffer

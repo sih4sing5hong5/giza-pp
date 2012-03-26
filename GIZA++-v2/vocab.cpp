@@ -21,7 +21,7 @@
 
 #include "vocab.h"
 
-void vcbList::readVocabList()
+void VocabList::readVocabList()
      // reads a vocabulary file from fname. It expects the following format:
      //
      // token_id token_string frequency
