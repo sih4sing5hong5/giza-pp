@@ -27,12 +27,37 @@
 
 #include "alignment.h"
 
-ostream&operator<<(ostream&out, const Alignment&a)
-{
-  int m=a.a.size()-1,l=a.f.size()-1;
-  out << "AL(l:"<<l<<",m:"<<m<<")(a: ";
-  for(int j=1;j<=m;j++)out << a(j) << ' ';
+Alignment::Alignment() {}
+Alignment::Alignment(PositionIndex _l, PositionIndex _m)
+    : a(_m+1, 0),
+      positionSum(_l+1, 0), f(_l+1, 0),
+      als_i(_l+1,0), als_j(_m+1), l(_l), m(_m) {
+  Init();
+}
+
+Alignment::~Alignment() {}
+
+void Alignment::Init() {
+  f[0] = m;
+  for (PositionIndex j = 1; j <= m; ++j) {
+    if (j > 1) als_j[j].prev = j - 1;
+    if (j < m) als_j[j].next = j + 1;
+  }
+  als_i[0] = 1;
+}
+
+std::ostream&operator<<(std::ostream& out, const Alignment& a) {
+  const int m = a.a.size() - 1;
+  const int l = a.f.size() - 1;
+
+  out << "AL(l:" << l << ",m:" << m << ")(a: ";
+
+  for (int j = 1; j <= m; j++) {
+    out << a(j) << ' ';
+  }
   out << ")(fert: ";
-  for(int i=0;i<=l;i++)out << a.fert(i) << ' ';
-  return out << ")  c:"<<"\n";
+  for (int i = 0; i <= l; i++) {
+    out << a.fert(i) << ' ';
+  }
+  return out << ")  c:" << "\n";
 }
