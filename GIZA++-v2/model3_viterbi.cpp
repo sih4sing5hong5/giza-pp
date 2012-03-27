@@ -585,7 +585,6 @@ void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHan
       if (Log)
 	logmsg << "\nCollecting counts over found alignments, total prob: "
 	       << align_total_count <<  "\n";
-      hash_map<Vector<WordIndex>, LogProb, AlignmentHashFunc, AlignmentComparator >::iterator align ;
       int acount = 0 ;
       if (align_total_count == 0 ){
 	cerr << " WARNINIG: For the following sentence pair : \n";
@@ -599,13 +598,13 @@ void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHan
       }
       else {
 	if (collect_counts) {
-	  for(align = neighborhood.begin(); align != neighborhood.end(); align++){
-	    temp = (*align).second/align_total_count ;
-	    collectCountsOverAlignement(/*tTable, aCountTable, */es, fs, /*p1_count,
-					  p0_count ,*/ ((*align).first), temp , count);
+	  for(AlignmentModel::AlignmentHashMap::iterator align_it = neighborhood.begin();
+          align_it != neighborhood.end(); ++align_it) {
+	    temp = (*align_it).second / align_total_count;
+	    collectCountsOverAlignement(es, fs, ((*align_it).first), temp , count);
 	    acount++;
-	    if (viterbi_score < temp){
-	      viterbi_alignment = ((*align).first);
+	    if (viterbi_score < temp) {
+	      viterbi_alignment = ((*align_it).first);
 	      viterbi_score = temp;
 	    }
 	  }

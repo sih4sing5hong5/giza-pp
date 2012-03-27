@@ -24,7 +24,6 @@
 
 #include "defs.h"
 
-
 #include <cassert>
 
 #include <iostream>
@@ -32,84 +31,98 @@
 #include <functional>
 #include <map>
 #include <set>
-//#include <vector>
 #include "util/vector.h"
 #include <utility>
-#include <math.h>
+#include <cmath>
 #include <fstream>
 #include "transpair_model1.h"
 
-
-/* ----------------- Class Defintions for AlignmentHashFunc --------------------
-   Objective: This class is used to define a hash mapping function to map
-   an alignment (defined as a vector of integers) into a hash key
- ----------------------------------------------------------------------------*/
-
+// This class is used to define a hash mapping function to map an
+// alignment (defined as a vector of integers) into a hash key.
 class AlignmentHashFunc : public unary_function<Vector<WordIndex>, size_t> {
  public:
-  size_t operator()(const Vector<WordIndex>& key) const
-    // to define the mapping function. it takes an alignment (a vector of
-    // integers) and it returns an integer value (hash key).
-    {
-      WordIndex j ;
-      size_t s  ;
-      size_t key_sum = 0 ;
-      //      logmsg << "For alignment:" ;
-      for (j = 1 ; j < key.size() ; j++){
-	//	logmsg << " " << key[j] ;
-	key_sum += (size_t) (int) pow(double(key[j]), double((j % 6)+1));
-      }
-      //      logmsg << " , Key value was : " <<  key_sum;
-      s = key_sum % 1000000 ;
-      //      logmsg << " h(k) = " << s << endl ;
-      return(s);
+  // to define the mapping function. it takes an alignment (a vector of
+  // integers) and it returns an integer value (hash key).
+  size_t operator()(const Vector<WordIndex>& key) const {
+    size_t key_sum = 0;
+    for (WordIndex j = 1; j < key.size(); ++j) {
+      key_sum += static_cast<size_t>(std::pow(static_cast<double>(key[j]),
+                                              static_cast<double>((j % 6) + 1)));
     }
+    return key_sum % 1000000;
+  }
 };
 
 // Returns true if two alignments are the same (two vectors have same enties)
 class AlignmentComparator {
  public:
-  bool operator()(const Vector<WordIndex> t1,
-		  const Vector<WordIndex> t2) const
-    {WordIndex j ;
-    if (t1.size() != t2.size())
-      return(false);
-    for (j = 1 ; j < t1.size() ; j++)
-      if (t1[j] != t2[j])
-	return(false);
-    return(true);
+  bool operator()(const Vector<WordIndex>& t1,
+                  const Vector<WordIndex>& t2) const {
+    if (t1.size() != t2.size()) {
+      return false;
     }
+    for (WordIndex j = 1; j < t1.size(); ++j) {
+      if (t1[j] != t2[j]) {
+        return false;
+      }
+    }
+    return true;
+  }
 };
 
-/* ---------------- End of Class Defnition for AlignmentHashFunc --------------*/
-
-
-/* ------------------ Class Defintions for AlignmentModel -----------------------
- Class Name: AlignmentModel
- Objective: Alignments neighborhhoods (collection of alignments) are stored in
- a hash table (for easy lookup). Each alignment vector is mapped into a hash
- key using the operator defined above.
- *--------------------------------------------------------------------------*/
-
+// Alignments neighborhhoods (collection of alignments) are stored in
+// a hash table (for easy lookup). Each alignment vector is mapped
+// into a hash key using the operator defined above.
 class AlignmentModel {
-private:
-  hash_map<Vector<WordIndex>, LogProb, AlignmentHashFunc, AlignmentComparator > a;
-private:
-  //  void erase(Vector<WordIndex>&);
-public:
+ public:
+  typedef hash_map<Vector<WordIndex>, LogProb,
+                   AlignmentHashFunc, AlignmentComparator> AlignmentHashMap;
 
-  // methods;
+  AlignmentModel() {}
+  ~AlignmentModel() {}
 
-  inline hash_map<Vector<WordIndex>, LogProb, AlignmentHashFunc, AlignmentComparator >::iterator begin(void){return a.begin();} // begining of hash
-  inline hash_map<Vector<WordIndex>, LogProb, AlignmentHashFunc, AlignmentComparator >::iterator end(void){return a.end();} // end of hash
-  inline const hash_map<Vector<WordIndex>, LogProb, AlignmentHashFunc, AlignmentComparator >& getHash() const {return a;}; // reference to hash table
-  bool insert(Vector<WordIndex>&, LogProb val=0.0); // add a alignmnet
- //  void setValue(Vector<WordIndex>&, LogProb val); // not needed
-  LogProb getValue(Vector<WordIndex>&)const; // retrieve prob. of alignment
-  inline void clear(void){ a.clear();}; // clear hash table
-  //  void printTable(const char* filename);
-  //inline void resize(WordIndex n) {a.resize(n);}; // resize table
+  AlignmentHashMap::iterator begin() { return m_alignment.begin(); }
+  AlignmentHashMap::const_iterator begin() const {
+    return m_alignment.begin();
+  }
+
+  AlignmentHashMap::iterator end() { return m_alignment.end(); }
+  AlignmentHashMap::const_iterator end() const {
+    return m_alignment.end();
+  }
+
+  const AlignmentHashMap& getHash() const { return m_alignment; }
+
+  // Add a alignmnet.
+  bool insert(const Vector<WordIndex>&aj, LogProb val=0.0);
+
+  // Retrieve probability of alignment.
+  LogProb getValue(const Vector<WordIndex>& align) const;
+
+  // Clear hash table.
+  void clear() { m_alignment.clear(); }
+
+ private:
+  AlignmentHashMap m_alignment;
 };
 
-/* -------------- End of alignmode Class Definitions ------------------------*/
+inline bool AlignmentModel::insert(const Vector<WordIndex>& aj, LogProb val) {
+  AlignmentHashMap::iterator it = m_alignment.find(aj);
+  if (it != m_alignment.end() || val <= 0) {
+    return false;
+  }
+  m_alignment.insert(pair<const Vector<WordIndex>, LogProb>(aj, val));
+  return true;
+}
+
+inline LogProb AlignmentModel::getValue(const Vector<WordIndex>& align) const {
+  const LogProb zero = 0.0 ;
+  AlignmentHashMap::const_iterator it = m_alignment.find(align);
+  if (it == m_alignment.end()) {
+    return zero;
+  } else {
+    return it->second;
+  }
+}
+
 #endif  // GIZAPP_ALIGN_TABLES_H_

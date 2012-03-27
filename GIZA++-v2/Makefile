@@ -62,7 +62,6 @@ LIBOBJECTS = \
 	sentence_handler.o \
 	ttables.o \
 	atables.o \
-	align_tables.o \
 	giza_main.o \
 	ntables.o \
 	model2to3.o \
