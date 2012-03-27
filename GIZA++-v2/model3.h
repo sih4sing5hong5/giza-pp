@@ -29,7 +29,6 @@
 class alignment;
 class AlignmentModel;
 class HMM;
-class LogProb;
 class Perplexity;
 class SentenceHandler;
 class transpair_model2;

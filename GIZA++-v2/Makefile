@@ -52,7 +52,6 @@ DATE = `date +%d-%m-%Y`
 LIBOBJECTS = \
 	util/assert.o \
 	util/dictionary.o \
-	util/logprob.o \
 	util/perplexity.o \
 	util/util.o \
 	parameter.o \

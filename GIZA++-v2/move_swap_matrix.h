@@ -29,7 +29,6 @@
 #define GIZAPP_MOVE_SWAP_MATRIX_H_
 
 #include "alignment.h"
-#include "util/logprob.h"
 #include "util/array2.h"
 
 extern short DoViterbiTraining;

@@ -21,7 +21,6 @@
 
 #include "model3.h"
 
-#include "util/logprob.h"
 #include "util/perplexity.h"
 #include "util/util.h"
 #include "globals.h"
@@ -558,11 +557,11 @@ void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHan
 	logmsg << "\n";
       }
 
-      LogProb align_total_count=0;
+      LogProb align_total_count = 0.0;
       //      LogProb best_score;
 
       Vector<WordIndex> viterbi_alignment;
-      LogProb  viterbi_score ;
+      LogProb viterbi_score;
       AlignmentModel neighborhood;
       neighborhood.clear();
       align_total_count = 0;

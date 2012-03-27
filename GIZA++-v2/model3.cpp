@@ -25,7 +25,6 @@
 #include "align_tables.h"
 #include "coll_counts.h"
 #include "util/perplexity.h"
-#include "util/logprob.h"
 #include "util/util.h"
 #include "sentence_handler.h"
 #include "globals.h"

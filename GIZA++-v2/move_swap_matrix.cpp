@@ -20,6 +20,7 @@
 */
 
 #include "move_swap_matrix.h"
+#include "transpair_model3.h"
 
 template<class TRANSPAIR>
 MoveSwapMatrix<TRANSPAIR>::MoveSwapMatrix(const TRANSPAIR&_ef, const alignment&_a)

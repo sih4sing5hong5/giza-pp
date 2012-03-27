@@ -28,7 +28,6 @@
 
 #include "defs.h"
 #include "util/vector.h"
-#include "util/logprob.h"
 
 // Alignments neighborhhoods (collection of alignments) are stored in
 // a hash table (for easy lookup). Each alignment vector is mapped

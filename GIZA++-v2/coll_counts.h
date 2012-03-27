@@ -32,7 +32,6 @@
 // #include "transpair_model4.h"
 
 class alignment;
-class LogProb;
 
 template <class T> class MoveSwapMatrix;
 template <class T> class AModel;

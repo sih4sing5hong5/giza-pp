@@ -25,6 +25,8 @@
 
 typedef unsigned int WordIndex;
 typedef unsigned int PositionIndex;
+typedef double LogProb;
+
 typedef float PROB;
 typedef float COUNT;
 

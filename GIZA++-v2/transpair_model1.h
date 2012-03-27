@@ -26,7 +26,6 @@
 #include <algorithm>
 
 #include "defs.h"
-#include "util/logprob.h"
 #include "util/array2.h"
 #include "util/vector.h"
 #include "ntables.h"
