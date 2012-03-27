@@ -9,3 +9,5 @@
 - Introduce namespace 'gizapp'.
 - Reduce header dependencies.
 - Need some abstract classes.
+- Keep indentation consistent.
+- Clean up transpair_model classes.

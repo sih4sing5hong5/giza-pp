@@ -56,8 +56,8 @@
    on   */
 
 
-/*----------- Defnition of Hash Function for class tmodel ------- -----------*/
-
+/*----------- Defnition of Hash Function for class TModel ------- -----------*/
+// TODO: Move this class inside of TModel.
 class HashPair : public unary_function<WordIDPair, size_t > {
 public:
   size_t operator()(const WordIDPair& key) const
@@ -80,6 +80,7 @@ public:
 
  *---------------------------------------------------------------------------*/
 
+// TODO: Come up with better class name. What is Lp?
 //typedef float COUNT ;
 //typedef LogProb PROB ;
 template <class COUNT, class PROB>
