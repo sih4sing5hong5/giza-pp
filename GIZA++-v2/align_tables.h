@@ -37,46 +37,50 @@
 #include <fstream>
 #include "transpair_model1.h"
 
-// This class is used to define a hash mapping function to map an
-// alignment (defined as a vector of integers) into a hash key.
-class AlignmentHashFunc : public unary_function<Vector<WordIndex>, size_t> {
- public:
-  // to define the mapping function. it takes an alignment (a vector of
-  // integers) and it returns an integer value (hash key).
-  size_t operator()(const Vector<WordIndex>& key) const {
-    size_t key_sum = 0;
-    for (WordIndex j = 1; j < key.size(); ++j) {
-      key_sum += static_cast<size_t>(std::pow(static_cast<double>(key[j]),
-                                              static_cast<double>((j % 6) + 1)));
-    }
-    return key_sum % 1000000;
-  }
-};
-
-// Returns true if two alignments are the same (two vectors have same enties)
-class AlignmentComparator {
- public:
-  bool operator()(const Vector<WordIndex>& t1,
-                  const Vector<WordIndex>& t2) const {
-    if (t1.size() != t2.size()) {
-      return false;
-    }
-    for (WordIndex j = 1; j < t1.size(); ++j) {
-      if (t1[j] != t2[j]) {
-        return false;
-      }
-    }
-    return true;
-  }
-};
-
 // Alignments neighborhhoods (collection of alignments) are stored in
 // a hash table (for easy lookup). Each alignment vector is mapped
 // into a hash key using the operator defined above.
 class AlignmentModel {
  public:
-  typedef hash_map<Vector<WordIndex>, LogProb,
-                   AlignmentHashFunc, AlignmentComparator> AlignmentHashMap;
+  class AlignmentHashFunc;
+  class AlignmentComparator;
+
+  typedef Vector<WordIndex> Key;
+  typedef hash_map<Key, LogProb, AlignmentHashFunc,
+                   AlignmentComparator> AlignmentHashMap;
+
+  // This class is used to define a hash mapping function to map an
+  // alignment (defined as a vector of integers) into a hash key.
+  class AlignmentHashFunc : public unary_function<Key, size_t> {
+   public:
+    // to define the mapping function. it takes an alignment (a vector of
+    // integers) and it returns an integer value (hash key).
+    size_t operator()(const Key& key) const {
+      size_t key_sum = 0;
+      for (WordIndex j = 1; j < key.size(); ++j) {
+        key_sum += static_cast<size_t>(std::pow(static_cast<double>(key[j]),
+                                                static_cast<double>((j % 6) + 1)));
+      }
+      return key_sum % 1000000;
+    }
+  };
+
+  // Returns true if two alignments are the same (two vectors have same enties)
+  class AlignmentComparator {
+   public:
+    bool operator()(const Key& t1,
+                    const Key& t2) const {
+      if (t1.size() != t2.size()) {
+        return false;
+      }
+      for (WordIndex j = 1; j < t1.size(); ++j) {
+        if (t1[j] != t2[j]) {
+          return false;
+        }
+      }
+      return true;
+    }
+  };
 
   AlignmentModel() {}
   ~AlignmentModel() {}
@@ -94,10 +98,10 @@ class AlignmentModel {
   const AlignmentHashMap& getHash() const { return m_alignment; }
 
   // Add a alignmnet.
-  bool insert(const Vector<WordIndex>&aj, LogProb val=0.0);
+  bool insert(const Key&aj, LogProb val=0.0);
 
   // Retrieve probability of alignment.
-  LogProb getValue(const Vector<WordIndex>& align) const;
+  LogProb getValue(const Key& align) const;
 
   // Clear hash table.
   void clear() { m_alignment.clear(); }
@@ -106,16 +110,16 @@ class AlignmentModel {
   AlignmentHashMap m_alignment;
 };
 
-inline bool AlignmentModel::insert(const Vector<WordIndex>& aj, LogProb val) {
+inline bool AlignmentModel::insert(const Key& aj, LogProb val) {
   AlignmentHashMap::iterator it = m_alignment.find(aj);
   if (it != m_alignment.end() || val <= 0) {
     return false;
   }
-  m_alignment.insert(pair<const Vector<WordIndex>, LogProb>(aj, val));
+  m_alignment.insert(pair<const Key, LogProb>(aj, val));
   return true;
 }
 
-inline LogProb AlignmentModel::getValue(const Vector<WordIndex>& align) const {
+inline LogProb AlignmentModel::getValue(const Key& align) const {
   const LogProb zero = 0.0 ;
   AlignmentHashMap::const_iterator it = m_alignment.find(align);
   if (it == m_alignment.end()) {
