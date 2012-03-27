@@ -22,20 +22,13 @@
 #ifndef GIZAPP_ALIGN_TABLES_H_
 #define GIZAPP_ALIGN_TABLES_H_
 
-#include "defs.h"
-
-#include <cassert>
-
-#include <iostream>
-#include <algorithm>
-#include <functional>
-#include <map>
-#include <set>
-#include "util/vector.h"
-#include <utility>
 #include <cmath>
-#include <fstream>
-#include "transpair_model1.h"
+#include <functional>
+#include <utility>
+
+#include "defs.h"
+#include "util/vector.h"
+#include "util/logprob.h"
 
 // Alignments neighborhhoods (collection of alignments) are stored in
 // a hash table (for easy lookup). Each alignment vector is mapped
@@ -51,7 +44,7 @@ class AlignmentModel {
 
   // This class is used to define a hash mapping function to map an
   // alignment (defined as a vector of integers) into a hash key.
-  class AlignmentHashFunc : public unary_function<Key, size_t> {
+  class AlignmentHashFunc : public std::unary_function<Key, size_t> {
    public:
     // to define the mapping function. it takes an alignment (a vector of
     // integers) and it returns an integer value (hash key).
@@ -82,7 +75,7 @@ class AlignmentModel {
     }
   };
 
-  AlignmentModel() {}
+  AlignmentModel() : m_alignment() {}
   ~AlignmentModel() {}
 
   AlignmentHashMap::iterator begin() { return m_alignment.begin(); }
