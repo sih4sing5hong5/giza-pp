@@ -33,7 +33,7 @@
 #include "forward_backward.h"
 #include "sentence_handler.h"
 #include "transpair_model5.h"
-#include "transpair_modelhmm.h"
+#include "transpair_model_hmm.h"
 #include "parameter.h"
 #include "coll_counts.h"
 

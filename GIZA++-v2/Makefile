@@ -71,7 +71,7 @@ LIBOBJECTS = \
 	transpair_model3.o \
 	transpair_model4.o \
 	transpair_model5.o \
-	transpair_modelhmm.o \
+	transpair_model_hmm.o \
 	parse.o \
 	model3_viterbi.o \
 	model3_viterbi_with_tricks.o \

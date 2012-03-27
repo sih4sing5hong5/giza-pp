@@ -31,7 +31,7 @@
 #include "d5tables.h"
 #include "transpair_model3.h"
 #include "transpair_model5.h"
-#include "transpair_modelhmm.h"
+#include "transpair_model_hmm.h"
 #include "parameter.h"
 #include "hmm.h"
 

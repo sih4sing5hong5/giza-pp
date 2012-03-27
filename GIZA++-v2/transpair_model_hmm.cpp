@@ -1,4 +1,4 @@
-#include "transpair_modelhmm.h"
+#include "transpair_model_hmm.h"
 #include "forward_backward.h"
 
 TransPairModelHMM::TransPairModelHMM(const Vector<WordIndex>& es,

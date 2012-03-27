@@ -26,7 +26,7 @@
 #include "move_swap_matrix.h"
 #include "d5tables.h"
 #include "transpair_model5.h"
-#include "transpair_modelhmm.h"
+#include "transpair_model_hmm.h"
 #include "parameter.h"
 
 extern float COUNTINCREASE_CUTOFF_AL;
