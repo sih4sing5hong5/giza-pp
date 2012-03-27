@@ -57,16 +57,16 @@ class TransPairModelHMM : public transpair_model2
 
   int modelnr() const { return 6; }
 
-  LogProb scoreOfMove(const alignment&a, WordIndex _new_i, WordIndex j,double f=-1.0) const;
+  LogProb scoreOfMove(const Alignment&a, WordIndex _new_i, WordIndex j,double f=-1.0) const;
 
-  LogProb scoreOfAlignmentForChange(const alignment&) const { return -1.0; }
+  LogProb scoreOfAlignmentForChange(const Alignment&) const { return -1.0; }
 
-  LogProb scoreOfSwap(const alignment&a, WordIndex j1, WordIndex j2,double=-1.0) const {
+  LogProb scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double=-1.0) const {
     return _scoreOfSwap(a,j1,j2);
   }
 
-  LogProb _scoreOfMove(const alignment&a, WordIndex new_i, WordIndex j,double f = -1.0) const {
-    alignment b(a);
+  LogProb _scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j,double f = -1.0) const {
+    Alignment b(a);
     b.set(j, new_i);
     const LogProb a_prob = prob_of_target_and_alignment_given_source(a);
     const LogProb b_prob = prob_of_target_and_alignment_given_source(b);
@@ -79,16 +79,16 @@ class TransPairModelHMM : public transpair_model2
     }
   }
 
-  LogProb _scoreOfSwap(const alignment&a, WordIndex j1, WordIndex j2, double f = -1.0) const {
+  LogProb _scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2, double f = -1.0) const {
     WordIndex aj1 = a(j1), aj2 = a(j2);
     if (aj1 == aj2) return 1.0;
     const LogProb a_prob = prob_of_target_and_alignment_given_source(a);
 
-    const_cast<alignment&>(a).set(j1,aj2);
-    const_cast<alignment&>(a).set(j2,aj1);
+    const_cast<Alignment&>(a).set(j1,aj2);
+    const_cast<Alignment&>(a).set(j2,aj1);
     const LogProb b_prob = prob_of_target_and_alignment_given_source(a);
-    const_cast<alignment&>(a).set(j1,aj1);
-    const_cast<alignment&>(a).set(j2,aj2);
+    const_cast<Alignment&>(a).set(j1,aj1);
+    const_cast<Alignment&>(a).set(j2,aj2);
 
     if (a_prob) {
       return b_prob / a_prob;
@@ -99,10 +99,10 @@ class TransPairModelHMM : public transpair_model2
     }
   }
 
-  LogProb prob_of_target_and_alignment_given_source(const alignment&al,
+  LogProb prob_of_target_and_alignment_given_source(const Alignment&al,
                                                     bool verbose = false) const;
 
-  void computeScores(const alignment& al, vector<double>& d) const;
+  void computeScores(const Alignment& al, vector<double>& d) const;
 
   bool isSubOptimal() const { return false; }
 

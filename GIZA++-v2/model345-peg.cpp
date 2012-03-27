@@ -24,7 +24,7 @@
 #include "alignment.h"
 #include "coll_counts.h"
 
-bool makeOneMoveSwap(const alignment&x,const alignment&y,set<OneMoveSwap>&soms)
+bool makeOneMoveSwap(const Alignment&x,const Alignment&y,set<OneMoveSwap>&soms)
 {
   OneMoveSwap oms;
   oms.type=0;

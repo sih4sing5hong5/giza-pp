@@ -26,7 +26,7 @@
 #include "ntables.h"
 #include "defs.h"
 
-class alignment;
+class Alignment;
 class AlignmentModel;
 class HMM;
 class Perplexity;
@@ -114,18 +114,18 @@ public:
                                    LogProb , float count);
 
   LogProb viterbi_model2(const transpair_model3&ef,
-                         alignment&output,
+                         Alignment&output,
                          int pair_no,
                          int i_peg = -1,
                          int j_peg = -1 ) const;
 
   LogProb _viterbi_model2(const transpair_model2&ef,
-                          alignment&output,
+                          Alignment&output,
                           int i_peg = -1,
                           int j_peg = -1 ) const;
 
   LogProb viterbi_model2(const TransPairModelHMM&ef,
-                         alignment&output,
+                         Alignment& output,
                          int pair_no,
                          int i_peg = -1,
                          int j_peg = -1) const;

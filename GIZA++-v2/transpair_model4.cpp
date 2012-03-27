@@ -24,10 +24,10 @@
 
 GLOBAL_PARAMETER(float,d4modelsmooth_factor,"model4SmoothFactor","smooting parameter for alignment probabilities in Model 4",kParLevSmooth,0.2);
 
-LogProb transpair_model4::_scoreOfMove(const alignment&a, WordIndex new_i, WordIndex j,double)const
+LogProb transpair_model4::_scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j,double)const
 {
   LogProb a_prob=prob_of_target_and_alignment_given_source(a);
-  alignment b(a);
+  Alignment b(a);
   b.set(j, new_i);
   LogProb b_prob=prob_of_target_and_alignment_given_source(b);
   if( a_prob )
@@ -37,10 +37,10 @@ LogProb transpair_model4::_scoreOfMove(const alignment&a, WordIndex new_i, WordI
   else
     return 1.0;
 }
-LogProb transpair_model4::_scoreOfSwap(const alignment&a, WordIndex j1, WordIndex j2,double)const
+LogProb transpair_model4::_scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double)const
 {
   LogProb a_prob=prob_of_target_and_alignment_given_source(a);
-  alignment b(a);
+  Alignment b(a);
   b.set(j1, a(j2));
   b.set(j2, a(j1));
   LogProb b_prob=prob_of_target_and_alignment_given_source(b);
@@ -52,7 +52,7 @@ LogProb transpair_model4::_scoreOfSwap(const alignment&a, WordIndex j1, WordInde
     return 1.0;
 }
 //increasing efficiency: no copy of alignment (calc. everything incrementally)
-LogProb transpair_model4::scoreOfMove(const alignment&a, WordIndex new_i, WordIndex j,double thisValue)const
+LogProb transpair_model4::scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j,double thisValue)const
 {
   if( a(j)==new_i )
     return 1.0;
@@ -62,15 +62,15 @@ LogProb transpair_model4::scoreOfMove(const alignment&a, WordIndex new_i, WordIn
     a_prob=prob_of_target_and_alignment_given_source(a,2);
   MASSERT(a_prob==prob_of_target_and_alignment_given_source(a,2));
   WordIndex old_i=a(j);
-  //alignment b(a);
-  const_cast<alignment&>(a).set(j,new_i);
+  //Alignment b(a);
+  const_cast<Alignment&>(a).set(j,new_i);
   LogProb b_prob=prob_of_target_and_alignment_given_source(a,2);
-  const_cast<alignment&>(a).set(j,old_i);
+  const_cast<Alignment&>(a).set(j,old_i);
   change*=b_prob/a_prob;
   return change;
 }
 //increasing efficiency: no copy of alignment (calc. everything incrementally)
-LogProb transpair_model4::scoreOfSwap(const alignment&a, WordIndex j1, WordIndex j2,double thisValue)const
+LogProb transpair_model4::scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double thisValue)const
 {
   WordIndex aj1=a(j1),aj2=a(j2);
   if( aj1==aj2 )
@@ -81,12 +81,12 @@ LogProb transpair_model4::scoreOfSwap(const alignment&a, WordIndex j1, WordIndex
     a_prob=prob_of_target_and_alignment_given_source(a,2);
   MASSERT(a_prob==prob_of_target_and_alignment_given_source(a,2));
 
-  //alignment b(a);
-  const_cast<alignment&>(a).set(j1,aj2);
-  const_cast<alignment&>(a).set(j2,aj1);
+  //Alignment b(a);
+  const_cast<Alignment&>(a).set(j1,aj2);
+  const_cast<Alignment&>(a).set(j2,aj1);
   LogProb b_prob=prob_of_target_and_alignment_given_source(a,2);
-  const_cast<alignment&>(a).set(j1,aj1);
-  const_cast<alignment&>(a).set(j2,aj2);
+  const_cast<Alignment&>(a).set(j1,aj1);
+  const_cast<Alignment&>(a).set(j2,aj2);
 
   if( verboseTP )
     cerr << "scoreOfSwap: " << change << ' ' << a_prob << ' ' << b_prob << ' ' << endl;
@@ -96,7 +96,7 @@ LogProb transpair_model4::scoreOfSwap(const alignment&a, WordIndex j1, WordIndex
   return change;
 }
 
-LogProb transpair_model4::prob_of_target_and_alignment_given_source_1(const alignment&al,bool verb)const
+LogProb transpair_model4::prob_of_target_and_alignment_given_source_1(const Alignment&al,bool verb)const
 {
   LogProb total = 1.0 ;
   total *= pow(double(1-p1), m-2.0 * al.fert(0)) * pow(double(p1), double(al.fert(0)));
@@ -117,7 +117,7 @@ LogProb transpair_model4::prob_of_target_and_alignment_given_source_1(const alig
   return total;
 }
 
-LogProb transpair_model4::prob_of_target_and_alignment_given_source(const alignment&al, short distortionType,bool verb)const
+LogProb transpair_model4::prob_of_target_and_alignment_given_source(const Alignment&al, short distortionType,bool verb)const
 {
   LogProb total = 1.0 ;
   static const LogProb almostZero = 1E-299 ;
@@ -148,7 +148,7 @@ LogProb transpair_model4::prob_of_target_and_alignment_given_source(const alignm
   return total?total:almostZero;
 }
 
-void transpair_model4::computeScores(const alignment&al,vector<double>&d)const
+void transpair_model4::computeScores(const Alignment&al,vector<double>&d)const
 {
   LogProb total1 = 1.0,total2=1.0,total3=1.0,total4=1.0 ;
   total1 *= pow(double(1-p1), m-2.0 * al.fert(0)) * pow(double(p1), double(al.fert(0)));

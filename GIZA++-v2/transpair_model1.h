@@ -82,19 +82,19 @@ class transpair_model1
   WordIndex get_fs(int j)const {return F[j];}
   bool greedyHillClimbing()const
     {return 0;}
-  void computeScores(const alignment&,vector<double>&)const
+  void computeScores(const Alignment&,vector<double>&)const
     {}
-  LogProb scoreOfMove(const alignment&a, WordIndex new_i, WordIndex j,double=-1.0)const
+  LogProb scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j,double=-1.0)const
     {
       int old_i=a(j);
       return (t(new_i, j) /t(old_i, j));
     }
-  LogProb scoreOfSwap(const alignment&a, WordIndex j1, WordIndex j2,double=-1.0)const
+  LogProb scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double=-1.0)const
     {
       WordIndex i1=a(j1), i2=a(j2);
       return (t(i2, j1)/t(i1, j1))*(t(i1, j2)/t(i2, j2));
     }
-  LogProb prob_of_target_and_alignment_given_source(const alignment&al)const
+  LogProb prob_of_target_and_alignment_given_source(const Alignment&al)const
     {
       LogProb prob=1.0;
       int lp1=al.get_l()+1;

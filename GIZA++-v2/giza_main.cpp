@@ -354,7 +354,7 @@ void initGlobals(void)
   MAX_SENTENCE_LENGTH = kMaxAllowedSentenceLength ;
 }
 
-void convert(const map< pair<int,int>,char >&reference,alignment&x)
+void convert(const map< pair<int,int>,char >&reference,Alignment&x)
 {
   int l=x.get_l();
   int m=x.get_m();
@@ -494,7 +494,7 @@ double StartTraining(int&result)
 	     int l=es.size()-1;
 	     int m=fs.size()-1;
 	     transpair_model4 tm4(es,fs,m1.tTable,m2.aTable,m3.dTable,m3.nTable,1-p0,p0,&d4m);
-	     alignment al(l,m);
+	     Alignment al(l,m);
 	     cout << "I use the alignment " << sent.sentenceNo-1 << '\n';
 	     //convert(ReferenceAlignment[sent.sentenceNo-1],al);
 	     transpair_model3 tm3(es,fs,m1.tTable,m2.aTable,m3.dTable,m3.nTable,1-p0,p0,0);

@@ -46,7 +46,7 @@ transpair_model3::transpair_model3(const Vector<WordIndex>&es, const Vector<Word
     }
 }
 
-LogProb transpair_model3::scoreOfMove(const alignment&a, WordIndex new_i, WordIndex j, double,bool forModel3)const
+LogProb transpair_model3::scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j, double,bool forModel3)const
 {
   LogProb change;
   const WordIndex old_i=a(j);
@@ -76,7 +76,7 @@ LogProb transpair_model3::scoreOfMove(const alignment&a, WordIndex new_i, WordIn
   return change;
 }
 
-LogProb transpair_model3::scoreOfSwap(const alignment&a, WordIndex j1, WordIndex j2, double,bool forModel3)const
+LogProb transpair_model3::scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2, double,bool forModel3)const
 {
   PROB score=1;
   assert(j1<j2);
@@ -111,9 +111,9 @@ ostream&operator<<(ostream&out, const transpair_model3&m)
   return out;
 }
 
-LogProb transpair_model3::_scoreOfMove(const alignment&a, WordIndex new_i, WordIndex j,double)const
+LogProb transpair_model3::_scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j,double)const
 {
-  alignment b(a);
+  Alignment b(a);
   b.set(j, new_i);
   LogProb a_prob=prob_of_target_and_alignment_given_source(a);
   LogProb b_prob=prob_of_target_and_alignment_given_source(b);
@@ -125,9 +125,9 @@ LogProb transpair_model3::_scoreOfMove(const alignment&a, WordIndex new_i, WordI
     return 1.0;
 }
 
-LogProb transpair_model3::_scoreOfSwap(const alignment&a, WordIndex j1, WordIndex j2,double thisValue)const
+LogProb transpair_model3::_scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double thisValue)const
 {
-  alignment b(a);
+  Alignment b(a);
   b.set(j1, a(j2));
   b.set(j2, a(j1));
   LogProb a_prob=thisValue;
@@ -143,7 +143,7 @@ LogProb transpair_model3::_scoreOfSwap(const alignment&a, WordIndex j1, WordInde
     return 1.0;
 }
 
-LogProb transpair_model3::prob_of_target_and_alignment_given_source(const alignment&al,bool verb)const
+LogProb transpair_model3::prob_of_target_and_alignment_given_source(const Alignment&al,bool verb)const
 {
   LogProb total = 1.0 ;
   static const LogProb zero = 1E-299 ;
@@ -172,7 +172,7 @@ LogProb transpair_model3::prob_of_target_and_alignment_given_source(const alignm
 }
 
 
-void transpair_model3::computeScores(const alignment&al,vector<double>&d)const
+void transpair_model3::computeScores(const Alignment&al,vector<double>&d)const
 {
   LogProb total1 = 1.0,total2=1.0,total3=1.0,total4=1.0 ;
   total1 *= pow(double(1-p1), m-2.0 * al.fert(0)) * pow(double(p1), double(al.fert(0)));

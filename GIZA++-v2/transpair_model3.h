@@ -73,15 +73,15 @@ class transpair_model3 : public transpair_model2
   const PROB&get_fertility(WordIndex i, WordIndex f)const
     {MASSERT(i>0);return (f>=g_max_fertility)?n(i, g_max_fertility):n(i, f);}
   int modelnr()const{return 3;}
-  LogProb scoreOfAlignmentForChange(const alignment&)const
+  LogProb scoreOfAlignmentForChange(const Alignment& a)const
     {return -1.0; }
-  LogProb scoreOfMove(const alignment&a, WordIndex new_i, WordIndex j, double thisValue=-1.0,bool withDistortions=1)const;
-  LogProb scoreOfSwap(const alignment&a, WordIndex j1, WordIndex j2, double thisValue=-1.0,bool withDistortions=1)const ;
-  LogProb _scoreOfMove(const alignment&a, WordIndex new_i, WordIndex j,double thisValue=-1.0)const;
-  LogProb _scoreOfSwap(const alignment&a, WordIndex j1, WordIndex j2,double thisValue=-1.0)const;
+  LogProb scoreOfMove(const Alignment& a, WordIndex new_i, WordIndex j, double thisValue=-1.0,bool withDistortions=1)const;
+  LogProb scoreOfSwap(const Alignment& a, WordIndex j1, WordIndex j2, double thisValue=-1.0,bool withDistortions=1)const ;
+  LogProb _scoreOfMove(const Alignment& a, WordIndex new_i, WordIndex j,double thisValue=-1.0)const;
+  LogProb _scoreOfSwap(const Alignment& a, WordIndex j1, WordIndex j2,double thisValue=-1.0)const;
   friend ostream&operator<<(ostream&out, const transpair_model3&m);
-  LogProb prob_of_target_and_alignment_given_source(const alignment&al,bool verb=0)const;
+  LogProb prob_of_target_and_alignment_given_source(const Alignment&al,bool verb=0)const;
   bool isSubOptimal()const{return 1;}
-  void computeScores(const alignment&al,vector<double>&d)const;
+  void computeScores(const Alignment& al, vector<double>&d)const;
 };
 #endif  // GIZAPP_TRANSPAIR_MODEL3_H_

@@ -12,7 +12,7 @@ TransPairModelHMM::TransPairModelHMM(const Vector<WordIndex>& es,
 
 TransPairModelHMM::~TransPairModelHMM() { delete network_; }
 
-LogProb TransPairModelHMM::scoreOfMove(const alignment&a,
+LogProb TransPairModelHMM::scoreOfMove(const Alignment&a,
                                         WordIndex _new_i,
                                         WordIndex j,
                                         double f) const {
@@ -71,7 +71,7 @@ LogProb TransPairModelHMM::scoreOfMove(const alignment&a,
   return change;
 }
 
-LogProb TransPairModelHMM::prob_of_target_and_alignment_given_source(const alignment&al,
+LogProb TransPairModelHMM::prob_of_target_and_alignment_given_source(const Alignment&al,
                                                                       bool verbose) const {
   double prob=1.0;
   int theIPrev=0;
@@ -106,7 +106,7 @@ LogProb TransPairModelHMM::prob_of_target_and_alignment_given_source(const align
   return prob*network_->finalMultiply;
 }
 
-void TransPairModelHMM::computeScores(const alignment& al, vector<double>& d) const {
+void TransPairModelHMM::computeScores(const Alignment& al, vector<double>& d) const {
   double prob1 = 1.0, prob2 = 1.0;
   int theIPrev=0;
   for(unsigned int j=1;j<=m;j++) {

@@ -112,7 +112,7 @@ double collectCountsOverNeighborhoodForSophisticatedModels(const MoveSwapMatrix<
 }
 
 template<class TRANSPAIR>
-void _collectCountsOverNeighborhoodForSophisticatedModels(const MoveSwapMatrix<TRANSPAIR>&Mmsc,const alignment&msc,const TRANSPAIR&ef,LogProb normalized_ascore,d4model*d4Table)
+void _collectCountsOverNeighborhoodForSophisticatedModels(const MoveSwapMatrix<TRANSPAIR>&Mmsc,const Alignment&msc,const TRANSPAIR&ef,LogProb normalized_ascore,d4model*d4Table)
 {
   Mmsc.check();
   const PositionIndex m=msc.get_m(),l=msc.get_l();
@@ -132,7 +132,7 @@ void _collectCountsOverNeighborhoodForSophisticatedModels(const MoveSwapMatrix<T
 }
 
 template<class TRANSPAIR>
-void _collectCountsOverNeighborhoodForSophisticatedModels(const MoveSwapMatrix<TRANSPAIR>&Mmsc,const alignment&msc,const TRANSPAIR&ef,LogProb normalized_ascore,d5model*d5Table)
+void _collectCountsOverNeighborhoodForSophisticatedModels(const MoveSwapMatrix<TRANSPAIR>&Mmsc,const Alignment&msc,const TRANSPAIR&ef,LogProb normalized_ascore,d5model*d5Table)
 {
   Mmsc.check();
   _collectCountsOverNeighborhoodForSophisticatedModels(Mmsc,msc,ef,normalized_ascore,&d5Table->d4m);
@@ -180,7 +180,7 @@ template<class TRANSPAIR,class MODEL>
 double collectCountsOverNeighborhoodForSophisticatedModels(const MoveSwapMatrix<TRANSPAIR>&msc,LogProb normalized_ascore,MODEL*d5Table)
 {
   const PositionIndex m=msc.get_m(),l=msc.get_l();
-  alignment x(msc);
+  Alignment x(msc);
   double sum=0;
   msc.check();
   if( !msc.isCenterDeleted() )

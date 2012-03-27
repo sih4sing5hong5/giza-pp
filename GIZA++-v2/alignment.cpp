@@ -20,14 +20,14 @@
 */
 
 /*
-  alignment: 'checked' alignment representation with automatic calculation
+  Alignment: 'checked' Alignment representation with automatic calculation
   of fertilities
   Franz Josef Och (30/07/99)
 */
 
 #include "alignment.h"
 
-ostream&operator<<(ostream&out, const alignment&a)
+ostream&operator<<(ostream&out, const Alignment&a)
 {
   int m=a.a.size()-1,l=a.f.size()-1;
   out << "AL(l:"<<l<<",m:"<<m<<")(a: ";

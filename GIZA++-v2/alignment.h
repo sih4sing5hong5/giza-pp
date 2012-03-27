@@ -32,24 +32,22 @@
 #include "defs.h"
 #include "util/assert.h"
 
-class al_struct {
- public:
-  al_struct() : prev(0), next(0) { }
-  ~al_struct() {}
-  PositionIndex prev, next;
-};
-
-class alignment {
+class Alignment {
  private:
+  struct AlignmentStruct {
+    AlignmentStruct() : prev(0), next(0) { }
+    PositionIndex prev, next;
+  };
+
   Vector<PositionIndex> a;
   Vector<PositionIndex> positionSum,f;
 
  public:
   Vector<PositionIndex> als_i;
-  Vector<al_struct>  als_j;
+  Vector<AlignmentStruct>  als_j;
   PositionIndex l,m;
-  alignment() {}
-  alignment(PositionIndex _l, PositionIndex _m)
+  Alignment() {}
+  Alignment(PositionIndex _l, PositionIndex _m)
     : a(_m+1, (PositionIndex)0),
     positionSum(_l+1, (PositionIndex)0), f(_l+1, (PositionIndex)0), als_i(_l+1,0),als_j(_m+1),l(_l), m(_m)
     {
@@ -64,7 +62,7 @@ class alignment {
       als_i[0]=1;
     }
 
-  virtual ~alignment() {}
+  virtual ~Alignment() {}
 
   PositionIndex get_l()const
     {return l;}
@@ -189,8 +187,8 @@ class alignment {
       MASSERT(als_j[j].prev==0||a[als_j[j].prev]==a[j]);
       return als_j[j].prev;
     }
-  friend ostream &operator<<(ostream&out, const alignment&a);
-  friend bool operator==(const alignment&a, const alignment&b)
+  friend ostream &operator<<(ostream&out, const Alignment&a);
+  friend bool operator==(const Alignment&a, const Alignment&b)
     {
       MASSERT(a.a.size()==b.a.size());
       for(PositionIndex j=1;j<=a.get_m();j++)
@@ -198,7 +196,7 @@ class alignment {
 	  return 0;
       return 1;
     }
-  friend bool operator<(const alignment&x, const alignment&y)
+  friend bool operator<(const Alignment&x, const Alignment&y)
     {
       MASSERT(x.get_m()==y.get_m());
       for(PositionIndex j=1;j<=x.get_m();j++)
@@ -208,7 +206,7 @@ class alignment {
 	  return 0;
       return 0;
     }
-  friend int differences(const alignment&x, const alignment&y){
+  friend int differences(const Alignment&x, const Alignment&y){
     int count=0;
     MASSERT(x.get_m()==y.get_m());
     for(PositionIndex j=1;j<=x.get_m();j++)

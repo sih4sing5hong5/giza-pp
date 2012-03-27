@@ -65,15 +65,15 @@ class transpair_model4 : public transpair_model3
 	    }
 	}
     }
-  LogProb prob_of_target_and_alignment_given_source_1(const alignment&al,bool verb)const;
-  LogProb scoreOfAlignmentForChange(const alignment&a)const
+  LogProb prob_of_target_and_alignment_given_source_1(const Alignment&al,bool verb)const;
+  LogProb scoreOfAlignmentForChange(const Alignment&a)const
     {return prob_of_target_and_alignment_given_source(a,2); }
-  LogProb scoreOfMove(const alignment&a, WordIndex new_i, WordIndex j,double thisValue=-1.0)const;
-  LogProb scoreOfSwap(const alignment&a, WordIndex j1, WordIndex j2,double thisValue=-1.0)const ;
-  LogProb _scoreOfMove(const alignment&a, WordIndex new_i, WordIndex j,double thisValue=-1.0)const;
-  LogProb _scoreOfSwap(const alignment&a, WordIndex j1, WordIndex j2,double thisValue=-1.0)const ;
+  LogProb scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j,double thisValue=-1.0)const;
+  LogProb scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double thisValue=-1.0)const ;
+  LogProb _scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j,double thisValue=-1.0)const;
+  LogProb _scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double thisValue=-1.0)const ;
   int modelnr()const{return 4;}
-  LogProb prob_of_target_and_alignment_given_source(const alignment&al, short distortionType=3,bool verb=0)const;
-  void computeScores(const alignment&al,vector<double>&d)const;
+  LogProb prob_of_target_and_alignment_given_source(const Alignment&al, short distortionType=3,bool verb=0)const;
+  void computeScores(const Alignment&al,vector<double>&d)const;
 };
 #endif  // GIZAPP_TRANSPAIR_MODEL4_H_

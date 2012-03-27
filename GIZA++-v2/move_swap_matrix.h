@@ -34,7 +34,7 @@
 extern short DoViterbiTraining;
 
 template<class TRANSPAIR>
-class MoveSwapMatrix : public alignment {
+class MoveSwapMatrix : public Alignment {
  private:
   const TRANSPAIR&ef;
   const WordIndex l, m;
@@ -47,7 +47,7 @@ class MoveSwapMatrix : public alignment {
   bool centerDeleted;
 
  public:
-  MoveSwapMatrix(const TRANSPAIR&_ef, const alignment&_a);
+  MoveSwapMatrix(const TRANSPAIR&_ef, const Alignment&_a);
   ~MoveSwapMatrix();
 
   bool check() const { return 1; }
@@ -105,7 +105,7 @@ class MoveSwapMatrix : public alignment {
   bool isRight() const;
   friend ostream&operator<<(ostream&out, const MoveSwapMatrix<TRANSPAIR>&m) {
     // TODO: fix C-style cast.
-    return out << (alignment)m << "\nEF:\n"<< m.ef << "\nCMOVE\n"
+    return out << (Alignment)m << "\nEF:\n"<< m.ef << "\nCMOVE\n"
                <<m._cmove << "\nCSWAP\n" << m._cswap << endl;
   }
 };

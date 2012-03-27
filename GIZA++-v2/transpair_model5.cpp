@@ -27,11 +27,11 @@ int m5scorefound=0,m5scorenotfound=0;
 GLOBAL_PARAMETER(float,d5modelsmooth_factor,"model5SmoothFactor","smooting parameter for distortion probabilities in Model 5 (linear interpolation with constant)",kParLevSmooth,0.1);
 float d5modelsmooth_countoffset=0.0;
 
-LogProb transpair_model5::_scoreOfMove(const alignment&a, WordIndex new_i, WordIndex j,double)const
+LogProb transpair_model5::_scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j,double)const
 {
   if( doModel4Scoring )
     return transpair_model4::_scoreOfMove(a,new_i,j);
-  alignment b(a);
+  Alignment b(a);
   b.set(j, new_i);
   LogProb a_prob=prob_of_target_and_alignment_given_source(a);
   LogProb b_prob=prob_of_target_and_alignment_given_source(b);
@@ -42,11 +42,11 @@ LogProb transpair_model5::_scoreOfMove(const alignment&a, WordIndex new_i, WordI
   else
     return 1.0;
 }
-LogProb transpair_model5::_scoreOfSwap(const alignment&a, WordIndex j1, WordIndex j2,double thisValue)const
+LogProb transpair_model5::_scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double thisValue)const
 {
   if( doModel4Scoring )
     return transpair_model4::_scoreOfSwap(a,j1,j2,thisValue);
-  alignment b(a);
+  Alignment b(a);
   b.set(j1, a(j2));
   b.set(j2, a(j1));
   LogProb a_prob=prob_of_target_and_alignment_given_source(a);
@@ -62,11 +62,11 @@ LogProb transpair_model5::_scoreOfSwap(const alignment&a, WordIndex j1, WordInde
 }
 
 //increasing efficiency: no copy of alignment (calc. everything incrementally)
-LogProb transpair_model5::scoreOfMove(const alignment&a, WordIndex new_i, WordIndex j,double thisValue)const
+LogProb transpair_model5::scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j,double thisValue)const
 {
   if( doModel4Scoring )
     return transpair_model4::scoreOfMove(a,new_i,j,thisValue);
-  alignment b(a);
+  Alignment b(a);
   b.set(j,new_i);
 
   LogProb change;
@@ -103,11 +103,11 @@ LogProb transpair_model5::scoreOfMove(const alignment&a, WordIndex new_i, WordIn
   change*=b_prob/a_prob;
   return change;
 }
-LogProb transpair_model5::scoreOfSwap(const alignment&a, WordIndex j1, WordIndex j2,double thisValue)const
+LogProb transpair_model5::scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double thisValue)const
 {
   if( doModel4Scoring )
     return transpair_model4::scoreOfSwap(a,j1,j2,thisValue);
-  alignment b(a);
+  Alignment b(a);
   b.set(j1,a(j2));
   b.set(j2,a(j1));
   LogProb change=transpair_model3::scoreOfSwap(a,j1,j2,-1.0,0);
@@ -120,7 +120,7 @@ LogProb transpair_model5::scoreOfSwap(const alignment&a, WordIndex j1, WordIndex
   return change;
 }
 
-LogProb transpair_model5::prob_of_target_and_alignment_given_source(const alignment&al, short distortionType,bool verb)const
+LogProb transpair_model5::prob_of_target_and_alignment_given_source(const Alignment&al, short distortionType,bool verb)const
 {
   if( doModel4Scoring )
     return transpair_model4::prob_of_target_and_alignment_given_source(al,distortionType);
@@ -194,7 +194,7 @@ LogProb transpair_model5::prob_of_target_and_alignment_given_source(const alignm
 }
 
 
-void transpair_model5::computeScores(const alignment&al,vector<double>&d)const
+void transpair_model5::computeScores(const Alignment&al,vector<double>&d)const
 {
   LogProb total1 = 1.0,total2=1.0,total3=1.0,total4=1.0 ;
   total1 *= pow(double(1-p1), m-2.0 * al.fert(0)) * pow(double(p1), double(al.fert(0)));

@@ -23,8 +23,8 @@
 #include "transpair_model3.h"
 
 template<class TRANSPAIR>
-MoveSwapMatrix<TRANSPAIR>::MoveSwapMatrix(const TRANSPAIR&_ef, const alignment&_a)
-    : alignment(_a), ef(_ef), l(ef.get_l()), m(ef.get_m()), _cmove(l+1, m+1), _cswap(m+1, m+1),
+MoveSwapMatrix<TRANSPAIR>::MoveSwapMatrix(const TRANSPAIR&_ef, const Alignment&_a)
+    : Alignment(_a), ef(_ef), l(ef.get_l()), m(ef.get_m()), _cmove(l+1, m+1), _cswap(m+1, m+1),
       delmove(l+1, m+1,0),delswap(m+1, m+1,0),changed(l+2, 0), changedCounter(1),
       modelnr(_ef.modelnr()),lazyEvaluation(0),centerDeleted(0)
 {

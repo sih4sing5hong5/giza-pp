@@ -58,13 +58,13 @@ int PrintHillClimbWarning=0;
 int PrintZeroScoreWarning=0;
 
 
-LogProb Model3::viterbi_model2(const TransPairModelHMM&ef, alignment&output, int
+LogProb Model3::viterbi_model2(const TransPairModelHMM&ef, Alignment&output, int
 #ifdef STORE_HMM_ALIGNMENTS
 pair_no
 #endif
 , int i_peg , int j_peg )const
 {
-  static Vector<pair<alignment,LogProb> > viterbis;
+  static Vector<pair<Alignment,LogProb> > viterbis;
   Vector<int>vit;
   int m=ef.get_m();
   int l=ef.get_l();
@@ -116,7 +116,7 @@ pair_no
     }
 }
 
-LogProb Model3::_viterbi_model2(const transpair_model2&ef, alignment&output, int i_peg, int j_peg)const
+LogProb Model3::_viterbi_model2(const transpair_model2&ef, Alignment&output, int i_peg, int j_peg)const
 {
   WordIndex best_i=0;
   LogProb ss=1;
@@ -199,7 +199,7 @@ LogProb Model3::_viterbi_model2(const transpair_model2&ef, alignment&output, int
   MASSERT(output.valid());
   return ss;
 }
-LogProb Model3::viterbi_model2(const transpair_model3&ef, alignment&output, int pair_no,int i_peg , int j_peg )const
+LogProb Model3::viterbi_model2(const transpair_model3&ef, Alignment&output, int pair_no,int i_peg , int j_peg )const
 {
   if( h&&UseHMMViterbiAlignmentIfPossible )
     {
@@ -222,7 +222,7 @@ LogProb greedyClimb_WithIBM3Scoring(MoveSwapMatrix<TRANSPAIR>&msc2,int j_peg=-1)
   bool hereVERB=0;
   do
     {
-      MoveSwapMatrix<typename TRANSPAIR::simpler_transpair_model> msc_IBM3(msc2.get_ef(),alignment(msc2));
+      MoveSwapMatrix<typename TRANSPAIR::simpler_transpair_model> msc_IBM3(msc2.get_ef(),Alignment(msc2));
       vector<pair<double,OneMoveSwap> > msvec;
       for (PositionIndex j = 1 ; j <= m ; j++)if (int(j) != j_peg)
 	{
@@ -475,15 +475,15 @@ void Model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
       }
 
       LogProb align_total_count=0;
-      alignment viterbi2alignment(l,m);
+      Alignment viterbi2alignment(l,m);
       MODEL_TYPE ef(es,fs,tTable,aTable,dTable,nTable,p1,p0,dm_in);
       viterbi_model2(ef,viterbi2alignment,pair_no-1);
       Vector<pair<MoveSwapMatrix<MODEL_TYPE>*,LogProb> >setOfGoodCenters(1);
-      set<alignment> alignments;
+      set<Alignment> alignments;
       MoveSwapMatrix<MODEL_TYPE> *best = (setOfGoodCenters[0].first  = new MoveSwapMatrix<MODEL_TYPE>(ef, viterbi2alignment));
       MoveSwapMatrix<MODEL_TYPE> _viterbi(*best), *viterbi=&_viterbi; // please, don't delete this line (FJO)
       if (Log)
-	logmsg << "VITERBI: " << alignment(_viterbi);
+        logmsg << "VITERBI: " << Alignment(_viterbi);
       if( ef.isSubOptimal() )
 	setOfGoodCenters[0].second = hillClimb_std(*best);
       else
@@ -505,7 +505,7 @@ void Model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
 	if( PrintZeroScoreWarning++<100 )
 	  {
 	    cerr << "WARNING: Hill Climbing yielded a zero score viterbi alignment for the following pair:\n";
-	    cerr << alignment(*setOfGoodCenters[bestAlignment].first) ;
+	    cerr << Alignment(*setOfGoodCenters[bestAlignment].first) ;
 	    printSentencePair(es, fs, cerr);
 	    if(Log){
 	      logmsg << "WARNING: Hill Climbing yielded a zero score viterbi alignment for the following pair:\n";
@@ -544,7 +544,7 @@ void Model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
 		    }
 		  else
 		    {
-		      alignment pegAlignment(l,m);
+		      Alignment pegAlignment(l,m);
 		      peggedAlignmentScore=viterbi_model2(ef,pegAlignment,pair_no-1,i,j);
 		      BESTPEGGED = new MoveSwapMatrix<MODEL_TYPE>(ef,pegAlignment);
 		      MASSERT( pegAlignment(j)==i );
@@ -562,8 +562,8 @@ void Model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
 			      if( LogPeg )
 				{
 				  cerr << "found better alignment by pegging " << pair_no << " " << peggedAlignmentScore/setOfGoodCenters[bestAlignment].second << '\n';
-				  cerr << "NEW BEST: " << alignment(*BESTPEGGED);
-				  cerr << "OLD     : " << alignment(*setOfGoodCenters[bestAlignment].first);
+				  cerr << "NEW BEST: " << Alignment(*BESTPEGGED);
+				  cerr << "OLD     : " << Alignment(*setOfGoodCenters[bestAlignment].first);
 				}
 			      flagBetterByPegging=1;
 			      bestAlignment=alignments.size()-1;
@@ -624,7 +624,7 @@ void Model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
 	    sum+=als[i].v;
 	  for(unsigned int i=0;i<min((unsigned int)als.size(),(unsigned int)PrintN);++i)
 	    {
-	      alignment x=*setOfGoodCenters[als[i].s].first;
+	      Alignment x=*setOfGoodCenters[als[i].s].first;
 	      if( !(als[i].a==0 && als[i].b==0) )
 		{
 		  if( als[i].a<=0&&als[i].b<=0 )
@@ -657,7 +657,7 @@ void Model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
       addAL((setOfGoodCenters[bestAlignment].first)->getAlignment(),sent.sentenceNo,l);
       if (Log)
       	logmsg << "processing this sentence pair ("<<l+1<<"x"<<m<<") : "<<
-      	  (l+1)*m << " prob : " << align_total_count << " " << (setOfGoodCenters[bestAlignment].second) << alignment(*setOfGoodCenters[bestAlignment].first) << " \n";
+      	  (l+1)*m << " prob : " << align_total_count << " " << (setOfGoodCenters[bestAlignment].second) << Alignment(*setOfGoodCenters[bestAlignment].first) << " \n";
       for(unsigned int i=0;i<setOfGoodCenters.size();i++)
 	delete setOfGoodCenters[i].first;
       double period = difftime(time(NULL), sent_s);

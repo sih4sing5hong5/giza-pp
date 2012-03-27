@@ -31,7 +31,7 @@
 // #include "transpair_model3.h"
 // #include "transpair_model4.h"
 
-class alignment;
+class Alignment;
 
 template <class T> class MoveSwapMatrix;
 template <class T> class AModel;
@@ -74,8 +74,8 @@ inline std::ostream& operator<<(std::ostream& out, const std::set<OneMoveSwap>& 
   return out;
 }
 
-bool makeOneMoveSwap(const alignment& a,
-                     const alignment& b,
+bool makeOneMoveSwap(const Alignment& a,
+                     const Alignment& b,
                      std::set<OneMoveSwap>& oms);
 
 // TODO: Need refactoring. this function requires too arguments.
