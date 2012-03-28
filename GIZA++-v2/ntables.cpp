@@ -30,9 +30,9 @@ GLOBAL_PARAMETER(double,NTablesFactorGeneral,"nSmoothGeneral","smoothing for fer
 
 template <class VALTYPE>
 void nmodel<VALTYPE>::printNTable(int noEW, const char* filename,
-				  const Vector<WordEntry>& evlist,
-				  bool actual) const
-     // prints the fertility table but with actual sourcce words (not their id)
+                                  const Vector<WordEntry>& evlist,
+                                  bool actual) const
+    // prints the fertility table but with actual sourcce words (not their id)
 {
   cerr << "Dumping nTable to: " << filename <<  '\n';
   ofstream of(filename);
@@ -41,14 +41,14 @@ void nmodel<VALTYPE>::printNTable(int noEW, const char* filename,
   for(i=1; int(i) < noEW; i++){
     if (evlist[i].freq > 0){
       if (actual)
-	of << evlist[i].word << ' ' ;
+        of << evlist[i].word << ' ' ;
       else
-	of << i << ' ' ;
+        of << i << ' ' ;
       for( k=0; k < g_max_fertility; k++){
-	p = getValue(i, k);
-	if (p <= PROB_SMOOTH)
-	  p = 0;
-	of << p << ' ';
+        p = getValue(i, k);
+        if (p <= PROB_SMOOTH)
+          p = 0;
+        of << p << ' ';
       }
       of << '\n';
     }
@@ -77,9 +77,9 @@ void nmodel<VALTYPE>::readNTable(const char *filename){
     inf >> ws >> tok;
     if (tok > kMaxVocabSize){
       cerr << "NTables:readNTable(): unrecognized token id: " << tok
-    <<'\n';
-    exit(-1);
-  }
+           <<'\n';
+      exit(-1);
+    }
     for(i = 0; i < g_max_fertility; i++){
       inf >> ws >> prob;
       getRef(tok, i)=prob;

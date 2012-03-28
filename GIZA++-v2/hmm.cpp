@@ -37,21 +37,21 @@ short g_hmm_training_special_flags = 0;
 GLOBAL_PARAMETER2(int,ModelH_Dump_Freq,"HMM DUMP FREQUENCY","th","dump frequency of HMM",kParLevOutput,0);
 
 GLOBAL_PARAMETER(short,CompareAlDeps,"emAlignmentDependencies",
-		 "lextrain: dependencies in the HMM alignment model. "
-		 " &1: sentence length; &2: previous class; &4: previous position; "
-		 " &8: French position; &16: French class"
-		 ,kParLevModels,2);
+                 "lextrain: dependencies in the HMM alignment model. "
+                 " &1: sentence length; &2: previous class; &4: previous position; "
+                 " &8: French position; &16: French class"
+                 ,kParLevModels,2);
 GLOBAL_PARAMETER(double,GLOBALProbabilityForEmpty,"emProbForEmpty",
-		 "f-b-trn: probability for empty word",kParLevModels,0.4);
+                 "f-b-trn: probability for empty word",kParLevModels,0.4);
 GLOBAL_PARAMETER(short,SmoothHMM,"emSmoothHMM",
-		 "f-b-trn: smooth HMM model &1: modified counts; &2:perform smoothing with -emAlSmooth",kParLevSpecial,2);
+                 "f-b-trn: smooth HMM model &1: modified counts; &2:perform smoothing with -emAlSmooth",kParLevSpecial,2);
 GLOBAL_PARAMETER(double,HMMAlignmentModelSmoothFactor,"emAlSmooth",
-		 "f-b-trn: smoothing factor for HMM alignment model (can be ignored by -emSmoothHMM)",kParLevSmooth,0.2);
+                 "f-b-trn: smoothing factor for HMM alignment model (can be ignored by -emSmoothHMM)",kParLevSmooth,0.2);
 
 HMM::HMM(Model2& m)
-  : Model2(m),
-    counts(GLOBALProbabilityForEmpty, ewordclasses, fwordclasses),
-    probs(GLOBALProbabilityForEmpty, ewordclasses, fwordclasses) {}
+    : Model2(m),
+      counts(GLOBALProbabilityForEmpty, ewordclasses, fwordclasses),
+      probs(GLOBALProbabilityForEmpty, ewordclasses, fwordclasses) {}
 
 HMM::~HMM() { }
 
@@ -90,10 +90,10 @@ int HMM::em_with_tricks(int noIterations) {
     initAL();
     em_loop(perp, sHandler1,  dump_files , alignfile.c_str(), trainViterbiPerp, false,it==1,it);
     if( errorsAL()<minErrors )
-      {
-	minErrors=errorsAL();
-        minIter=it;
-      }
+    {
+      minErrors=errorsAL();
+      minIter=it;
+    }
     if (testPerp && testHandler)
       em_loop(*testPerp, *testHandler, dump_files, test_alignfile.c_str(), *testViterbiPerp,  true,it==1,it);
     if (dump_files&&OutputInAachenFormat==1)
@@ -102,27 +102,27 @@ int HMM::em_with_tricks(int noIterations) {
     aCountTable.normalize(aTable);
     probs=counts;
     cout << modelName << ": ("<<it<<") TRAIN CROSS-ENTROPY " << perp.cross_entropy()
-	 << " PERPLEXITY " << perp.perplexity() << '\n';
-     if (testPerp && testHandler)
-       cout << modelName << ": ("<<it<<") TEST CROSS-ENTROPY " << (*testPerp).cross_entropy()
-	    << " PERPLEXITY " << (*testPerp).perplexity()
-	    << '\n';
-     cout << modelName << ": ("<<it<<") VITERBI TRAIN CROSS-ENTROPY " << trainViterbiPerp.cross_entropy()
-	 << " PERPLEXITY " << trainViterbiPerp.perplexity() << '\n';
+         << " PERPLEXITY " << perp.perplexity() << '\n';
     if (testPerp && testHandler)
-       cout << modelName << ": ("<<it<<") VITERBI TEST CROSS-ENTROPY " << testViterbiPerp->cross_entropy()
-	    << " PERPLEXITY " << testViterbiPerp->perplexity()
-	    << '\n';
+      cout << modelName << ": ("<<it<<") TEST CROSS-ENTROPY " << (*testPerp).cross_entropy()
+           << " PERPLEXITY " << (*testPerp).perplexity()
+           << '\n';
+    cout << modelName << ": ("<<it<<") VITERBI TRAIN CROSS-ENTROPY " << trainViterbiPerp.cross_entropy()
+         << " PERPLEXITY " << trainViterbiPerp.perplexity() << '\n';
+    if (testPerp && testHandler)
+      cout << modelName << ": ("<<it<<") VITERBI TEST CROSS-ENTROPY " << testViterbiPerp->cross_entropy()
+           << " PERPLEXITY " << testViterbiPerp->perplexity()
+           << '\n';
     if (dump_files){
       if( OutputInAachenFormat==0)
-	tTable.printProbTable(tfile.c_str(),Elist.getVocabList(),Flist.getVocabList(),OutputInAachenFormat);
+        tTable.printProbTable(tfile.c_str(),Elist.getVocabList(),Flist.getVocabList(),OutputInAachenFormat);
       ofstream afilestream(afileh.c_str());
       probs.writeJumps(afilestream);
       aCountTable.printTable(afile.c_str());
     }
     it_fn = time(NULL) ;
     cout << "\n" << modelName << " Iteration: " << it<< " took: " <<
-      difftime(it_fn, it_st) << " seconds\n";
+        difftime(it_fn, it_st) << " seconds\n";
   } // end of iterations
   fn = time(NULL) ;
   cout << endl << "Entire " << modelName << " Training took: " << difftime(fn, st) << " seconds\n";
@@ -133,22 +133,22 @@ int HMM::em_with_tricks(int noIterations) {
 }
 
 /*template<class T>
-T normalize_if_possible_with_increment(T*a,T*b,int increment)
-{
+  T normalize_if_possible_with_increment(T*a,T*b,int increment)
+  {
   T sum=0;
   for(T*i=a;i!=b;i+=increment)
-    sum+=*i;
+  sum+=*i;
   if( sum )
-    for(T*i=a;i!=b;i+=increment)
-      *i/=sum;
+  for(T*i=a;i!=b;i+=increment)
+  *i/=sum;
   else
-    {
-      T factor=increment/(b-a);
-      for(T*i=a;i!=b;i+=increment)
-	*i=factor;
-    }
+  {
+  T factor=increment/(b-a);
+  for(T*i=a;i!=b;i+=increment)
+  *i=factor;
+  }
   return sum;
-}*/
+  }*/
 
 void HMM::load_table(const char* filename){
   cout << "Hmm: loading a table not implemented.\n";
@@ -172,73 +172,73 @@ HMMNetwork* HMM::makeHMMNetwork(const Vector<WordIndex>& es,
   fill(net->alphainit.begin(),net->alphainit.end(),0.0);
   fill(net->betainit.begin(),net->betainit.end(),0.0);
   for(j=1;j<=m;j++)
-    {
-      for(i=1;i<=l;i++)
-	net->n(i-1,j-1)=tTable.getProb(es[i], fs[j]) ;
-      double emptyContribution=0;
-      emptyContribution=tTable.getProb(es[0],fs[j]) ;
-      for(i=1;i<=l;i++)
-	net->n(i+l-1,j-1)=emptyContribution;
-      net->finalMultiply*=max(normalize_if_possible_with_increment(&net->n(0,j-1),&net->n(0,j-1)+IJ,J),double(1e-12));
-    }
+  {
+    for(i=1;i<=l;i++)
+      net->n(i-1,j-1)=tTable.getProb(es[i], fs[j]) ;
+    double emptyContribution=0;
+    emptyContribution=tTable.getProb(es[0],fs[j]) ;
+    for(i=1;i<=l;i++)
+      net->n(i+l-1,j-1)=emptyContribution;
+    net->finalMultiply*=max(normalize_if_possible_with_increment(&net->n(0,j-1),&net->n(0,j-1)+IJ,J),double(1e-12));
+  }
   if( DependencyOfJ )
     net->e.resize(m-1);
   else
     net->e.resize(J>1);
   for(j=0;j<net->e.size();j++)
-    {
-      int frenchClass=fwordclasses.getClass(fs[1+min(int(m)-1,int(j)+1)]);
-      net->e[j].resize(I,I,0);
-      for(unsigned int i1=0;i1<I;++i1) {
-	Array<double> al(l);
-	CLASSIFY2(i1,i1real);
-	for(unsigned int i2=0;i2<l;i2++)
-	  al[i2]=probs.getAlProb(i1real,i2,l,m,ewordclasses.getClass(es[1+i1real]),frenchClass
-				 ,j+1);
-	normalize_if_possible(conv<double>(al.begin()),conv<double>(al.end()));
-	if( SmoothHMM&2 )
-	  smooth_standard(conv<double>(al.begin()),conv<double>(al.end()),HMMAlignmentModelSmoothFactor);
-	for(unsigned int i2=0;i2<I;i2++) {
-	  CLASSIFY(i2,empty_i2,i2real);
-	  net->e[j](i1,i2)	    = al[i2real];
+  {
+    int frenchClass=fwordclasses.getClass(fs[1+min(int(m)-1,int(j)+1)]);
+    net->e[j].resize(I,I,0);
+    for(unsigned int i1=0;i1<I;++i1) {
+      Array<double> al(l);
+      CLASSIFY2(i1,i1real);
+      for(unsigned int i2=0;i2<l;i2++)
+        al[i2]=probs.getAlProb(i1real,i2,l,m,ewordclasses.getClass(es[1+i1real]),frenchClass
+                               ,j+1);
+      normalize_if_possible(conv<double>(al.begin()),conv<double>(al.end()));
+      if( SmoothHMM&2 )
+        smooth_standard(conv<double>(al.begin()),conv<double>(al.end()),HMMAlignmentModelSmoothFactor);
+      for(unsigned int i2=0;i2<I;i2++) {
+        CLASSIFY(i2,empty_i2,i2real);
+        net->e[j](i1,i2)      = al[i2real];
 
-	  if( empty_i2 )
-	    if(i1real!=i2real)
-	      {
-		net->e[j](i1,i2)=0;
-	      }
-	    else
-	      {
-		net->e[j](i1,i2)=doInit?al[0]:(probs.getProbabilityForEmpty()); // make first HMM iteration like IBM-1
-	      }
-	}
-	normalize_if_possible(&net->e[j](i1,0),&net->e[j](i1,0)+I);
+        if( empty_i2 )
+          if(i1real!=i2real)
+          {
+            net->e[j](i1,i2)=0;
+          }
+          else
+          {
+            net->e[j](i1,i2)=doInit?al[0]:(probs.getProbabilityForEmpty()); // make first HMM iteration like IBM-1
+          }
+      }
+      normalize_if_possible(&net->e[j](i1,0),&net->e[j](i1,0)+I);
+    }
+  }
+  if( doInit )
+  {
+    for(unsigned int i=0;i<I;++i)
+    {
+      net->alphainit[i]=net->betainit[i]=(i<I/2)?1:(2.0/I);
+      net->betainit[i]=1.0;
+    }
+  }
+  else
+  {
+    if( DependencyOfPrevAJ==0 )
+    {
+      for(i=0;i<I;i++)
+      {
+        CLASSIFY2(i,ireal);
+        net->alphainit[i]=probs.getAlProb(-1,ireal,l,m,0,fwordclasses.getClass(fs[1+0]),0);
       }
     }
-  if( doInit )
+    else
     {
-      for(unsigned int i=0;i<I;++i)
-	{
-	  net->alphainit[i]=net->betainit[i]=(i<I/2)?1:(2.0/I);
-	  net->betainit[i]=1.0;
-	}
+      if(g_uniform_entry_exit&2 )probs.getBetaInit(I,net->betainit);
+      if(g_uniform_entry_exit&1 )probs.getAlphaInit(I,net->alphainit);
     }
-  else
-    {
-      if( DependencyOfPrevAJ==0 )
-	{
-	  for(i=0;i<I;i++)
-	    {
-	      CLASSIFY2(i,ireal);
-	      net->alphainit[i]=probs.getAlProb(-1,ireal,l,m,0,fwordclasses.getClass(fs[1+0]),0);
-	    }
-	}
-      else
-	{
-	  if(g_uniform_entry_exit&2 )probs.getBetaInit(I,net->betainit);
-	  if(g_uniform_entry_exit&1 )probs.getAlphaInit(I,net->alphainit);
-	}
-    }
+  }
   MASSERT( net->alphainit.size()==I );MASSERT( net->betainit.size()==I );
   normalize_if_possible(conv<double>(net->alphainit.begin()),conv<double>(net->alphainit.end()));
   normalize_if_possible(conv<double>(net->betainit.begin()),conv<double>(net->betainit.end()));
@@ -277,86 +277,86 @@ void HMM::em_loop(Perplexity& perp, SentenceHandler& sHandler1,
     Array<double> gamma;
     Array<Array2<double> > epsilon(DependencyOfJ?(m-1):1);
     double trainProb;
-      trainProb=ForwardBackwardTraining(*net,gamma,epsilon);
+    trainProb=ForwardBackwardTraining(*net,gamma,epsilon);
     if( !test )
+    {
+      double *gp=conv<double>(gamma.begin());
+      for(unsigned int i2=0;i2<J;i2++)for(unsigned int i1=0;i1<I;++i1,++gp)
+                                        if( *gp>MINCOUNTINCREASE )
+                                        {
+                                          COUNT add= *gp*so;
+                                          if( i1>=l )
+                                          {
+                                            tTable.incCount(es[0],fs[1+i2],add);
+                                            aCountTable.getRef(0,i2+1,l,m)+=add;
+                                          }
+                                          else
+                                          {
+                                            tTable.incCount(es[1+i1],fs[1+i2],add);
+                                            aCountTable.getRef(1+i1,1+i2,l,m)+=add;
+                                          }
+                                        }
+      double p0c=0.0,np0c=0.0;
+      for(unsigned int jj=0;jj<epsilon.size();jj++)
       {
-	double *gp=conv<double>(gamma.begin());
-	for(unsigned int i2=0;i2<J;i2++)for(unsigned int i1=0;i1<I;++i1,++gp)
-	  if( *gp>MINCOUNTINCREASE )
-	    {
-	      COUNT add= *gp*so;
-	      if( i1>=l )
-		{
-		  tTable.incCount(es[0],fs[1+i2],add);
-		  aCountTable.getRef(0,i2+1,l,m)+=add;
-		}
-	      else
-		{
-		  tTable.incCount(es[1+i1],fs[1+i2],add);
-		  aCountTable.getRef(1+i1,1+i2,l,m)+=add;
-		}
-	    }
-	double p0c=0.0,np0c=0.0;
-	for(unsigned int jj=0;jj<epsilon.size();jj++)
-	  {
-	    int frenchClass=fwordclasses.getClass(fs[1+min(int(m)-1,int(jj)+1)]);
-	    double *ep=epsilon[jj].begin();
-	    if( ep )
-	      {
-		//for(i=0;i<I;i++)
-		//  normalize_if_possible_with_increment(ep+i,ep+i+I*I,I);
-		//		for(i=0;i<I*I;++i)
-		//  ep[i] *= I;
-		//if( DependencyOfJ )
-		//  if( J-1 )
-		//    for(i=0;i<I*I;++i)
-		//      ep[i] /= (J-1);
-		double mult=1.0;
-		mult*=l;
-		//if( DependencyOfJ && J-1)
-		//  mult/=(J-1);
-		for(i=0;i<I;i++)
-		  {
-		    for(unsigned int i_bef=0;i_bef<I;i_bef++,ep++)
-		      {
-			CLASSIFY(i,i_empty,ireal);
-			CLASSIFY2(i_bef,i_befreal);
-			if( i_empty )
-			  p0c+=*ep * mult;
-			else
-			  {
-			    counts.addAlCount(i_befreal,ireal,l,m,ewordclasses.getClass(es[1+i_befreal]),
-					      frenchClass ,jj+1,*ep * mult,0.0);
-			    np0c+=*ep * mult;
-			  }
-			MASSERT( &epsilon[jj](i,i_bef)== ep);
-		      }
-		  }
-	      }
-	  }
-	double *gp1=conv<double>(gamma.begin()),*gp2=conv<double>(gamma.end())-I;
-	Array<double>&ai=counts.doGetAlphaInit(I);
-	Array<double>&bi=counts.doGetBetaInit(I);
-	int firstFrenchClass=(fs.size()>1)?(fwordclasses.getClass(fs[1+0])):0;
-	for(i=0;i<I;i++,gp1++,gp2++)
-	  {
-	    CLASSIFY(i,i_empty,ireal);
-	    ai[i]+= *gp1;
-	    bi[i]+= *gp2;
-	    if( DependencyOfPrevAJ==0 )
-	      {
-		if( i_empty )
-		  p0c+=*gp1;
-		else
-		  {
-		    counts.addAlCount(-1,ireal,l,m,0,firstFrenchClass,0,*gp1,0.0);
-		    np0c+=*gp1;
-		  }
-	      }
-	  }
-    if( Verbose )
-      cout << "l: " << l << "m: " << m << " p0c: " << p0c << " np0c: " << np0c << endl;
+        int frenchClass=fwordclasses.getClass(fs[1+min(int(m)-1,int(jj)+1)]);
+        double *ep=epsilon[jj].begin();
+        if( ep )
+        {
+          //for(i=0;i<I;i++)
+          //  normalize_if_possible_with_increment(ep+i,ep+i+I*I,I);
+          //    for(i=0;i<I*I;++i)
+          //  ep[i] *= I;
+          //if( DependencyOfJ )
+          //  if( J-1 )
+          //    for(i=0;i<I*I;++i)
+          //      ep[i] /= (J-1);
+          double mult=1.0;
+          mult*=l;
+          //if( DependencyOfJ && J-1)
+          //  mult/=(J-1);
+          for(i=0;i<I;i++)
+          {
+            for(unsigned int i_bef=0;i_bef<I;i_bef++,ep++)
+            {
+              CLASSIFY(i,i_empty,ireal);
+              CLASSIFY2(i_bef,i_befreal);
+              if( i_empty )
+                p0c+=*ep * mult;
+              else
+              {
+                counts.addAlCount(i_befreal,ireal,l,m,ewordclasses.getClass(es[1+i_befreal]),
+                                  frenchClass ,jj+1,*ep * mult,0.0);
+                np0c+=*ep * mult;
+              }
+              MASSERT( &epsilon[jj](i,i_bef)== ep);
+            }
+          }
+        }
       }
+      double *gp1=conv<double>(gamma.begin()),*gp2=conv<double>(gamma.end())-I;
+      Array<double>&ai=counts.doGetAlphaInit(I);
+      Array<double>&bi=counts.doGetBetaInit(I);
+      int firstFrenchClass=(fs.size()>1)?(fwordclasses.getClass(fs[1+0])):0;
+      for(i=0;i<I;i++,gp1++,gp2++)
+      {
+        CLASSIFY(i,i_empty,ireal);
+        ai[i]+= *gp1;
+        bi[i]+= *gp2;
+        if( DependencyOfPrevAJ==0 )
+        {
+          if( i_empty )
+            p0c+=*gp1;
+          else
+          {
+            counts.addAlCount(-1,ireal,l,m,0,firstFrenchClass,0,*gp1,0.0);
+            np0c+=*gp1;
+          }
+        }
+      }
+      if( Verbose )
+        cout << "l: " << l << "m: " << m << " p0c: " << p0c << " np0c: " << np0c << endl;
+    }
     cross_entropy+=log(max(trainProb,1e-100))+log(max(net->finalMultiply,1e-100));
     Array<int>vit;
     double viterbi_score=1.0;
@@ -365,11 +365,11 @@ void HMM::em_loop(Perplexity& perp, SentenceHandler& sHandler1,
     else
       viterbi_score=HMMRealViterbi(*net,vit);
     for(j=1;j<=m;j++)
-      {
-	viterbi_alignment[j]=vit[j-1]+1;
-	if( viterbi_alignment[j]>l)
-	  viterbi_alignment[j]=0;
-      }
+    {
+      viterbi_alignment[j]=vit[j-1]+1;
+      if( viterbi_alignment[j]>l)
+        viterbi_alignment[j]=0;
+    }
     sHandler1.setProbOfSentence(sent,cross_entropy);
     perp.addFactor(cross_entropy, so, l, m,1);
     viterbi_perp.addFactor(log(viterbi_score)+log(max(net->finalMultiply,1e-100)), so, l, m,1);

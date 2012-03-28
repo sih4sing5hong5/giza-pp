@@ -40,105 +40,105 @@ class nmodel
   Array2<VALTYPE, Vector<VALTYPE> > ntab;
  public:
   nmodel(int maxw, int maxn)
-    : ntab(maxw, maxn, 0.0)
-    {}
+      : ntab(maxw, maxn, 0.0)
+  {}
   VALTYPE getValue(int w, unsigned int n)const
-    {
-      MASSERT(w!=0);
-      if(n>=ntab.getLen2())
-	return 0.0;
-      else
-	return max(ntab(w, n), VALTYPE(PROB_SMOOTH));
-    }
+  {
+    MASSERT(w!=0);
+    if(n>=ntab.getLen2())
+      return 0.0;
+    else
+      return max(ntab(w, n), VALTYPE(PROB_SMOOTH));
+  }
   VALTYPE&getRef(int w, int n)
-    {
-      //massert(w!=0);
-      return ntab(w, n);
-    }
+  {
+    //massert(w!=0);
+    return ntab(w, n);
+  }
   template<class COUNT>
   void normalize(nmodel<COUNT>&write,const Vector<WordEntry>* _evlist)const
-{
-  int h1=ntab.getLen1(), h2=ntab.getLen2();
-  int nParams=0;
-  if( _evlist&&(NTablesFactorGraphemes||NTablesFactorGeneral) )
+  {
+    int h1=ntab.getLen1(), h2=ntab.getLen2();
+    int nParams=0;
+    if( _evlist&&(NTablesFactorGraphemes||NTablesFactorGeneral) )
     {
       size_t maxlen=0;
       const Vector<WordEntry>&evlist=*_evlist;
       for(unsigned int i=1;i<evlist.size();i++)
-	maxlen=max(maxlen,evlist[i].word.length());
+        maxlen=max(maxlen,evlist[i].word.length());
       Array2<COUNT,Vector<COUNT> > counts(maxlen+1,g_max_fertility+1,0.0);
       Vector<COUNT> nprob_general(g_max_fertility+1,0.0);
       for(unsigned int i=1;i<min((unsigned int)h1,(unsigned int)evlist.size());i++)
-	{
-	  int l=evlist[i].word.length();
-	  for(int k=0;k<h2;k++)
-	    {
-	      counts(l,k)+=getValue(i,k);
-	      nprob_general[k]+=getValue(i,k);
-	    }
-	}
+      {
+        int l=evlist[i].word.length();
+        for(int k=0;k<h2;k++)
+        {
+          counts(l,k)+=getValue(i,k);
+          nprob_general[k]+=getValue(i,k);
+        }
+      }
       COUNT sum2=0;
       for(unsigned int i=1;i<maxlen+1;i++)
-	{
-	  COUNT sum=0.0;
-	  for(int k=0;k<h2;k++)
-	    sum+=counts(i,k);
-	  sum2+=sum;
-	  if( sum )
-	    {
-	      double average=0.0;
-	      //cerr << "l: " << i << " " << sum << " ";
-	      for(int k=0;k<h2;k++)
-		{
-		  counts(i,k)/=sum;
-		  //cerr << counts(i,k) << ' ';
-		  average+=k*counts(i,k);
-		}
-	      //cerr << "avg: " << average << endl;
-	      //cerr << '\n';
-	    }
-	}
+      {
+        COUNT sum=0.0;
+        for(int k=0;k<h2;k++)
+          sum+=counts(i,k);
+        sum2+=sum;
+        if( sum )
+        {
+          double average=0.0;
+          //cerr << "l: " << i << " " << sum << " ";
+          for(int k=0;k<h2;k++)
+          {
+            counts(i,k)/=sum;
+            //cerr << counts(i,k) << ' ';
+            average+=k*counts(i,k);
+          }
+          //cerr << "avg: " << average << endl;
+          //cerr << '\n';
+        }
+      }
       for(unsigned int k=0;k<nprob_general.size();k++)
-	nprob_general[k]/=sum2;
+        nprob_general[k]/=sum2;
 
       for(int i=1;i<h1;i++)
-	{
-	  int l=-1;
-	  if((unsigned int)i<evlist.size())
-	    l=evlist[i].word.length();
-	  COUNT sum=0.0;
-	  for(int k=0;k<h2;k++)
-	    sum+=getValue(i, k)+((l==-1)?0.0:(counts(l,k)*NTablesFactorGraphemes)) + NTablesFactorGeneral*nprob_general[k];
-	  assert(sum);
-	  for(int k=0;k<h2;k++)
-	    {
-	      write.getRef(i, k)=(getValue(i, k)+((l==-1)?0.0:(counts(l,k)*NTablesFactorGraphemes)))/sum + NTablesFactorGeneral*nprob_general[k];
-	      nParams++;
-	    }
-	}
-    }
-  else
-    for(int i=1;i<h1;i++)
       {
-	COUNT sum=0.0;
-	for(int k=0;k<h2;k++)
-	  sum+=getValue(i, k);
-	assert(sum);
-	for(int k=0;k<h2;k++)
-	  {
-	    write.getRef(i, k)=getValue(i, k)/sum;
-	    nParams++;
-	  }
+        int l=-1;
+        if((unsigned int)i<evlist.size())
+          l=evlist[i].word.length();
+        COUNT sum=0.0;
+        for(int k=0;k<h2;k++)
+          sum+=getValue(i, k)+((l==-1)?0.0:(counts(l,k)*NTablesFactorGraphemes)) + NTablesFactorGeneral*nprob_general[k];
+        assert(sum);
+        for(int k=0;k<h2;k++)
+        {
+          write.getRef(i, k)=(getValue(i, k)+((l==-1)?0.0:(counts(l,k)*NTablesFactorGraphemes)))/sum + NTablesFactorGeneral*nprob_general[k];
+          nParams++;
+        }
       }
-  cerr << "NTable contains " << nParams << " parameter.\n";
-}
+    }
+    else
+      for(int i=1;i<h1;i++)
+      {
+        COUNT sum=0.0;
+        for(int k=0;k<h2;k++)
+          sum+=getValue(i, k);
+        assert(sum);
+        for(int k=0;k<h2;k++)
+        {
+          write.getRef(i, k)=getValue(i, k)/sum;
+          nParams++;
+        }
+      }
+    cerr << "NTable contains " << nParams << " parameter.\n";
+  }
 
   void clear()
-    {
-      int h1=ntab.getLen1(), h2=ntab.getLen2();
-      for(int i=0;i<h1;i++)for(int k=0;k<h2;k++)
-	ntab(i, k)=0;
-    }
+  {
+    int h1=ntab.getLen1(), h2=ntab.getLen2();
+    for(int i=0;i<h1;i++)for(int k=0;k<h2;k++)
+                           ntab(i, k)=0;
+  }
   void printNTable(int noEW, const char* filename, const Vector<WordEntry>& evlist, bool) const;
   void readNTable(const char *filename);
 

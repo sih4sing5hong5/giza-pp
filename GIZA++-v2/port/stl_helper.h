@@ -58,7 +58,7 @@ inline double verfProb(int n1,int n2)
   else if( n1==2 )return prob*n2mult;
   else if( n1==3 )return prob*n3mult;
   else
-  return prob;
+    return prob;
 }
 
 inline bool prefix(const string&x,const string&y)
@@ -91,13 +91,13 @@ inline int Hash(const string& s)
 template<class A,class B,class C>
 class tri
 {
-public:
+ public:
   A a;
   B b;
   C c;
   tri(){};
   tri(const A&_a,const B&_b,const C&_c)
-    : a(_a),b(_b),c(_c) {}
+      : a(_a),b(_b),c(_c) {}
 };
 template<class A,class B,class C>
 bool operator==(const tri<A,B,C>&x,const tri<A,B,C>&y)
@@ -120,7 +120,7 @@ double used_time();
 template<class T>
 class my_hash
 {
-public:
+ public:
   int operator()(const T&t)const {return Hash(t);}
 };
 
@@ -130,35 +130,35 @@ inline int Hash(int value) { return value; }
 template<class A,class B>
 class leda_h_array : public MY_HASH_BASE
 {
-private:
+ private:
   B init;
-public:
+ public:
   leda_h_array() : MY_HASH_BASE() {}
   leda_h_array(const B&_init)
-    : MY_HASH_BASE(),init(_init) {}
+  : MY_HASH_BASE(),init(_init) {}
   bool defined(const A&a) const
-    { return find(a)!=this->end(); }
+  { return find(a)!=this->end(); }
   const B&operator[](const A&a)const
-    {
-      typename MY_HASH_BASE::const_iterator pos=find(a);
-      if( pos==this->end() )
-	return init;
-      else
-	return pos->second;
-    }
-  B&operator[](const A&a)
-    {
-      typename MY_HASH_BASE::iterator pos=find(a);
-      if( pos==this->end() )
-	{
-	  insert(MY_HASH_BASE::value_type(a,init));
-	  pos=find(a);
-	  iassert(pos!=this->end());
-	}
+  {
+    typename MY_HASH_BASE::const_iterator pos=find(a);
+    if( pos==this->end() )
+      return init;
+    else
       return pos->second;
+  }
+  B&operator[](const A&a)
+  {
+    typename MY_HASH_BASE::iterator pos=find(a);
+    if( pos==this->end() )
+    {
+      insert(MY_HASH_BASE::value_type(a,init));
+      pos=find(a);
+      iassert(pos!=this->end());
     }
+    return pos->second;
+  }
   const B&initValue()const
-    {return init;}
+  {return init;}
 };
 
 #define forall_defined_h(a,b,c,d) for(typename leda_h_array<a,b>::const_iterator __jj__=(d).begin();__jj__!=(d).end()&&((c=__jj__->first),1); ++__jj__)
@@ -169,12 +169,12 @@ ostream & operator<<(ostream&out,const leda_h_array<T,U>&w)
   bool makeNl=0;
   out << "h_array{";
   forall_defined_h(T,U,t,w)
-    {
-      if( makeNl )
-	out << "\n       ";
-      out << "EL:" << t << " INH:" << w[t] << ".";
-      makeNl=1;
-    }
+  {
+    if( makeNl )
+      out << "\n       ";
+    out << "EL:" << t << " INH:" << w[t] << ".";
+    makeNl=1;
+  }
   return out << "}\n";
 }
 
@@ -189,9 +189,9 @@ bool operator==(const leda_h_array<A,B>&p1,const leda_h_array<A,B>&p2)
 {
   A v;
   forall_defined_h(A,B,v,p1)
-    if( !( p1[v]==p2[v]) ) return 0;
+      if( !( p1[v]==p2[v]) ) return 0;
   forall_defined_h(A,B,v,p2)
-    if( !( p1[v]==p2[v]) ) return 0;
+      if( !( p1[v]==p2[v]) ) return 0;
   return 1;
 }
 
@@ -200,10 +200,10 @@ int count_elements(T a,T b)
 {
   int c=0;
   while(a!=b)
-    {
-      a++;
-      c++;
-    }
+  {
+    a++;
+    c++;
+  }
   return c;
 }
 
@@ -217,11 +217,11 @@ T normalize_if_possible_with_increment(T*a,T*b,int increment)
     for(T*i=a;i!=b;i+=increment)
       *i/=sum;
   else
-    {
-      T factor=increment/(b-a);
-      for(T*i=a;i!=b;i+=increment)
-	*i=factor;
-    }
+  {
+    T factor=increment/(b-a);
+    for(T*i=a;i!=b;i+=increment)
+      *i=factor;
+  }
   return sum;
 }
 
@@ -230,14 +230,14 @@ inline int m_comp_3way(T a,T b,int n)
 {
   int _n=0;
   while((_n++<n) && a && b)
-    {
-      const typename T::value_type &aa=*a;
-      const typename T::value_type &bb=*b;
-      if( aa<bb )return 1;
-      if( bb<aa )return -1;
-      ++a;
-      ++b;
-    }
+  {
+    const typename T::value_type &aa=*a;
+    const typename T::value_type &bb=*b;
+    if( aa<bb )return 1;
+    if( bb<aa )return -1;
+    ++a;
+    ++b;
+  }
   return 0;
 }
 
@@ -266,10 +266,10 @@ T *conv(typename vector<T>::iterator i)
 #endif
 
 /*template<class T>
-const T *conv(const T*x)
-{
+  const T *conv(const T*x)
+  {
   return x;
-}*/
+  }*/
 template<class T>
 T *conv(T*x)
 {

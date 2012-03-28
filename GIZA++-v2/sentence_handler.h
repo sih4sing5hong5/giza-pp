@@ -40,16 +40,16 @@
 #include "vocab.h"
 #include "globals.h"
 /*----------------------- Class Prototype Definition ------------------------*
- Class Name: sentenceHandleer
- Objective: This class is defined to handle training sentece pairs from the
- parallel corpus. Each pair has: a target sentece, called here French; a
- source sentece, called here English sentece; and an integer number denoting
- the number of times this pair occured in trining corpus. Both source and
- target senteces are represented as integer vector (variable size arrays),
- each entry is a numeric value which is the token id for the particular token
- in the sentece.
+  Class Name: sentenceHandleer
+  Objective: This class is defined to handle training sentece pairs from the
+  parallel corpus. Each pair has: a target sentece, called here French; a
+  source sentece, called here English sentece; and an integer number denoting
+  the number of times this pair occured in trining corpus. Both source and
+  target senteces are represented as integer vector (variable size arrays),
+  each entry is a numeric value which is the token id for the particular token
+  in the sentece.
 
- *---------------------------------------------------------------------------*/
+  *---------------------------------------------------------------------------*/
 
 class SentencePair {
  public:
@@ -65,13 +65,13 @@ class SentencePair {
 
   void clear(){ eSent.clear(); fSent.clear(); noOcc=0; realCount=0; sentenceNo=0;};
   const Vector<WordIndex>&get_eSent()const
-    { return eSent; }
+  { return eSent; }
   const Vector<WordIndex>&get_fSent()const
-    { return fSent; }
+  { return fSent; }
   int getSentenceNo()const
-    { return sentenceNo; }
+  { return sentenceNo; }
   double getCount()const
-    { return realCount; }
+  { return realCount; }
 };
 
 inline ostream&operator<<(ostream&of,const SentencePair&s)
@@ -90,7 +90,7 @@ inline ostream&operator<<(ostream&of,const SentencePair&s)
 }
 
 class SentenceHandler {
-public:
+ public:
   // TODO: Should be private.
   const char * inputFilename; // parallel corpus file name, similar for all
   ifstream *inputFile;                 // parallel corpus file handler

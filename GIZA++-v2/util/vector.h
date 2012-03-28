@@ -65,149 +65,149 @@ template<class T> class Vector
 
  public:
   Vector()
-    : p(0), realSize(0), maxWritten(-1)
-    {
+      : p(0), realSize(0), maxWritten(-1)
+  {
 #ifdef VERY_ARRAY_DEBUG
-      cout << "MAKE ARRAY: " << this<<" "<<(void*)p << '\n';
+    cout << "MAKE ARRAY: " << this<<" "<<(void*)p << '\n';
 #endif
-    }
+  }
   Vector(const Vector<T> &x)
-    : p(new T[x.maxWritten+1]), realSize(x.maxWritten+1), maxWritten(x.maxWritten)
-    {
-      memo_new(p);
-      copy(p, x.p, realSize);
+      : p(new T[x.maxWritten+1]), realSize(x.maxWritten+1), maxWritten(x.maxWritten)
+  {
+    memo_new(p);
+    copy(p, x.p, realSize);
 #ifdef VERY_ARRAY_DEBUG
-      cout << "MAKE ARRAY copy: " << this << " " << realSize <<" "<<(void*)p<< '\n';
+    cout << "MAKE ARRAY copy: " << this << " " << realSize <<" "<<(void*)p<< '\n';
 #endif
-    }
+  }
   explicit Vector(int n)
-    : p(new T[n]), realSize(n), maxWritten(n-1)
-    {
-      memo_new(p);
+  : p(new T[n]), realSize(n), maxWritten(n-1)
+  {
+    memo_new(p);
 #ifdef VERY_ARRAY_DEBUG
-      cout << "MAKE ARRAY with parameter n: " << this << " " << realSize<<" "<<(void*)p << '\n';
+    cout << "MAKE ARRAY with parameter n: " << this << " " << realSize<<" "<<(void*)p << '\n';
 #endif
-    }
+  }
   Vector(int n, const T&_init)
-    : p(new T[n]), realSize(n), maxWritten(n-1)
-    {
-      memo_new(p);
-      for(int iii=0;iii<n;iii++)p[iii]=_init;
+      : p(new T[n]), realSize(n), maxWritten(n-1)
+  {
+    memo_new(p);
+    for(int iii=0;iii<n;iii++)p[iii]=_init;
 #ifdef VERY_ARRAY_DEBUG
-      cout << "MAKE ARRAY with parameter n and init: " << this << " " << realSize<<" "<<(void*)p << '\n';
+    cout << "MAKE ARRAY with parameter n and init: " << this << " " << realSize<<" "<<(void*)p << '\n';
 #endif
-    }
+  }
 
   ~Vector()
+  {
+#ifdef VERY_ARRAY_DEBUG
+    cout << "FREE ARRAY: " << this << " " << realSize<<" "<<(void*)p << '\n';
+#endif
+    delete [] p;
+    memo_del(p, 1);
+#ifndef NDEBUG
+    p=0;realSize=-1;maxWritten=-1;
+#endif
+  }
+
+  Vector<T>& operator=(const Vector<T>&x)
+  {
+    if( this!= &x )
     {
 #ifdef VERY_ARRAY_DEBUG
-      cout << "FREE ARRAY: " << this << " " << realSize<<" "<<(void*)p << '\n';
+      cout << "FREE ARRAY because of operator=: " << this << " " << realSize<<" "<<(void*)p << '\n';
 #endif
       delete [] p;
       memo_del(p, 1);
-#ifndef NDEBUG
-      p=0;realSize=-1;maxWritten=-1;
+      realSize = x.maxWritten+1;
+      maxWritten = x.maxWritten;
+      p = new T[realSize];
+      memo_new(p);
+      copy(p, x.p, realSize);
+#ifdef VERY_ARRAY_DEBUG
+      cout << "NEW ARRAY because of operator=: " << this << " " << realSize<<" "<<(void*)p << '\n';
 #endif
     }
-
-  Vector<T>& operator=(const Vector<T>&x)
-    {
-      if( this!= &x )
-	{
-#ifdef VERY_ARRAY_DEBUG
-	  cout << "FREE ARRAY because of operator=: " << this << " " << realSize<<" "<<(void*)p << '\n';
-#endif
-	  delete [] p;
-	  memo_del(p, 1);
-	  realSize = x.maxWritten+1;
-	  maxWritten = x.maxWritten;
-	  p = new T[realSize];
-	  memo_new(p);
-	  copy(p, x.p, realSize);
-#ifdef VERY_ARRAY_DEBUG
-	  cout << "NEW ARRAY because of operator=: " << this << " " << realSize<<" "<<(void*)p << '\n';
-#endif
-	}
-      return *this;
-    }
+    return *this;
+  }
 
   Vector<T>& operator=(Vector<T>&x)
+  {
+    if( this!= &x )
     {
-      if( this!= &x )
-	{
 #ifdef VERY_ARRAY_DEBUG
-	  cout << "FREE ARRAY because of operator=: " << this << " " << realSize<<" "<<(void*)p << '\n';
+      cout << "FREE ARRAY because of operator=: " << this << " " << realSize<<" "<<(void*)p << '\n';
 #endif
-	  delete [] p;
-	  memo_del(p, 1);
-	  realSize = x.maxWritten+1;
-	  maxWritten = x.maxWritten;
-	  p = new T[realSize];
-	  memo_new(p);
-	  copy(p, x.p, realSize);
+      delete [] p;
+      memo_del(p, 1);
+      realSize = x.maxWritten+1;
+      maxWritten = x.maxWritten;
+      p = new T[realSize];
+      memo_new(p);
+      copy(p, x.p, realSize);
 #ifdef VERY_ARRAY_DEBUG
-	  cout << "NEW ARRAY because of operator=: " << this << " " << realSize<<" "<<(void*)p << '\n';
+      cout << "NEW ARRAY because of operator=: " << this << " " << realSize<<" "<<(void*)p << '\n';
 #endif
-	}
-      return *this;
     }
+    return *this;
+  }
 
   void allowAccess(int n)
-    {
-      while( realSize<=n )
-	_expand();
-      maxWritten=max(maxWritten, n);
-      assert( maxWritten<realSize );
-    }
+  {
+    while( realSize<=n )
+      _expand();
+    maxWritten=max(maxWritten, n);
+    assert( maxWritten<realSize );
+  }
   void resize(int n)
-    {
-      while( realSize<n )
-	_expand();
-      maxWritten=n-1;
-    }
+  {
+    while( realSize<n )
+      _expand();
+    maxWritten=n-1;
+  }
   void clear()
-    {
-      resize(0);
-    }
+  {
+    resize(0);
+  }
   void reserve(int n)
-    {
-      int maxOld=maxWritten;
-      resize(n);
-      maxWritten=maxOld;
-    }
+  {
+    int maxOld=maxWritten;
+    resize(n);
+    maxWritten=maxOld;
+  }
   void sort(int until=-1)
-    {
-      if( until== -1 ) until=size();
-      std::sort(p, p+until);
-    }
+  {
+    if( until== -1 ) until=size();
+    std::sort(p, p+until);
+  }
   void invsort(int until=-1)
-    {
-      if( until== -1 ) until=size();
-      std::sort(p, p+until, greater<T>());
-    }
+  {
+    if( until== -1 ) until=size();
+    std::sort(p, p+until, greater<T>());
+  }
   void init(int n, const T&_init)
-    {
+  {
 #ifdef VERY_ARRAY_DEBUG
-      cout << "FREE ARRAY because of init: " << this << " " << realSize<<" "<<(void*)p << '\n';
+    cout << "FREE ARRAY because of init: " << this << " " << realSize<<" "<<(void*)p << '\n';
 #endif
-      delete []p;
-      memo_del(p, 1);
-      p=new T[n];
-      memo_new(p);
-      realSize=n;
-      maxWritten=n-1;
-      for(int iii=0;iii<n;iii++)p[iii]=_init;
+    delete []p;
+    memo_del(p, 1);
+    p=new T[n];
+    memo_new(p);
+    realSize=n;
+    maxWritten=n-1;
+    for(int iii=0;iii<n;iii++)p[iii]=_init;
 #ifdef VERY_ARRAY_DEBUG
-      cout << "NEW ARRAY because of init: " << this << " " << realSize<<" "<<(void*)p << '\n';
+    cout << "NEW ARRAY because of init: " << this << " " << realSize<<" "<<(void*)p << '\n';
 #endif
-    }
+  }
   inline unsigned int size() const
-    {assert( maxWritten<realSize );
+  {assert( maxWritten<realSize );
     return maxWritten+1;}
   inline int low() const
-    { return 0; }
+  { return 0; }
   inline int high() const
-    { return maxWritten; }
+  { return maxWritten; }
   int findMax() const;
   int findMin() const;
   void errorAccess(int n) const;
@@ -215,82 +215,82 @@ template<class T> class Vector
   inline T*begin(){return p;}
   inline T*end(){return p+maxWritten+1;}
   inline T& operator[](int n)
-    {
+  {
 #ifndef NDEBUG
-      if( n<0 || n>maxWritten )
-	errorAccess(n);
+    if( n<0 || n>maxWritten )
+      errorAccess(n);
 #endif
-      return p[n];
-    }
+    return p[n];
+  }
   inline const T& operator[](int n) const
-    {
+  {
 #ifndef NDEBUG
-      if(n<0 || n>maxWritten )
-	errorAccess(n);
+    if(n<0 || n>maxWritten )
+      errorAccess(n);
 #endif
-      return p[n];
-    }
+    return p[n];
+  }
   inline const T& get(int n) const
-    {
+  {
 #ifndef NDEBUG
-      if(n<0 || n>maxWritten )
-	errorAccess(n);
+    if(n<0 || n>maxWritten )
+      errorAccess(n);
 #endif
-      return p[n];
-    }
+    return p[n];
+  }
   const T&top(int n=0) const
-    {return (*this)[maxWritten-n];}
+  {return (*this)[maxWritten-n];}
   T&top(int n=0)
-    {return (*this)[maxWritten-n];}
+  {return (*this)[maxWritten-n];}
   const T&back(int n=0) const
-    {return (*this)[maxWritten-n];}
+  {return (*this)[maxWritten-n];}
   T&back(int n=0)
-    {return (*this)[maxWritten-n];}
+  {return (*this)[maxWritten-n];}
   T&push_back(const T&x)
+  {
+    allowAccess(maxWritten+1);
+    (*this)[maxWritten]=x;
+    return top();
+  }
+  /*
+    bool writeTo(ostream&out) const
     {
-      allowAccess(maxWritten+1);
-      (*this)[maxWritten]=x;
-      return top();
-    }
-    /*
-  bool writeTo(ostream&out) const
+    out << "Vector ";
+    out << size() << " ";
+    out << a << '\n';
+    for(int iv=0;iv<=maxWritten;iv++)
     {
-      out << "Vector ";
-      out << size() << " ";
-      out << a << '\n';
-      for(int iv=0;iv<=maxWritten;iv++)
-	{
-	  writeOb(out, (*this)[iv]);
-	  out << '\n';
-	}
-      return 1;
+    writeOb(out, (*this)[iv]);
+    out << '\n';
     }
-    */
+    return 1;
+    }
+  */
 
   bool readFrom(istream&in)
+  {
+    string s;
+    if( !in )
     {
-      string s;
-      if( !in )
-	{
-	  cerr << "ERROR(Vector): file cannot be opened.\n";
-	  return 0;
-	}
-      in >> s;
-      if( !(s=="Vector") )
-	{
-	  cerr << "ERROR(Vector): Vector!='"<<s<<"'\n";
-	  return 0;
-	}
-      int biggest;
-      in >> biggest;
-      // in >> a;
-      resize(biggest);
-      for(int iv=0;iv<size();iv++)
-	{
-	  readOb(in, (*this)[iv]);
-	}
-      return 1;
+      cerr << "ERROR(Vector): file cannot be opened.\n";
+      return 0;
     }
+    in >> s;
+    if( !(s=="Vector") )
+    {
+      cerr << "ERROR(Vector): Vector!='"<<s<<"'\n";
+      return 0;
+    }
+    int biggest;
+    in >> biggest;
+    // in >> a;
+    resize(biggest);
+    for(int iv=0;iv<size();iv++)
+    {
+      readOb(in, (*this)[iv]);
+    }
+    return 1;
+  }
 };
 
 template<class T> bool operator==(const Vector<T> &x, const Vector<T> &y)
@@ -298,17 +298,17 @@ template<class T> bool operator==(const Vector<T> &x, const Vector<T> &y)
   if( &x == &y )
     return 1;
   else
+  {
+    if( y.size()!=x.size() )
+      return 0;
+    else
     {
-      if( y.size()!=x.size() )
-	return 0;
-      else
-	{
-	  for(unsigned int iii=0;iii<x.size();iii++)
-	    if( !(x[iii]==y[iii]) )
-	      return 0;
-	  return 1;
-	}
+      for(unsigned int iii=0;iii<x.size();iii++)
+        if( !(x[iii]==y[iii]) )
+          return 0;
+      return 1;
     }
+  }
 }
 template<class T> bool operator!=(const Vector<T> &x, const Vector<T> &y)
 {
@@ -320,26 +320,26 @@ template<class T> bool operator<(const Vector<T> &x, const Vector<T> &y)
   if( &x == &y )
     return 0;
   else
+  {
+    if( y.size()<x.size() )
+      return !(y<x);
+    for(int iii=0;iii<x.size();iii++)
     {
-      if( y.size()<x.size() )
-	return !(y<x);
-      for(int iii=0;iii<x.size();iii++)
-	{
-	  assert( iii!=y.size() );
-	  if( x[iii]<y[iii] )
-	    return 1;
-	  else if( y[iii]<x[iii] )
-	    return 0;
-	}
-      return x.size()!=y.size();//??
+      assert( iii!=y.size() );
+      if( x[iii]<y[iii] )
+        return 1;
+      else if( y[iii]<x[iii] )
+        return 0;
     }
+    return x.size()!=y.size();//??
+  }
 }
 
 
 template<class T> void Vector<T>:: errorAccess(int n) const
 {
-  cerr 	<< "ERROR: Access to array element " << n
-	<< " (" << maxWritten << ", " << realSize << ", " << (void*)p << ")\n";
+  cerr  << "ERROR: Access to array element " << n
+        << " (" << maxWritten << ", " << realSize << ", " << (void*)p << ")\n";
   cout <<  "ERROR: Access to array element " << n
        << " (" << maxWritten << ", " << realSize << ", " << (void*)p << ")\n";
   assert(0);
@@ -400,26 +400,26 @@ template<class T> int Vector<T>::findMax() const
   if( size()==0 )
     return -1;
   else
-    {
-      int maxPos=0;
-      for(int iii=1;iii<size();iii++)
-	if( (*this)[maxPos]<(*this)[iii] )
-	  maxPos=iii;
-      return maxPos;
-    }
+  {
+    int maxPos=0;
+    for(int iii=1;iii<size();iii++)
+      if( (*this)[maxPos]<(*this)[iii] )
+        maxPos=iii;
+    return maxPos;
+  }
 }
 template<class T> int Vector<T>::findMin() const
 {
   if( size()==0 )
     return -1;
   else
-    {
-      int minPos=0;
-      for(int iii=1;iii<size();iii++)
-	if( (*this)[iii]<(*this)[minPos] )
-	  minPos=iii;
-      return minPos;
-    }
+  {
+    int minPos=0;
+    for(int iii=1;iii<size();iii++)
+      if( (*this)[iii]<(*this)[minPos] )
+        minPos=iii;
+    return minPos;
+  }
 }
 
 #endif

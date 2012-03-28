@@ -46,9 +46,9 @@ GLOBAL_PARAMETER(double,Manlexfactor1,"manlexfactor1","",kParLevEM,0.0);
 GLOBAL_PARAMETER(double,Manlexfactor2,"manlexfactor2","",kParLevEM,0.0);
 
 SentenceHandler::SentenceHandler(const char*  filename, VocabList* elist,
-				 VocabList*  flist) : realCount(0)
-  // This method is the constructor of the class, it also intitializes the
-  // sentence pair sequential number (count) to zero.
+                                 VocabList*  flist) : realCount(0)
+                                                      // This method is the constructor of the class, it also intitializes the
+                                                      // sentence pair sequential number (count) to zero.
 
 {
   readflag = false ;
@@ -71,21 +71,21 @@ SentenceHandler::SentenceHandler(const char*  filename, VocabList* elist,
     cout << "Calculating vocabulary frequencies from corpus " << filename << '\n';
     SentencePair s ;
     while (getNextSentence(s, elist, flist))
-      {
-	totalPairs1++;
-	totalPairs2+=s.realCount;
-	// NOTE: this value might change during training
-	// for words from the manual dictionary, yet this is ignored!
+    {
+      totalPairs1++;
+      totalPairs2+=s.realCount;
+      // NOTE: this value might change during training
+      // for words from the manual dictionary, yet this is ignored!
 
-	if( s.noOcc<0 )
-	  isNegative=1;
-      }
+      if( s.noOcc<0 )
+        isNegative=1;
+    }
   }
   if( isNegative==1 )
-    {
-      cerr << "WARNING: corpus contains negative occurrency frequencies => these are interpreted as entries of a manual dictionary.\n";
-      realCount=new Vector<double>(totalPairs1,1.0);
-    }
+  {
+    cerr << "WARNING: corpus contains negative occurrency frequencies => these are interpreted as entries of a manual dictionary.\n";
+    realCount=new Vector<double>(totalPairs1,1.0);
+  }
   else
     realCount=0;
 }
@@ -134,44 +134,44 @@ bool SentenceHandler::getNextSentence(SentencePair& sent, VocabList* elist, Voca
     cout << "Reading more sentence pairs into memory ... \n";
     while((noSentInBuffer < kTrainBufSize) && readNextSentence(s)){
       if ((s.fSent.size()-1) > (g_max_fertility-1) * (s.eSent.size()-1)){
-	cerr << "WARNING: The following sentence pair has source/target sentence length ration more than\n"<<
-	  "the maximum allowed limit for a source word fertility\n"<<
-	  " source length = " << s.eSent.size()-1 << " target length = " << s.fSent.size()-1 <<
-	  " ratio " << double(s.fSent.size()-1)/  (s.eSent.size()-1) << " ferility limit : " <<
-	  g_max_fertility-1 << '\n';
-	cerr << "Shortening sentence \n";
-	cerr << s;
-	s.eSent.resize(min(s.eSent.size(),s.fSent.size()));
-	s.fSent.resize(min(s.eSent.size(),s.fSent.size()));
+        cerr << "WARNING: The following sentence pair has source/target sentence length ration more than\n"<<
+            "the maximum allowed limit for a source word fertility\n"<<
+            " source length = " << s.eSent.size()-1 << " target length = " << s.fSent.size()-1 <<
+            " ratio " << double(s.fSent.size()-1)/  (s.eSent.size()-1) << " ferility limit : " <<
+            g_max_fertility-1 << '\n';
+        cerr << "Shortening sentence \n";
+        cerr << s;
+        s.eSent.resize(min(s.eSent.size(),s.fSent.size()));
+        s.fSent.resize(min(s.eSent.size(),s.fSent.size()));
       }
       Buffer.push_back(s) ;
       if (elist && flist){
-	if ((*elist).size() > 0)
-	  for (WordIndex i= 0 ; i < s.eSent.size() ; i++){
-	    if (s.eSent[i] >= (*elist).uniqTokens()){
-	      if( PrintedTooLong++<100)
-		cerr << "ERROR: source word " << s.eSent[i] << " is not in the vocabulary list \n";
-	      exit(-1);
-	    }
-	    (*elist).incFreq(s.eSent[i], s.realCount);
-	  }
-	if ((*flist).size() > 0)
-	  for (WordIndex j= 1 ; j < s.fSent.size() ; j++){
-	    if (s.fSent[j] >= (*flist).uniqTokens()){
-	      cerr << "ERROR: target word " << s.fSent[j] << " is not in the vocabulary list \n";
-	      exit(-1);
-	    }
-	    (*flist).incFreq(s.fSent[j], s.realCount);
-	  }
+        if ((*elist).size() > 0)
+          for (WordIndex i= 0 ; i < s.eSent.size() ; i++){
+            if (s.eSent[i] >= (*elist).uniqTokens()){
+              if( PrintedTooLong++<100)
+                cerr << "ERROR: source word " << s.eSent[i] << " is not in the vocabulary list \n";
+              exit(-1);
+            }
+            (*elist).incFreq(s.eSent[i], s.realCount);
+          }
+        if ((*flist).size() > 0)
+          for (WordIndex j= 1 ; j < s.fSent.size() ; j++){
+            if (s.fSent[j] >= (*flist).uniqTokens()){
+              cerr << "ERROR: target word " << s.fSent[j] << " is not in the vocabulary list \n";
+              exit(-1);
+            }
+            (*flist).incFreq(s.fSent[j], s.realCount);
+          }
       }
       noSentInBuffer++;
     }
     if (inputFile->eof()){
       allInMemory = (Buffer.size() >= 1 &&
-		     Buffer[currentSentence].sentenceNo == 1) ;
+                     Buffer[currentSentence].sentenceNo == 1) ;
       if (allInMemory)
-	cout << "Corpus fits in memory, corpus has: " << Buffer.size() <<
-	  " sentence pairs.\n";
+        cout << "Corpus fits in memory, corpus has: " << Buffer.size() <<
+            " sentence pairs.\n";
     }
   }
   if(noSentInBuffer <= 0 ){
@@ -181,22 +181,22 @@ bool SentenceHandler::getNextSentence(SentencePair& sent, VocabList* elist, Voca
   }
   sent = Buffer[currentSentence++] ;
   if( sent.noOcc<0 && realCount )
-    {
-      if( Manlexfactor1 && sent.noOcc==-1.0 )
-	sent.realCount=Manlexfactor1;
-      else if( Manlexfactor2 && sent.noOcc==-2.0 )
-	sent.realCount=Manlexfactor2;
-      else
-	sent.realCount=(*realCount)[sent.getSentenceNo()-1];
-    }
+  {
+    if( Manlexfactor1 && sent.noOcc==-1.0 )
+      sent.realCount=Manlexfactor1;
+    else if( Manlexfactor2 && sent.noOcc==-2.0 )
+      sent.realCount=Manlexfactor2;
+    else
+      sent.realCount=(*realCount)[sent.getSentenceNo()-1];
+  }
   return true ;
 }
 bool SentenceHandler::readNextSentence(SentencePair& sent)
-  /* This method reads in a new pair of sentences, each pair is read from the
-     corpus file as line triples. The first line the no of times this line
-     pair occured in the corpus, the second line is the source sentence and
-     the third is the target sentence. The sentences are represented by a space
-     separated positive integer token ids. */
+    /* This method reads in a new pair of sentences, each pair is read from the
+       corpus file as line triples. The first line the no of times this line
+       pair occured in the corpus, the second line is the source sentence and
+       the third is the target sentence. The sentences are represented by a space
+       separated positive integer token ids. */
 {
 
   string line;
@@ -207,21 +207,21 @@ bool SentenceHandler::readNextSentence(SentencePair& sent)
     istringstream buffer(line);
     buffer >> sent.noOcc;
     if( sent.noOcc<0 )
+    {
+      if( realCount )
       {
-	if( realCount )
-	  {
-	    if( Manlexfactor1 && sent.noOcc==-1.0 )
-	      sent.realCount=Manlexfactor1;
-	    else if( Manlexfactor2 && sent.noOcc==-2.0 )
-	      sent.realCount=Manlexfactor2;
-	    else
-	      {
-		sent.realCount=(*realCount)[pair_no];
-	      }
-	  }
-	else
-	  sent.realCount=1.0;
+        if( Manlexfactor1 && sent.noOcc==-1.0 )
+          sent.realCount=Manlexfactor1;
+        else if( Manlexfactor2 && sent.noOcc==-2.0 )
+          sent.realCount=Manlexfactor2;
+        else
+        {
+          sent.realCount=(*realCount)[pair_no];
+        }
       }
+      else
+        sent.realCount=1.0;
+    }
     else
       sent.realCount=sent.noOcc;
   }
@@ -235,13 +235,13 @@ bool SentenceHandler::readNextSentence(SentencePair& sent)
     // a null word (id 0) at the begining of the sentence.
     while(buffer>>w){ // read source sentece , word by word .
       if (sent.eSent.size() < MAX_SENTENCE_LENGTH)
-	sent.eSent.push_back(w);
+        sent.eSent.push_back(w);
       else {
-	if( PrintedTooLong++<100)
-	  cerr << "{WARNING:(a)truncated sentence "<<pair_no<<"}";
-	//cerr << "ERROR: getSentence.cc:getNextSentence(): sentence exceeds preset length limit of : " << MAX_SENTENCE_LENGTH << '\n';
-	//cerr << "The following sentence will be truncated\n" << line;
-	break ;
+        if( PrintedTooLong++<100)
+          cerr << "{WARNING:(a)truncated sentence "<<pair_no<<"}";
+        //cerr << "ERROR: getSentence.cc:getNextSentence(): sentence exceeds preset length limit of : " << MAX_SENTENCE_LENGTH << '\n';
+        //cerr << "The following sentence will be truncated\n" << line;
+        break ;
       }
     }
   }
@@ -254,13 +254,13 @@ bool SentenceHandler::readNextSentence(SentencePair& sent)
     sent.fSent.push_back(0); //0 is inserted for program uniformity
     while(buffer>>w){ // read target sentece , word by word .
       if (sent.fSent.size() < MAX_SENTENCE_LENGTH)
-	sent.fSent.push_back(w);
+        sent.fSent.push_back(w);
       else {
-	if( PrintedTooLong++<100)
-	  cerr << "{WARNING:(b)truncated sentence "<<pair_no<<"}";
-	//cerr << "ERROR: getSentence.cc:getNextSentence(): sentence exceeds preset length limit of : " << MAX_SENTENCE_LENGTH << '\n';
-	//cerr << "The following sentence will be truncated\n" << line;
-	break ;
+        if( PrintedTooLong++<100)
+          cerr << "{WARNING:(b)truncated sentence "<<pair_no<<"}";
+        //cerr << "ERROR: getSentence.cc:getNextSentence(): sentence exceeds preset length limit of : " << MAX_SENTENCE_LENGTH << '\n';
+        //cerr << "The following sentence will be truncated\n" << line;
+        break ;
       }
     }
   }
@@ -287,22 +287,22 @@ double optimize_lambda(Vector<double>&vd)
 {
   Vector<double> l;
   for(double lambda=1.0;lambda<ManlexMAX_MULTIPLICITY;lambda+=0.33)
+  {
+    double prod=0.0;
+    for(unsigned int i=0;i<vd.size();++i)
     {
-      double prod=0.0;
-      for(unsigned int i=0;i<vd.size();++i)
-	{
-	  prod += vd[i]*exp(lambda*vd[i])/(exp(lambda*vd[i])-1.0);
-	}
-      l.push_back(fabs(prod-1.0));
+      prod += vd[i]*exp(lambda*vd[i])/(exp(lambda*vd[i])-1.0);
     }
+    l.push_back(fabs(prod-1.0));
+  }
   double lam=double(min_element(l.begin(),l.end())-l.begin())*0.33+1.0;
   if( lam<1.0 )
-    {
-      cerr << "ERROR: lambda is smaller than one: " << lam << endl;
-      for(unsigned int i=0;i<vd.size();++i)
-	cerr << vd[i] << ' ';
-      cerr << endl;
-    }
+  {
+    cerr << "ERROR: lambda is smaller than one: " << lam << endl;
+    for(unsigned int i=0;i<vd.size();++i)
+      cerr << vd[i] << ' ';
+    cerr << endl;
+  }
   return lam;
 }
 
@@ -311,27 +311,27 @@ void SentenceHandler::setProbOfSentence(const SentencePair&s,double d)
   if( realCount==0 )
     return;
   else
+  {
+    if( s.noOcc<=0 )
     {
-      if( s.noOcc<=0 )
-	{
-	  double ed=exp(d);
-	  if( oldPairs.size()>0&&(oldPairs.back().get_eSent()!=s.get_eSent()||oldPairs.back().getSentenceNo()>=s.getSentenceNo()) )
-	    {
-	      double lambda=optimize_lambda(oldProbs);
-	      for(unsigned int i=0;i<oldPairs.size();++i)
-		{
-		  if( oldProbs[i]<1e-5 )
-		    (*realCount)[oldPairs[i].getSentenceNo()-1]=1.0;
-		  else
-		    (*realCount)[oldPairs[i].getSentenceNo()-1]=lambda*oldProbs[i]/(1-exp(-lambda*oldProbs[i]));
-		}
-	      oldPairs.clear();
-	      oldProbs.clear();
-	    }
-	  oldPairs.push_back(s);
-	  oldProbs.push_back(ed);
-	}
+      double ed=exp(d);
+      if( oldPairs.size()>0&&(oldPairs.back().get_eSent()!=s.get_eSent()||oldPairs.back().getSentenceNo()>=s.getSentenceNo()) )
+      {
+        double lambda=optimize_lambda(oldProbs);
+        for(unsigned int i=0;i<oldPairs.size();++i)
+        {
+          if( oldProbs[i]<1e-5 )
+            (*realCount)[oldPairs[i].getSentenceNo()-1]=1.0;
+          else
+            (*realCount)[oldPairs[i].getSentenceNo()-1]=lambda*oldProbs[i]/(1-exp(-lambda*oldProbs[i]));
+        }
+        oldPairs.clear();
+        oldProbs.clear();
+      }
+      oldPairs.push_back(s);
+      oldProbs.push_back(ed);
     }
+  }
 }
 
 /* ------------- End of Method Definition of Class SentenceHandler ----------*/

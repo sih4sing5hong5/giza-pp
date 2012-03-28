@@ -31,11 +31,11 @@
 #include "parameter.h"
 
 void printSentencePair(Vector<WordIndex>& es,
-			Vector<WordIndex>& fs,
-			ostream& of)
+                       Vector<WordIndex>& fs,
+                       ostream& of)
 
-  // just writes a sentece pair to the give output stream, one sentence pair line
-  // it writes token ids not actual tokens.
+// just writes a sentece pair to the give output stream, one sentence pair line
+// it writes token ids not actual tokens.
 {
   WordIndex i, j, l, m;
   l = es.size() - 1;
@@ -52,21 +52,21 @@ void printSentencePair(Vector<WordIndex>& es,
 
 extern short CompactAlignmentFormat;
 void printAlignToFile(const Vector<WordIndex>& es,
-		      const Vector<WordIndex>& fs,
-		      const Vector<WordEntry>& evlist,
-		      const Vector<WordEntry>& fvlist,
-		      ostream& of2,
-		      const Vector<WordIndex>& viterbi_alignment,
-		      int pair_no, double alignment_score)
+                      const Vector<WordIndex>& fs,
+                      const Vector<WordEntry>& evlist,
+                      const Vector<WordEntry>& fvlist,
+                      ostream& of2,
+                      const Vector<WordIndex>& viterbi_alignment,
+                      int pair_no, double alignment_score)
 
-     // prints the given alignment to alignments file (given it stream pointer)
-     // in a format recognizable by the draw-alignment tool ... which is of the
-     // example (each line triple is one sentence pair):
-     //   # sentence caption
-     //   target_word_1 target_word_2  ..... target_word_m
-     //   source_word_1 ({ x y z }) source_word_2 ({ })  .. source_word_n ({w})
-     // where x, y, z, and w are positions of target words that each source word
-     // is connected to.
+// prints the given alignment to alignments file (given it stream pointer)
+// in a format recognizable by the draw-alignment tool ... which is of the
+// example (each line triple is one sentence pair):
+//   # sentence caption
+//   target_word_1 target_word_2  ..... target_word_m
+//   source_word_1 ({ x y z }) source_word_2 ({ })  .. source_word_n ({w})
+// where x, y, z, and w are positions of target words that each source word
+// is connected to.
 
 {
   WordIndex l, m;
@@ -75,35 +75,35 @@ void printAlignToFile(const Vector<WordIndex>& es,
   l = es.size() - 1;
   m = fs.size() - 1;
   if( CompactAlignmentFormat )
-    {
-      for (WordIndex j = 1 ; j <= m ; j++)
-	if( viterbi_alignment[j] )
-	  of2 << viterbi_alignment[j]-1 << ' ' << j-1 << ' ';
-      of2 << '\n';
-    }
+  {
+    for (WordIndex j = 1 ; j <= m ; j++)
+      if( viterbi_alignment[j] )
+        of2 << viterbi_alignment[j]-1 << ' ' << j-1 << ' ';
+    of2 << '\n';
+  }
   else
-    {
-      of2 << "# Sentence pair (" << pair_no <<") source length " << l << " target length "<< m <<
-	" alignment score : "<< alignment_score << '\n';
-      for (WordIndex j = 1 ; j <= m ; j++){
-	of2 << fvlist[fs[j]].word << " " ;
-	translations[viterbi_alignment[j]].push_back(j);
-      }
-      of2 << '\n';
-
-      for (WordIndex i = 0  ; i <= l ; i++){
-	of2 << evlist[es[i]].word << " ({ " ;
-	for (WordIndex j = 0 ; j < translations[i].size() ; j++)
-	  of2 << translations[i][j] << " " ;
-	of2 << "}) ";
-      }
-      of2 << '\n';
+  {
+    of2 << "# Sentence pair (" << pair_no <<") source length " << l << " target length "<< m <<
+        " alignment score : "<< alignment_score << '\n';
+    for (WordIndex j = 1 ; j <= m ; j++){
+      of2 << fvlist[fs[j]].word << " " ;
+      translations[viterbi_alignment[j]].push_back(j);
     }
+    of2 << '\n';
+
+    for (WordIndex i = 0  ; i <= l ; i++){
+      of2 << evlist[es[i]].word << " ({ " ;
+      for (WordIndex j = 0 ; j < translations[i].size() ; j++)
+        of2 << translations[i][j] << " " ;
+      of2 << "}) ";
+    }
+    of2 << '\n';
+  }
 }
 
 void printOverlapReport(const TModel<COUNT, PROB>& tTable,
-			SentenceHandler& testHandler,  VocabList& trainEList,
-			VocabList& trainFList, VocabList& testEList, VocabList& testFList)
+                        SentenceHandler& testHandler,  VocabList& trainEList,
+                        VocabList& trainFList, VocabList& testEList, VocabList& testFList)
 {
   set<WordIDPair> testCoocur ;
   SentencePair s ;
@@ -118,7 +118,7 @@ void printOverlapReport(const TModel<COUNT, PROB>& tTable,
   while(testHandler.getNextSentence(s)){
     for (WordIndex i = 1 ; i < s.eSent.size() ; i++)
       for (WordIndex j = 1 ; j < s.fSent.size() ; j++)
-	testCoocur.insert(WordIDPair(s.eSent[i], s.fSent[j])) ;
+        testCoocur.insert(WordIDPair(s.eSent[i], s.fSent[j])) ;
   }
   set<WordIDPair>::const_iterator i ;
   for (i = testCoocur.begin() ; i != testCoocur.end() ; ++i){
@@ -138,7 +138,7 @@ void printOverlapReport(const TModel<COUNT, PROB>& tTable,
   for (WordIndex i = 0 ; i <  testFList.getVocabList().size() && i < testFList.uniqTokens();i++)
     if (testFList.getVocabList()[i].freq > 0 && trainFList.getVocabList()[i].freq <= 0){
       of_trgUnk << i << ' ' << testFList.getVocabList()[i].word << ' ' << testFList.getVocabList()[i].freq
-		<< '\n';
+                << '\n';
       trgUnk++ ;
     }
   string srcUnkFile = Prefix + ".tst.src.unk" ;
@@ -148,7 +148,7 @@ void printOverlapReport(const TModel<COUNT, PROB>& tTable,
     if (testEList.getVocabList()[j].freq > 0 && trainEList.getVocabList()[j].freq <= 0){
       srcUnk++ ;
       of_srcUnk << j << ' ' << testEList.getVocabList()[j].word << ' ' << testEList.getVocabList()[j].freq
-		<< '\n';
+                << '\n';
     }
   string summaryFile = Prefix + ".tst.stats" ;
   ofstream of_summary(summaryFile.c_str());
@@ -173,40 +173,40 @@ double ErrorsInAlignment(const map< pair<int,int>,char >&reference,const Vector<
 {
   int err=0;
   for(unsigned int j=1;j<test.size();j++)
+  {
+    if( test[j]>0 )
     {
-      if( test[j]>0 )
-	{
-	  map< pair<int,int>,char >::const_iterator i=reference.find(make_pair(test[j]-1,j-1));
-	  if( i==reference.end() )
-	    {
-	      toomuch++;
-	      err++;
-	    }
-	  else
-	    if( !(i->second=='S' || i->second=='P'))
-	      cerr << "ERROR: wrong symbol in reference alignment '" << i->second << ' ' << int(i->second) << " no:" << pair_no<< "'\n";
-	  eventsToomuch++;
-	}
+      map< pair<int,int>,char >::const_iterator i=reference.find(make_pair(test[j]-1,j-1));
+      if( i==reference.end() )
+      {
+        toomuch++;
+        err++;
+      }
+      else
+        if( !(i->second=='S' || i->second=='P'))
+          cerr << "ERROR: wrong symbol in reference alignment '" << i->second << ' ' << int(i->second) << " no:" << pair_no<< "'\n";
+      eventsToomuch++;
     }
+  }
   for(map< pair<int,int>,char >::const_iterator i=reference.begin();i!=reference.end();++i)
+  {
+    if( i->second=='S' )
     {
-      if( i->second=='S' )
-	{
-	  unsigned int J=i->first.second+1;
-	  unsigned int I=i->first.first+1;
-	  if( int(J)>=int(test.size())||int(I)>int(l)||int(J)<1||int(I)<1 )
-	    cerr << "ERROR: alignment outside of range in reference alignment" << J << " " << test.size() << " (" << I << " " << l << ") no:" << pair_no << '\n';
-	  else
-	    {
-	      if(test[J]!=I)
-		{
-		  missing++;
-		  err++;
-		}
-	    }
-	  eventsMissing++;
-	}
+      unsigned int J=i->first.second+1;
+      unsigned int I=i->first.first+1;
+      if( int(J)>=int(test.size())||int(I)>int(l)||int(J)<1||int(I)<1 )
+        cerr << "ERROR: alignment outside of range in reference alignment" << J << " " << test.size() << " (" << I << " " << l << ") no:" << pair_no << '\n';
+      else
+      {
+        if(test[J]!=I)
+        {
+          missing++;
+          err++;
+        }
+      }
+      eventsMissing++;
     }
+  }
   if( Verbose )
     cout << err << " errors in sentence\n";
   if( eventsToomuch+eventsMissing )

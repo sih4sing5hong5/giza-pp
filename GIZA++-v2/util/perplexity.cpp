@@ -35,9 +35,9 @@
 #include "globals.h"
 
 Perplexity::Perplexity()
-  : sum_(0.0),
-    wc_(0.0),
-    E_M_L_(new Array2<double, Vector<double> >(MAX_SENTENCE_LENGTH,MAX_SENTENCE_LENGTH)) {
+    : sum_(0.0),
+      wc_(0.0),
+      E_M_L_(new Array2<double, Vector<double> >(MAX_SENTENCE_LENGTH,MAX_SENTENCE_LENGTH)) {
   Init();
 }
 

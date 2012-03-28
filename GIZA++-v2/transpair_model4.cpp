@@ -105,15 +105,15 @@ LogProb transpair_model4::prob_of_target_and_alignment_given_source_1(const Alig
     total *= double(m - al.fert(0) - i + 1) / (double(DeficientDistortionForEmptyWord?(max(2,int(m))/DeficientDistortionForEmptyWord):i)) ;
   if( verb) cerr << "IBM-4: +NULL:binomial+distortion " << total << endl;
   for (WordIndex i = 1 ; i <= l ; i++)
-    {
-      total *= get_fertility(i, al.fert(i));// * (LogProb) factorial(al.fert(i));
-      if( verb) cerr << "IBM-4: fertility of " << i << " " << get_fertility(i, al.fert(i)) << " -> " << total << endl;
-    }
+  {
+    total *= get_fertility(i, al.fert(i));// * (LogProb) factorial(al.fert(i));
+    if( verb) cerr << "IBM-4: fertility of " << i << " " << get_fertility(i, al.fert(i)) << " -> " << total << endl;
+  }
   for (WordIndex j = 1 ; j <= m ; j++)
-    {
-      total*= get_t(al(j), j) ;
-      if( verb) cerr << "IBM-4: t of j:" << j << " i:" << al(j) << ": " << get_t(al(j), j)  << " -> " << total << endl;
-    }
+  {
+    total*= get_t(al(j), j) ;
+    if( verb) cerr << "IBM-4: t of j:" << j << " i:" << al(j) << ": " << get_t(al(j), j)  << " -> " << total << endl;
+  }
   return total;
 }
 
@@ -122,29 +122,29 @@ LogProb transpair_model4::prob_of_target_and_alignment_given_source(const Alignm
   LogProb total = 1.0 ;
   static const LogProb almostZero = 1E-299 ;
   if( distortionType&1 )
-    {
-      total *= prob_of_target_and_alignment_given_source_1(al,verb);
-    }
+  {
+    total *= prob_of_target_and_alignment_given_source_1(al,verb);
+  }
   if( distortionType&2 )
-    {
-      for(WordIndex j=1;j<=m;j++)
-	if( al(j) )
-	  if( al.get_head(al(j))==j)
-	    {
-	      int ep=al.prev_cept(al(j));
-	      float x2=probFirst[ep](j,al.get_center(ep));
-	      MASSERT(x2<=1.0);
-	      total*=x2;
-	      if( verb) cerr << "IBM-4: d=1 of " << j << ": " << x2  << " -> " << total << endl;
-	    }
-	  else
-	    {
-	      float x2=probSecond(j,al.prev_in_cept(j));
-	      MASSERT(x2<=1.0);
-	      total*=x2;
-	      if( verb) cerr << "IBM-4: d>1 of " << j << ": " << x2  << " -> " << total << endl;
-	    }
-    }
+  {
+    for(WordIndex j=1;j<=m;j++)
+      if( al(j) )
+        if( al.get_head(al(j))==j)
+        {
+          int ep=al.prev_cept(al(j));
+          float x2=probFirst[ep](j,al.get_center(ep));
+          MASSERT(x2<=1.0);
+          total*=x2;
+          if( verb) cerr << "IBM-4: d=1 of " << j << ": " << x2  << " -> " << total << endl;
+        }
+        else
+        {
+          float x2=probSecond(j,al.prev_in_cept(j));
+          MASSERT(x2<=1.0);
+          total*=x2;
+          if( verb) cerr << "IBM-4: d>1 of " << j << ": " << x2  << " -> " << total << endl;
+        }
+  }
   return total?total:almostZero;
 }
 
@@ -161,16 +161,16 @@ void transpair_model4::computeScores(const Alignment&al,vector<double>&d)const
   for(WordIndex j=1;j<=m;j++)
     if( al(j) )
       if( al.get_head(al(j))==j)
-	{
-	  int ep=al.prev_cept(al(j));
-	  float x2=probFirst[ep](j,al.get_center(ep));
-	  total4*=x2;
-	}
+      {
+        int ep=al.prev_cept(al(j));
+        float x2=probFirst[ep](j,al.get_center(ep));
+        total4*=x2;
+      }
       else
-	{
-	  float x2=probSecond(j,al.prev_in_cept(j));
-	  total4*=x2;
-	}
+      {
+        float x2=probSecond(j,al.prev_in_cept(j));
+        total4*=x2;
+      }
   d.push_back(total1);//9
   d.push_back(total2);//10
   d.push_back(total3);//11

@@ -1,22 +1,22 @@
 /*
 
-EGYPT Toolkit for Statistical Machine Translation
-Written by Yaser Al-Onaizan, Jan Curin, Michael Jahr, Kevin Knight, John Lafferty, Dan Melamed, David Purdy, Franz Och, Noah Smith, and David Yarowsky.
+  EGYPT Toolkit for Statistical Machine Translation
+  Written by Yaser Al-Onaizan, Jan Curin, Michael Jahr, Kevin Knight, John Lafferty, Dan Melamed, David Purdy, Franz Och, Noah Smith, and David Yarowsky.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
-USA.
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+  USA.
 
 */
 
@@ -33,7 +33,7 @@ extern short NoEmptyWord;
 GLOBAL_PARAMETER2(int,Model2_Dump_Freq,"MODEL 2 DUMP FREQUENCY","t2","dump frequency of Model 2",kParLevOutput,0);
 
 Model2::Model2(Model1& m, AModel<PROB>& _aTable, AModel<COUNT>& _aCountTable)
-    : Model1(m), aTable(_aTable), aCountTable(_aCountTable) { }
+: Model1(m), aTable(_aTable), aCountTable(_aCountTable) { }
 
 Model2::~Model2() {}
 
@@ -42,19 +42,19 @@ void Model2::initialize_table_uniformly(SentenceHandler& sHandler1) {
   int n=0;
   SentencePair sent ;
   sHandler1.rewind();
-   while(sHandler1.getNextSentence(sent)){
+  while(sHandler1.getNextSentence(sent)){
     Vector<WordIndex>& es = sent.eSent;
     Vector<WordIndex>& fs = sent.fSent;
     WordIndex l = es.size() - 1;
     WordIndex m = fs.size() - 1;
     n++;
     if(1<=m&&aTable.getValue(l,m,l,m)<=PROB_SMOOTH)
-      {
-	PROB uniform_val = 1.0 / (l+1) ;
-	for(WordIndex j=1; j <= m; j++)
-	  for(WordIndex i=0; i <= l; i++)
-	    aTable.setValue(i,j, l, m, uniform_val);
-      }
+    {
+      PROB uniform_val = 1.0 / (l+1) ;
+      for(WordIndex j=1; j <= m; j++)
+        for(WordIndex i=0; i <= l; i++)
+          aTable.setValue(i,j, l, m, uniform_val);
+    }
   }
 }
 
@@ -88,11 +88,10 @@ int Model2::em_with_tricks(int noIterations)
     aCountTable.clear();
     initAL();
     em_loop(perp, sHandler1, dump_files, alignfile.c_str(), trainViterbiPerp, false);
-    if( errorsAL()<minErrors )
-      {
-	minErrors=errorsAL();
-        minIter=it;
-      }
+    if( errorsAL()<minErrors ) {
+      minErrors=errorsAL();
+      minIter=it;
+    }
     if (testPerp && testHandler)
       em_loop(*testPerp, *testHandler, dump_files, test_alignfile.c_str(), *testViterbiPerp, true);
     if (dump_files&&OutputInAachenFormat==1)
@@ -100,23 +99,22 @@ int Model2::em_with_tricks(int noIterations)
     tTable.normalizeTable(Elist, Flist);
     aCountTable.normalize(aTable);
     cout << modelName << ": ("<<it<<") TRAIN CROSS-ENTROPY " << perp.cross_entropy()
-	 << " PERPLEXITY " << perp.perplexity() << '\n';
-     if (testPerp && testHandler)
-       cout << modelName << ": ("<<it<<") TEST CROSS-ENTROPY " << (*testPerp).cross_entropy()
-	    << " PERPLEXITY " << (*testPerp).perplexity()
-	    << '\n';
-     cout << modelName << ": ("<<it<<") VITERBI TRAIN CROSS-ENTROPY " << trainViterbiPerp.cross_entropy()
-	 << " PERPLEXITY " << trainViterbiPerp.perplexity() << '\n';
+         << " PERPLEXITY " << perp.perplexity() << '\n';
     if (testPerp && testHandler)
-       cout << modelName << ": ("<<it<<") VITERBI TEST CROSS-ENTROPY " << testViterbiPerp->cross_entropy()
-	    << " PERPLEXITY " << testViterbiPerp->perplexity()
-	    << '\n';
-    if (dump_files)
-      {
-	if(OutputInAachenFormat==0)
-	  tTable.printProbTable(tfile.c_str(),Elist.getVocabList(),Flist.getVocabList(),OutputInAachenFormat);
-	aCountTable.printTable(afile.c_str());
-      }
+      cout << modelName << ": ("<<it<<") TEST CROSS-ENTROPY " << (*testPerp).cross_entropy()
+           << " PERPLEXITY " << (*testPerp).perplexity()
+           << '\n';
+    cout << modelName << ": ("<<it<<") VITERBI TRAIN CROSS-ENTROPY " << trainViterbiPerp.cross_entropy()
+         << " PERPLEXITY " << trainViterbiPerp.perplexity() << '\n';
+    if (testPerp && testHandler)
+      cout << modelName << ": ("<<it<<") VITERBI TEST CROSS-ENTROPY " << testViterbiPerp->cross_entropy()
+           << " PERPLEXITY " << testViterbiPerp->perplexity()
+           << '\n';
+    if (dump_files) {
+      if(OutputInAachenFormat==0)
+        tTable.printProbTable(tfile.c_str(),Elist.getVocabList(),Flist.getVocabList(),OutputInAachenFormat);
+      aCountTable.printTable(afile.c_str());
+    }
     it_fn = time(NULL) ;
     cout << modelName << " Iteration: " << it<< " took: " << difftime(it_fn, it_st) << " seconds\n";
   } // end of iterations
@@ -141,8 +139,8 @@ void Model2::load_table(const char* aname) {
 
 
 void Model2::em_loop(Perplexity& perp, SentenceHandler& sHandler1,
-		     bool dump_alignment, const char* alignfile, Perplexity& viterbi_perp,
-		     bool test)
+                     bool dump_alignment, const char* alignfile, Perplexity& viterbi_perp,
+                     bool test)
 {
   MASSERT(aTable.is_distortion==0);
   MASSERT(aCountTable.is_distortion==0);
@@ -176,43 +174,43 @@ void Model2::em_loop(Perplexity& perp, SentenceHandler& sHandler1,
       PROB e = 0.0, word_best_score = 0;
       WordIndex best_i = 0 ; // i for which fj is best maped to ei
       for(i=0; i <= l; i++){
-	sPtrCache[i] = tTable.getPtr(es[i], fs[j]) ;
-	if (sPtrCache[i] != 0 &&(*(sPtrCache[i])).prob > PROB_SMOOTH )
-	  e = (*(sPtrCache[i])).prob * aTable.getValue(i,j, l, m) ;
-	else e = PROB_SMOOTH * aTable.getValue(i,j, l, m);
-	denom += e ;
-	if (e > word_best_score){
-	  word_best_score = e ;
-	  best_i = i ;
-	}
+        sPtrCache[i] = tTable.getPtr(es[i], fs[j]) ;
+        if (sPtrCache[i] != 0 &&(*(sPtrCache[i])).prob > PROB_SMOOTH )
+          e = (*(sPtrCache[i])).prob * aTable.getValue(i,j, l, m) ;
+        else e = PROB_SMOOTH * aTable.getValue(i,j, l, m);
+        denom += e ;
+        if (e > word_best_score){
+          word_best_score = e ;
+          best_i = i ;
+        }
       }
       viterbi_alignment[j] = best_i ;
       viterbi_score *= word_best_score; ///denom ;
       cross_entropy += log(denom) ;
       if (denom == 0){
-	if (test)
-	  cerr << "WARNING: denom is zero (TEST)\n";
-	else
-	  cerr << "WARNING: denom is zero (TRAIN)\n";
+        if (test)
+          cerr << "WARNING: denom is zero (TEST)\n";
+        else
+          cerr << "WARNING: denom is zero (TRAIN)\n";
       }
       if (!test){
-	if(denom > 0){
-	  COUNT val = COUNT(so) / (COUNT) double(denom) ;
-	  for( i=0; i <= l; i++){
-	    PROB e(0.0);
-	    if (sPtrCache[i] != 0 &&  (*(sPtrCache[i])).prob > PROB_SMOOTH)
-	      e = (*(sPtrCache[i])).prob ;
-	    else e = PROB_SMOOTH  ;
-	    e *= aTable.getValue(i,j, l, m);
-	    COUNT temp = COUNT(e) * val ;
-	    if( NoEmptyWord==0 || i!=0 )
-	      if (sPtrCache[i] != 0)
-		(*(sPtrCache[i])).count += temp ;
-	      else
-		tTable.incCount(es[i], fs[j], temp);
-	    aCountTable.getRef(i,j, l, m)+= temp ;
-	  } /* end of for i */
-	} // end of if (denom > 0)
+        if(denom > 0){
+          COUNT val = COUNT(so) / (COUNT) double(denom) ;
+          for( i=0; i <= l; i++){
+            PROB e(0.0);
+            if (sPtrCache[i] != 0 &&  (*(sPtrCache[i])).prob > PROB_SMOOTH)
+              e = (*(sPtrCache[i])).prob ;
+            else e = PROB_SMOOTH  ;
+            e *= aTable.getValue(i,j, l, m);
+            COUNT temp = COUNT(e) * val ;
+            if( NoEmptyWord==0 || i!=0 )
+              if (sPtrCache[i] != 0)
+                (*(sPtrCache[i])).count += temp ;
+              else
+                tTable.incCount(es[i], fs[j], temp);
+            aCountTable.getRef(i,j, l, m)+= temp ;
+          } /* end of for i */
+        } // end of if (denom > 0)
       }// if (!test)
     } // end of for (j) ;
     sHandler1.setProbOfSentence(sent,cross_entropy);

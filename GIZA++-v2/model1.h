@@ -51,12 +51,12 @@ class ReportInfo {
              SentenceHandler* _testHandler,
              Perplexity& _trainViterbiPerp,
              Perplexity* _testViterbiPerp)
-    : perp(_perp),
-      sHandler1(_sHandler1),
-      testPerp(_testPerp),
-      testHandler(_testHandler),
-      trainViterbiPerp(_trainViterbiPerp),
-      testViterbiPerp(_testViterbiPerp) { }
+      : perp(_perp),
+        sHandler1(_sHandler1),
+        testPerp(_testPerp),
+        testHandler(_testHandler),
+        trainViterbiPerp(_trainViterbiPerp),
+        testViterbiPerp(_testViterbiPerp) { }
 
   virtual ~ReportInfo() { }
 };
@@ -104,7 +104,7 @@ class Model1 : public ReportInfo {
 
   void addAL(const Vector<WordIndex>& viterbi_alignment,int pair_no,int l) {
     if ( pair_no<=int(ReferenceAlignment.size()) ) {
-	  //cerr << "AL: " << viterbi_alignment << " " << pair_no << endl;
+      //cerr << "AL: " << viterbi_alignment << " " << pair_no << endl;
       ErrorsInAlignment(ReferenceAlignment[pair_no-1],
                         viterbi_alignment,
                         l,
@@ -137,14 +137,24 @@ class Model1 : public ReportInfo {
     }
   }
 
-  // TODO: WTF! clean up.
   void initAL() {
-    ALmissingVALI=ALtoomuchVALI=ALeventsMissingVALI=ALeventsToomuchVALI=ALmissingTEST=ALtoomuchTEST=ALeventsMissingTEST=ALeventsToomuchTEST=ALmissing=ALtoomuch=ALeventsMissing=ALeventsToomuch=0;
+    ALmissingVALI = 0;
+    ALtoomuchVALI = 0;
+    ALeventsMissingVALI = 0;
+    ALeventsToomuchVALI = 0;
+    ALmissingTEST = 0;
+    ALtoomuchTEST = 0;
+    ALeventsMissingTEST = 0;
+    ALeventsToomuchTEST = 0;
+    ALmissing = 0;
+    ALtoomuch = 0;
+    ALeventsMissing = 0;
+    ALeventsToomuch = 0;
   }
 
   double errorsAL () const {
     if (ALeventsMissingVALI+ALeventsToomuchVALI)
-      return (ALmissingVALI+ALtoomuchVALI)/double(ALeventsMissingVALI+ALeventsToomuchVALI);
+      return (ALmissingVALI+ALtoomuchVALI) / double(ALeventsMissingVALI+ALeventsToomuchVALI);
     else
       return 0.0;
   }

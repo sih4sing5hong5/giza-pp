@@ -83,12 +83,12 @@ class _Parameter
  public:
   int onlyCopy;
   _Parameter(string n,bool&b,string desc,int _level,bool _onlyCopy)
-    : name(simpleString(n)),ifChanged(&b),description(desc),level(_level),filename(0),onlyCopy(_onlyCopy) {}
+      : name(simpleString(n)),ifChanged(&b),description(desc),level(_level),filename(0),onlyCopy(_onlyCopy) {}
   virtual ~_Parameter(){};
   bool operator==(const string&s)const
-    { return name== simpleString(s); }
+  { return name== simpleString(s); }
   void setChanged()
-    { *ifChanged=true; }
+  { *ifChanged=true; }
   virtual bool setParameter(string s2,int)=0;
   virtual ostream&printAt(ostream&out)=0;
   virtual ostream&printValue(ostream&out)=0;
@@ -97,13 +97,13 @@ class _Parameter
   bool isFilename() { return filename;}
   void setFilename(bool x=1) { filename=x;}
   friend bool operator==(const _Parameter&a,const _Parameter&b)
-    { return a.name==b.name; }
+  { return a.name==b.name; }
   friend bool operator<(const _Parameter&a,const _Parameter&b)
-    { return a.name<b.name; }
+  { return a.name<b.name; }
   friend int Hash(const _Parameter&aaa)
-    { return Hashstring(aaa.name); }
+  { return Hashstring(aaa.name); }
   friend ostream&operator<<(ostream&out,const _Parameter&p)
-    { return out<<"Parameter: "<<p.name <<endl;}
+  { return out<<"Parameter: "<<p.name <<endl;}
 };
 
 template<class T>
@@ -113,31 +113,31 @@ class Parameter : public _Parameter
   T*t;
  public:
   Parameter(string n,bool&b,string desc,T&_t,int level=0,bool onlyCopy=0)
-    : _Parameter(n,b,desc,level,onlyCopy),t(&_t) {}
+      : _Parameter(n,b,desc,level,onlyCopy),t(&_t) {}
   virtual ~Parameter(){}
   virtual bool setParameter(string s2,int verb)
+  {
+    T x;
+    if( !(*t==mConvert(s2,x)))
     {
-      T x;
-      if( !(*t==mConvert(s2,x)))
-	{
-	  bool printedFirst=0;
-	  if( verb>1 )
-	    {
-	      cout << "Parameter '"<<name <<"' changed from '"<<*t<<"' to '";
-	      printedFirst=1;
-	    }
-	  mConvert(s2,*t);
-	  if( printedFirst )
-	    cout << *t <<"'\n";
-	  setChanged();
-	  return 1;
-	}
-      return 0;
+      bool printedFirst=0;
+      if( verb>1 )
+      {
+        cout << "Parameter '"<<name <<"' changed from '"<<*t<<"' to '";
+        printedFirst=1;
+      }
+      mConvert(s2,*t);
+      if( printedFirst )
+        cout << *t <<"'\n";
+      setChanged();
+      return 1;
     }
+    return 0;
+  }
   virtual ostream&printAt(ostream&out)
-    {return out << name << " = " << *t << "  (" << description << ")";}
+  {return out << name << " = " << *t << "  (" << description << ")";}
   virtual ostream&printValue(ostream&out)
-    {return out << *t;}
+  {return out << *t;}
 };
 
 typedef MP<_Parameter> ParPtr;
@@ -146,11 +146,11 @@ class ParSet : public set<ParPtr>
 {
  public:
   void insert(const ParPtr&x)
-    {
-      if( count(x)!=0 )
-	cerr << "ERROR: element " << x->getString() << " already inserted.\n";
-      set<ParPtr>::insert(x);
-    }
+  {
+    if( count(x)!=0 )
+      cerr << "ERROR: element " << x->getString() << " already inserted.\n";
+    set<ParPtr>::insert(x);
+  }
 };
 
 bool makeSetCommand(string s1,string s2,const ParSet&pars,int verb=1,int level= -1);

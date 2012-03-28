@@ -49,10 +49,10 @@ inline bool doubleEqual(const double a, const double b)
   if( bl )
     return 1;
   else
-    {
-      cerr << "DIFFERENT: " << a << " " << b << " " << a/b << " " << 1.0-a/b << endl;
-      return 0;
-    }
+  {
+    cerr << "DIFFERENT: " << a << " " << b << " " << a/b << " " << 1.0-a/b << endl;
+    return 0;
+  }
 }
 
 
@@ -64,17 +64,17 @@ class transpair_model3 : public transpair_model2
  public:
   typedef transpair_model3 simpler_transpair_model;
   transpair_model3(const Vector<WordIndex>&es, const Vector<WordIndex>&fs, TModel<COUNT, PROB>&tTable,
-		   AModel<PROB>&aTable, AModel<PROB>&dTable, nmodel<PROB>&nTable,
-		   double _p1, double _p0, void*x=0);
+                   AModel<PROB>&aTable, AModel<PROB>&dTable, nmodel<PROB>&nTable,
+                   double _p1, double _p0, void*x=0);
   const PROB&get_d(WordIndex i, WordIndex j)const
-    {return d(i, j);}
+  {return d(i, j);}
   const PROB&get_a(WordIndex i, WordIndex j)const
-    {return a(i, j);}
+  {return a(i, j);}
   const PROB&get_fertility(WordIndex i, WordIndex f)const
-    {MASSERT(i>0);return (f>=g_max_fertility)?n(i, g_max_fertility):n(i, f);}
+  {MASSERT(i>0);return (f>=g_max_fertility)?n(i, g_max_fertility):n(i, f);}
   int modelnr()const{return 3;}
   LogProb scoreOfAlignmentForChange(const Alignment& a)const
-    {return -1.0; }
+  {return -1.0; }
   LogProb scoreOfMove(const Alignment& a, WordIndex new_i, WordIndex j, double thisValue=-1.0,bool withDistortions=1)const;
   LogProb scoreOfSwap(const Alignment& a, WordIndex j1, WordIndex j2, double thisValue=-1.0,bool withDistortions=1)const ;
   LogProb _scoreOfMove(const Alignment& a, WordIndex new_i, WordIndex j,double thisValue=-1.0)const;

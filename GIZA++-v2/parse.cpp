@@ -36,27 +36,27 @@
 extern bool ONLYALDUMPS;
 
 void parseConfigFile (char * fname )
-  // This functions reads in the configuration file to set up some run-time
-  // parameters. The parameters are global variables that are defined in
-  // main.cc and used all over the place in the program
-  // The format of the configuration file can be explained in the following way
-  // FORMAT:
-  // the character '\n' separates lines ..
-  // lines that start with "//" (skipping over white spaces are considered
-  // as comments and will be ignored.
-  // Any other line is considered as an attribute setting instruction and it
-  // is divided into haves (separated by a colon ":"). The first half is the
-  // attribute value which consists of the concatenation of all non-white space
-  // tokens before the colon. These tokens will have spaces eseparating them.
-  // The attribute vlue is the first token after the colon (any thing after
-  // it will be ignored ;
-  // For example :
-  // if the configuration file has the following entry:
-  //
-  // NO.   ITERATIONS   MODEL 2 :	10
-  //
-  // then the attribute is "NO. ITERATIONS MODEL 2" , and the attribute value
-  // is "10"  (these do not include the quotation marks).
+    // This functions reads in the configuration file to set up some run-time
+    // parameters. The parameters are global variables that are defined in
+    // main.cc and used all over the place in the program
+    // The format of the configuration file can be explained in the following way
+    // FORMAT:
+    // the character '\n' separates lines ..
+    // lines that start with "//" (skipping over white spaces are considered
+    // as comments and will be ignored.
+    // Any other line is considered as an attribute setting instruction and it
+    // is divided into haves (separated by a colon ":"). The first half is the
+    // attribute value which consists of the concatenation of all non-white space
+    // tokens before the colon. These tokens will have spaces eseparating them.
+    // The attribute vlue is the first token after the colon (any thing after
+    // it will be ignored ;
+    // For example :
+    // if the configuration file has the following entry:
+    //
+    // NO.   ITERATIONS   MODEL 2 : 10
+    //
+    // then the attribute is "NO. ITERATIONS MODEL 2" , and the attribute value
+    // is "10"  (these do not include the quotation marks).
 
 {
 
@@ -77,41 +77,41 @@ void parseConfigFile (char * fname )
     if (word != "//"){ // if line does not start with "//" (i.e. not a comment)
       attrib = word ;
       while((buffer >> word) && (word != ":")){
-	attrib += " " + word ;
+        attrib += " " + word ;
       }
       if(!(buffer >> attribval))
-	{
-	  istringstream buffer2(line);
-	  buffer2>>attrib;
-	  buffer2>>attribval;
-	}
+      {
+        istringstream buffer2(line);
+        buffer2>>attrib;
+        buffer2>>attribval;
+      }
 
       // This# is where (1) the configuration file is defined and
       //               (2) parsing of its attributes occurs.
 
       if(attrib == "t FILE"){
-	t_Filename = attribval;
-	cout << "\tt file:  " << t_Filename << '\n';
+        t_Filename = attribval;
+        cout << "\tt file:  " << t_Filename << '\n';
       }
       else if(attrib ==  "a FILE"){
-	a_Filename = attribval;
-	cout << "\ta file:  " << a_Filename << '\n';
+        a_Filename = attribval;
+        cout << "\ta file:  " << a_Filename << '\n';
       }
       else if(attrib == "d FILE"){
-	d_Filename = attribval;
-	cout << "\td file:  " << d_Filename << '\n';
+        d_Filename = attribval;
+        cout << "\td file:  " << d_Filename << '\n';
       }
       else if(attrib == "n FILE"){
-	n_Filename = attribval;
-	cout << "\tn file:  " << n_Filename << '\n';
+        n_Filename = attribval;
+        cout << "\tn file:  " << n_Filename << '\n';
       }
       else if(attrib == "p0 FILE"){
-	p0_Filename = attribval;
-	cout << "\tp0 file:  " << p0_Filename << '\n';
+        p0_Filename = attribval;
+        cout << "\tp0 file:  " << p0_Filename << '\n';
       }
       else if ( line == ""){}
       else if(  !makeSetCommand(attrib,attribval,getGlobalParSet(),2) )
-	cerr << "ERROR: Unrecognized attribute :" << attrib << '\n';
+        cerr << "ERROR: Unrecognized attribute :" << attrib << '\n';
     }
   }
 }
@@ -131,16 +131,16 @@ void parseArguments(int argc, char *argv[])
     parseConfigFile(argv[1]);
   while(++arg<argc){
     if( strlen(argv[arg])>2 && argv[arg][0]=='-' && argv[arg][1]=='-' )
-      {
-	if( !makeSetCommand(argv[arg]+1,"1",getGlobalParSet(),2))
-	  cerr << "WARNING: ignoring unrecognized option:  "<< argv[arg] << '\n' ;
-      }
+    {
+      if( !makeSetCommand(argv[arg]+1,"1",getGlobalParSet(),2))
+        cerr << "WARNING: ignoring unrecognized option:  "<< argv[arg] << '\n' ;
+    }
     else if( arg+1<argc && !makeSetCommand(argv[arg],argv[arg+1],getGlobalParSet(),2))
       cerr << "WARNING: ignoring unrecognized option:  "<< argv[arg] << '\n' ;
     else
-      {
-	arg++;
-      }
+    {
+      arg++;
+    }
   }
   if( OPath.length() )
     OPath+="/";

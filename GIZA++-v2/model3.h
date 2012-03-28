@@ -36,7 +36,7 @@ class transpair_model3;
 class TransPairModelHMM;
 
 class Model3 : public Model2 {
- // TODO: should be private.
+  // TODO: should be private.
  public:
   AModel<PROB>  dTable;
   AModel<COUNT> dCountTable;
@@ -48,7 +48,7 @@ class Model3 : public Model2 {
   nmodel<COUNT> nCountTable;
   HMM* h;
 
-public:
+ public:
   Model3(Model2& m2);
   ~Model3();
 

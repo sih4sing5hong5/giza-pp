@@ -89,24 +89,23 @@ class AModel {
     return a.get(aj, j, (CompactADTable&&is_distortion)?MaxSentLength:(l+1),(CompactADTable&&!is_distortion)?MaxSentLength:(m+1));
   }
 
-  VALTYPE&getRef(WordIndex aj, WordIndex j, WordIndex l, WordIndex m)
-    {
-      MASSERT( (!is_distortion) || aj<=m );MASSERT( (!is_distortion) || j<=l );
-      MASSERT( is_distortion    || aj<=l );MASSERT( is_distortion    || j<=m );MASSERT( (is_distortion) || j!=0 );
-      MASSERT( l<MaxSentLength );MASSERT( m<MaxSentLength );
-      return a(aj, j, (CompactADTable&&is_distortion)?MaxSentLength:(l+1),(CompactADTable&&!is_distortion)?MaxSentLength:(m+1));
-    }
-  void setValue(WordIndex aj, WordIndex j, WordIndex l, WordIndex m, VALTYPE val)
-    {
-      getRef(aj, j, l, m)=val;
-    }
-  VALTYPE getValue(WordIndex aj, WordIndex j, WordIndex l, WordIndex m) const
-    {
-      if( is_distortion==0 )
-	return max(double(PROB_SMOOTH),amodel_smooth_factor/(l+1)+(1.0-amodel_smooth_factor)*get(aj, j, l, m));
-      else
-	return max(double(PROB_SMOOTH),amodel_smooth_factor/m+(1.0-amodel_smooth_factor)*get(aj, j, l, m));
-    }
+  VALTYPE&getRef(WordIndex aj, WordIndex j, WordIndex l, WordIndex m) {
+    MASSERT( (!is_distortion) || aj<=m );MASSERT( (!is_distortion) || j<=l );
+    MASSERT( is_distortion    || aj<=l );MASSERT( is_distortion    || j<=m );MASSERT( (is_distortion) || j!=0 );
+    MASSERT( l<MaxSentLength );MASSERT( m<MaxSentLength );
+    return a(aj, j, (CompactADTable&&is_distortion)?MaxSentLength:(l+1),(CompactADTable&&!is_distortion)?MaxSentLength:(m+1));
+  }
+
+  void setValue(WordIndex aj, WordIndex j, WordIndex l, WordIndex m, VALTYPE val) {
+    getRef(aj, j, l, m) = val;
+  }
+
+  VALTYPE getValue(WordIndex aj, WordIndex j, WordIndex l, WordIndex m) const {
+    if (is_distortion == 0)
+      return max(double(PROB_SMOOTH), amodel_smooth_factor/(l+1)+(1.0-amodel_smooth_factor)*get(aj, j, l, m));
+    else
+      return max(double(PROB_SMOOTH), amodel_smooth_factor/m+(1.0-amodel_smooth_factor)*get(aj, j, l, m));
+  }
 
   // Print amodel to file with the name filename (it'll be created or overwritten
   // format : for a table :

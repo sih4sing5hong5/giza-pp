@@ -50,10 +50,10 @@ class AlDeps {
   int j;
   CLS Cj;
   AlDeps(int l,int p=0,int _j=0,CLS s1=0,CLS _Cj=0)
-    : englishSentenceLength(l),
-      classPrevious(s1),
-      previous(p),
-      j(_j),Cj(_Cj) { }
+      : englishSentenceLength(l),
+        classPrevious(s1),
+        previous(p),
+        j(_j),Cj(_Cj) { }
   ~AlDeps() {}
 
   friend bool operator<(const AlDeps&x,const AlDeps&y) {
@@ -90,8 +90,7 @@ class Hash_AlDeps {
 };
 
 template<class CLS,class MAPPERCLASSTOSTRING>
-class HMMTables
-{
+class HMMTables {
  protected:
   double probabilityForEmpty;
   bool updateProbabilityForEmpty;
@@ -111,7 +110,7 @@ class HMMTables
             const MAPPERCLASSTOSTRING& m2);
   virtual ~HMMTables();
 
-  const HMMTables<CLS,MAPPERCLASSTOSTRING>* getThis() const {return this;}
+  const HMMTables<CLS,MAPPERCLASSTOSTRING>* getThis() const { return this; }
 
   virtual double getAlProb(int i,int k,int sentLength,int J,CLS w1,CLS w2,int j,int iter=0) const;
 
@@ -136,17 +135,13 @@ template<class CLS, class MAPPERCLASSTOSTRING>
 void HMMTables<CLS, MAPPERCLASSTOSTRING>::performGISIteration(
     const HMMTables<CLS,MAPPERCLASSTOSTRING>*old) {
   cout << "OLDSIZE: " << (old?(old->alProb.size()):0) << " NEWSIZE:"<< alProb.size()<< endl;
-  for(typename std::map<AlDeps<CLS>,FlexArray<double> >::iterator i=alProb.begin();i!=alProb.end();++i)
-	{
-	  if( alProbPredicted.count(i->first))
-    {
+  for(typename std::map<AlDeps<CLS>,FlexArray<double> >::iterator i=alProb.begin();i!=alProb.end();++i) {
+    if( alProbPredicted.count(i->first)) {
       normalize_if_possible(i->second.begin(),i->second.end());
       normalize_if_possible(alProbPredicted[i->first].begin(),alProbPredicted[i->first].end());
-      for(int j=i->second.low();j<=i->second.high();++j)
-      {
-        if( i->second[j] )
-          if(alProbPredicted[i->first][j]>0.0 )
-		      {
+      for(int j=i->second.low();j<=i->second.high();++j) {
+        if( i->second[j] ) {
+          if(alProbPredicted[i->first][j]>0.0 ) {
             double op=1.0;
             if( old && old->alProb.count(i->first) )
               op=(old->alProb.find(i->first)->second)[j];
@@ -155,28 +150,31 @@ void HMMTables<CLS, MAPPERCLASSTOSTRING>::performGISIteration(
             //     << i->second[j] << "/pred:" << alProbPredicted[i->first][j] << " -> ";
             i->second[j]= op*(i->second[j]/alProbPredicted[i->first][j]);
             //cerr << i->second[j] << endl;
-		      }
-          else
-		      {
+          } else {
             cerr << "ERROR2 in performGISiteration: " << i->second[j] << endl;
-		      }
+          }
+        }
       }
+    } else {
+      cerr << "ERROR in performGISIteration: " << alProbPredicted.count(i->first) << endl;
     }
-	  else
-	    cerr << "ERROR in performGISIteration: " << alProbPredicted.count(i->first) << endl;
-	}
+  }
 }
 
 template<class CLS,class MAPPERCLASSTOSTRING>
 inline void printAlDeps(std::ostream& out, const AlDeps<CLS>&x,
                         const MAPPERCLASSTOSTRING& mapper1,
-                        const MAPPERCLASSTOSTRING& mapper2)
-{
-  if( (CompareAlDeps&1) ) out << "sentenceLength: " << x.englishSentenceLength<< ' ';
-  if( (CompareAlDeps&2) ) out << "previousClass: " << mapper1.classString(x.classPrevious) << ' ';
-  if( (CompareAlDeps&4) ) out << "previousPosition: " << x.previous << ' ';
-  if( (CompareAlDeps&8) ) out << "FrenchPosition: " << x.j << ' ';
-  if( (CompareAlDeps&16) ) out << "FrenchClass: " << mapper2.classString(x.Cj) << ' ';
+                        const MAPPERCLASSTOSTRING& mapper2) {
+  if ((CompareAlDeps&1))
+    out << "sentenceLength: " << x.englishSentenceLength<< ' ';
+  if ((CompareAlDeps&2))
+    out << "previousClass: " << mapper1.classString(x.classPrevious) << ' ';
+  if ((CompareAlDeps&4))
+    out << "previousPosition: " << x.previous << ' ';
+  if ((CompareAlDeps&8))
+    out << "FrenchPosition: " << x.j << ' ';
+  if ((CompareAlDeps&16))
+    out << "FrenchClass: " << mapper2.classString(x.Cj) << ' ';
 }
 
 #endif  // GIZAPP_HMM_TABLES_H_

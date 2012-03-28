@@ -30,20 +30,20 @@
 #include <algorithm>
 
 transpair_model3::transpair_model3(const Vector<WordIndex>&es, const Vector<WordIndex>&fs, TModel<COUNT, PROB>&tTable, AModel<PROB>&aTable, AModel<PROB>&dTable, nmodel<PROB>&nTable, double _p1, double _p0, void*)
-  : transpair_model2(es,fs,tTable,aTable),d(es.size(), fs.size()),n(es.size(), g_max_fertility+1), p0(_p0), p1(_p1)
+: transpair_model2(es,fs,tTable,aTable),d(es.size(), fs.size()),n(es.size(), g_max_fertility+1), p0(_p0), p1(_p1)
 {
   WordIndex l=es.size()-1,m=fs.size()-1;
   for(WordIndex i=0;i<=l;i++)
+  {
+    for(WordIndex j=1;j<=m;j++)
+      d(i, j)=dTable.getValue(j, i, l, m);
+    if( i>0 )
     {
-      for(WordIndex j=1;j<=m;j++)
-	d(i, j)=dTable.getValue(j, i, l, m);
-      if( i>0 )
-	{
-	  for(WordIndex f=0;f<g_max_fertility;f++)
-	    n(i, f)=nTable.getValue(es[i], f);
-	  n(i,g_max_fertility)=PROB_SMOOTH;
-	}
+      for(WordIndex f=0;f<g_max_fertility;f++)
+        n(i, f)=nTable.getValue(es[i], f);
+      n(i,g_max_fertility)=PROB_SMOOTH;
     }
+  }
 }
 
 LogProb transpair_model3::scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j, double,bool forModel3)const
@@ -55,24 +55,24 @@ LogProb transpair_model3::scoreOfMove(const Alignment&a, WordIndex new_i, WordIn
     change=1.0;
   else if (old_i == 0)
     change=((double)p0*p0/p1) *
-      (( (DeficientDistortionForEmptyWord?(max(2,int(m))/DeficientDistortionForEmptyWord):f0)*(m-f0+1.0)) / ((m-2*f0+1)*(m-2*f0+2.0))) *
-      ((PROB)(forModel3?(a.fert(new_i)+1.0):1.0)) *
-      (get_fertility(new_i, a.fert(new_i)+1) / get_fertility(new_i, a.fert(new_i)))*
-      (t(new_i, j)/t(old_i, j))*
-      (forModel3?d(new_i, j):1.0);
+           (( (DeficientDistortionForEmptyWord?(max(2,int(m))/DeficientDistortionForEmptyWord):f0)*(m-f0+1.0)) / ((m-2*f0+1)*(m-2*f0+2.0))) *
+           ((PROB)(forModel3?(a.fert(new_i)+1.0):1.0)) *
+           (get_fertility(new_i, a.fert(new_i)+1) / get_fertility(new_i, a.fert(new_i)))*
+           (t(new_i, j)/t(old_i, j))*
+           (forModel3?d(new_i, j):1.0);
   else if (new_i == 0)
     change=(double(p1) / (p0*p0)) *
-      (double((m-2*f0)*(m-2*f0-1))/( (DeficientDistortionForEmptyWord?(max(2,int(m))/DeficientDistortionForEmptyWord):(1+f0))*(m-f0))) *
-      (forModel3?(1.0/a.fert(old_i)):1.0) *
-      (get_fertility(old_i, a.fert(old_i)-1) /get_fertility(old_i, a.fert(old_i)))*
-      (t(new_i, j) /t(old_i, j)) *
-      (forModel3?(1.0 / d(old_i, j)):1.0);
+           (double((m-2*f0)*(m-2*f0-1))/( (DeficientDistortionForEmptyWord?(max(2,int(m))/DeficientDistortionForEmptyWord):(1+f0))*(m-f0))) *
+           (forModel3?(1.0/a.fert(old_i)):1.0) *
+           (get_fertility(old_i, a.fert(old_i)-1) /get_fertility(old_i, a.fert(old_i)))*
+           (t(new_i, j) /t(old_i, j)) *
+           (forModel3?(1.0 / d(old_i, j)):1.0);
   else
     change=(forModel3?((a.fert(new_i)+1.0)/a.fert(old_i)):1.0) *
-      (get_fertility(old_i,a.fert(old_i)-1) / get_fertility(old_i,a.fert(old_i))) *
-      (get_fertility(new_i,a.fert(new_i)+1) /get_fertility(new_i,a.fert(new_i))) *
-      (t(new_i,j)/t(old_i,j)) *
-      (forModel3?(d(new_i,j)/d(old_i,j)):1.0);
+           (get_fertility(old_i,a.fert(old_i)-1) / get_fertility(old_i,a.fert(old_i))) *
+           (get_fertility(new_i,a.fert(new_i)+1) /get_fertility(new_i,a.fert(new_i))) *
+           (t(new_i,j)/t(old_i,j)) *
+           (forModel3?(d(new_i,j)/d(old_i,j)):1.0);
   return change;
 }
 
@@ -82,31 +82,31 @@ LogProb transpair_model3::scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex
   assert(j1<j2);
   WordIndex i1=a(j1), i2=a(j2);
   if (i1!=i2)
+  {
+    score=(t(i2, j1)/t(i1, j1))*(t(i1, j2)/t(i2, j2));
+    if( forModel3 )
     {
-      score=(t(i2, j1)/t(i1, j1))*(t(i1, j2)/t(i2, j2));
-      if( forModel3 )
-	{
-	  if (i1)
-	    score *= d(i1, j2)/d(i1, j1);
-	  if (i2)
-	    score *= d(i2, j1)/d(i2, j2);
-	}
+      if (i1)
+        score *= d(i1, j2)/d(i1, j1);
+      if (i2)
+        score *= d(i2, j1)/d(i2, j2);
     }
+  }
   return score;
 }
 
 ostream&operator<<(ostream&out, const transpair_model3&m)
 {
   for(WordIndex i=0;i<=m.get_l();i++)
-    {
-      out << "EF-I:"<<i<<' ';
-      for(WordIndex j=1;j<=m.get_m();j++)
-	out << "("<<m.t(i,j)<<","<<m.d(i,j)<<")";
-      for(WordIndex j=1;j<g_max_fertility;j++)
-	if( i>0 )
-	  out << "(fert:"<<m.get_fertility(i,j)<<")";
-      out << '\n';
-    }
+  {
+    out << "EF-I:"<<i<<' ';
+    for(WordIndex j=1;j<=m.get_m();j++)
+      out << "("<<m.t(i,j)<<","<<m.d(i,j)<<")";
+    for(WordIndex j=1;j<g_max_fertility;j++)
+      if( i>0 )
+        out << "(fert:"<<m.get_fertility(i,j)<<")";
+    out << '\n';
+  }
   out << "T:" << m.t << "D:" << m.d << "A:" << m.a  << "N:" << m.n << m.p0 << m.p1 << '\n';
   return out;
 }
@@ -153,21 +153,21 @@ LogProb transpair_model3::prob_of_target_and_alignment_given_source(const Alignm
     total *= double(m - al.fert(0) - i + 1) / (double(DeficientDistortionForEmptyWord?(max(2,int(m))/DeficientDistortionForEmptyWord):i)) ;
   if( verb) cerr << "IBM-3: +NULL:binomial+distortion " << total << '\n';
   for (WordIndex i = 1 ; i <= l ; i++)
-    {
-      total *= get_fertility(i, al.fert(i)) * (LogProb) factorial(al.fert(i));
-      if( verb) cerr << "IBM-3: fertility of " << i << " with factorial " << get_fertility(i, al.fert(i)) * (LogProb) factorial(al.fert(i)) << " -> " << total << '\n';
-    }
+  {
+    total *= get_fertility(i, al.fert(i)) * (LogProb) factorial(al.fert(i));
+    if( verb) cerr << "IBM-3: fertility of " << i << " with factorial " << get_fertility(i, al.fert(i)) * (LogProb) factorial(al.fert(i)) << " -> " << total << '\n';
+  }
   for (WordIndex j = 1 ; j <= m ; j++)
+  {
+    total*= get_t(al(j), j) ;
+    MASSERT(get_t(al(j), j)>=PROB_SMOOTH);
+    if( verb) cerr << "IBM-3: t of " << j << " " << al(j) << ": " << get_t(al(j), j)  << " -> " << total << '\n';
+    if (al(j))
     {
-      total*= get_t(al(j), j) ;
-      MASSERT(get_t(al(j), j)>=PROB_SMOOTH);
-      if( verb) cerr << "IBM-3: t of " << j << " " << al(j) << ": " << get_t(al(j), j)  << " -> " << total << '\n';
-      if (al(j))
-	{
-	  total *= get_d(al(j), j);
-	  if( verb) cerr << "IBM-3: d of " << j << ": " << get_d(al(j), j)  << " -> " << total << '\n';
-	}
+      total *= get_d(al(j), j);
+      if( verb) cerr << "IBM-3: d of " << j << ": " << get_d(al(j), j)  << " -> " << total << '\n';
     }
+  }
   return total?total:zero;
 }
 
@@ -179,18 +179,18 @@ void transpair_model3::computeScores(const Alignment&al,vector<double>&d)const
   for (WordIndex i = 1 ; i <= al.fert(0) ; i++)
     total1 *= double(m - al.fert(0) - i + 1) / (double(DeficientDistortionForEmptyWord?(max(2,int(m))/DeficientDistortionForEmptyWord):i)) ;
   for (WordIndex i = 1 ; i <= l ; i++)
-    {
-      total2 *= get_fertility(i, al.fert(i)) * (LogProb) factorial(al.fert(i));
-    }
+  {
+    total2 *= get_fertility(i, al.fert(i)) * (LogProb) factorial(al.fert(i));
+  }
   for (WordIndex j = 1 ; j <= m ; j++)
+  {
+    total3*= get_t(al(j), j) ;
+    MASSERT( get_t(al(j), j)>=PROB_SMOOTH );
+    if (al(j))
     {
-      total3*= get_t(al(j), j) ;
-      MASSERT( get_t(al(j), j)>=PROB_SMOOTH );
-      if (al(j))
-	{
-	  total4 *= get_d(al(j), j);
-	}
+      total4 *= get_d(al(j), j);
     }
+  }
   d.push_back(total1);//5
   d.push_back(total2);//6
   d.push_back(total3);//7

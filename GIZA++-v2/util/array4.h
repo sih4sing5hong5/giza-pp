@@ -32,47 +32,47 @@ template<class T> class Array4
   T init;
  public:
   Array4(int m,const T&_init)
-    : A(m,m,0),M(m),init(_init) {}
+      : A(m,m,0),M(m),init(_init) {}
   ~Array4()
-    {
-      for(int l=0;l<M;++l)
-	for(int m=0;m<M;++m)
-	  delete A(l,m);
-    }
+  {
+    for(int l=0;l<M;++l)
+      for(int m=0;m<M;++m)
+        delete A(l,m);
+  }
   const T&operator()(int i, int j, int l, int m)const
-    {
-      if( A(l,m)==0 )
-	return init;
-      else
-	return (*A(l,m))(i,j);
-    }
-  const T&get(int i, int j, int l, int m)const
-    {
-      if( A(l,m)==0 )
-	return init;
-      else
-	return (*A(l,m))(i,j);
-    }
-  T&operator()(int i, int j, int l, int m)
-    {
-      if( A(l,m)==0 )
-	{
-	  A(l,m)=new Array2<T>(max(l+1,m+1),max(l+1,m+1),init);
-	}
+  {
+    if( A(l,m)==0 )
+      return init;
+    else
       return (*A(l,m))(i,j);
-    }
-  void clear()
+  }
+  const T&get(int i, int j, int l, int m)const
+  {
+    if( A(l,m)==0 )
+      return init;
+    else
+      return (*A(l,m))(i,j);
+  }
+  T&operator()(int i, int j, int l, int m)
+  {
+    if( A(l,m)==0 )
     {
-      for(int l=0;l<M;++l)
-	for(int m=0;m<M;++m)
-	  if( A(l,m) )
-	    {
-	      Array2<T>&a=*A(l,m);
-	      for(int i=0;i<=l;++i)
-		for(int j=0;j<=m;++j)
-		  a(i,j)=0.0;
-	    }
+      A(l,m)=new Array2<T>(max(l+1,m+1),max(l+1,m+1),init);
     }
+    return (*A(l,m))(i,j);
+  }
+  void clear()
+  {
+    for(int l=0;l<M;++l)
+      for(int m=0;m<M;++m)
+        if( A(l,m) )
+        {
+          Array2<T>&a=*A(l,m);
+          for(int i=0;i<=l;++i)
+            for(int j=0;j<=m;++j)
+              a(i,j)=0.0;
+        }
+  }
 };
 
 #endif  // GIZAPP_UTIL_ARRAY4_H_

@@ -22,14 +22,13 @@
 #include "vocab.h"
 
 void VocabList::readVocabList()
-     // reads a vocabulary file from fname. It expects the following format:
-     //
-     // token_id token_string frequency
+    // reads a vocabulary file from fname. It expects the following format:
+    //
+    // token_id token_string frequency
 {
-
-  int freq=0;
-  WordIndex word_id ;
-  WordEntry entry("NULL",0) ;
+  int freq = 0;
+  WordIndex word_id;
+  WordEntry entry("NULL",0);
 
   string line, word ;
   cerr << "Reading vocabulary file from:" << fname << "\n";
@@ -41,49 +40,40 @@ void VocabList::readVocabList()
   }
 
   list.push_back(entry);
-  s2i[entry.word]=list.size()-1;
+  s2i[entry.word] = list.size() - 1;
 
-  while(getline(vFile, line)){
+  while (getline(vFile, line)) {
     istringstream buffer(line);
     if(!(buffer >> word_id >> word >> freq))
       cerr << "ERROR: reading vocabulary; " << word_id << ' ' << word << ' ' << freq << endl;
     if (word_id == 0){
       cerr << "ERROR: TOKEN ID 0 is reserved for special token NULL, in line: \n"<< line<<"\n" ;
       exit(-1);
-    }
-    else if (word_id >= kMaxVocabSize){
+    } else if (word_id >= kMaxVocabSize) {
       cerr << "ERROR: TOKEN ID is greater than maximum vocabulary size "
-	   << kMaxVocabSize << " in line :\n"<< line <<"\n" ;
+           << kMaxVocabSize << " in line :\n"<< line <<"\n" ;
       exit(-1);
-    }
-    else if (freq < 0){
+    } else if (freq < 0) {
       cerr << "ERROR: frequency must be a positive integer, in line :\n"
-	   << line <<"\n";
+           << line <<"\n";
       exit(-1);
-    }
-    else if(word_id >= list.size()){
+    } else if(word_id >= list.size()) {
       list.resize(word_id+1);
       list[word_id].word = word ;
       s2i[word]=word_id;
       list[word_id].freq = 0 ;
       noUniqueTokens = word_id + 1 ;
-      //      noUniqueTokens++ ;
-      //      total += freq ;
-    }
-    else if(list[word_id].word != "\0"){
+    } else if(list[word_id].word != "\0") {
       cerr << "ERROR: TOKEN ID must be unique for each token, in line :\n"
-	   << line <<"\n";
+           << line <<"\n";
       cerr << "TOKEN ID " << word_id << " has already been assigned to: " <<
-	list[word_id].word << "\n";
+          list[word_id].word << "\n";
       exit(-1);
-    }
-    else { // line  has valid information
+    } else { // line  has valid information
       list[word_id].word = word ;
       s2i[word]=word_id;
       list[word_id].freq = 0 ;
-      //      noUniqueTokens++ ;
       noUniqueTokens  = word_id + 1 ;
-      //      total += freq ;
     }
   } // end of while
 }

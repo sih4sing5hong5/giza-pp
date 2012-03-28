@@ -53,16 +53,16 @@ class transpair_model5 : public transpair_model4
   typedef transpair_model3 simpler_transpair_model;
   mutable map<Vector<PositionIndex>,LogProb> scores[4];
   transpair_model5(const Vector<WordIndex>&es, const Vector<WordIndex>&fs, TModel<COUNT, PROB>&tTable,
-		   AModel<PROB>&aTable, AModel<PROB>&dTable, nmodel<PROB>&nTable, double _p1, double _p0,
-		   const d5model*_d5m)
-    : transpair_model4(es, fs, tTable, aTable, dTable, nTable, _p1, _p0,&_d5m->d4m),d5m(*_d5m),doModel4Scoring(0) {}
+                   AModel<PROB>&aTable, AModel<PROB>&dTable, nmodel<PROB>&nTable, double _p1, double _p0,
+                   const d5model*_d5m)
+      : transpair_model4(es, fs, tTable, aTable, dTable, nTable, _p1, _p0,&_d5m->d4m),d5m(*_d5m),doModel4Scoring(0) {}
   LogProb scoreOfAlignmentForChange(const Alignment& a)const
-    {
-      if( doModel4Scoring )
-	return transpair_model4::prob_of_target_and_alignment_given_source(a,2);
-      else
-	return prob_of_target_and_alignment_given_source(a,2);
-    }
+  {
+    if( doModel4Scoring )
+      return transpair_model4::prob_of_target_and_alignment_given_source(a,2);
+    else
+      return prob_of_target_and_alignment_given_source(a,2);
+  }
   LogProb scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j,double thisValue=-1.0)const;
   LogProb scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double thisValue=-1.0)const ;
   LogProb _scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j,double thisValue=-1.0)const;

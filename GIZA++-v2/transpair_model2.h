@@ -38,15 +38,15 @@ class transpair_model2 : public transpair_model1
   Array2<PROB, Vector<PROB> > a;
  public:
   transpair_model2(const Vector<WordIndex>&es, const Vector<WordIndex>&fs, const TModel<COUNT, PROB>&tTable,
-		   const AModel<PROB>&aTable)
-    : transpair_model1(es,fs,tTable),a(es.size(),fs.size())
-    {
-      for(WordIndex i=0;i<=l;i++)
-	for(WordIndex j=1;j<=m;j++)
-	  a(i, j)=aTable.getValue(i, j, l, m);
-    }
+                   const AModel<PROB>&aTable)
+      : transpair_model1(es,fs,tTable),a(es.size(),fs.size())
+  {
+    for(WordIndex i=0;i<=l;i++)
+      for(WordIndex j=1;j<=m;j++)
+        a(i, j)=aTable.getValue(i, j, l, m);
+  }
   const PROB&get_a(WordIndex i, WordIndex j)const
-    {return a(i, j);}
+  {return a(i, j);}
 };
 
 #endif  // GIZAPP_TRANSPAIR_MODEL2_H_
