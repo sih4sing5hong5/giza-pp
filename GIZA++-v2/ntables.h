@@ -42,14 +42,15 @@ class nmodel
   nmodel(int maxw, int maxn)
       : ntab(maxw, maxn, 0.0)
   {}
-  VALTYPE getValue(int w, unsigned int n)const
-  {
+
+  VALTYPE getValue(int w, unsigned int n) const {
     MASSERT(w!=0);
     if(n>=ntab.getLen2())
       return 0.0;
     else
-      return max(ntab(w, n), VALTYPE(PROB_SMOOTH));
+      return max(ntab(w, n), VALTYPE(g_smooth_prob));
   }
+
   VALTYPE&getRef(int w, int n)
   {
     //massert(w!=0);

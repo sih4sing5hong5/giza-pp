@@ -102,9 +102,9 @@ class AModel {
 
   VALTYPE getValue(WordIndex aj, WordIndex j, WordIndex l, WordIndex m) const {
     if (is_distortion == 0)
-      return max(double(PROB_SMOOTH), amodel_smooth_factor/(l+1)+(1.0-amodel_smooth_factor)*get(aj, j, l, m));
+      return max(double(g_smooth_prob), amodel_smooth_factor/(l+1)+(1.0-amodel_smooth_factor)*get(aj, j, l, m));
     else
-      return max(double(PROB_SMOOTH), amodel_smooth_factor/m+(1.0-amodel_smooth_factor)*get(aj, j, l, m));
+      return max(double(g_smooth_prob), amodel_smooth_factor/m+(1.0-amodel_smooth_factor)*get(aj, j, l, m));
   }
 
   // Print amodel to file with the name filename (it'll be created or overwritten

@@ -46,7 +46,7 @@ void nmodel<VALTYPE>::printNTable(int noEW, const char* filename,
         of << i << ' ' ;
       for( k=0; k < g_max_fertility; k++){
         p = getValue(i, k);
-        if (p <= PROB_SMOOTH)
+        if (p <= g_smooth_prob)
           p = 0;
         of << p << ' ';
       }

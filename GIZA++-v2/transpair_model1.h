@@ -51,8 +51,8 @@ class transpair_model1
       for(WordIndex j=1;j<=m;j++)
       {
         t(i, j)=tTable.getProb(es[i], fs[j]);
-        if( !(t(i,j)>=PROB_SMOOTH) )
-          cerr << "ERROR IN PROBABILITY: " << t(i,j) << " " << PROB_SMOOTH << endl;
+        if( !(t(i,j)>=g_smooth_prob) )
+          cerr << "ERROR IN PROBABILITY: " << t(i,j) << " " << g_smooth_prob << endl;
       }
   }
   /*  transpair_model1(const Vector<WordIndex>&es, const Vector<WordIndex>&fs)
@@ -68,38 +68,40 @@ class transpair_model1
       t(i,j)=1.0;
       else
       t(i,j)=1/100.0;
-      MASSERT( t(i,j)>=PROB_SMOOTH );
+      MASSERT( t(i,j)>=g_smooth_prob );
       }
       }*/
-  WordIndex get_l()const
-  {return l;}
-  WordIndex get_m()const
-  {return m;}
-  const PROB&get_t(WordIndex i, WordIndex j)const
-  {MASSERT( t(i,j)>=PROB_SMOOTH);
-    return t(i, j);}
-  WordIndex get_es(int i)const {return E[i];}
-  WordIndex get_fs(int j)const {return F[j];}
-  bool greedyHillClimbing()const
-  {return 0;}
-  void computeScores(const Alignment&,vector<double>&)const
-  {}
-  LogProb scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j,double=-1.0)const
-  {
-    int old_i=a(j);
+  WordIndex get_l() const { return l; }
+  WordIndex get_m()const { return m; }
+
+  const PROB& get_t(WordIndex i, WordIndex j) const {
+    MASSERT(t(i,j) >= g_smooth_prob);
+    return t(i, j);
+  }
+
+  WordIndex get_es(int i) const { return E[i]; }
+  WordIndex get_fs(int j) const { return F[j]; }
+
+  bool greedyHillClimbing() const { return 0; }
+
+  void computeScores(const Alignment&, vector<double>&)const { }
+
+  LogProb scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j, double=-1.0) const {
+    int old_i = a(j);
     return (t(new_i, j) /t(old_i, j));
   }
-  LogProb scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double=-1.0)const
-  {
+
+  LogProb scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double=-1.0) const {
     WordIndex i1=a(j1), i2=a(j2);
     return (t(i2, j1)/t(i1, j1))*(t(i1, j2)/t(i2, j2));
   }
-  LogProb prob_of_target_and_alignment_given_source(const Alignment&al)const
-  {
-    LogProb prob=1.0;
-    int lp1=al.get_l()+1;
-    for(unsigned int j=1;j<=al.get_m();++j)
-      prob*=t(al(j),j)/lp1;
+
+  LogProb prob_of_target_and_alignment_given_source(const Alignment&al) const {
+    LogProb prob = 1.0;
+    int lp1 = al.get_l()+1;
+
+    for(unsigned int j = 1; j <= al.get_m(); ++j)
+      prob *= t(al(j),j) / lp1;
     return prob;
   }
 };

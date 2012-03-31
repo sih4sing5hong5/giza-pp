@@ -122,7 +122,7 @@ void printOverlapReport(const TModel<COUNT, PROB>& tTable,
   }
   set<WordIDPair>::const_iterator i ;
   for (i = testCoocur.begin() ; i != testCoocur.end() ; ++i){
-    if (tTable.getProb((*i).first, (*i).second) > PROB_SMOOTH){
+    if (tTable.getProb((*i).first, (*i).second) > g_smooth_prob){
       seen_coocur ++ ;
       //      of_seenCoocur << (*i).first << ' ' << (*i).second << '\n';
     }

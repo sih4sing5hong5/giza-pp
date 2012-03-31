@@ -57,8 +57,8 @@ void TModel<COUNT, PROB>::printProbTable(const char *filename,
       {
         const CPPair&x=(*lexmat[i])[j].second;
         WordIndex e=i,f=(*lexmat[i])[j].first;
-        if( x.prob>PROB_SMOOTH )
-          if( actual )
+        if (x.prob>g_smooth_prob)
+          if (actual)
             of << evlist[e].word << ' ' << fvlist[f].word << ' ' << x.prob << '\n';
           else
             of << e << ' ' << f << ' ' << x.prob << '\n';
@@ -250,7 +250,7 @@ void TModel<COUNT, PROB>::normalizeTable(const VocabList&engl, const VocabList&f
   for(unsigned int k=0;k<engl.uniqTokens();++k)
     if( nFrench[k] )
     {
-      double probMass=(french.uniqTokensInCorpus()-nFrench[k])*PROB_SMOOTH;
+      double probMass = (french.uniqTokensInCorpus() - nFrench[k]) * g_smooth_prob;
       if( probMass<0.0 )
         cout << k << " french.uniqTokensInCorpus(): " << french.uniqTokensInCorpus() << "  nFrench[k]:"<< nFrench[k] << '\n';
       total[k]+= total[k]*probMass/(1-probMass);

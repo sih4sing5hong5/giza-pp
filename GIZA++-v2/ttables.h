@@ -275,9 +275,9 @@ class TModel {
   {
     const CPPair *p=find(e,f);
     if( p )
-      return max(p->prob, PROB_SMOOTH);
+      return max(p->prob, g_smooth_prob);
     else
-      return PROB_SMOOTH;
+      return g_smooth_prob;
   }
 
   COUNT getCount(WordIndex e, WordIndex f) const
@@ -357,13 +357,13 @@ class TModel {
 
   PROB getProb(WordIndex e, WordIndex f) const
       // read probability value for P(fj/ei) from the hash table
-      // if pair does not exist, return floor value PROB_SMOOTH
+      // if pair does not exist, return floor value g_smooth_prob
   {
     typename hash_map<WordIDPair, CPPair, HashPair, equal_to<WordIDPair> >::const_iterator i= ef.find(WordIDPair(e, f));
     if(i == ef.end())
-      return PROB_SMOOTH;
+      return g_smooth_prob;
     else
-      return max(((*i).second).prob, PROB_SMOOTH);
+      return max(((*i).second).prob, g_smooth_prob);
   }
 
   COUNT getCount(WordIndex e, WordIndex f) const

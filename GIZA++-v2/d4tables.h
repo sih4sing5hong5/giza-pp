@@ -179,10 +179,10 @@ class d4model {
     assert(j>=1);//assert(j_cp>=0);
     assert(j<=msl);assert(j_cp<=msl);
     if(p==D1.end()) {
-      return PROB_SMOOTH;
+      return g_smooth_prob;
     } else {
       MASSERT((p->second)[j-j_cp+msl].second<=1.0);
-      return max(PROB_SMOOTH,d4modelsmooth_factor/(2*m-1)+(1-d4modelsmooth_factor)*(p->second)[j-j_cp+msl].second);
+      return max(g_smooth_prob,d4modelsmooth_factor/(2*m-1)+(1-d4modelsmooth_factor)*(p->second)[j-j_cp+msl].second);
     }
   }
 
@@ -193,10 +193,10 @@ class d4model {
     map<m4_key,Vpff,compare1 >::const_iterator p=D1.find(key);
 
     if(p==D1.end()) {
-      return PROB_SMOOTH;
+      return g_smooth_prob;
     } else {
       MASSERT((p->second)[j-j_cp+msl].second<=1.0);
-      return max(PROB_SMOOTH,d4modelsmooth_factor/(2*m-1)+(1-d4modelsmooth_factor)*(p->second)[j-j_cp+msl].second);
+      return max(g_smooth_prob,d4modelsmooth_factor/(2*m-1)+(1-d4modelsmooth_factor)*(p->second)[j-j_cp+msl].second);
     }
   }
 
@@ -209,10 +209,10 @@ class d4model {
     MASSERT(j>j_prev);
     MASSERT(j<=msl);MASSERT(j_prev<=msl);
     if(p==Db1.end()) {
-      return PROB_SMOOTH;
+      return g_smooth_prob;
     } else {
       MASSERT((p->second)[j-j_prev+msl].second<=1.0 );
-      return max(PROB_SMOOTH,d4modelsmooth_factor/(m-1)+(1-d4modelsmooth_factor)*(p->second)[j-j_prev+msl].second);
+      return max(g_smooth_prob,d4modelsmooth_factor/(m-1)+(1-d4modelsmooth_factor)*(p->second)[j-j_prev+msl].second);
     }
   }
 
@@ -223,10 +223,10 @@ class d4model {
     m4_key key(M4_Dependencies,l,m,F,E,j_prev,-1,-1);
     map<m4_key,Vpff,compareb1 >::const_iterator p=Db1.find(key);
     if(p==Db1.end()) {
-      return PROB_SMOOTH;
+      return g_smooth_prob;
     } else {
       MASSERT((p->second)[j-j_prev+msl].second<=1.0 );
-      return max(PROB_SMOOTH,d4modelsmooth_factor/(m-1)+(1-d4modelsmooth_factor)*(p->second)[j-j_prev+msl].second);
+      return max(g_smooth_prob, d4modelsmooth_factor/(m-1)+(1-d4modelsmooth_factor)*(p->second)[j-j_prev+msl].second);
     }
   }
 

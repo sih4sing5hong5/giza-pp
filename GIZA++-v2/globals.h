@@ -31,7 +31,7 @@
 // TODO: Use only POD data. Replace string objects with const char[]
 // if it possible.
 
-extern float PROB_SMOOTH;
+extern float g_smooth_prob;
 extern bool Verbose, Log, Peg, Transfer, Transfer2to3, useDict ;
 extern string Prefix, LogFilename, OPath,
   SourceVocabFilename, TargetVocabFilename, CorpusFilename, TestCorpusFilename,

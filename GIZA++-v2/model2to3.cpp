@@ -148,10 +148,10 @@ void Model3::estimate_t_a_d(SentenceHandler& sHandler1, Perplexity& perp, Perple
       WordIndex best_i = 0;
       for(i = 0; i <= l; i++){
         sPtrCache[i] = tTable.getPtr(es[i], fs[j]);
-        if (sPtrCache[i] != 0 &&  (*(sPtrCache[i])).prob > PROB_SMOOTH) // if valid pointer
+        if (sPtrCache[i] != 0 &&  (*(sPtrCache[i])).prob > g_smooth_prob) // if valid pointer
           temp_mult[i][j]= (*(sPtrCache[i])).prob * aTable.getValue(i, j, l, m);
         else
-          temp_mult[i][j] = PROB_SMOOTH *  aTable.getValue(i, j, l, m);
+          temp_mult[i][j] = g_smooth_prob *  aTable.getValue(i, j, l, m);
         total += temp_mult[i][j];
         if (temp_mult[i][j] > word_best_score){
           word_best_score = temp_mult[i][j];
@@ -171,9 +171,9 @@ void Model3::estimate_t_a_d(SentenceHandler& sHandler1, Perplexity& perp, Perple
           if (temp_mult[i][j] == 1) // smooth to prevent underflow
             temp_mult[i][j] = 0.99;
           else  if (temp_mult[i][j] == 0)
-            temp_mult[i][j] = PROB_SMOOTH;
+            temp_mult[i][j] = g_smooth_prob;
           val = temp_mult[i][j] * PROB(count);
-          if ( val > PROB_SMOOTH) {
+          if (val > g_smooth_prob) {
             if( updateT )
             {
               if (sPtrCache[i] != 0)

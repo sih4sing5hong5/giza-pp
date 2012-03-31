@@ -47,7 +47,7 @@ void AModel<VALTYPE>::printTable(const char *filename) const {
           double sum=0.0;
           for (WordIndex i = 0; i <= L; i++) {
             VALTYPE x=getValue(i, j, L, M);
-            if (x > PROB_SMOOTH) {
+            if (x > g_smooth_prob) {
               of << i << ' ' << j << ' ' << L << ' ' << M << ' ' << x << '\n';
               sum+=x;
             }
@@ -59,7 +59,7 @@ void AModel<VALTYPE>::printTable(const char *filename) const {
           double sum = 0.0;
           for (WordIndex j = 1; j <= M; j++) {
             VALTYPE x=getValue(j, i, L, M);
-            if (x > PROB_SMOOTH) {
+            if (x > g_smooth_prob) {
               of << j << ' ' << i << ' ' << L << ' ' << M << ' ' << x << '\n';
               sum+=x;
             }

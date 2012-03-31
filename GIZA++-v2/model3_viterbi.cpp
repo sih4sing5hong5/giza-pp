@@ -569,9 +569,9 @@ void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHan
     if (Peg){
       for (i = 0 ; i <= l ; i++)
         for (j = 1 ; j <= m ; j++){
-          if ( (tTable.getProb(es[i], fs[j]) > PROB_SMOOTH) &&
-               (aTable.getValue(i, j, l, m) > PROB_SMOOTH) &&
-               (dTable.getValue(j, i, l, m) > PROB_SMOOTH))
+          if ( (tTable.getProb(es[i], fs[j]) > g_smooth_prob) &&
+               (aTable.getValue(i, j, l, m) > g_smooth_prob) &&
+               (dTable.getValue(j, i, l, m) > g_smooth_prob))
             findAlignmentsNeighborhood(/*tTable, aTable,*/ /*p1_count,
                                                              p0_count, */ es, fs, align_total_count, neighborhood, i, j);
         }

@@ -41,7 +41,7 @@ transpair_model3::transpair_model3(const Vector<WordIndex>&es, const Vector<Word
     {
       for(WordIndex f=0;f<g_max_fertility;f++)
         n(i, f)=nTable.getValue(es[i], f);
-      n(i,g_max_fertility)=PROB_SMOOTH;
+      n(i,g_max_fertility) = g_smooth_prob;
     }
   }
 }
@@ -159,8 +159,8 @@ LogProb transpair_model3::prob_of_target_and_alignment_given_source(const Alignm
   }
   for (WordIndex j = 1 ; j <= m ; j++)
   {
-    total*= get_t(al(j), j) ;
-    MASSERT(get_t(al(j), j)>=PROB_SMOOTH);
+    total *= get_t(al(j), j);
+    MASSERT(get_t(al(j), j) >= g_smooth_prob);
     if( verb) cerr << "IBM-3: t of " << j << " " << al(j) << ": " << get_t(al(j), j)  << " -> " << total << '\n';
     if (al(j))
     {
@@ -185,7 +185,7 @@ void transpair_model3::computeScores(const Alignment&al,vector<double>&d)const
   for (WordIndex j = 1 ; j <= m ; j++)
   {
     total3*= get_t(al(j), j) ;
-    MASSERT( get_t(al(j), j)>=PROB_SMOOTH );
+    MASSERT (get_t(al(j), j) >= g_smooth_prob);
     if (al(j))
     {
       total4 *= get_d(al(j), j);

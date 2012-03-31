@@ -51,7 +51,7 @@ GLOBAL_PARAMETER3(int,Model5_Iterations,"Model5_Iterations","NO. ITERATIONS MODE
 GLOBAL_PARAMETER3(int,Model6_Iterations,"Model6_Iterations","NO. ITERATIONS MODEL 6","m6","number of iterations for Model 6",kParLevIter,0);
 
 
-GLOBAL_PARAMETER(float, PROB_SMOOTH,"probSmooth","probability smoothing (floor) value ",kParLevOptheur,1e-7);
+GLOBAL_PARAMETER(float, g_smooth_prob,"probSmooth","probability smoothing (floor) value ",kParLevOptheur,1e-7);
 GLOBAL_PARAMETER(float, MINCOUNTINCREASE,"minCountIncrease","minimal count increase",kParLevOptheur,1e-7);
 
 GLOBAL_PARAMETER2(int,Transfer_Dump_Freq,"TRANSFER DUMP FREQUENCY","t2to3","output: dump of transfer from Model 2 to 3",kParLevOutput,0);

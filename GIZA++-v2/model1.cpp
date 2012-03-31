@@ -201,9 +201,9 @@ void Model1::em_loop(int it,Perplexity& perp, SentenceHandler& sHandler1, bool s
         for((i=0),(sPtrCachePtr=&sPtrCache[0]); i <= l; i++,sPtrCachePtr++){
           PROB e(0.0) ;
           (*sPtrCachePtr) = tTable.getPtr(es[i], fs[j]) ;
-          if ((*sPtrCachePtr) != 0 && (*((*sPtrCachePtr))).prob > PROB_SMOOTH)
+          if ((*sPtrCachePtr) != 0 && (*((*sPtrCachePtr))).prob > g_smooth_prob)
             e = (*((*sPtrCachePtr))).prob;
-          else e = PROB_SMOOTH ;
+          else e = g_smooth_prob ;
           denom += e  ;
           if (e > word_best_score){
             word_best_score = e ;
@@ -234,9 +234,9 @@ void Model1::em_loop(int it,Perplexity& perp, SentenceHandler& sHandler1, bool s
                 PROB e(0.0) ;
                 if (it == 1 && !seedModel1)
                   e =  uniform  ;
-                else if ((*sPtrCachePtr) != 0 &&  (*((*sPtrCachePtr))).prob > PROB_SMOOTH)
+                else if ((*sPtrCachePtr) != 0 &&  (*((*sPtrCachePtr))).prob > g_smooth_prob)
                   e = (*((*sPtrCachePtr))).prob;
-                else e = PROB_SMOOTH ;
+                else e = g_smooth_prob ;
                 COUNT x=e*val;
                 if( it==1||x>MINCOUNTINCREASE )
                   if ((*sPtrCachePtr) != 0)
@@ -253,9 +253,10 @@ void Model1::em_loop(int it,Perplexity& perp, SentenceHandler& sHandler1, bool s
               PROB e(0.0) ;
               if (it == 1 && !seedModel1)
                 e =  uniform  ;
-              else if ((*sPtrCachePtr) != 0 &&  (*((*sPtrCachePtr))).prob > PROB_SMOOTH)
+              else if ((*sPtrCachePtr) != 0 &&  (*((*sPtrCachePtr))).prob > g_smooth_prob)
                 e = (*((*sPtrCachePtr))).prob;
-              else e = PROB_SMOOTH ;
+              else
+                e = g_smooth_prob;
               //if( !(i==0) )
               //cout << "COUNT(e): " << e << " " << MINCOUNTINCREASE << endl;
               COUNT x=e*val;

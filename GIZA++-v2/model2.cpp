@@ -48,7 +48,7 @@ void Model2::initialize_table_uniformly(SentenceHandler& sHandler1) {
     WordIndex l = es.size() - 1;
     WordIndex m = fs.size() - 1;
     n++;
-    if(1<=m&&aTable.getValue(l,m,l,m)<=PROB_SMOOTH)
+    if(1<=m&&aTable.getValue(l,m,l,m)<=g_smooth_prob)
     {
       PROB uniform_val = 1.0 / (l+1) ;
       for(WordIndex j=1; j <= m; j++)
@@ -175,9 +175,10 @@ void Model2::em_loop(Perplexity& perp, SentenceHandler& sHandler1,
       WordIndex best_i = 0 ; // i for which fj is best maped to ei
       for(i=0; i <= l; i++){
         sPtrCache[i] = tTable.getPtr(es[i], fs[j]) ;
-        if (sPtrCache[i] != 0 &&(*(sPtrCache[i])).prob > PROB_SMOOTH )
+        if (sPtrCache[i] != 0 &&(*(sPtrCache[i])).prob > g_smooth_prob )
           e = (*(sPtrCache[i])).prob * aTable.getValue(i,j, l, m) ;
-        else e = PROB_SMOOTH * aTable.getValue(i,j, l, m);
+        else
+          e = g_smooth_prob * aTable.getValue(i,j, l, m);
         denom += e ;
         if (e > word_best_score){
           word_best_score = e ;
@@ -198,9 +199,10 @@ void Model2::em_loop(Perplexity& perp, SentenceHandler& sHandler1,
           COUNT val = COUNT(so) / (COUNT) double(denom) ;
           for( i=0; i <= l; i++){
             PROB e(0.0);
-            if (sPtrCache[i] != 0 &&  (*(sPtrCache[i])).prob > PROB_SMOOTH)
+            if (sPtrCache[i] != 0 &&  (*(sPtrCache[i])).prob > g_smooth_prob)
               e = (*(sPtrCache[i])).prob ;
-            else e = PROB_SMOOTH  ;
+            else
+              e = g_smooth_prob;
             e *= aTable.getValue(i,j, l, m);
             COUNT temp = COUNT(e) * val ;
             if( NoEmptyWord==0 || i!=0 )

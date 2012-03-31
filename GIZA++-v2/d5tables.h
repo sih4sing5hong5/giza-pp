@@ -106,7 +106,7 @@ class d5model {
     if( p==D1.end() )
       return UNSEENPROB;
     else
-      return max(PROB_SMOOTH,d5modelsmooth_factor/(vacancies_total)+(1-d5modelsmooth_factor)*(p->second)[vacancies_j].second);
+      return max(g_smooth_prob,d5modelsmooth_factor/(vacancies_total)+(1-d5modelsmooth_factor)*(p->second)[vacancies_j].second);
   }
 
   PROB getProb_bigger(PositionIndex vacancies_j, PositionIndex vacancies_jp,
@@ -121,7 +121,7 @@ class d5model {
     if(p==Db1.end())
       return UNSEENPROB;
     else
-      return max(PROB_SMOOTH,d5modelsmooth_factor/(vacancies_total)+(1-d5modelsmooth_factor)*(p->second)[vacancies_j - vacancies_jp].second);
+      return max(g_smooth_prob, d5modelsmooth_factor/(vacancies_total)+(1-d5modelsmooth_factor)*(p->second)[vacancies_j - vacancies_jp].second);
   }
 
   void normalizeTable() {
