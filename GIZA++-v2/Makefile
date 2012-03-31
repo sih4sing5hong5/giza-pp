@@ -52,6 +52,7 @@ DATE = `date +%d-%m-%Y`
 LIBOBJECTS = \
 	util/assert.o \
 	util/dictionary.o \
+	util/parse.o \
 	util/perplexity.o \
 	util/util.o \
 	parameter.o \
@@ -71,7 +72,6 @@ LIBOBJECTS = \
 	transpair_model4.o \
 	transpair_model5.o \
 	transpair_model_hmm.o \
-	parse.o \
 	ibm_model3_viterbi.o \
 	ibm_model3_viterbi_with_tricks.o \
 	ibm_model345-peg.o \
