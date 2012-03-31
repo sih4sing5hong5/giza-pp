@@ -89,7 +89,7 @@ $(LIBRARY): $(LIBOBJECTS)
 	rm -f $@
 	$(AR) -rs $@ $(LIBOBJECTS)
 
-GIZA++: $(LIBOBJECTS)
+GIZA++: giza_main.o $(LIBOBJECTS)
 	$(CXX) $(CFLAGS_OPT) $(LDFLAGS) giza_main.o $(LIBOBJECTS) -o $@
 
 prf: GIZA++.prf
