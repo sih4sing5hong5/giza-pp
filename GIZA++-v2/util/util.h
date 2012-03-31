@@ -36,7 +36,29 @@ class WordEntry;
 template <class COUNT, class PROB>
 class TModel;
 
-extern void parseConfigFile (char * fname);
+// Reads in the configuration file to set up some run-time
+// parameters. The parameters are global variables that are defined in
+// main.cc and used all over the place in the program
+// The format of the configuration file can be explained in the following way
+// FORMAT:
+// the character '\n' separates lines ..
+// lines that start with "//" (skipping over white spaces are considered
+// as comments and will be ignored.
+// Any other line is considered as an attribute setting instruction and it
+// is divided into haves (separated by a colon ":"). The first half is the
+// attribute value which consists of the concatenation of all non-white space
+// tokens before the colon. These tokens will have spaces eseparating them.
+// The attribute vlue is the first token after the colon (any thing after
+// it will be ignored;
+// For example :
+// if the configuration file has the following entry:
+//
+// NO.   ITERATIONS   MODEL 2 : 10
+//
+// then the attribute is "NO. ITERATIONS MODEL 2" , and the attribute value
+// is "10"  (these do not include the quotation marks).
+extern void parseConfigFile(const char * fname);
+
 extern void parseArguments(int argc, char *argv[]);
 
 extern void generatePerplexityReport(const Perplexity& trainperp,
