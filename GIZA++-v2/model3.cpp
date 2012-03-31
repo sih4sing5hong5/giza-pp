@@ -98,11 +98,11 @@ void Model3::em(int noIterations, SentenceHandler& sHandler1) {
       //mj changed next line
       number.insert((size_t) 0, 1, (char)(n % 10 + '0'));
     } while((n /= 10) > 0);
-    tfile = Prefix + ".t3." + number;
-    afile = Prefix + ".a3." + number;
-    nfile = Prefix + ".n3." + number;
-    dfile = Prefix + ".d3." + number;
-    p0file = Prefix + ".p0_3." + number;
+    tfile = g_prefix + ".t3." + number;
+    afile = g_prefix + ".a3." + number;
+    nfile = g_prefix + ".n3." + number;
+    dfile = g_prefix + ".d3." + number;
+    p0file = g_prefix + ".p0_3." + number;
     //    tCountTable.clear();
     dCountTable.clear();
     nCountTable.clear();
@@ -312,18 +312,18 @@ int Model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
       } while((n /= 10) > 0);
       if( final )
         number="final";
-      tfile = Prefix + ".t3." + number;
-      tfile_actual = Prefix + ".actual.t3." + number;
-      afile = Prefix + ".a3." + number;
-      nfile = Prefix + ".n3." + number;
-      nfile_actual = Prefix + ".actual.n3." + number;
-      dfile = Prefix + ".d3." + number;
-      d4file = Prefix + ".d4." + number;
-      d4file2 = Prefix + ".D4." + number;
-      d5file = Prefix + ".d5." + number;
-      alignfile = Prefix + ".A3." + number;
-      test_alignfile = Prefix + ".tst.A3." + number;
-      p0file = Prefix + ".p0_3." + number;
+      tfile = g_prefix + ".t3." + number;
+      tfile_actual = g_prefix + ".actual.t3." + number;
+      afile = g_prefix + ".a3." + number;
+      nfile = g_prefix + ".n3." + number;
+      nfile_actual = g_prefix + ".actual.n3." + number;
+      dfile = g_prefix + ".d3." + number;
+      d4file = g_prefix + ".d4." + number;
+      d4file2 = g_prefix + ".D4." + number;
+      d5file = g_prefix + ".d5." + number;
+      alignfile = g_prefix + ".A3." + number;
+      test_alignfile = g_prefix + ".tst.A3." + number;
+      p0file = g_prefix + ".p0_3." + number;
     }
     // clear count tables
     //    tCountTable.clear();

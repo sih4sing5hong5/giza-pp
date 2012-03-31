@@ -81,10 +81,10 @@ int Model2::em_with_tricks(int noIterations)
     do{
       number.insert((size_t)0, 1, (char)(n % 10 + '0'));
     } while((n /= 10) > 0);
-    tfile = Prefix + ".t" + shortModelName + "." + number ;
-    afile = Prefix + ".a" + shortModelName + "." + number ;
-    alignfile = Prefix + ".A" + shortModelName + "." + number ;
-    test_alignfile = Prefix + ".tst.A" + shortModelName + "." + number ;
+    tfile = g_prefix + ".t" + shortModelName + "." + number ;
+    afile = g_prefix + ".a" + shortModelName + "." + number ;
+    alignfile = g_prefix + ".A" + shortModelName + "." + number ;
+    test_alignfile = g_prefix + ".tst.A" + shortModelName + "." + number ;
     aCountTable.clear();
     initAL();
     em_loop(perp, sHandler1, dump_files, alignfile.c_str(), trainViterbiPerp, false);

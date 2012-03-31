@@ -80,11 +80,11 @@ int HMM::em_with_tricks(int noIterations) {
     do{
       number.insert((size_t)0, 1, (char)(n % 10 + '0'));
     } while((n /= 10) > 0);
-    tfile = Prefix + ".t" + shortModelName + "." + number ;
-    afile = Prefix + ".a" + shortModelName + "." + number ;
-    afileh = Prefix + ".h" + shortModelName + "." + number ;
-    alignfile = Prefix + ".A" + shortModelName + "." + number ;
-    test_alignfile = Prefix + ".tst.A" + shortModelName + "." + number ;
+    tfile = g_prefix + ".t" + shortModelName + "." + number ;
+    afile = g_prefix + ".a" + shortModelName + "." + number ;
+    afileh = g_prefix + ".h" + shortModelName + "." + number ;
+    alignfile = g_prefix + ".A" + shortModelName + "." + number ;
+    test_alignfile = g_prefix + ".tst.A" + shortModelName + "." + number ;
     counts=HMMTables<int,WordClasses>(GLOBALProbabilityForEmpty,ewordclasses,fwordclasses);
     aCountTable.clear();
     initAL();

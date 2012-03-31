@@ -144,8 +144,8 @@ void parseArguments(int argc, char *argv[])
     }
   }
   if( OPath.length() )
-    OPath+="/";
-  Prefix = (OPath + Prefix);
+    OPath += "/";
+  g_prefix = (OPath + g_prefix);
   g_log_filename = (OPath + g_log_filename);
 
   printGIZAPars(cout);

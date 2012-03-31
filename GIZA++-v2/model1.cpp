@@ -90,9 +90,9 @@ int Model1::em_with_tricks(int noIterations, /*Perplexity& perp, SentenceHandler
     do{
       number.insert((size_t)0, 1, (char)(n % 10 + '0'));
     } while((n /= 10) > 0);
-    tfile = Prefix + ".t" + shortModelName + "." + number ;
-    alignfile = Prefix + ".A" + shortModelName + "." + number ;
-    test_alignfile = Prefix +".tst.A" + shortModelName + "." + number ;
+    tfile = g_prefix + ".t" + shortModelName + "." + number ;
+    alignfile = g_prefix + ".A" + shortModelName + "." + number ;
+    test_alignfile = g_prefix +".tst.A" + shortModelName + "." + number ;
     initAL();
     em_loop(it,perp, sHandler1, seedModel1, dump_files, alignfile.c_str(), dictionary, useDict, trainViterbiPerp);
     if (testPerp && testHandler) // calculate test perplexity

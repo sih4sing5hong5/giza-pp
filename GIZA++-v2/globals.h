@@ -37,8 +37,10 @@ extern bool g_enable_logging;
 
 extern bool Peg, Transfer, Transfer2to3, useDict ;
 
-extern string g_log_filename;
-extern string Prefix, OPath,
+extern std::string g_log_filename;
+extern std::string g_prefix;
+
+extern string OPath,
   SourceVocabFilename, TargetVocabFilename, CorpusFilename, TestCorpusFilename,
   t_Filename, a_Filename, p0_Filename, d_Filename, n_Filename, dictionary_Filename;
 

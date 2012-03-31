@@ -132,7 +132,7 @@ void printOverlapReport(const TModel<COUNT, PROB>& tTable,
     }
   }
 
-  string trgUnkFile = Prefix + ".tst.trg.unk" ;
+  string trgUnkFile = g_prefix + ".tst.trg.unk" ;
   ofstream of_trgUnk(trgUnkFile.c_str());
 
   for (WordIndex i = 0 ; i <  testFList.getVocabList().size() && i < testFList.uniqTokens();i++)
@@ -141,7 +141,7 @@ void printOverlapReport(const TModel<COUNT, PROB>& tTable,
                 << '\n';
       trgUnk++ ;
     }
-  string srcUnkFile = Prefix + ".tst.src.unk" ;
+  string srcUnkFile = g_prefix + ".tst.src.unk" ;
   ofstream of_srcUnk(srcUnkFile.c_str());
 
   for (WordIndex j = 0 ; j <  testEList.getVocabList().size() && j < testEList.uniqTokens();j++)
@@ -150,7 +150,7 @@ void printOverlapReport(const TModel<COUNT, PROB>& tTable,
       of_srcUnk << j << ' ' << testEList.getVocabList()[j].word << ' ' << testEList.getVocabList()[j].freq
                 << '\n';
     }
-  string summaryFile = Prefix + ".tst.stats" ;
+  string summaryFile = g_prefix + ".tst.stats" ;
   ofstream of_summary(summaryFile.c_str());
   of_summary << "\t\t STATISTICS ABOUT TEST CORPUS\n\n";
   of_summary << "source unique tokens: " <<  testEList.uniqTokens() << '\n';

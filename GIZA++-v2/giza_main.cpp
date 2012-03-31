@@ -85,7 +85,9 @@ Vector<map< pair<int,int>,char > > ReferenceAlignment;
 bool useDict = false;
 string CoocurrenceFile;
 string g_log_filename;
-string Prefix, OPath, Usage,
+string g_prefix;
+
+string OPath, Usage,
   SourceVocabFilename, TargetVocabFilename, CorpusFilename,
   TestCorpusFilename, t_Filename, a_Filename, p0_Filename, d_Filename,
   n_Filename, dictionary_Filename;
@@ -120,7 +122,7 @@ const char*stripPath(const char*fullpath)
 
 void printDecoderConfigFile()
 {
-  string decoder_config_file = Prefix + ".Decoder.config" ;
+  string decoder_config_file = g_prefix + ".Decoder.config" ;
   cerr << "writing decoder configuration file to " <<  decoder_config_file.c_str() <<'\n';
   ofstream decoder(decoder_config_file.c_str());
   if(!decoder){
@@ -143,7 +145,7 @@ void printDecoderConfigFile()
           << "#\n#        - Absolute paths (file name starts with /) will override\n"
           << "#          the default directory.\n\n";
   // strip file prefix info and leave only the path name in Prefix
-  string path = Prefix.substr(0, Prefix.find_last_of("/")+1);
+  string path = g_prefix.substr(0, g_prefix.find_last_of("/")+1);
   if( path=="" )
     path=".";
   decoder << "TM_RawDataDir = " << path << '\n';
@@ -167,17 +169,17 @@ void printDecoderConfigFile()
     last_model = 2 ;
   else last_model = 1 ;
   string last_modelName = str2Num(last_model);
-  string p=Prefix + ".t" + /*last_modelName*/"3" +".final";
+  string p=g_prefix + ".t" + /*last_modelName*/"3" +".final";
   decoder << "TTable = " << stripPath(p.c_str()) << '\n';
-  p = Prefix + ".ti.final" ;
+  p = g_prefix + ".ti.final" ;
   decoder << "InverseTTable = " << stripPath(p.c_str()) << '\n';
-  p=Prefix + ".n" + /*last_modelName*/"3" + ".final";
+  p=g_prefix + ".n" + /*last_modelName*/"3" + ".final";
   decoder << "NTable = " << stripPath(p.c_str())  << '\n';
-  p=Prefix + ".d" + /*last_modelName*/"3" + ".final";
+  p=g_prefix + ".d" + /*last_modelName*/"3" + ".final";
   decoder << "D3Table = " << stripPath(p.c_str())  << '\n';
-  p=Prefix + ".D4.final";
+  p=g_prefix + ".D4.final";
   decoder << "D4Table = " << stripPath(p.c_str()) << '\n';
-  p=Prefix + ".p0_"+ /*last_modelName*/"3" + ".final";
+  p=g_prefix + ".p0_"+ /*last_modelName*/"3" + ".final";
   decoder << "PZero = " << stripPath(p.c_str()) << '\n';
   decoder << "Source.vcb = " << SourceVocabFilename << '\n';
   decoder << "Target.vcb = " << TargetVocabFilename << '\n';
@@ -185,7 +187,7 @@ void printDecoderConfigFile()
   //  decoder << "Target.classes = " << TargetVocabFilename + ".classes" <<'\n';
   decoder << "Source.classes = " << SourceVocabFilename+".classes" << '\n';
   decoder << "Target.classes = " << TargetVocabFilename + ".classes" <<'\n';
-  p=Prefix + ".fe0_"+ /*last_modelName*/"3" + ".final";
+  p=g_prefix + ".fe0_"+ /*last_modelName*/"3" + ".final";
   decoder << "FZeroWords       = " <<stripPath(p.c_str()) << '\n' ;
 
   /*  decoder << "# Translation Parameters\n"
@@ -214,13 +216,13 @@ void printAllTables(VocabList& eTrainVcbList, VocabList& eTestVcbList,
                     VocabList& fTrainVcbList, VocabList& fTestVcbList, Model1& m1)
 {
   cerr << "writing Final tables to Disk \n";
-  string t_inv_file = Prefix + ".ti.final" ;
+  string t_inv_file = g_prefix + ".ti.final" ;
   if( !FEWDUMPS)
     m1.getTTable().printProbTableInverse(t_inv_file.c_str(), m1.getEnglishVocabList(),
                                          m1.getFrenchVocabList(),
                                          m1.getETotalWCount(),
                                          m1.getFTotalWCount());
-  t_inv_file = Prefix + ".actual.ti.final" ;
+  t_inv_file = g_prefix + ".actual.ti.final" ;
   if ( !FEWDUMPS ) {
     m1.getTTable().printProbTableInverse(t_inv_file.c_str(),
                                          eTrainVcbList.getVocabList(),
@@ -229,7 +231,7 @@ void printAllTables(VocabList& eTrainVcbList, VocabList& eTestVcbList,
                                          m1.getFTotalWCount(), true);
   }
 
-  string perp_filename = Prefix + ".perp" ;
+  string perp_filename = g_prefix + ".perp" ;
   ofstream of_perp(perp_filename.c_str());
 
   cout << "Writing PERPLEXITY report to: " << perp_filename << '\n';
@@ -248,7 +250,7 @@ void printAllTables(VocabList& eTrainVcbList, VocabList& eTestVcbList,
                              of_perp, (*corpus).getTotalNoPairs1(), 0, true);
   }
 
-  string eTrainVcbFile = Prefix + ".trn.src.vcb" ;
+  string eTrainVcbFile = g_prefix + ".trn.src.vcb" ;
   ofstream of_eTrainVcb(eTrainVcbFile.c_str());
   cout << "Writing source vocabulary list to : " << eTrainVcbFile << '\n';
   if (!of_eTrainVcb){
@@ -257,7 +259,7 @@ void printAllTables(VocabList& eTrainVcbList, VocabList& eTestVcbList,
   }
   eTrainVcbList.printVocabList(of_eTrainVcb) ;
 
-  string fTrainVcbFile = Prefix + ".trn.trg.vcb" ;
+  string fTrainVcbFile = g_prefix + ".trn.trg.vcb" ;
   ofstream of_fTrainVcb(fTrainVcbFile.c_str());
   cout << "Writing source vocabulary list to : " << fTrainVcbFile << '\n';
   if(!of_fTrainVcb){
@@ -268,7 +270,7 @@ void printAllTables(VocabList& eTrainVcbList, VocabList& eTestVcbList,
 
   //print test vocabulary list
 
-  string eTestVcbFile = Prefix + ".tst.src.vcb" ;
+  string eTestVcbFile = g_prefix + ".tst.src.vcb" ;
   ofstream of_eTestVcb(eTestVcbFile.c_str());
   cout << "Writing source vocabulary list to : " << eTestVcbFile << '\n';
   if(!of_eTestVcb){
@@ -277,7 +279,7 @@ void printAllTables(VocabList& eTrainVcbList, VocabList& eTestVcbList,
   }
   eTestVcbList.printVocabList(of_eTestVcb) ;
 
-  string fTestVcbFile = Prefix + ".tst.trg.vcb" ;
+  string fTestVcbFile = g_prefix + ".tst.trg.vcb" ;
   ofstream of_fTestVcb(fTestVcbFile.c_str());
   cout << "Writing source vocabulary list to : " << fTestVcbFile << '\n';
   if(!of_fTestVcb){
@@ -344,8 +346,8 @@ void ReadAlignment(const string&x,Vector<map< pair<int,int>,char > >&a) {
 
 void initGlobals() {
   NODUMPS = false ;
-  Prefix = port::GetFileSpec();
-  g_log_filename = Prefix + ".log";
+  g_prefix = port::GetFileSpec();
+  g_log_filename = g_prefix + ".log";
   MAX_SENTENCE_LENGTH = kMaxAllowedSentenceLength ;
 }
 
@@ -379,7 +381,7 @@ double StartTraining(int& result) {
   globeTrainVcbList=&eTrainVcbList;
   globfTrainVcbList=&fTrainVcbList;
 
-  string repFilename = Prefix + ".gizacfg" ;
+  string repFilename = g_prefix + ".gizacfg" ;
   ofstream of2(repFilename.c_str());
   writeParameters(of2,getGlobalParSet(),-1) ;
 
@@ -529,7 +531,7 @@ double StartTraining(int& result) {
       if(Transfer2to3||HMM_Iterations==0){
         if( HMM_Iterations>0 )
           cout << "WARNING: transfor is not needed, as results are overwritten bei transfer from HMM.\n";
-        string test_alignfile = Prefix +".tst.A2to3";
+        string test_alignfile = g_prefix +".tst.A2to3";
         if (testCorpus)
           m2.em_loop(testPerp, *testCorpus,Transfer_Dump_Freq==1&&!NODUMPS,test_alignfile.c_str(), testViterbiPerp, true);
         if (testCorpus)
@@ -575,8 +577,8 @@ int main(int argc, char* argv[]) {
   getGlobalParSet().insert(new Parameter<string>("l",ParameterChangedFlag,"log file name",g_log_filename,kParLevOutput));
   getGlobalParSet().insert(new Parameter<string>("LOG FILE",ParameterChangedFlag,"log file name",g_log_filename,-1));
 
-  getGlobalParSet().insert(new Parameter<string>("o",ParameterChangedFlag,"output file prefix",Prefix,kParLevOutput));
-  getGlobalParSet().insert(new Parameter<string>("OUTPUT FILE PREFIX",ParameterChangedFlag,"output file prefix",Prefix,-1));
+  getGlobalParSet().insert(new Parameter<string>("o",ParameterChangedFlag,"output file prefix",g_prefix,kParLevOutput));
+  getGlobalParSet().insert(new Parameter<string>("OUTPUT FILE PREFIX",ParameterChangedFlag,"output file prefix",g_prefix,-1));
   getGlobalParSet().insert(new Parameter<string>("OUTPUT PATH",ParameterChangedFlag,"output path",OPath,kParLevOutput));
 
   time_t st1, fn;

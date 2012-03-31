@@ -125,7 +125,7 @@ void Model3::estimate_t_a_d(SentenceHandler& sHandler1, Perplexity& perp, Perple
   trainVPerp.clear();
   ofstream of2;
   if (dump_files){
-    alignfile = Prefix +".A2to3";
+    alignfile = g_prefix +".A2to3";
     of2.open(alignfile.c_str());
   }
   if (simple) cerr <<"Using simple estimation for fertilties\n";
@@ -223,7 +223,7 @@ void Model3::estimate_t_a_d(SentenceHandler& sHandler1, Perplexity& perp, Perple
   sHandler1.rewind();
   cerr << "Normalizing t, a, d, n count tables now ... ";
   if( dump_files && OutputInAachenFormat==1 ) {
-    tfile = Prefix + ".t2to3";
+    tfile = g_prefix + ".t2to3";
     tTable.printCountTable(tfile.c_str(),Elist.getVocabList(),Flist.getVocabList(),1);
   }
   if( updateT )
@@ -253,11 +253,11 @@ void Model3::estimate_t_a_d(SentenceHandler& sHandler1, Perplexity& perp, Perple
   p0 = 0.95;
   p1 = 0.05;
   if (dump_files){
-    tfile = Prefix + ".t2to3";
-    afile = Prefix + ".a2to3";
-    nfile = Prefix + ".n2to3";
-    dfile = Prefix + ".d2to3";
-    p0file = Prefix + ".p0_2to3";
+    tfile = g_prefix + ".t2to3";
+    afile = g_prefix + ".a2to3";
+    nfile = g_prefix + ".n2to3";
+    dfile = g_prefix + ".d2to3";
+    p0file = g_prefix + ".p0_2to3";
 
     if( OutputInAachenFormat==0 )
       tTable.printProbTable(tfile.c_str(),Elist.getVocabList(),Flist.getVocabList(),OutputInAachenFormat);
