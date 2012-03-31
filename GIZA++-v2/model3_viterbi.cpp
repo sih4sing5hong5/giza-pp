@@ -578,7 +578,7 @@ void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHan
     }
     //  Now Collect counts over saved neighborhoods
     viterbi_score = 0 ;
-    if (Verbose)
+    if (g_is_verbose)
       cerr << "\nCollecting counts over found alignments, total prob: "
            << align_total_count <<  "\n";
     if (Log)
@@ -611,7 +611,7 @@ void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHan
       perp.addFactor(log(double(align_total_count)), count, l, m,0);
       viterbiPerp.addFactor(log(double(viterbi_score)), count, l, m,0);
 
-      if (Verbose){
+      if (g_is_verbose){
         cerr << "Collected counts over "<<acount <<" (of "
              << pow(double(m), double(l+1)) <<") differnet alignments\n";
         cerr << "Bucket count of alignments hash: "<<
@@ -641,9 +641,10 @@ void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHan
     if (Log)
       logmsg << "processing this sentence pair ("<<l+1<<"x"<<m<<") : "<<
           (l+1)*m << " took : " << period << " seconds\n";
-    if (Verbose)
+    if (g_is_verbose) {
       cerr << "processing this sentence pair took : " << period
            << " seconds\n";
+    }
 
   } /* of sentence pair E, F */
   sHandler1.rewind();

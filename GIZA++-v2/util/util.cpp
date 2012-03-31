@@ -207,7 +207,7 @@ double ErrorsInAlignment(const map< pair<int,int>,char >&reference,const Vector<
       eventsMissing++;
     }
   }
-  if( Verbose )
+  if (g_is_verbose)
     cout << err << " errors in sentence\n";
   if( eventsToomuch+eventsMissing )
     return (toomuch+missing)/(eventsToomuch+eventsMissing);

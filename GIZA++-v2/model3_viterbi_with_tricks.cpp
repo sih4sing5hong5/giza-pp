@@ -661,9 +661,10 @@ void Model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
     for(unsigned int i=0;i<setOfGoodCenters.size();i++)
       delete setOfGoodCenters[i].first;
     double period = difftime(time(NULL), sent_s);
-    if (Verbose)
+    if (g_is_verbose) {
       cerr << "processing this sentence pair took : " << period
            << " seconds\n";
+    }
 
   } /* of sentence pair E, F */
   sHandler1.rewind();

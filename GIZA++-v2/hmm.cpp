@@ -354,7 +354,7 @@ void HMM::em_loop(Perplexity& perp, SentenceHandler& sHandler1,
           }
         }
       }
-      if( Verbose )
+      if( g_is_verbose )
         cout << "l: " << l << "m: " << m << " p0c: " << p0c << " np0c: " << np0c << endl;
     }
     cross_entropy+=log(max(trainProb,1e-100))+log(max(net->finalMultiply,1e-100));
@@ -373,9 +373,18 @@ void HMM::em_loop(Perplexity& perp, SentenceHandler& sHandler1,
     sHandler1.setProbOfSentence(sent,cross_entropy);
     perp.addFactor(cross_entropy, so, l, m,1);
     viterbi_perp.addFactor(log(viterbi_score)+log(max(net->finalMultiply,1e-100)), so, l, m,1);
-    if( Verbose )
-      cout << "Viterbi-perp: " << log(viterbi_score) << ' ' << log(max(net->finalMultiply,1e-100)) << ' ' << viterbi_score << ' ' << net->finalMultiply << ' ' << *net << "gamma: " << gamma << endl;
-    delete net;net=0;
+
+    if (g_is_verbose) {
+      cout << "Viterbi-perp: " << log(viterbi_score) << ' '
+           << log(max(net->finalMultiply,1e-100)) << ' '
+           << viterbi_score << ' ' << net->finalMultiply
+           << ' ' << *net << "gamma: " << gamma << endl;
+    }
+
+    // TODO: Use more safe resource management like RAII.
+    delete net;
+    net = 0;
+
     if (dump_alignment||(FEWDUMPS&&sent.getSentenceNo()<1000) )
       printAlignToFile(es, fs, Elist.getVocabList(), Flist.getVocabList(), of2, viterbi_alignment, sent.getSentenceNo(), viterbi_score);
     addAL(viterbi_alignment,sent.getSentenceNo(),l);

@@ -32,7 +32,9 @@
 // if it possible.
 
 extern float g_smooth_prob;
-extern bool Verbose, Log, Peg, Transfer, Transfer2to3, useDict ;
+extern bool g_is_verbose;
+
+extern bool Log, Peg, Transfer, Transfer2to3, useDict ;
 extern string Prefix, LogFilename, OPath,
   SourceVocabFilename, TargetVocabFilename, CorpusFilename, TestCorpusFilename,
   t_Filename, a_Filename, p0_Filename, d_Filename, n_Filename, dictionary_Filename;
@@ -68,7 +70,6 @@ extern VocabList *globeTrainVcbList, *globfTrainVcbList;
 
 extern short g_prediction_in_alignments;
 extern short SmoothHMM;
-#define VERB Verbose
 
 extern Vector<map< pair<int,int>,char > > ReferenceAlignment;
 

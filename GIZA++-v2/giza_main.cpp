@@ -55,7 +55,7 @@ GLOBAL_PARAMETER(float, g_smooth_prob,"probSmooth","probability smoothing (floor
 GLOBAL_PARAMETER(float, MINCOUNTINCREASE,"minCountIncrease","minimal count increase",kParLevOptheur,1e-7);
 
 GLOBAL_PARAMETER2(int,Transfer_Dump_Freq,"TRANSFER DUMP FREQUENCY","t2to3","output: dump of transfer from Model 2 to 3",kParLevOutput,0);
-GLOBAL_PARAMETER2(bool,Verbose,"verbose","v","0: not verbose; 1: verbose",kParLevOutput,0);
+GLOBAL_PARAMETER2(bool, g_is_verbose, "verbose","v","0: not verbose; 1: verbose", kParLevOutput, 0);
 GLOBAL_PARAMETER(bool,Log,"log","0: no logfile; 1: logfile",kParLevOutput,0);
 
 
