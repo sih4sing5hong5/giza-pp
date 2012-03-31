@@ -88,8 +88,9 @@ string g_log_filename;
 string g_prefix;
 string g_output_path;
 string g_source_vocab_filename;
+string g_target_vocab_filename;
 
-string Usage, TargetVocabFilename, CorpusFilename,
+string Usage, CorpusFilename,
   TestCorpusFilename, t_Filename, a_Filename, p0_Filename, d_Filename,
   n_Filename, dictionary_Filename;
 
@@ -183,11 +184,11 @@ void printDecoderConfigFile()
   p=g_prefix + ".p0_"+ /*last_modelName*/"3" + ".final";
   decoder << "PZero = " << stripPath(p.c_str()) << '\n';
   decoder << "Source.vcb = " << g_source_vocab_filename << '\n';
-  decoder << "Target.vcb = " << TargetVocabFilename << '\n';
+  decoder << "Target.vcb = " << g_target_vocab_filename << '\n';
   //  decoder << "Source.classes = " << g_source_vocab_filename + ".classes" << '\n';
-  //  decoder << "Target.classes = " << TargetVocabFilename + ".classes" <<'\n';
-  decoder << "Source.classes = " << g_source_vocab_filename+".classes" << '\n';
-  decoder << "Target.classes = " << TargetVocabFilename + ".classes" <<'\n';
+  //  decoder << "Target.classes = " << g_target_vocab_filename + ".classes" <<'\n';
+  decoder << "Source.classes = " << g_source_vocab_filename + ".classes" << '\n';
+  decoder << "Target.classes = " << g_target_vocab_filename + ".classes" <<'\n';
   p=g_prefix + ".fe0_"+ /*last_modelName*/"3" + ".final";
   decoder << "FZeroWords       = " <<stripPath(p.c_str()) << '\n' ;
 
@@ -388,7 +389,7 @@ double StartTraining(int& result) {
 
   cout << "reading vocabulary files \n";
   eTrainVcbList.setName(g_source_vocab_filename.c_str());
-  fTrainVcbList.setName(TargetVocabFilename.c_str());
+  fTrainVcbList.setName(g_target_vocab_filename.c_str());
   eTrainVcbList.readVocabList();
   fTrainVcbList.readVocabList();
   cout << "Source vocabulary list has " << eTrainVcbList.uniqTokens() << " unique tokens \n";
@@ -469,10 +470,10 @@ double StartTraining(int& result) {
     ifstream p0f(p0file.c_str());
     p0f >> p0;
     d4model d4m(MAX_SENTENCE_LENGTH);
-    d4m.makeWordClasses(m1.Elist,m1.Flist,g_source_vocab_filename+".classes",TargetVocabFilename+".classes");
+    d4m.makeWordClasses(m1.Elist, m1.Flist, g_source_vocab_filename + ".classes", g_target_vocab_filename + ".classes");
     d4m.readProbTable(d4file.c_str());
     //d5model d5m(d4m);
-    //d5m.makeWordClasses(m1.Elist,m1.Flist,g_source_vocab_filename+".classes",TargetVocabFilename+".classes");
+    //d5m.makeWordClasses(m1.Elist,m1.Flist,g_source_vocab_filename+".classes",g_target_vocab_filename+".classes");
     //d5m.readProbTable(d5file.c_str());
     makeSetCommand("model4smoothfactor","0.0",getGlobalParSet(),2);
     //makeSetCommand("model5smoothfactor","0.0",getGlobalParSet(),2);
@@ -523,7 +524,7 @@ double StartTraining(int& result) {
       }
       if(HMM_Iterations > 0){
         cout << "NOTE: I am doing iterations with the HMM model!\n";
-        h.makeWordClasses(m1.Elist,m1.Flist,g_source_vocab_filename+".classes",TargetVocabFilename+".classes");
+        h.makeWordClasses(m1.Elist, m1.Flist, g_source_vocab_filename + ".classes", g_target_vocab_filename + ".classes");
         h.initialize_table_uniformly(*corpus);
         minIter=h.em_with_tricks(HMM_Iterations);
         errors=h.errorsAL();
@@ -565,10 +566,10 @@ int main(int argc, char* argv[]) {
   getGlobalParSet().insert(new Parameter<string>("CoocurrenceFile",ParameterChangedFlag,"",CoocurrenceFile,kParLevSpecial));
 #endif
   getGlobalParSet().insert(new Parameter<string>("ReadTablePrefix",ParameterChangedFlag,"optimized",ReadTablePrefix,-1));
-  getGlobalParSet().insert(new Parameter<string>("S",ParameterChangedFlag,"source vocabulary file name",g_source_vocab_filename,kParLevInput));
-  getGlobalParSet().insert(new Parameter<string>("SOURCE VOCABULARY FILE",ParameterChangedFlag,"source vocabulary file name",g_source_vocab_filename,-1));
-  getGlobalParSet().insert(new Parameter<string>("T",ParameterChangedFlag,"target vocabulary file name",TargetVocabFilename,kParLevInput));
-  getGlobalParSet().insert(new Parameter<string>("TARGET VOCABULARY FILE",ParameterChangedFlag,"target vocabulary file name",TargetVocabFilename,-1));
+  getGlobalParSet().insert(new Parameter<string>("S", ParameterChangedFlag, "source vocabulary file name", g_source_vocab_filename, kParLevInput));
+  getGlobalParSet().insert(new Parameter<string>("SOURCE VOCABULARY FILE", ParameterChangedFlag,"source vocabulary file name", g_source_vocab_filename, -1));
+  getGlobalParSet().insert(new Parameter<string>("T", ParameterChangedFlag, "target vocabulary file name", g_target_vocab_filename, kParLevInput));
+  getGlobalParSet().insert(new Parameter<string>("TARGET VOCABULARY FILE", ParameterChangedFlag, "target vocabulary file name", g_target_vocab_filename, -1));
   getGlobalParSet().insert(new Parameter<string>("C",ParameterChangedFlag,"training corpus file name",CorpusFilename,kParLevInput));
   getGlobalParSet().insert(new Parameter<string>("CORPUS FILE",ParameterChangedFlag,"training corpus file name",CorpusFilename,-1));
   getGlobalParSet().insert(new Parameter<string>("TC",ParameterChangedFlag,"test corpus file name",TestCorpusFilename,kParLevInput));

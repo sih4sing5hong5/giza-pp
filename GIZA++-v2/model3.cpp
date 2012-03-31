@@ -260,9 +260,9 @@ int Model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
 {
   double minErrors=1.0;int minIter=0;
   d4model d4m(MAX_SENTENCE_LENGTH);
-  d4m.makeWordClasses(Elist,Flist, g_source_vocab_filename + ".classes", TargetVocabFilename+".classes");
+  d4m.makeWordClasses(Elist,Flist, g_source_vocab_filename + ".classes", g_target_vocab_filename + ".classes");
   d5model d5m(d4m);
-  d5m.makeWordClasses(Elist,Flist, g_source_vocab_filename + ".classes", TargetVocabFilename+".classes");
+  d5m.makeWordClasses(Elist,Flist, g_source_vocab_filename + ".classes", g_target_vocab_filename + ".classes");
   time_t it_st, st, it_fn, fn;
   bool dump_files = false;
   string tfile, tfile_actual, dfile, afile, nfile, nfile_actual, p0file, alignfile, number, test_alignfile, d4file,d5file,zeroFertFile;
