@@ -69,7 +69,7 @@ template <class VALTYPE>
 class AModel {
  public:
   Array4<VALTYPE> a;
-  bool is_distortion ;
+  bool is_distortion;
   WordIndex MaxSentLength;
   bool ignoreL, ignoreM;
 
@@ -117,7 +117,7 @@ class AModel {
 
   template <class COUNT>
   void normalize(AModel<COUNT>& aTable) const {
-    WordIndex i, j, l, m ;
+    WordIndex i, j, l, m;
     COUNT total;
     int nParam = 0;
     for (l = 0;l < MaxSentLength; l++) {

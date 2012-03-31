@@ -53,10 +53,10 @@
 
 class SentencePair {
  public:
-  int sentenceNo ;
+  int sentenceNo;
   float noOcc;
   float realCount;
-  Vector<WordIndex> eSent ;
+  Vector<WordIndex> eSent;
   Vector<WordIndex> fSent;
 
  public:

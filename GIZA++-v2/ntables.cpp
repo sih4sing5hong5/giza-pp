@@ -36,14 +36,14 @@ void nmodel<VALTYPE>::printNTable(int noEW, const char* filename,
 {
   cerr << "Dumping nTable to: " << filename <<  '\n';
   ofstream of(filename);
-  VALTYPE p ;
-  WordIndex k, i ;
+  VALTYPE p;
+  WordIndex k, i;
   for(i=1; int(i) < noEW; i++){
     if (evlist[i].freq > 0){
       if (actual)
-        of << evlist[i].word << ' ' ;
+        of << evlist[i].word << ' ';
       else
-        of << i << ' ' ;
+        of << i << ' ';
       for( k=0; k < g_max_fertility; k++){
         p = getValue(i, k);
         if (p <= g_smooth_prob)

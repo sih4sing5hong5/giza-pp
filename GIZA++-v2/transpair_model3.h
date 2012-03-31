@@ -75,7 +75,7 @@ class transpair_model3 : public transpair_model2
   LogProb scoreOfAlignmentForChange(const Alignment& a)const
   {return -1.0; }
   LogProb scoreOfMove(const Alignment& a, WordIndex new_i, WordIndex j, double thisValue=-1.0,bool withDistortions=1)const;
-  LogProb scoreOfSwap(const Alignment& a, WordIndex j1, WordIndex j2, double thisValue=-1.0,bool withDistortions=1)const ;
+  LogProb scoreOfSwap(const Alignment& a, WordIndex j1, WordIndex j2, double thisValue=-1.0,bool withDistortions=1)const;
   LogProb _scoreOfMove(const Alignment& a, WordIndex new_i, WordIndex j,double thisValue=-1.0)const;
   LogProb _scoreOfSwap(const Alignment& a, WordIndex j1, WordIndex j2,double thisValue=-1.0)const;
   friend ostream&operator<<(ostream&out, const transpair_model3&m);

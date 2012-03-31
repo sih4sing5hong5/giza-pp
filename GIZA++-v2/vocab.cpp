@@ -30,9 +30,9 @@ void VocabList::readVocabList()
   WordIndex word_id;
   WordEntry entry("NULL",0);
 
-  string line, word ;
+  string line, word;
   cerr << "Reading vocabulary file from:" << fname << "\n";
-  //  total = 0 ;
+  //  total = 0;
   ifstream vFile(fname);
   if(!vFile){
     cerr <<  "\nCannot open vocabulary file " << fname << "file";
@@ -47,11 +47,11 @@ void VocabList::readVocabList()
     if(!(buffer >> word_id >> word >> freq))
       cerr << "ERROR: reading vocabulary; " << word_id << ' ' << word << ' ' << freq << endl;
     if (word_id == 0){
-      cerr << "ERROR: TOKEN ID 0 is reserved for special token NULL, in line: \n"<< line<<"\n" ;
+      cerr << "ERROR: TOKEN ID 0 is reserved for special token NULL, in line: \n"<< line<<"\n";
       exit(-1);
     } else if (word_id >= kMaxVocabSize) {
       cerr << "ERROR: TOKEN ID is greater than maximum vocabulary size "
-           << kMaxVocabSize << " in line :\n"<< line <<"\n" ;
+           << kMaxVocabSize << " in line :\n"<< line <<"\n";
       exit(-1);
     } else if (freq < 0) {
       cerr << "ERROR: frequency must be a positive integer, in line :\n"
@@ -59,10 +59,10 @@ void VocabList::readVocabList()
       exit(-1);
     } else if(word_id >= list.size()) {
       list.resize(word_id+1);
-      list[word_id].word = word ;
+      list[word_id].word = word;
       s2i[word]=word_id;
-      list[word_id].freq = 0 ;
-      noUniqueTokens = word_id + 1 ;
+      list[word_id].freq = 0;
+      noUniqueTokens = word_id + 1;
     } else if(list[word_id].word != "\0") {
       cerr << "ERROR: TOKEN ID must be unique for each token, in line :\n"
            << line <<"\n";
@@ -70,10 +70,10 @@ void VocabList::readVocabList()
           list[word_id].word << "\n";
       exit(-1);
     } else { // line  has valid information
-      list[word_id].word = word ;
+      list[word_id].word = word;
       s2i[word]=word_id;
-      list[word_id].freq = 0 ;
-      noUniqueTokens  = word_id + 1 ;
+      list[word_id].freq = 0;
+      noUniqueTokens  = word_id + 1;
     }
   } // end of while
 }

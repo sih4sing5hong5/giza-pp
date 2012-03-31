@@ -42,7 +42,7 @@ class Model3 : public Model2 {
   AModel<COUNT> dCountTable;
 
   PROB p0,p1;
-  double p0_count, p1_count ;
+  double p0_count, p1_count;
 
   nmodel<PROB>  nTable;
   nmodel<COUNT> nCountTable;

@@ -112,7 +112,7 @@ inline bool AlignmentModel::insert(const Key& aj, LogProb val) {
 }
 
 inline LogProb AlignmentModel::getValue(const Key& align) const {
-  const LogProb zero = 0.0 ;
+  const LogProb zero = 0.0;
   AlignmentHashMap::const_iterator it = m_alignment.find(align);
   if (it == m_alignment.end()) {
     return zero;

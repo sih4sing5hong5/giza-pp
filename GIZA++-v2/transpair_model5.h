@@ -64,9 +64,9 @@ class transpair_model5 : public transpair_model4
       return prob_of_target_and_alignment_given_source(a,2);
   }
   LogProb scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j,double thisValue=-1.0)const;
-  LogProb scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double thisValue=-1.0)const ;
+  LogProb scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double thisValue=-1.0)const;
   LogProb _scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j,double thisValue=-1.0)const;
-  LogProb _scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double thisValue=-1.0)const ;
+  LogProb _scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double thisValue=-1.0)const;
   int modelnr()const{return 5;}
   LogProb prob_of_target_and_alignment_given_source(const Alignment&al, short distortionType=3,bool verb=0)const;
   void computeScores(const Alignment&al,vector<double>&d)const;

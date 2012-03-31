@@ -81,17 +81,17 @@ class HashPair : public unary_function<WordIDPair, size_t > {
    *---------------------------------------------------------------------------*/
 
 // TODO: Come up with better class name. What is Lp?
-//typedef float COUNT ;
-//typedef LogProb PROB ;
+//typedef float COUNT;
+//typedef LogProb PROB;
 template <class COUNT, class PROB>
 class LpPair {
  public:
-  COUNT count ;
-  PROB  prob ;
+  COUNT count;
+  PROB  prob;
  public: // constructor
-  LpPair():count(0), prob(0){} ;
+  LpPair():count(0), prob(0){};
   LpPair(COUNT c, PROB p):count(c), prob(p){};
-} ;
+};
 
 #ifdef BINARY_SEARCH_FOR_TTABLE
 
@@ -268,7 +268,7 @@ class TModel {
     {
       CPPair *p=find(e,f);
       if( p )
-        p->count += inc ;
+        p->count += inc;
     }
   }
 
@@ -328,8 +328,8 @@ class TModel {
 
   // insert: add entry P(fj/ei) to the hash function, Default value is 0.0
   void insert(WordIndex e, WordIndex f, COUNT cval=0.0, PROB pval = 0.0){
-    ef[WordIDPair(e, f)].count = cval ;
-    ef[WordIDPair(e, f)].prob = pval ;
+    ef[WordIDPair(e, f)].count = cval;
+    ef[WordIDPair(e, f)].prob = pval;
   }
 
   // returns a reference to the word pair, if does not exists, it creates it.
@@ -345,7 +345,7 @@ class TModel {
     typename hash_map<WordIDPair, CPPair, HashPair, equal_to<WordIDPair> >::iterator i = ef.find(WordIDPair(e, f));
     if(i != ef.end())  // if it exists, return a pointer to it.
       return(&((*i).second));
-    else return(0) ; // else return NULL pointer
+    else return(0); // else return NULL pointer
   }
 
   void incCount(WordIndex e, WordIndex f, COUNT inc)
@@ -353,7 +353,7 @@ class TModel {
   // it creates it with the given value.
   {
     if( inc )
-      ef[WordIDPair(e, f)].count += inc ;
+      ef[WordIDPair(e, f)].count += inc;
   }
 
   PROB getProb(WordIndex e, WordIndex f) const

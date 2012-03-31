@@ -124,24 +124,24 @@ LogProb transpair_model5::prob_of_target_and_alignment_given_source(const Alignm
 {
   if( doModel4Scoring )
     return transpair_model4::prob_of_target_and_alignment_given_source(al,distortionType);
-  LogProb total = 1.0 ;
-  static const LogProb almostZero = 1E-299 ;
+  LogProb total = 1.0;
+  static const LogProb almostZero = 1E-299;
   double x2;
   if( distortionType&1 )
   {
     total *= pow(double(1-p1), m-2.0 * al.fert(0)) * pow(double(p1), double(al.fert(0)));
     if( verb) cerr << "IBM-5: (1-p1)^(m-2 f0)*p1^f0: " << total << endl;
-    for (WordIndex i = 1 ; i <= al.fert(0) ; i++)
-      total *= double(m - al.fert(0) - i + 1) / i ; // IBM-5 is not deficient!
+    for (WordIndex i = 1; i <= al.fert(0); i++)
+      total *= double(m - al.fert(0) - i + 1) / i; // IBM-5 is not deficient!
     if( verb) cerr << "IBM-5: +NULL:binomial+distortion " << total << endl;
-    for (WordIndex i = 1 ; i <= l ; i++)
+    for (WordIndex i = 1; i <= l; i++)
     {
       total *= get_fertility(i, al.fert(i));
       if( verb) cerr << "IBM-5: fertility of " << i << " " << get_fertility(i, al.fert(i)) << " -> " << total << endl;
     }
-    for (WordIndex j = 1 ; j <= m ; j++)
+    for (WordIndex j = 1; j <= m; j++)
     {
-      total*= get_t(al(j), j) ;
+      total*= get_t(al(j), j);
       if( verb) cerr << "IBM-5: t of j:" << j << " i:" << al(j) << ": " << get_t(al(j), j)  << " -> " << total << endl;
     }
   }
@@ -196,14 +196,14 @@ LogProb transpair_model5::prob_of_target_and_alignment_given_source(const Alignm
 
 void transpair_model5::computeScores(const Alignment&al,vector<double>&d)const
 {
-  LogProb total1 = 1.0,total2=1.0,total3=1.0,total4=1.0 ;
+  LogProb total1 = 1.0,total2=1.0,total3=1.0,total4=1.0;
   total1 *= pow(double(1-p1), m-2.0 * al.fert(0)) * pow(double(p1), double(al.fert(0)));
-  for (WordIndex i = 1 ; i <= al.fert(0) ; i++)
-    total1 *= double(m - al.fert(0) - i + 1) / i ; // IBM-5 is not deficient!
-  for (WordIndex i = 1 ; i <= l ; i++)
+  for (WordIndex i = 1; i <= al.fert(0); i++)
+    total1 *= double(m - al.fert(0) - i + 1) / i; // IBM-5 is not deficient!
+  for (WordIndex i = 1; i <= l; i++)
     total2 *= get_fertility(i, al.fert(i));
-  for (WordIndex j = 1 ; j <= m ; j++)
-    total3*= get_t(al(j), j) ;
+  for (WordIndex j = 1; j <= m; j++)
+    total3*= get_t(al(j), j);
   PositionIndex prev_cept=0;
   PositionIndex vac_all=m;
   Vector<char> vac(m+1,0);

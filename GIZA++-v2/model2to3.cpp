@@ -39,7 +39,7 @@ double get_sum_of_partitions(int n, int source_pos,
   double sum = 0, prod;
   int s, w, u, v;
   WordIndex k, k1, i;
-  WordIndex num_parts = 0 ;
+  WordIndex num_parts = 0;
   int total_partitions_considered = 0;
 
   int part[kMaxFertility], mult[kMaxFertility];
@@ -56,7 +56,7 @@ double get_sum_of_partitions(int n, int source_pos,
     if (init){
       part[1] = n;
       mult[1] = 1;
-      num_parts = 1 ;
+      num_parts = 1;
       init = false;
     }
     else {
@@ -210,7 +210,7 @@ void Model3::estimate_t_a_d(SentenceHandler& sHandler1, Perplexity& perp, Perple
         r = 1;
         for (j = 1; j <= m; j++)
           r *= (1 - temp_mult[i][j]);
-        for (k = 0 ; k <  max_fertility_here; k++){
+        for (k = 0; k <  max_fertility_here; k++){
           sum = get_sum_of_partitions(k, i, alpha);
           temp = r * sum * count;
           nCountTable.getRef(es[i], k)+=temp;

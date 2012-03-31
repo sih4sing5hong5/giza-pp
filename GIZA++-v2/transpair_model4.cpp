@@ -98,20 +98,20 @@ LogProb transpair_model4::scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex
 
 LogProb transpair_model4::prob_of_target_and_alignment_given_source_1(const Alignment&al,bool verb)const
 {
-  LogProb total = 1.0 ;
+  LogProb total = 1.0;
   total *= pow(double(1-p1), m-2.0 * al.fert(0)) * pow(double(p1), double(al.fert(0)));
   if( verb) cerr << "IBM-4: (1-p1)^(m-2 f0)*p1^f0: " << total << endl;
-  for (WordIndex i = 1 ; i <= al.fert(0) ; i++)
-    total *= double(m - al.fert(0) - i + 1) / (double(DeficientDistortionForEmptyWord?(max(2,int(m))/DeficientDistortionForEmptyWord):i)) ;
+  for (WordIndex i = 1; i <= al.fert(0); i++)
+    total *= double(m - al.fert(0) - i + 1) / (double(DeficientDistortionForEmptyWord?(max(2,int(m))/DeficientDistortionForEmptyWord):i));
   if( verb) cerr << "IBM-4: +NULL:binomial+distortion " << total << endl;
-  for (WordIndex i = 1 ; i <= l ; i++)
+  for (WordIndex i = 1; i <= l; i++)
   {
     total *= get_fertility(i, al.fert(i));// * (LogProb) factorial(al.fert(i));
     if( verb) cerr << "IBM-4: fertility of " << i << " " << get_fertility(i, al.fert(i)) << " -> " << total << endl;
   }
-  for (WordIndex j = 1 ; j <= m ; j++)
+  for (WordIndex j = 1; j <= m; j++)
   {
-    total*= get_t(al(j), j) ;
+    total*= get_t(al(j), j);
     if( verb) cerr << "IBM-4: t of j:" << j << " i:" << al(j) << ": " << get_t(al(j), j)  << " -> " << total << endl;
   }
   return total;
@@ -119,8 +119,8 @@ LogProb transpair_model4::prob_of_target_and_alignment_given_source_1(const Alig
 
 LogProb transpair_model4::prob_of_target_and_alignment_given_source(const Alignment&al, short distortionType,bool verb)const
 {
-  LogProb total = 1.0 ;
-  static const LogProb almostZero = 1E-299 ;
+  LogProb total = 1.0;
+  static const LogProb almostZero = 1E-299;
   if( distortionType&1 )
   {
     total *= prob_of_target_and_alignment_given_source_1(al,verb);
@@ -150,14 +150,14 @@ LogProb transpair_model4::prob_of_target_and_alignment_given_source(const Alignm
 
 void transpair_model4::computeScores(const Alignment&al,vector<double>&d)const
 {
-  LogProb total1 = 1.0,total2=1.0,total3=1.0,total4=1.0 ;
+  LogProb total1 = 1.0,total2=1.0,total3=1.0,total4=1.0;
   total1 *= pow(double(1-p1), m-2.0 * al.fert(0)) * pow(double(p1), double(al.fert(0)));
-  for (WordIndex i = 1 ; i <= al.fert(0) ; i++)
-    total1 *= double(m - al.fert(0) - i + 1) / (double(DeficientDistortionForEmptyWord?(max(2,int(m))/DeficientDistortionForEmptyWord):i)) ;
-  for (WordIndex i = 1 ; i <= l ; i++)
+  for (WordIndex i = 1; i <= al.fert(0); i++)
+    total1 *= double(m - al.fert(0) - i + 1) / (double(DeficientDistortionForEmptyWord?(max(2,int(m))/DeficientDistortionForEmptyWord):i));
+  for (WordIndex i = 1; i <= l; i++)
     total2 *= get_fertility(i, al.fert(i));// * (LogProb) factorial(al.fert(i));
-  for (WordIndex j = 1 ; j <= m ; j++)
-    total3*= get_t(al(j), j) ;
+  for (WordIndex j = 1; j <= m; j++)
+    total3*= get_t(al(j), j);
   for(WordIndex j=1;j<=m;j++)
     if( al(j) )
       if( al.get_head(al(j))==j)

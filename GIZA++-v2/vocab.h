@@ -79,10 +79,10 @@ class VocabList {
   }
 
   void clearAllFreq() {
-    for (WordIndex id = 0 ; id < list.size() ; id++)
-      list[id].freq = 0 ;
-    total = 0 ;
-    noUniqueTokensInCorpus = 0 ;
+    for (WordIndex id = 0; id < list.size(); id++)
+      list[id].freq = 0;
+    total = 0;
+    noUniqueTokensInCorpus = 0;
   }
 
   int operator()(const string& x) const {
@@ -108,7 +108,7 @@ class VocabList {
   }
 
   void printVocabList(ostream& of) {
-    for (WordIndex i = 1 ; i < list.size() ; i++){
+    for (WordIndex i = 1; i < list.size(); i++){
       if (list[i].word != "" && list[i].freq > 0)
         of << i << ' ' << list[i].word << ' ' << list[i].freq << '\n';
     }

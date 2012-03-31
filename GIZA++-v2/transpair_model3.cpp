@@ -145,19 +145,19 @@ LogProb transpair_model3::_scoreOfSwap(const Alignment&a, WordIndex j1, WordInde
 
 LogProb transpair_model3::prob_of_target_and_alignment_given_source(const Alignment&al,bool verb)const
 {
-  LogProb total = 1.0 ;
-  static const LogProb zero = 1E-299 ;
+  LogProb total = 1.0;
+  static const LogProb zero = 1E-299;
   total *= pow(double(1-p1), m-2.0 * al.fert(0)) * pow(double(p1), double(al.fert(0)));
   if( verb) cerr << "IBM-3: (1-p1)^(m-2 f0)*p1^f0: " << total << '\n';
-  for (WordIndex i = 1 ; i <= al.fert(0) ; i++)
-    total *= double(m - al.fert(0) - i + 1) / (double(DeficientDistortionForEmptyWord?(max(2,int(m))/DeficientDistortionForEmptyWord):i)) ;
+  for (WordIndex i = 1; i <= al.fert(0); i++)
+    total *= double(m - al.fert(0) - i + 1) / (double(DeficientDistortionForEmptyWord?(max(2,int(m))/DeficientDistortionForEmptyWord):i));
   if( verb) cerr << "IBM-3: +NULL:binomial+distortion " << total << '\n';
-  for (WordIndex i = 1 ; i <= l ; i++)
+  for (WordIndex i = 1; i <= l; i++)
   {
     total *= get_fertility(i, al.fert(i)) * (LogProb) factorial(al.fert(i));
     if( verb) cerr << "IBM-3: fertility of " << i << " with factorial " << get_fertility(i, al.fert(i)) * (LogProb) factorial(al.fert(i)) << " -> " << total << '\n';
   }
-  for (WordIndex j = 1 ; j <= m ; j++)
+  for (WordIndex j = 1; j <= m; j++)
   {
     total *= get_t(al(j), j);
     MASSERT(get_t(al(j), j) >= g_smooth_prob);
@@ -174,17 +174,17 @@ LogProb transpair_model3::prob_of_target_and_alignment_given_source(const Alignm
 
 void transpair_model3::computeScores(const Alignment&al,vector<double>&d)const
 {
-  LogProb total1 = 1.0,total2=1.0,total3=1.0,total4=1.0 ;
+  LogProb total1 = 1.0,total2=1.0,total3=1.0,total4=1.0;
   total1 *= pow(double(1-p1), m-2.0 * al.fert(0)) * pow(double(p1), double(al.fert(0)));
-  for (WordIndex i = 1 ; i <= al.fert(0) ; i++)
-    total1 *= double(m - al.fert(0) - i + 1) / (double(DeficientDistortionForEmptyWord?(max(2,int(m))/DeficientDistortionForEmptyWord):i)) ;
-  for (WordIndex i = 1 ; i <= l ; i++)
+  for (WordIndex i = 1; i <= al.fert(0); i++)
+    total1 *= double(m - al.fert(0) - i + 1) / (double(DeficientDistortionForEmptyWord?(max(2,int(m))/DeficientDistortionForEmptyWord):i));
+  for (WordIndex i = 1; i <= l; i++)
   {
     total2 *= get_fertility(i, al.fert(i)) * (LogProb) factorial(al.fert(i));
   }
-  for (WordIndex j = 1 ; j <= m ; j++)
+  for (WordIndex j = 1; j <= m; j++)
   {
-    total3*= get_t(al(j), j) ;
+    total3*= get_t(al(j), j);
     MASSERT (get_t(al(j), j) >= g_smooth_prob);
     if (al(j))
     {

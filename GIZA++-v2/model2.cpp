@@ -40,7 +40,7 @@ Model2::~Model2() {}
 void Model2::initialize_table_uniformly(SentenceHandler& sHandler1) {
   // initialize the aTable uniformly (run this before running em_with_tricks)
   int n=0;
-  SentencePair sent ;
+  SentencePair sent;
   sHandler1.rewind();
   while(sHandler1.getNextSentence(sent)){
     Vector<WordIndex>& es = sent.eSent;
@@ -50,7 +50,7 @@ void Model2::initialize_table_uniformly(SentenceHandler& sHandler1) {
     n++;
     if(1<=m&&aTable.getValue(l,m,l,m)<=g_smooth_prob)
     {
-      PROB uniform_val = 1.0 / (l+1) ;
+      PROB uniform_val = 1.0 / (l+1);
       for(WordIndex j=1; j <= m; j++)
         for(WordIndex i=0; i <= l; i++)
           aTable.setValue(i,j, l, m, uniform_val);
@@ -65,15 +65,15 @@ int Model2::em_with_tricks(int noIterations)
   time_t it_st, st, it_fn, fn;
   string tfile, afile, number, alignfile, test_alignfile;
   int pair_no = 0;
-  bool dump_files = false ;
-  ofstream of2 ;
-  st = time(NULL) ;
+  bool dump_files = false;
+  ofstream of2;
+  st = time(NULL);
   sHandler1.rewind();
   cout << "\n==========================================================\n";
   cout << modelName << " Training Started at: " << ctime(&st) << " iter: " << noIterations << "\n";
-  for(int it=1; it <= noIterations ; it++){
+  for(int it=1; it <= noIterations; it++){
     pair_no = 0;
-    it_st = time(NULL) ;
+    it_st = time(NULL);
     cout << endl << "-----------\n" << modelName << ": Iteration " << it << '\n';
     dump_files = (Model2_Dump_Freq != 0) && ((it % Model2_Dump_Freq) == 0) && !NODUMPS;
     number = "";
@@ -81,10 +81,10 @@ int Model2::em_with_tricks(int noIterations)
     do{
       number.insert((size_t)0, 1, (char)(n % 10 + '0'));
     } while((n /= 10) > 0);
-    tfile = g_prefix + ".t" + shortModelName + "." + number ;
-    afile = g_prefix + ".a" + shortModelName + "." + number ;
-    alignfile = g_prefix + ".A" + shortModelName + "." + number ;
-    test_alignfile = g_prefix + ".tst.A" + shortModelName + "." + number ;
+    tfile = g_prefix + ".t" + shortModelName + "." + number;
+    afile = g_prefix + ".a" + shortModelName + "." + number;
+    alignfile = g_prefix + ".A" + shortModelName + "." + number;
+    test_alignfile = g_prefix + ".tst.A" + shortModelName + "." + number;
     aCountTable.clear();
     initAL();
     em_loop(perp, sHandler1, dump_files, alignfile.c_str(), trainViterbiPerp, false);
@@ -115,14 +115,14 @@ int Model2::em_with_tricks(int noIterations)
         tTable.printProbTable(tfile.c_str(),Elist.getVocabList(),Flist.getVocabList(),OutputInAachenFormat);
       aCountTable.printTable(afile.c_str());
     }
-    it_fn = time(NULL) ;
+    it_fn = time(NULL);
     cout << modelName << " Iteration: " << it<< " took: " << difftime(it_fn, it_st) << " seconds\n";
   } // end of iterations
   aCountTable.clear();
-  fn = time(NULL) ;
+  fn = time(NULL);
   cout << endl << "Entire " << modelName << " Training took: " << difftime(fn, st) << " seconds\n";
   //  cout << "tTable contains " << tTable.getHash().bucket_count()
-  //     << " buckets and  " << tTable.getHash().size() << " entries." ;
+  //     << " buckets and  " << tTable.getHash().size() << " entries.";
   cout << "==========================================================\n";
   return minIter;
 }
@@ -144,16 +144,16 @@ void Model2::em_loop(Perplexity& perp, SentenceHandler& sHandler1,
 {
   MASSERT(aTable.is_distortion==0);
   MASSERT(aCountTable.is_distortion==0);
-  WordIndex i, j, l, m ;
+  WordIndex i, j, l, m;
   double cross_entropy;
-  int pair_no=0 ;
+  int pair_no=0;
   perp.clear();
   viterbi_perp.clear();
   ofstream of2;
   // for each sentence pair in the corpus
   if (dump_alignment||FEWDUMPS )
     of2.open(alignfile);
-  SentencePair sent ;
+  SentencePair sent;
 
   vector<double> ferts(evlist.size());
 
@@ -172,22 +172,22 @@ void Model2::em_loop(Perplexity& perp, SentenceHandler& sHandler1,
       // entries  that map fs to all possible ei in this sentence.
       PROB denom = 0.0;
       PROB e = 0.0, word_best_score = 0;
-      WordIndex best_i = 0 ; // i for which fj is best maped to ei
+      WordIndex best_i = 0; // i for which fj is best maped to ei
       for(i=0; i <= l; i++){
-        sPtrCache[i] = tTable.getPtr(es[i], fs[j]) ;
+        sPtrCache[i] = tTable.getPtr(es[i], fs[j]);
         if (sPtrCache[i] != 0 &&(*(sPtrCache[i])).prob > g_smooth_prob )
-          e = (*(sPtrCache[i])).prob * aTable.getValue(i,j, l, m) ;
+          e = (*(sPtrCache[i])).prob * aTable.getValue(i,j, l, m);
         else
           e = g_smooth_prob * aTable.getValue(i,j, l, m);
-        denom += e ;
+        denom += e;
         if (e > word_best_score){
-          word_best_score = e ;
-          best_i = i ;
+          word_best_score = e;
+          best_i = i;
         }
       }
-      viterbi_alignment[j] = best_i ;
-      viterbi_score *= word_best_score; ///denom ;
-      cross_entropy += log(denom) ;
+      viterbi_alignment[j] = best_i;
+      viterbi_score *= word_best_score; ///denom;
+      cross_entropy += log(denom);
       if (denom == 0){
         if (test)
           cerr << "WARNING: denom is zero (TEST)\n";
@@ -196,25 +196,25 @@ void Model2::em_loop(Perplexity& perp, SentenceHandler& sHandler1,
       }
       if (!test){
         if(denom > 0){
-          COUNT val = COUNT(so) / (COUNT) double(denom) ;
+          COUNT val = COUNT(so) / (COUNT) double(denom);
           for( i=0; i <= l; i++){
             PROB e(0.0);
             if (sPtrCache[i] != 0 &&  (*(sPtrCache[i])).prob > g_smooth_prob)
-              e = (*(sPtrCache[i])).prob ;
+              e = (*(sPtrCache[i])).prob;
             else
               e = g_smooth_prob;
             e *= aTable.getValue(i,j, l, m);
-            COUNT temp = COUNT(e) * val ;
+            COUNT temp = COUNT(e) * val;
             if( NoEmptyWord==0 || i!=0 )
               if (sPtrCache[i] != 0)
-                (*(sPtrCache[i])).count += temp ;
+                (*(sPtrCache[i])).count += temp;
               else
                 tTable.incCount(es[i], fs[j], temp);
-            aCountTable.getRef(i,j, l, m)+= temp ;
+            aCountTable.getRef(i,j, l, m)+= temp;
           } /* end of for i */
         } // end of if (denom > 0)
       }// if (!test)
-    } // end of for (j) ;
+    } // end of for (j);
     sHandler1.setProbOfSentence(sent,cross_entropy);
     perp.addFactor(cross_entropy, so, l, m,1);
     viterbi_perp.addFactor(log(viterbi_score), so, l, m,1);

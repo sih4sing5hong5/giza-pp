@@ -64,15 +64,15 @@ int HMM::em_with_tricks(int noIterations) {
   time_t it_st, st, it_fn, fn;
   string tfile, afile,afileh, number, alignfile, test_alignfile;
   int pair_no = 0;
-  bool dump_files = false ;
-  ofstream of2 ;
-  st = time(NULL) ;
+  bool dump_files = false;
+  ofstream of2;
+  st = time(NULL);
   sHandler1.rewind();
   cout << "\n==========================================================\n";
   cout << modelName << " Training Started at: " << ctime(&st);
-  for(int it=1; it <= noIterations ; it++){
+  for(int it=1; it <= noIterations; it++){
     pair_no = 0;
-    it_st = time(NULL) ;
+    it_st = time(NULL);
     cout << endl << "-----------\n" << modelName << ": Iteration " << it << '\n';
     dump_files = (dumpFreq != 0) && ((it % dumpFreq) == 0) && !NODUMPS;
     number = "";
@@ -80,11 +80,11 @@ int HMM::em_with_tricks(int noIterations) {
     do{
       number.insert((size_t)0, 1, (char)(n % 10 + '0'));
     } while((n /= 10) > 0);
-    tfile = g_prefix + ".t" + shortModelName + "." + number ;
-    afile = g_prefix + ".a" + shortModelName + "." + number ;
-    afileh = g_prefix + ".h" + shortModelName + "." + number ;
-    alignfile = g_prefix + ".A" + shortModelName + "." + number ;
-    test_alignfile = g_prefix + ".tst.A" + shortModelName + "." + number ;
+    tfile = g_prefix + ".t" + shortModelName + "." + number;
+    afile = g_prefix + ".a" + shortModelName + "." + number;
+    afileh = g_prefix + ".h" + shortModelName + "." + number;
+    alignfile = g_prefix + ".A" + shortModelName + "." + number;
+    test_alignfile = g_prefix + ".tst.A" + shortModelName + "." + number;
     counts=HMMTables<int,WordClasses>(GLOBALProbabilityForEmpty,ewordclasses,fwordclasses);
     aCountTable.clear();
     initAL();
@@ -120,14 +120,14 @@ int HMM::em_with_tricks(int noIterations) {
       probs.writeJumps(afilestream);
       aCountTable.printTable(afile.c_str());
     }
-    it_fn = time(NULL) ;
+    it_fn = time(NULL);
     cout << "\n" << modelName << " Iteration: " << it<< " took: " <<
         difftime(it_fn, it_st) << " seconds\n";
   } // end of iterations
-  fn = time(NULL) ;
+  fn = time(NULL);
   cout << endl << "Entire " << modelName << " Training took: " << difftime(fn, st) << " seconds\n";
   //cout << "tTable contains " << tTable.getHash().bucket_count()
-  //     << " buckets and  " << tTable.getHash().size() << " entries." ;
+  //     << " buckets and  " << tTable.getHash().size() << " entries.";
   cout << "==========================================================\n";
   return minIter;
 }
@@ -174,9 +174,9 @@ HMMNetwork* HMM::makeHMMNetwork(const Vector<WordIndex>& es,
   for(j=1;j<=m;j++)
   {
     for(i=1;i<=l;i++)
-      net->n(i-1,j-1)=tTable.getProb(es[i], fs[j]) ;
+      net->n(i-1,j-1)=tTable.getProb(es[i], fs[j]);
     double emptyContribution=0;
-    emptyContribution=tTable.getProb(es[0],fs[j]) ;
+    emptyContribution=tTable.getProb(es[0],fs[j]);
     for(i=1;i<=l;i++)
       net->n(i+l-1,j-1)=emptyContribution;
     net->finalMultiply*=max(normalize_if_possible_with_increment(&net->n(0,j-1),&net->n(0,j-1)+IJ,J),double(1e-12));
@@ -250,16 +250,16 @@ extern float MINCOUNTINCREASE;
 void HMM::em_loop(Perplexity& perp, SentenceHandler& sHandler1,
                   bool dump_alignment, const char* alignfile, Perplexity& viterbi_perp,
                   bool test,bool doInit,int) {
-  WordIndex i, j, l, m ;
+  WordIndex i, j, l, m;
   double cross_entropy;
-  int pair_no=0 ;
+  int pair_no=0;
   perp.clear();
   viterbi_perp.clear();
   ofstream of2;
   // for each sentence pair in the corpus
   if (dump_alignment||FEWDUMPS )
     of2.open(alignfile);
-  SentencePair sent ;
+  SentencePair sent;
   sHandler1.rewind();
   while(sHandler1.getNextSentence(sent)){
     const Vector<WordIndex>& es = sent.get_eSent();

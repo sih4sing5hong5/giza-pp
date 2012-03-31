@@ -35,7 +35,7 @@ extern float g_smooth_prob;
 extern bool g_is_verbose;
 extern bool g_enable_logging;
 
-extern bool Peg, Transfer, Transfer2to3, useDict ;
+extern bool Peg, Transfer, Transfer2to3, useDict;
 
 extern std::string g_log_filename;
 extern std::string g_prefix;
@@ -47,10 +47,10 @@ extern std::string g_target_vocab_filename;
 extern string CorpusFilename, TestCorpusFilename,
   t_Filename, a_Filename, p0_Filename, d_Filename, n_Filename, dictionary_Filename;
 
-extern double M5P0,P0 ;
-extern bool NODUMPS, FEWDUMPS  ;
-extern string Usage ;
-extern unsigned int MAX_SENTENCE_LENGTH ;
+extern double M5P0,P0;
+extern bool NODUMPS, FEWDUMPS;
+extern string Usage;
+extern unsigned int MAX_SENTENCE_LENGTH;
 extern int PegUntil;
 
 extern short DeficientDistortionForEmptyWord;

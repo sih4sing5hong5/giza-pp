@@ -42,7 +42,7 @@ template<class T> ostream& operator<<(ostream&o, const Vector<T>&a)
 {
   o << "Vector(" << a.size() << "){ ";
   for(unsigned int iii=0;iii<a.size();iii++)
-    o << " " << iii<< ": " << a[iii]<<" ;";
+    o << " " << iii<< ": " << a[iii]<<";";
   return o << "}\n";
 }
 
@@ -352,7 +352,7 @@ template<class T> ostream& operator<<(ostream&o, const Vector<T>&a)
 {
   o << "Vector(" << a.size() << "){ ";
   for(unsigned int iii=0;iii<a.size();iii++)
-    o << " " << iii<< ": " << a[iii]<<" ;";
+    o << " " << iii<< ": " << a[iii]<< ";";
   return o << "}\n";
 }
 

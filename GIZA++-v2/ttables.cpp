@@ -102,7 +102,7 @@ template <class COUNT, class PROB>
 void TModel<COUNT, PROB>::readProbTable(const char *){
 }
 
-template class TModel<COUNT,PROB> ;
+template class TModel<COUNT,PROB>;
 #else
 /* ------------------ Method Definiotns for Class TModel --------------------*/
 
@@ -164,22 +164,22 @@ void TModel<COUNT, PROB>::printProbTableInverse(const char *filename,
   cerr << "Dumping the t table inverse to file: " << filename << '\n';
   ofstream of(filename);
   typename hash_map<WordIDPair, CPPair, HashPair, equal_to<WordIDPair> >::const_iterator i;
-  PROB p_inv = 0 ;
+  PROB p_inv = 0;
   //  static const PROB ratio(double(fTotal)/eTotal);
-  WordIndex e, f ;
+  WordIndex e, f;
   int no_errors(0);
-  vector<PROB> total(fvlist.size(),PROB(0)) ; // Sum over all e of P(f/e) * p(e) - needed for normalization
+  vector<PROB> total(fvlist.size(),PROB(0)); // Sum over all e of P(f/e) * p(e) - needed for normalization
 
   for(i = ef.begin(); i != ef.end(); i++){
-    e = ((*i).first).first ;
-    f = ((*i).first).second ;
+    e = ((*i).first).first;
+    f = ((*i).first).second;
     total[f] += (PROB) evlist[e].freq * ((*i).second.prob); //add P(f/ei) * F(ei)
   }
 
   for(i = ef.begin(); i != ef.end(); i++){
-    e = ((*i).first).first ;
-    f = ((*i).first).second ;
-    p_inv = ((*i).second.prob) * (PROB) evlist[e].freq / total[f] ;
+    e = ((*i).first).first;
+    f = ((*i).first).second;
+    p_inv = ((*i).second.prob) * (PROB) evlist[e].freq / total[f];
     if (p_inv > 1.0001 || p_inv < 0){
       no_errors++;
       if (no_errors <= 10){
@@ -205,14 +205,14 @@ void TModel<COUNT, PROB>::printProbTableInverse(const char *filename,
   cerr << "Dumping the t table inverse to file: " << filename << '\n';
   ofstream of(filename);
   hash_map<WordIDPair, CPPair, HashPair, equal_to<WordIDPair> >::const_iterator i;
-  PROB p_inv = 0 ;
+  PROB p_inv = 0;
   static const PROB ratio(double(fTotal)/eTotal);
-  WordIndex e, f ;
+  WordIndex e, f;
   for(i = ef.begin(); i != ef.end(); i++){
-  e = ((*i).first).first ;
-  f = ((*i).first).second ;
+  e = ((*i).first).first;
+  f = ((*i).first).second;
   p_inv = ((*i).second.prob) * ratio * (PROB) evlist[e].freq /
-  (PROB) fvlist[f].freq ;
+  (PROB) fvlist[f].freq;
   if (actual)
   of << fvlist[f].word << ' ' << evlist[e].word << ' ' << p_inv << '\n';
   else
@@ -256,33 +256,33 @@ void TModel<COUNT, PROB>::normalizeTable(const VocabList&engl, const VocabList&f
       total[k]+= total[k]*probMass/(1-probMass);
     }
   typename hash_map<WordIDPair, CPPair, HashPair, equal_to<WordIDPair> >::iterator j, k;
-  PROB p ;
+  PROB p;
   int nParams=0;
   for(j = ef.begin(); j != ef.end(); ){
     k = j;
-    k++ ;
+    k++;
     if( (total[((*j).first).first])>0.0 )
-      p = ((((*j).second).count) /(total[((*j).first).first])) ;
+      p = ((((*j).second).count) /(total[((*j).first).first]));
     else
       p= 0.0;
     if (p > PROB_CUTOFF)
     {
       if( iter>0 )
       {
-        ((*j).second).prob = 0 ;
-        ((*j).second).count = p ;
+        ((*j).second).prob = 0;
+        ((*j).second).count = p;
       }
       else
       {
-        ((*j).second).prob = p ;
-        ((*j).second).count = 0 ;
+        ((*j).second).prob = p;
+        ((*j).second).count = 0;
       }
       nParams++;
     }
     else {
       erase(((*j).first).first, ((*j).first).second);
     }
-    j = k ;
+    j = k;
   }
   if( iter>0 )
     return normalizeTable(engl, french, iter-1);
@@ -314,7 +314,7 @@ void TModel<COUNT, PROB>::readProbTable(const char *filename){
   cerr << "Read " << nEntry << " entries in prob. table.\n";
 }
 
-template class TModel<COUNT,PROB> ;
+template class TModel<COUNT,PROB>;
 
 /* ---------------- End of Method Definitions of class TModel ---------------*/
 

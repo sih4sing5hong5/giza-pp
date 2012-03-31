@@ -33,29 +33,29 @@ LogProb Model3::prob_of_target_and_alignment_given_source(
     TModel<COUNT, PROB>& tTable,
     Vector<WordIndex>& fs,
     Vector<WordIndex>& es) {
-  LogProb total = 1.0 ;
-  LogProb temp = 0.0 ;
-  const LogProb zero = 0.0 ;
+  LogProb total = 1.0;
+  LogProb temp = 0.0;
+  const LogProb zero = 0.0;
   WordIndex l = es.size()-1, m = fs.size()-1;
-  WordIndex i, j ;
+  WordIndex i, j;
 
   total *= pow(double(1-p1), m-2.0 * Fert[0]) * pow(double(p1), double(Fert[0]));
   if (total == 0)
     return(zero);
-  for (i = 1 ; i <= Fert[0] ; i++){  // loop caculates m-fert[0] choose fert[0]
-    total *= double(m - Fert[0] - i + 1) / i ;
+  for (i = 1; i <= Fert[0]; i++){  // loop caculates m-fert[0] choose fert[0]
+    total *= double(m - Fert[0] - i + 1) / i;
     if (total == 0)
       return(zero);
   }
-  for (i = 1 ; i <= l ; i++){ // this loop calculates fertilities term
+  for (i = 1; i <= l; i++){ // this loop calculates fertilities term
     total *= double(nTable.getValue(es[i], Fert[i])) * (LogProb) factorial(Fert[i]);
     if (total == 0)
       return(zero);
   }
-  for (j = 1 ; j <= m ; j++){
-    //    temp = tTable.getValue(es[A[j]], fs[j]) ;
-    temp = double(tTable.getProb(es[A[j]], fs[j])) ;
-    total *= temp ;
+  for (j = 1; j <= m; j++){
+    //    temp = tTable.getValue(es[A[j]], fs[j]);
+    temp = double(tTable.getProb(es[A[j]], fs[j]));
+    total *= temp;
     if (0 != A[j])
       total *= double(dTable.getValue(j, A[j], l, m));
     if (total == 0)
@@ -67,26 +67,26 @@ LogProb Model3::prob_of_target_and_alignment_given_source(
 LogProb Model3::prob_of_target_given_source(TModel<COUNT, PROB>& tTable,
                                             Vector<WordIndex>& fs,
                                             Vector<WordIndex>& es) {
-  WordIndex x, y ;
-  LogProb total = 0 ;
+  WordIndex x, y;
+  LogProb total = 0;
   //  WordIndex l = es.size(), m = fs.size();
   WordIndex l = es.size()-1, m = fs.size()-1;
   Vector<WordIndex> A(fs.size(),/*-1*/0);
   Vector<WordIndex> Fert(es.size(),0);
-  WordIndex i,j ;
+  WordIndex i,j;
 
-  for ( x = 0 ; x < pow(l+1.0, double(m)) ; x++){ // For all possible alignmets A
-    y = x ;
-    //    for (j = 1 ; j < m ; j++){
-    for (j = 1 ; j <= m ; j++){
-      A[j] = y % (l+1) ;
-      y /= (l+1) ;
+  for ( x = 0; x < pow(l+1.0, double(m)); x++){ // For all possible alignmets A
+    y = x;
+    //    for (j = 1; j < m; j++){
+    for (j = 1; j <= m; j++){
+      A[j] = y % (l+1);
+      y /= (l+1);
     }
-    //    for(i = 0 ; i < l ; i++)
-    for(i = 0 ; i <= l ; i++)
-      Fert[i] = 0 ;
-    //    for (j = 1 ; j < m ; j++)
-    for (j = 1 ; j <= m ; j++)
+    //    for(i = 0; i < l; i++)
+    for(i = 0; i <= l; i++)
+      Fert[i] = 0;
+    //    for (j = 1; j < m; j++)
+    for (j = 1; j <= m; j++)
       Fert[A[j]]++;
     //    if (2 * Fert[0] < m){
     if (2 * Fert[0] <= m){ /* consider alignments that has Fert[0] less than
@@ -117,8 +117,8 @@ LogProb Model3::scoreOfMove(Vector<WordIndex>& es,
     //
 {
   //  LogProb score;
-  LogProb change ;
-  WordIndex m, l ;
+  LogProb change;
+  WordIndex m, l;
 
   m = fs.size() - 1;
   l = es.size() - 1;
@@ -126,7 +126,7 @@ LogProb Model3::scoreOfMove(Vector<WordIndex>& es,
 
   if (A[j] == i)
     //    return(original_score);
-    return(1) ;
+    return(1);
   else if (A[j] == 0){ // a move from position zero to something else
     change = double(p0*p0)/p1 *
              (double((Fert[0]*(m-Fert[0]+1))) / ((m-2*Fert[0]+1)*(m-2*Fert[0]+2))) *
@@ -181,16 +181,16 @@ LogProb Model3::scoreOfSwap(Vector<WordIndex>& es,
     //    2.0: the new score will be twice as much.
     //
 {
-  LogProb score ;
-  WordIndex i1, i2, m, l ;
+  LogProb score;
+  WordIndex i1, i2, m, l;
 
-  m = fs.size() - 1 ;
-  l = es.size() - 1 ;
+  m = fs.size() - 1;
+  l = es.size() - 1;
   if (j1 == j2 || A[j1] == A[j2]) // if swapping same position return ratio 1
     return(1);
   else {
-    i1 = A[j1] ;
-    i2 = A[j2] ;
+    i1 = A[j1];
+    i2 = A[j2];
     score =
         double(tTable.getProb(es[i2], fs[j1]))/double(tTable.getProb(es[i1], fs[j1])) *
         double(tTable.getProb(es[i1], fs[j2]))/double(tTable.getProb(es[i2], fs[j2]));
@@ -219,10 +219,10 @@ void Model3::hillClimb(Vector<WordIndex>& es,
     // if no pegging is needed i_peg == -1, and j_peg == -1
 {
   WordIndex i, j, l, m, j1, old_i;
-  LogProb change ;
+  LogProb change;
   bool local_minima;
-  int level = 0 ;
-  LogProb best_change_so_far, best_change ;
+  int level = 0;
+  LogProb best_change_so_far, best_change;
   Vector<WordIndex> A_so_far;
   Vector<WordIndex> Fert_so_far;
 
@@ -231,31 +231,31 @@ void Model3::hillClimb(Vector<WordIndex>& es,
   if (g_enable_logging) {
     util::Logging::GetLogger() << "\nStarting hill climbing with original score: " << best_score <<"\n";
   }
-  best_change = 1 ; // overall scaling factor (i.e. from the begining of climb
+  best_change = 1; // overall scaling factor (i.e. from the begining of climb
   do {
-    best_change_so_far = 1 ; // best scaling factor of this level of hill climb
-    local_minima = true ;
-    for (j = 1 ; j <= m ; j++){
+    best_change_so_far = 1; // best scaling factor of this level of hill climb
+    local_minima = true;
+    for (j = 1; j <= m; j++){
       if (int(j) != j_peg){ // make sure not to change the pegged link
-        for (j1 = j + 1 ; j1 <= m; j1++){
+        for (j1 = j + 1; j1 <= m; j1++){
           // for all possible swaps
           // make sure you are not swapping at same position
           if ((A[j] != A[j1]) && (int(j1) != j_peg)){
             //      change = scoreOfSwap(es, fs, A, best_score, tTable, j, j1);
             change = scoreOfSwap(es, fs, A, tTable, j, j1);
             if (change > best_change_so_far){ // if better alignment found, keep it
-              local_minima = false ;
-              best_change_so_far = change ;
-              A_so_far = A ;
-              Fert_so_far = Fert ;
-              old_i = A_so_far[j] ;
-              A_so_far[j] = A_so_far[j1] ;
-              A_so_far[j1] = old_i ;
+              local_minima = false;
+              best_change_so_far = change;
+              A_so_far = A;
+              Fert_so_far = Fert;
+              old_i = A_so_far[j];
+              A_so_far[j] = A_so_far[j1];
+              A_so_far[j1] = old_i;
             } // end of if (change > best_change_so_far)
           } // end of if (A[j] != A[j1]  ..)
         } // of for (j1 = j+1  ....)
-        //      for (i = 0 ; i < l ; i++){ // all possible moves
-        for (i = 0 ; i <= l ; i++){ // all possible moves
+        //      for (i = 0; i < l; i++){ // all possible moves
+        for (i = 0; i <= l; i++){ // all possible moves
           if (i != A[j]){ // make sure not to move to same position
             if (i != 0 || (m >= 2 * (Fert[0]+1))){ // if moving to NULL word
               // (pos 0), make sure not to violate the fertility restriction
@@ -263,43 +263,43 @@ void Model3::hillClimb(Vector<WordIndex>& es,
               //        change = scoreOfMove(es, fs, A, Fert, best_score, tTable, j, i);
               change = scoreOfMove(es, fs, A, Fert, tTable, j, i);
               if (change > best_change_so_far){ // if better alignment found, keep it
-                best_change_so_far = change ;
-                local_minima = false ;
-                A_so_far = A ;
-                Fert_so_far = Fert ;
-                old_i = A_so_far[j] ;
-                A_so_far[j] = i ;
-                Fert_so_far[old_i]-- ;
-                Fert_so_far[i]++ ;
+                best_change_so_far = change;
+                local_minima = false;
+                A_so_far = A;
+                Fert_so_far = Fert;
+                old_i = A_so_far[j];
+                A_so_far[j] = i;
+                Fert_so_far[old_i]--;
+                Fert_so_far[i]++;
               } // end of if (change > best_change_so_far)
             } // end of if ((i!=0) ...
           } // end of if (i != A[j] )
-        } // end of for (i = 0 ;  ....)
+        } // end of for (i = 0;  ....)
       } // end of if(j != j_peg)
-    } // end of for (j = 1 ; ...)
+    } // end of for (j = 1; ...)
     level++;
     if (!local_minima){
       if (best_change_so_far > 1){ // if current chage is improving
-        A = A_so_far ;
-        Fert = Fert_so_far ;
-        best_change *= best_change_so_far ;
+        A = A_so_far;
+        Fert = Fert_so_far;
+        best_change *= best_change_so_far;
       }
       else{
-        local_minima = true ;
+        local_minima = true;
       }
     } // end of if(!local_minima)
     if (g_enable_logging) {
-      util::Logging::GetLogger() << "." ;
+      util::Logging::GetLogger() << ".";
     }
     if (level> 15)
-      cerr << "." ;
+      cerr << ".";
   } while (local_minima == false);
   if (g_enable_logging) {
     util::Logging::GetLogger() << "\n" << "Hill Climb Level: " << level
            << " score: scaling old: " << (best_score * best_change);
   }
   if (level > 15)
-    cerr << "\nHill Climb Level: " << level << " score: scaling old: " <<(best_score*best_change) ;
+    cerr << "\nHill Climb Level: " << level << " score: scaling old: " <<(best_score*best_change);
   best_score = prob_of_target_and_alignment_given_source(A, Fert, tTable, fs, es);
   if (g_enable_logging) {
     util::Logging::GetLogger() << " using new calc: " << best_score << '\n';
@@ -328,19 +328,19 @@ void Model3::findBestAlignment(Vector<WordIndex>& es,
 
   l = es.size() - 1;
   m = fs.size() - 1;
-  for (i=0 ; i <= l ; i++)
-    Fert[i] = 0 ;
-  ss = 1 ;
+  for (i=0; i <= l; i++)
+    Fert[i] = 0;
+  ss = 1;
   if ((j_peg != -1) && (i_peg != -1)){ //  if you're doing pegging
-    A[j_peg]  = i_peg ;
-    Fert[i_peg] = 1 ;
+    A[j_peg]  = i_peg;
+    Fert[i_peg] = 1;
     ss *= double(tTable.getProb(es[i_peg], fs[j_peg])) *
           double(aTable.getValue(i_peg, j_peg, l, m));
   }
-  for (j = 1 ; j <= m ; j++){
+  for (j = 1; j <= m; j++){
     if (int(j) != j_peg){
-      score = 0 ;
-      for (i = 0 ; i <= l ; i++){
+      score = 0;
+      for (i = 0; i <= l; i++){
         // first make sure that connecting target word at pos j to source word
         // at  pos i will not lead to a violation on Fertility restrictions
         // (e.g. maximum fertility for a word, max fertility for NULL word, etc)
@@ -349,16 +349,16 @@ void Model3::findBestAlignment(Vector<WordIndex>& es,
           temp = double(tTable.getProb(es[i], fs[j])) *
                  double(aTable.getValue(i, j, l, m));
           if (temp > score ){
-            best_i = i ;
-            score = temp ;
+            best_i = i;
+            score = temp;
           } // end of if (temp > score)
         } // end of if (((i == 0 ...)
       } // end of for (i= 0 ...)
       if (score == 0){
-        cerr << "WARNING: In searching for model2 best alignment\n " ;
+        cerr << "WARNING: In searching for model2 best alignment\n ";
         cerr << "Nothing was set for target token " << fs[j] <<
             "at position j: " << j << "\n";
-        for (i = 0 ; i <= l ; i++){
+        for (i = 0; i <= l; i++){
           cerr << "i: " << i << "ttable("<<es[i]<<", "<<fs[j]<<") = " <<
               tTable.getProb(es[i], fs[j]) << " atable(" << i<<", "<<j<<", "<<
               l<<", "<<m<<") = "<< aTable.getValue(i, j, l, m) << " product " <<
@@ -373,14 +373,14 @@ void Model3::findBestAlignment(Vector<WordIndex>& es,
 
       } // end of if (score == 0)
       else {
-        Fert[best_i]++ ;
-        A[j] = best_i ;
+        Fert[best_i]++;
+        A[j] = best_i;
       }
-      ss *= score ;
+      ss *= score;
     } // end of if (j != j_peg)
-  } // end of for (j == 1 ;  ...)
+  } // end of for (j == 1;  ...)
   if (ss <= 0){
-    cerr << "WARNING: Model2 viterbi alignment has zero score for sentence pair:\n" ;
+    cerr << "WARNING: Model2 viterbi alignment has zero score for sentence pair:\n";
     printSentencePair(es, fs, cerr);
   }
   best_score = prob_of_target_and_alignment_given_source(A, Fert, tTable, fs, es);
@@ -396,28 +396,28 @@ void Model3::collectCountsOverAlignement(const Vector<WordIndex>& es,
                                          LogProb score,
                                          float count)
 {
-  WordIndex j,i,l,m ;
+  WordIndex j,i,l,m;
   Vector<WordIndex> Fert(es.size(),0);
-  l = es.size() - 1 ;
-  m = fs.size() - 1 ;
+  l = es.size() - 1;
+  m = fs.size() - 1;
   score *= LogProb(count);
-  COUNT temp = COUNT(score) ;
-  for (i=0 ; i <= l ; i++)
-    Fert[i] = 0 ;
-  for (j = 1 ; j <= m ; j++){
+  COUNT temp = COUNT(score);
+  for (i=0; i <= l; i++)
+    Fert[i] = 0;
+  for (j = 1; j <= m; j++){
     Fert[A[j]]++;
     tTable.incCount(es[A[j]], fs[j], temp);
     //    tCountTable.getRef(es[A[j]], fs[j])+=score;
     if (A[j])
-      dCountTable.getRef(j, A[j], l, m)+= temp ;
-    aCountTable.getRef(A[j], j, l, m)+= temp ;
+      dCountTable.getRef(j, A[j], l, m)+= temp;
+    aCountTable.getRef(A[j], j, l, m)+= temp;
   }
-  for(i = 0 ; i <= l ; i++)
-    nCountTable.getRef(es[i], Fert[i])+= temp ;
-  //  p1_count += score * (LogProb) (Fert[0]) ;
-  //  p0_count += score * (LogProb) ((m - 2 * Fert[0])) ;
-  p1_count += temp * (Fert[0]) ;
-  p0_count += temp *  ((m - 2 * Fert[0])) ;
+  for(i = 0; i <= l; i++)
+    nCountTable.getRef(es[i], Fert[i])+= temp;
+  //  p1_count += score * (LogProb) (Fert[0]);
+  //  p0_count += score * (LogProb) ((m - 2 * Fert[0]));
+  p1_count += temp * (Fert[0]);
+  p0_count += temp *  ((m - 2 * Fert[0]));
 }
 
 
@@ -438,7 +438,7 @@ void Model3::findAlignmentsNeighborhood(Vector<WordIndex>& es,
   Vector<WordIndex> Fert(es.size(),0);
   time_t it_st;
 
-  best_score = 0 ;
+  best_score = 0;
   l = es.size() - 1;
   m = fs.size() - 1;
   findBestAlignment(es, fs, A, Fert, best_score, /*tTable, aTable,*/ i_peg, j_peg);
@@ -461,24 +461,24 @@ void Model3::findAlignmentsNeighborhood(Vector<WordIndex>& es,
       /* consider alignments that has Fert[0] less than
          half the number of words in French sentence */
       if (neighborhood.insert(A, best_score)){
-        align_total_count += best_score ;
+        align_total_count += best_score;
       }
     }
     else { // else part is added for debugging / Yaser
-      cerr << "WARNING:Best Alignment found violates Fertility requiremnets !!\n" ;
-      for (i = 0 ; i <= l ; i++)
+      cerr << "WARNING:Best Alignment found violates Fertility requiremnets !!\n";
+      for (i = 0; i <= l; i++)
         cerr << "Fert["<<i<<"] = "<< Fert[i] << "\n";
-      for (j = 1 ; j <= m ; j++){
+      for (j = 1; j <= m; j++){
         cerr << "A["<<j<<"] = "<< A[j] <<"\n";
       }
       cerr << "Condition violated : 2 * Fert[0] <= m " << 2*Fert[0] <<"?"<<
           m << "\n";
     } // end of added code for debugging // Yaser
-    it_st = time(NULL) ;
+    it_st = time(NULL);
 
     // Now find add all neighbors of the best alignmet to the  collection
-    for (j = 1 ; j <= m ; j++){
-      for (j1 = j + 1 ; j1 <= m; j1++){ // all possible swaps
+    for (j = 1; j <= m; j++){
+      for (j1 = j + 1; j1 <= m; j1++){ // all possible swaps
         if (A[j] != A[j1]){// make sure you are not swapping at same position
           //      score = best_score * scoreOfSwap(es, fs, A, best_score, tTable, j, j1);
           score = best_score * scoreOfSwap(es, fs, A, tTable, j, j1);
@@ -486,20 +486,20 @@ void Model3::findAlignmentsNeighborhood(Vector<WordIndex>& es,
           if (2 * Fert[0] <= m && score > 0){
             /* consider alignments that has Fert[0] less than
                half the number of words in French sentence */
-            old_i = A[j] ;
-            A[j] = A[j1] ;
-            A[j1] = old_i ;
+            old_i = A[j];
+            A[j] = A[j1];
+            A[j1] = old_i;
             if (neighborhood.insert(A, score)){
-              align_total_count += score ;
+              align_total_count += score;
             }
             // restore original alignment
-            old_i = A[j] ;
-            A[j] = A[j1] ;
-            A[j1] = old_i ;
+            old_i = A[j];
+            A[j] = A[j1];
+            A[j1] = old_i;
           }
         }
       }
-      for (i = 0 ; i <= l ; i++){ // all possible moves
+      for (i = 0; i <= l; i++){ // all possible moves
         if (i != A[j]){ // make sure not to move to same position
           if ((Fert[i]+1 < g_max_fertility) &&
               ((i == 0 &&  (m >= 2*(Fert[0]+1))) || (i != 0))){
@@ -507,23 +507,23 @@ void Model3::findAlignmentsNeighborhood(Vector<WordIndex>& es,
             score = best_score * scoreOfMove(es, fs, A, Fert, tTable, j, i);
             // ADD  A and its score to list of alig. to collect counts over
             if (score > 0){
-              old_i = A[j] ;
-              A[j] = i ;
-              Fert[old_i]-- ;
-              Fert[i]++ ;
+              old_i = A[j];
+              A[j] = i;
+              Fert[old_i]--;
+              Fert[i]++;
               // add to list of alignemts here  ******************
               if (neighborhood.insert(A, score)){
-                align_total_count += score ;
+                align_total_count += score;
               }
               // now resotre alignment and fertilities to previoud values
-              A[j] = old_i ;
-              Fert[old_i]++ ;
-              Fert[i]-- ;
+              A[j] = old_i;
+              Fert[old_i]++;
+              Fert[i]--;
             } // end of if (score > 0)
           } // end of if (i == 0 ...)
         } // end of if (i != A[j])
-      }// end of for(i = 0 ; ...)
-    }// end of for (j = 1 ; ...)
+      }// end of for(i = 0; ...)
+    }// end of for (j = 1; ...)
   } // of else best_score <= 0
 }
 
@@ -531,35 +531,35 @@ void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHan
                           bool dump_files, const char* alignfile,
                           bool collect_counts, string model )
 {
-  WordIndex i, j, l, m ;
-  ofstream of2 ;
+  WordIndex i, j, l, m;
+  ofstream of2;
   int pair_no;
   LogProb temp;
 
   if (dump_files)
     of2.open(alignfile);
-  pair_no = 0 ; // sentence pair number
+  pair_no = 0; // sentence pair number
   // for each sentence pair in the corpus
-  perp.clear() ; // clears cross_entrop & perplexity
+  perp.clear(); // clears cross_entrop & perplexity
   viterbiPerp.clear();
-  SentencePair sent ;
+  SentencePair sent;
   while(sHandler1.getNextSentence(sent)){
     Vector<WordIndex>& es = sent.eSent;
     Vector<WordIndex>& fs = sent.fSent;
     const float count  = sent.getCount();
     if ((sent.sentenceNo % 1000) == 0)
       cerr <<sent.sentenceNo << '\n';
-    time_t sent_s = time(NULL) ;
-    pair_no++ ;
-    l = es.size() - 1 ;
-    m = fs.size() - 1 ;
+    time_t sent_s = time(NULL);
+    pair_no++;
+    l = es.size() - 1;
+    m = fs.size() - 1;
     if (g_enable_logging) {
       util::Logging::GetLogger() << "Processing sentence pair:\n\t";
       printSentencePair(es, fs, util::Logging::GetLogger());
-      for (i = 0 ; i <= l ; i++)
+      for (i = 0; i <= l; i++)
         util::Logging::GetLogger() << Elist.getVocabList()[es[i]].word << " ";
       util::Logging::GetLogger() << "\n\t";
-      for (j = 1 ; j <= m ; j++)
+      for (j = 1; j <= m; j++)
         util::Logging::GetLogger() << Flist.getVocabList()[fs[j]].word << " ";
       util::Logging::GetLogger() << "\n";
     }
@@ -572,10 +572,10 @@ void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHan
     AlignmentModel neighborhood;
     neighborhood.clear();
     align_total_count = 0;
-    findAlignmentsNeighborhood(/*tTable, aTable,*/ /*p1_count, p0_count,*/ es, fs, align_total_count, neighborhood) ;
+    findAlignmentsNeighborhood(/*tTable, aTable,*/ /*p1_count, p0_count,*/ es, fs, align_total_count, neighborhood);
     if (Peg){
-      for (i = 0 ; i <= l ; i++)
-        for (j = 1 ; j <= m ; j++){
+      for (i = 0; i <= l; i++)
+        for (j = 1; j <= m; j++){
           if ( (tTable.getProb(es[i], fs[j]) > g_smooth_prob) &&
                (aTable.getValue(i, j, l, m) > g_smooth_prob) &&
                (dTable.getValue(j, i, l, m) > g_smooth_prob))
@@ -584,14 +584,14 @@ void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHan
         }
     }
     //  Now Collect counts over saved neighborhoods
-    viterbi_score = 0 ;
+    viterbi_score = 0;
     if (g_is_verbose)
       cerr << "\nCollecting counts over found alignments, total prob: "
            << align_total_count <<  "\n";
     if (g_enable_logging)
       util::Logging::GetLogger() << "\nCollecting counts over found alignments, total prob: "
                                  << align_total_count <<  "\n";
-    int acount = 0 ;
+    int acount = 0;
     if (align_total_count == 0 ){
       cerr << " WARNINIG: For the following sentence pair : \n";
       printSentencePair(es, fs, cerr);

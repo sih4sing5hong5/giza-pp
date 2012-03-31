@@ -41,10 +41,10 @@ void printSentencePair(Vector<WordIndex>& es,
   l = es.size() - 1;
   m = fs.size() - 1;
   of << "Source sentence length : " << l << " , target : " << m << "\n";
-  for (i = 1 ; i <= l ; i++)
+  for (i = 1; i <= l; i++)
     of << es[i] << ' ';
   of << "\n";
-  for (j = 1 ; j <= m ; j++)
+  for (j = 1; j <= m; j++)
     of << fs[j] << ' ';
   of << "\n";
 
@@ -76,7 +76,7 @@ void printAlignToFile(const Vector<WordIndex>& es,
   m = fs.size() - 1;
   if( CompactAlignmentFormat )
   {
-    for (WordIndex j = 1 ; j <= m ; j++)
+    for (WordIndex j = 1; j <= m; j++)
       if( viterbi_alignment[j] )
         of2 << viterbi_alignment[j]-1 << ' ' << j-1 << ' ';
     of2 << '\n';
@@ -85,16 +85,16 @@ void printAlignToFile(const Vector<WordIndex>& es,
   {
     of2 << "# Sentence pair (" << pair_no <<") source length " << l << " target length "<< m <<
         " alignment score : "<< alignment_score << '\n';
-    for (WordIndex j = 1 ; j <= m ; j++){
-      of2 << fvlist[fs[j]].word << " " ;
+    for (WordIndex j = 1; j <= m; j++){
+      of2 << fvlist[fs[j]].word << " ";
       translations[viterbi_alignment[j]].push_back(j);
     }
     of2 << '\n';
 
-    for (WordIndex i = 0  ; i <= l ; i++){
-      of2 << evlist[es[i]].word << " ({ " ;
-      for (WordIndex j = 0 ; j < translations[i].size() ; j++)
-        of2 << translations[i][j] << " " ;
+    for (WordIndex i = 0; i <= l; i++){
+      of2 << evlist[es[i]].word << " ({ ";
+      for (WordIndex j = 0; j < translations[i].size(); j++)
+        of2 << translations[i][j] << " ";
       of2 << "}) ";
     }
     of2 << '\n';
@@ -105,25 +105,25 @@ void printOverlapReport(const TModel<COUNT, PROB>& tTable,
                         SentenceHandler& testHandler,  VocabList& trainEList,
                         VocabList& trainFList, VocabList& testEList, VocabList& testFList)
 {
-  set<WordIDPair> testCoocur ;
-  SentencePair s ;
-  /*  string unseenCoocurFile = Prefix + ".tst.unseen.cooc" ;
+  set<WordIDPair> testCoocur;
+  SentencePair s;
+  /*  string unseenCoocurFile = Prefix + ".tst.unseen.cooc";
       ofstream of_unseenCoocur(unseenCoocurFile.c_str());
 
-      string seenCoocurFile = Prefix + ".tst.seen.cooc" ;
+      string seenCoocurFile = Prefix + ".tst.seen.cooc";
       ofstream of_seenCoocur(seenCoocurFile.c_str());
   */
   testHandler.rewind();
-  int seen_coocur = 0, unseen_coocur = 0, srcUnk = 0, trgUnk = 0 ;
+  int seen_coocur = 0, unseen_coocur = 0, srcUnk = 0, trgUnk = 0;
   while(testHandler.getNextSentence(s)){
-    for (WordIndex i = 1 ; i < s.eSent.size() ; i++)
-      for (WordIndex j = 1 ; j < s.fSent.size() ; j++)
-        testCoocur.insert(WordIDPair(s.eSent[i], s.fSent[j])) ;
+    for (WordIndex i = 1; i < s.eSent.size(); i++)
+      for (WordIndex j = 1; j < s.fSent.size(); j++)
+        testCoocur.insert(WordIDPair(s.eSent[i], s.fSent[j]));
   }
-  set<WordIDPair>::const_iterator i ;
-  for (i = testCoocur.begin() ; i != testCoocur.end() ; ++i){
+  set<WordIDPair>::const_iterator i;
+  for (i = testCoocur.begin(); i != testCoocur.end(); ++i){
     if (tTable.getProb((*i).first, (*i).second) > g_smooth_prob){
-      seen_coocur ++ ;
+      seen_coocur ++;
       //      of_seenCoocur << (*i).first << ' ' << (*i).second << '\n';
     }
     else {
@@ -132,25 +132,25 @@ void printOverlapReport(const TModel<COUNT, PROB>& tTable,
     }
   }
 
-  string trgUnkFile = g_prefix + ".tst.trg.unk" ;
+  string trgUnkFile = g_prefix + ".tst.trg.unk";
   ofstream of_trgUnk(trgUnkFile.c_str());
 
-  for (WordIndex i = 0 ; i <  testFList.getVocabList().size() && i < testFList.uniqTokens();i++)
+  for (WordIndex i = 0; i <  testFList.getVocabList().size() && i < testFList.uniqTokens();i++)
     if (testFList.getVocabList()[i].freq > 0 && trainFList.getVocabList()[i].freq <= 0){
       of_trgUnk << i << ' ' << testFList.getVocabList()[i].word << ' ' << testFList.getVocabList()[i].freq
                 << '\n';
-      trgUnk++ ;
+      trgUnk++;
     }
-  string srcUnkFile = g_prefix + ".tst.src.unk" ;
+  string srcUnkFile = g_prefix + ".tst.src.unk";
   ofstream of_srcUnk(srcUnkFile.c_str());
 
-  for (WordIndex j = 0 ; j <  testEList.getVocabList().size() && j < testEList.uniqTokens();j++)
+  for (WordIndex j = 0; j <  testEList.getVocabList().size() && j < testEList.uniqTokens();j++)
     if (testEList.getVocabList()[j].freq > 0 && trainEList.getVocabList()[j].freq <= 0){
-      srcUnk++ ;
+      srcUnk++;
       of_srcUnk << j << ' ' << testEList.getVocabList()[j].word << ' ' << testEList.getVocabList()[j].freq
                 << '\n';
     }
-  string summaryFile = g_prefix + ".tst.stats" ;
+  string summaryFile = g_prefix + ".tst.stats";
   ofstream of_summary(summaryFile.c_str());
   of_summary << "\t\t STATISTICS ABOUT TEST CORPUS\n\n";
   of_summary << "source unique tokens: " <<  testEList.uniqTokens() << '\n';
@@ -233,7 +233,7 @@ void generatePerplexityReport(const Perplexity& trainperp,
 
   of << "#trnsz\ttstsz\titer\tmodel\ttrn-pp\t\ttest-pp\t\ttrn-vit-pp\t\ttst-vit-pp\n";
 
-  for (unsigned int i = 0 ; i < m; i++) {
+  for (unsigned int i = 0; i < m; i++) {
     of << trainsize << '\t' << testsize << '\t' << i<< '\t' << trainperp.model_id_[i] << '\t';
     if (i < trainperp.perp_.size()) {
       of << trainperp.perp_[i] << "\t\t";
@@ -241,17 +241,17 @@ void generatePerplexityReport(const Perplexity& trainperp,
       of << "N/A\t\t";
     }
     if (i<testperp.perp_.size()) {
-      of << testperp.perp_[i] << "\t\t" ;
+      of << testperp.perp_[i] << "\t\t";
     } else {
       of << "N/A\t\t";
     }
     if (i < trainVperp.perp_.size()) {
-      of << trainVperp.perp_[i] << "\t\t" ;
+      of << trainVperp.perp_[i] << "\t\t";
     } else {
       of << "N/A\t";
     }
     if (i< testVperp.perp_.size()) {
-      of << testVperp.perp_[i] << '\n' ;
+      of << testVperp.perp_[i] << '\n';
     } else {
       of << "N/A\n";
     }

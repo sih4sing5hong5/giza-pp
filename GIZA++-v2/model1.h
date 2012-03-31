@@ -64,15 +64,15 @@ class ReportInfo {
 class Model1 : public ReportInfo {
  public:
   string efFilename;
-  VocabList&  Elist ;
-  VocabList&  Flist ;
-  double eTotalWCount ; // size of source copus in number of words
-  double fTotalWCount ; // size of target corpus in number of words
+  VocabList&  Elist;
+  VocabList&  Flist;
+  double eTotalWCount; // size of source copus in number of words
+  double fTotalWCount; // size of target corpus in number of words
   int noEnglishWords;
   int noFrenchWords;
   TModel<COUNT, PROB>&tTable;
-  Vector<WordEntry>& evlist ;
-  Vector<WordEntry>& fvlist ;
+  Vector<WordEntry>& evlist;
+  Vector<WordEntry>& fvlist;
   int ALmissing,ALtoomuch,ALeventsMissing,ALeventsToomuch;
   int ALmissingVALI,ALtoomuchVALI,ALeventsMissingVALI,ALeventsToomuchVALI;
   int ALmissingTEST,ALtoomuchTEST,ALeventsMissingTEST,ALeventsToomuchTEST;

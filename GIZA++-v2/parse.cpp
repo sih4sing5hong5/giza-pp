@@ -50,7 +50,7 @@ void parseConfigFile (char * fname )
     // attribute value which consists of the concatenation of all non-white space
     // tokens before the colon. These tokens will have spaces eseparating them.
     // The attribute vlue is the first token after the colon (any thing after
-    // it will be ignored ;
+    // it will be ignored;
     // For example :
     // if the configuration file has the following entry:
     //
@@ -61,10 +61,10 @@ void parseConfigFile (char * fname )
 
 {
 
-  string line, word, attrib, attribval ;
+  string line, word, attrib, attribval;
   ifstream Config_File(fname);
   if(!Config_File){
-    cerr << "ERROR:  Cannot open configuration file " << fname << "!\n" ;
+    cerr << "ERROR:  Cannot open configuration file " << fname << "!\n";
     exit(1);
   }
 
@@ -73,12 +73,12 @@ void parseConfigFile (char * fname )
   while(getline(Config_File, line)){
 
     istringstream buffer(line);
-    word = attrib = attribval = "" ;
-    buffer >> word  ;
+    word = attrib = attribval = "";
+    buffer >> word;
     if (word != "//"){ // if line does not start with "//" (i.e. not a comment)
-      attrib = word ;
+      attrib = word;
       while((buffer >> word) && (word != ":")){
-        attrib += " " + word ;
+        attrib += " " + word;
       }
       if(!(buffer >> attribval))
       {
@@ -134,10 +134,10 @@ void parseArguments(int argc, char *argv[])
     if( strlen(argv[arg])>2 && argv[arg][0]=='-' && argv[arg][1]=='-' )
     {
       if( !makeSetCommand(argv[arg]+1,"1",getGlobalParSet(),2))
-        cerr << "WARNING: ignoring unrecognized option:  "<< argv[arg] << '\n' ;
+        cerr << "WARNING: ignoring unrecognized option:  "<< argv[arg] << '\n';
     }
     else if( arg+1<argc && !makeSetCommand(argv[arg],argv[arg+1],getGlobalParSet(),2))
-      cerr << "WARNING: ignoring unrecognized option:  "<< argv[arg] << '\n' ;
+      cerr << "WARNING: ignoring unrecognized option:  "<< argv[arg] << '\n';
     else
     {
       arg++;

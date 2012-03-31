@@ -99,13 +99,13 @@ const string str2Num(int n){
   do{
     number.insert((size_t)0, 1, (char)(n % 10 + '0'));
   } while((n /= 10) > 0);
-  return(number) ;
+  return(number);
 }
 
 
 double g_lambda = 1.09;
 SentenceHandler *testCorpus=0,*corpus=0;
-Perplexity trainPerp, testPerp, trainViterbiPerp, testViterbiPerp ;
+Perplexity trainPerp, testPerp, trainViterbiPerp, testViterbiPerp;
 
 string ReadTablePrefix;
 
@@ -113,7 +113,7 @@ string ReadTablePrefix;
 const char*stripPath(const char*fullpath)
     // strip the path info from the file name
 {
-  const char *ptr = fullpath + strlen(fullpath) - 1 ;
+  const char *ptr = fullpath + strlen(fullpath) - 1;
   while(ptr && ptr > fullpath && *ptr != '/'){ptr--;}
   if( *ptr=='/' )
     return(ptr+1);
@@ -124,7 +124,7 @@ const char*stripPath(const char*fullpath)
 
 void printDecoderConfigFile()
 {
-  string decoder_config_file = g_prefix + ".Decoder.config" ;
+  string decoder_config_file = g_prefix + ".Decoder.config";
   cerr << "writing decoder configuration file to " <<  decoder_config_file.c_str() <<'\n';
   ofstream decoder(decoder_config_file.c_str());
   if(!decoder){
@@ -162,18 +162,18 @@ void printDecoderConfigFile()
 
   int last_model;
   if (Model5_Iterations>0)
-    last_model = 5 ;
+    last_model = 5;
   else if (Model4_Iterations>0)
-    last_model = 4 ;
+    last_model = 4;
   else if (Model3_Iterations>0)
-    last_model = 3 ;
+    last_model = 3;
   else if (Model2_Iterations>0)
-    last_model = 2 ;
-  else last_model = 1 ;
+    last_model = 2;
+  else last_model = 1;
   string last_modelName = str2Num(last_model);
   string p=g_prefix + ".t" + /*last_modelName*/"3" +".final";
   decoder << "TTable = " << stripPath(p.c_str()) << '\n';
-  p = g_prefix + ".ti.final" ;
+  p = g_prefix + ".ti.final";
   decoder << "InverseTTable = " << stripPath(p.c_str()) << '\n';
   p=g_prefix + ".n" + /*last_modelName*/"3" + ".final";
   decoder << "NTable = " << stripPath(p.c_str())  << '\n';
@@ -190,7 +190,7 @@ void printDecoderConfigFile()
   decoder << "Source.classes = " << g_source_vocab_filename + ".classes" << '\n';
   decoder << "Target.classes = " << g_target_vocab_filename + ".classes" <<'\n';
   p=g_prefix + ".fe0_"+ /*last_modelName*/"3" + ".final";
-  decoder << "FZeroWords       = " <<stripPath(p.c_str()) << '\n' ;
+  decoder << "FZeroWords       = " <<stripPath(p.c_str()) << '\n';
 
   /*  decoder << "# Translation Parameters\n"
       << "# Note: TranslationModel and LanguageModelMode must have NUMBERS as\n"
@@ -218,13 +218,13 @@ void printAllTables(VocabList& eTrainVcbList, VocabList& eTestVcbList,
                     VocabList& fTrainVcbList, VocabList& fTestVcbList, Model1& m1)
 {
   cerr << "writing Final tables to Disk \n";
-  string t_inv_file = g_prefix + ".ti.final" ;
+  string t_inv_file = g_prefix + ".ti.final";
   if( !FEWDUMPS)
     m1.getTTable().printProbTableInverse(t_inv_file.c_str(), m1.getEnglishVocabList(),
                                          m1.getFrenchVocabList(),
                                          m1.getETotalWCount(),
                                          m1.getFTotalWCount());
-  t_inv_file = g_prefix + ".actual.ti.final" ;
+  t_inv_file = g_prefix + ".actual.ti.final";
   if ( !FEWDUMPS ) {
     m1.getTTable().printProbTableInverse(t_inv_file.c_str(),
                                          eTrainVcbList.getVocabList(),
@@ -233,7 +233,7 @@ void printAllTables(VocabList& eTrainVcbList, VocabList& eTestVcbList,
                                          m1.getFTotalWCount(), true);
   }
 
-  string perp_filename = g_prefix + ".perp" ;
+  string perp_filename = g_prefix + ".perp";
   ofstream of_perp(perp_filename.c_str());
 
   cout << "Writing PERPLEXITY report to: " << perp_filename << '\n';
@@ -252,43 +252,43 @@ void printAllTables(VocabList& eTrainVcbList, VocabList& eTestVcbList,
                              of_perp, (*corpus).getTotalNoPairs1(), 0, true);
   }
 
-  string eTrainVcbFile = g_prefix + ".trn.src.vcb" ;
+  string eTrainVcbFile = g_prefix + ".trn.src.vcb";
   ofstream of_eTrainVcb(eTrainVcbFile.c_str());
   cout << "Writing source vocabulary list to : " << eTrainVcbFile << '\n';
   if (!of_eTrainVcb){
     cerr << "\nERROR: Cannot write to " << eTrainVcbFile <<'\n';
     exit(1);
   }
-  eTrainVcbList.printVocabList(of_eTrainVcb) ;
+  eTrainVcbList.printVocabList(of_eTrainVcb);
 
-  string fTrainVcbFile = g_prefix + ".trn.trg.vcb" ;
+  string fTrainVcbFile = g_prefix + ".trn.trg.vcb";
   ofstream of_fTrainVcb(fTrainVcbFile.c_str());
   cout << "Writing source vocabulary list to : " << fTrainVcbFile << '\n';
   if(!of_fTrainVcb){
     cerr << "\nERROR: Cannot write to " << fTrainVcbFile <<'\n';
     exit(1);
   }
-  fTrainVcbList.printVocabList(of_fTrainVcb) ;
+  fTrainVcbList.printVocabList(of_fTrainVcb);
 
   //print test vocabulary list
 
-  string eTestVcbFile = g_prefix + ".tst.src.vcb" ;
+  string eTestVcbFile = g_prefix + ".tst.src.vcb";
   ofstream of_eTestVcb(eTestVcbFile.c_str());
   cout << "Writing source vocabulary list to : " << eTestVcbFile << '\n';
   if(!of_eTestVcb){
     cerr << "\nERROR: Cannot write to " << eTestVcbFile <<'\n';
     exit(1);
   }
-  eTestVcbList.printVocabList(of_eTestVcb) ;
+  eTestVcbList.printVocabList(of_eTestVcb);
 
-  string fTestVcbFile = g_prefix + ".tst.trg.vcb" ;
+  string fTestVcbFile = g_prefix + ".tst.trg.vcb";
   ofstream of_fTestVcb(fTestVcbFile.c_str());
   cout << "Writing source vocabulary list to : " << fTestVcbFile << '\n';
   if(!of_fTestVcb){
     cerr << "\nERROR: Cannot write to " << fTestVcbFile <<'\n';
     exit(1);
   }
-  fTestVcbList.printVocabList(of_fTestVcb) ;
+  fTestVcbList.printVocabList(of_fTestVcb);
   printDecoderConfigFile();
   if (testCorpus)
     printOverlapReport(m1.getTTable(), *testCorpus, eTrainVcbList,
@@ -347,10 +347,10 @@ void ReadAlignment(const string&x,Vector<map< pair<int,int>,char > >&a) {
 }
 
 void initGlobals() {
-  NODUMPS = false ;
+  NODUMPS = false;
   g_prefix = port::GetFileSpec();
   g_log_filename = g_prefix + ".log";
-  MAX_SENTENCE_LENGTH = kMaxAllowedSentenceLength ;
+  MAX_SENTENCE_LENGTH = kMaxAllowedSentenceLength;
 }
 
 void convert(const map< pair<int,int>,char >&reference,Alignment&x) {
@@ -383,9 +383,9 @@ double StartTraining(int& result) {
   globeTrainVcbList=&eTrainVcbList;
   globfTrainVcbList=&fTrainVcbList;
 
-  string repFilename = g_prefix + ".gizacfg" ;
+  string repFilename = g_prefix + ".gizacfg";
   ofstream of2(repFilename.c_str());
-  writeParameters(of2,getGlobalParSet(),-1) ;
+  writeParameters(of2,getGlobalParSet(),-1);
 
   cout << "reading vocabulary files \n";
   eTrainVcbList.setName(g_source_vocab_filename.c_str());
@@ -395,8 +395,8 @@ double StartTraining(int& result) {
   cout << "Source vocabulary list has " << eTrainVcbList.uniqTokens() << " unique tokens \n";
   cout << "Target vocabulary list has " << fTrainVcbList.uniqTokens() << " unique tokens \n";
 
-  VocabList eTestVcbList(eTrainVcbList) ;
-  VocabList fTestVcbList(fTrainVcbList) ;
+  VocabList eTestVcbList(eTrainVcbList);
+  VocabList fTestVcbList(fTrainVcbList);
 
   corpus = new SentenceHandler(CorpusFilename.c_str(), &eTrainVcbList, &fTrainVcbList);
 
@@ -454,18 +454,18 @@ double StartTraining(int& result) {
   if (ReadTablePrefix.length() ) {
     string number = "final";
     string tfile,afilennfile,dfile,d4file,p0file,afile,nfile; //d5file
-    tfile = ReadTablePrefix + ".t3." + number ;
-    afile = ReadTablePrefix + ".a3." + number ;
-    nfile = ReadTablePrefix + ".n3." + number ;
-    dfile = ReadTablePrefix + ".d3." + number ;
-    d4file = ReadTablePrefix + ".d4." + number ;
-    //d5file = ReadTablePrefix + ".d5." + number ;
-    p0file = ReadTablePrefix + ".p0_3." + number ;
+    tfile = ReadTablePrefix + ".t3." + number;
+    afile = ReadTablePrefix + ".a3." + number;
+    nfile = ReadTablePrefix + ".n3." + number;
+    dfile = ReadTablePrefix + ".d3." + number;
+    d4file = ReadTablePrefix + ".d4." + number;
+    //d5file = ReadTablePrefix + ".d5." + number;
+    p0file = ReadTablePrefix + ".p0_3." + number;
     tTable.readProbTable(tfile.c_str());
     aTable.readTable(afile.c_str());
     m3.dTable.readTable(dfile.c_str());
     m3.nTable.readNTable(nfile.c_str());
-    SentencePair sent ;
+    SentencePair sent;
     double p0;
     ifstream p0f(p0file.c_str());
     p0f >> p0;
@@ -506,10 +506,10 @@ double StartTraining(int& result) {
     }
   } else {
     // initialize model1
-    bool seedModel1 = false ;
+    bool seedModel1 = false;
     if(Model1_Iterations > 0){
       if (t_Filename != "NONE" && t_Filename != ""){
-        seedModel1 = true ;
+        seedModel1 = true;
         m1.load_table(t_Filename.c_str());
       }
       minIter=m1.em_with_tricks(Model1_Iterations,seedModel1,*dictionary, useDict);
@@ -594,7 +594,7 @@ int main(int argc, char* argv[]) {
     exit(1);
   }
 
-  initGlobals() ;
+  initGlobals();
   parseArguments(argc, argv);
 
   if (g_enable_logging) {

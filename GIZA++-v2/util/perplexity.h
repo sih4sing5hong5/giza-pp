@@ -72,13 +72,13 @@ class Perplexity {
     return (-1.0 * sum_ / (std::log(kCrossEntropyBase) * wc_));
   }
 
-  double getSum() const { return sum_ ; }
+  double getSum() const { return sum_; }
   double word_count() const { return wc_; }
 
   void addFactor(const double p, const double count, const int l,
                  const int m, bool withPoisson) {
-    wc_ += count * m ; // number of french words
-    sum_ += count * ((withPoisson ? ((*E_M_L_)(l, m)) : 0.0) + p) ;
+    wc_ += count * m; // number of french words
+    sum_ += count * ((withPoisson ? ((*E_M_L_)(l, m)) : 0.0) + p);
   }
 
   void record(const std::string& model) {
