@@ -165,13 +165,13 @@ backup: clean
 	tar cf - . | gzip -9 > ../GIZA++src.tar.gz
 
 snt2plain.out: snt2plain.o
-	$(CXX) $(LDFLAGS) -O3 -W -Wall snt2plain.o -o snt2plain.out
+	$(CXX) $(LDFLAGS) snt2plain.o -o snt2plain.out
 
 plain2snt.out: plain2snt.o
-	$(CXX) $(LDFLAGS) -O3 -W -Wall plain2snt.o -o plain2snt.out
+	$(CXX) $(LDFLAGS) plain2snt.o -o plain2snt.out
 
 snt2cooc.out: snt2cooc.o
-	$(CXX) $(LDFLAGS) -O3 -W -Wall snt2cooc.o -o snt2cooc.out
+	$(CXX) $(LDFLAGS) snt2cooc.o -o snt2cooc.out
 
 TAGS:
 	find . -name \*.h -print -o -name \*.cpp -print | etags -
