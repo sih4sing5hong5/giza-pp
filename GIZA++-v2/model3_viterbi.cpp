@@ -228,8 +228,9 @@ void Model3::hillClimb(Vector<WordIndex>& es,
 
   l = es.size() - 1;
   m = fs.size() - 1;
-  if (Log)
+  if (g_enable_logging) {
     logmsg << "\nStarting hill climbing with original score: " << best_score <<"\n";
+  }
   best_change = 1 ; // overall scaling factor (i.e. from the begining of climb
   do {
     best_change_so_far = 1 ; // best scaling factor of this level of hill climb
@@ -287,18 +288,22 @@ void Model3::hillClimb(Vector<WordIndex>& es,
         local_minima = true ;
       }
     } // end of if(!local_minima)
-    if (Log)
+    if (g_enable_logging) {
       logmsg << "." ;
+    }
     if (level> 15)
       cerr << "." ;
   } while (local_minima == false);
-  if (Log)
-    logmsg << "\n" << "Hill Climb Level: " << level << " score: scaling old: " <<(best_score*best_change) ;
+  if (g_enable_logging) {
+    logmsg << "\n" << "Hill Climb Level: " << level
+           << " score: scaling old: " << (best_score * best_change);
+  }
   if (level > 15)
     cerr << "\nHill Climb Level: " << level << " score: scaling old: " <<(best_score*best_change) ;
   best_score = prob_of_target_and_alignment_given_source(A, Fert, tTable, fs, es);
-  if (Log)
+  if (g_enable_logging) {
     logmsg << " using new calc: " << best_score << '\n';
+  }
   if (level>15)
     cerr << " using new calc: " << best_score << '\n';
 }
@@ -379,8 +384,10 @@ void Model3::findBestAlignment(Vector<WordIndex>& es,
     printSentencePair(es, fs, cerr);
   }
   best_score = prob_of_target_and_alignment_given_source(A, Fert, tTable, fs, es);
-  if (Log)
-    logmsg << "finding best alignment : score : " << ss <<"p(f, a/e) = "<< best_score<<"\n";
+  if (g_enable_logging) {
+    logmsg << "finding best alignment : score : " << ss
+           << "p(f, a/e) = "<< best_score << "\n";
+  }
 }
 
 void Model3::collectCountsOverAlignement(const Vector<WordIndex>& es,
@@ -443,7 +450,7 @@ void Model3::findAlignmentsNeighborhood(Vector<WordIndex>& es,
   if (best_score <= 0){
     cerr << "WARNING: Hill Climbing yielded a zero score viterbi alignment for the following pair:\n";
     printSentencePair(es, fs, cerr);
-    if(Log){
+    if(g_enable_logging) {
       logmsg << "WARNING: Hill Climbing yielded a zero score viterbi alignment for the following pair:\n";
       printSentencePair(es, fs, logmsg);
     }
@@ -546,7 +553,7 @@ void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHan
     pair_no++ ;
     l = es.size() - 1 ;
     m = fs.size() - 1 ;
-    if (Log){
+    if (g_enable_logging) {
       logmsg << "Processing sentence pair:\n\t";
       printSentencePair(es, fs, logmsg);
       for (i = 0 ; i <= l ; i++)
@@ -581,7 +588,7 @@ void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHan
     if (g_is_verbose)
       cerr << "\nCollecting counts over found alignments, total prob: "
            << align_total_count <<  "\n";
-    if (Log)
+    if (g_enable_logging)
       logmsg << "\nCollecting counts over found alignments, total prob: "
              << align_total_count <<  "\n";
     int acount = 0 ;
@@ -590,7 +597,7 @@ void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHan
       printSentencePair(es, fs, cerr);
       cerr << "The collection of alignments found have 0 probability!!\n";
       cerr << "No counts will be collected of it \n";
-      if (Log){
+      if (g_enable_logging) {
         logmsg << "The collection of alignments found have 0 probability!!\n";
         logmsg << "No counts will be collected of it \n";
       }
@@ -618,11 +625,11 @@ void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHan
             neighborhood.getHash().bucket_count()<< ", size " <<
             neighborhood.getHash().size() << "\n";
       }
-      if (Log){
-        logmsg << "Collected counts over "<<acount <<" (of "
-               << pow(double(m), double(l+1)) <<") differnet alignments\n";
-        logmsg << "Bucket count of alignments hash: "<<
-            neighborhood.getHash().bucket_count()<< "\n";
+      if (g_enable_logging) {
+        logmsg << "Collected counts over " << acount << " (of "
+               << pow(double(m), double(l+1)) << ") differnet alignments\n";
+        logmsg << "Bucket count of alignments hash: "
+               << neighborhood.getHash().bucket_count() << "\n";
       }
     } // end of else
     // write best alignment (viterbi) for this sentence pair to alignment file
@@ -638,9 +645,11 @@ void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHan
       }
     } // end of if (collect_counts)
     double period = difftime(time(NULL), sent_s);
-    if (Log)
-      logmsg << "processing this sentence pair ("<<l+1<<"x"<<m<<") : "<<
-          (l+1)*m << " took : " << period << " seconds\n";
+    if (g_enable_logging) {
+      logmsg << "processing this sentence pair (" << l + 1
+             << "x" << m << ") : " << (l+1) * m
+             << " took : " << period << " seconds\n";
+    }
     if (g_is_verbose) {
       cerr << "processing this sentence pair took : " << period
            << " seconds\n";

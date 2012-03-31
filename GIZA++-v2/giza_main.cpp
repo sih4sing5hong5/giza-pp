@@ -56,7 +56,7 @@ GLOBAL_PARAMETER(float, MINCOUNTINCREASE,"minCountIncrease","minimal count incre
 
 GLOBAL_PARAMETER2(int,Transfer_Dump_Freq,"TRANSFER DUMP FREQUENCY","t2to3","output: dump of transfer from Model 2 to 3",kParLevOutput,0);
 GLOBAL_PARAMETER2(bool, g_is_verbose, "verbose","v","0: not verbose; 1: verbose", kParLevOutput, 0);
-GLOBAL_PARAMETER(bool,Log,"log","0: no logfile; 1: logfile",kParLevOutput,0);
+GLOBAL_PARAMETER(bool, g_enable_logging, "log","0: no logfile; 1: logfile", kParLevOutput, 0);
 
 
 GLOBAL_PARAMETER(double,P0,"p0","fixed value for parameter p_0 in IBM-3/4 (if negative then it is determined in training)",kParLevEM,-1.0);
@@ -593,8 +593,10 @@ int main(int argc, char* argv[]) {
   initGlobals() ;
   parseArguments(argc, argv);
 
-  if (Log)
+  // TODO: Use logging factory.
+  if (g_enable_logging) {
     logmsg.open(LogFilename.c_str(), ios::out);
+  }
 
   printGIZAPars(cout);
   int a = -1;
