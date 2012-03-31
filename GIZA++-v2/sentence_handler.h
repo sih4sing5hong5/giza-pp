@@ -32,6 +32,7 @@
 #ifndef GIZAPP_SENTENCE_HANDLER_H_
 #define GIZAPP_SENTENCE_HANDLER_H_
 
+#include <cmath>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -39,6 +40,7 @@
 #include "defs.h"
 #include "vocab.h"
 #include "globals.h"
+
 /*----------------------- Class Prototype Definition ------------------------*
   Class Name: sentenceHandleer
   Objective: This class is defined to handle training sentece pairs from the
@@ -63,21 +65,24 @@ class SentencePair {
   SentencePair() { }
   ~SentencePair() { }
 
-  void clear() { eSent.clear(); fSent.clear(); noOcc=0; realCount=0; sentenceNo=0; };
-  const Vector<WordIndex>&get_eSent() const
-  { return eSent; }
-  const Vector<WordIndex>&get_fSent() const
-  { return fSent; }
-  int getSentenceNo() const
-  { return sentenceNo; }
-  double getCount() const
-  { return realCount; }
+  void clear() {
+    eSent.clear();
+    fSent.clear();
+    noOcc = 0;
+    realCount = 0;
+    sentenceNo = 0;
+  }
+
+  const Vector<WordIndex>&get_eSent() const { return eSent; }
+  const Vector<WordIndex>&get_fSent() const { return fSent; }
+  int getSentenceNo() const { return sentenceNo; }
+  double getCount() const { return realCount; }
 };
 
 inline ostream&operator<<(ostream&of,const SentencePair&s)
 {
   of << "Sent No: " << s.sentenceNo << " , No. Occurrences: " << s.noOcc << '\n';
-  if (abs(s.noOcc - s.realCount) < kEPS)
+  if (std::abs(s.noOcc - s.realCount) < kEPS)
     of << " Used No. Occurrences: " << s.realCount << '\n';
   unsigned int i;
   for (i=0; i < s.eSent.size(); i++)
