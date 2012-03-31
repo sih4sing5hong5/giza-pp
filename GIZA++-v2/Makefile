@@ -80,9 +80,15 @@ LIBOBJECTS = \
 	hmm_tables.o \
 	forward_backward.o
 
+LIBRARY = libgizapp.a
+
 PROGRAMS = GIZA++ snt2plain.out plain2snt.out snt2cooc.out
 
-opt: $(PROGRAMS)
+opt: $(PROGRAMS) $(LIBRARY)
+
+$(LIBRARY): $(LIBOBJECTS)
+	rm -f $@
+	$(AR) -rs $@ $(LIBOBJECTS)
 
 GIZA++: $(LIBOBJECTS)
 	$(CXX) $(CFLAGS_OPT) $(LIBOBJECTS) $(LDFLAGS) -o $@
@@ -152,7 +158,7 @@ iinstall: opt prf dbg
 	-cp GIZA++.dbg $(INSTALLDIR)/GIZA++.dbg
 
 clean:
-	-rm -f $(PROGRAMS) *.o $(OBJ_DIR_NRM)/*.o $(OBJ_DIR_DBG)/*.o $(OBJ_DIR_VDBG)/*.o $(OBJ_DIR_PRF)/*.o $(OBJ_DIR_OPT)/*.o
+	-rm -f $(PROGRAMS) $(LIBRARY) *.o $(OBJ_DIR_NRM)/*.o $(OBJ_DIR_DBG)/*.o $(OBJ_DIR_VDBG)/*.o $(OBJ_DIR_PRF)/*.o $(OBJ_DIR_OPT)/*.o
 	-rm -rf $(OBJ_DIR_NRM) $(OBJ_DIR_DBG) $(OBJ_DIR_VDBG) $(OBJ_DIR_PRF) $(OBJ_DIR_OPT)
 	-rm -fr *.dSYM
 
