@@ -76,9 +76,9 @@ bool ConvertSnt(const char* filename, int max_elements, bool counts,
     for (unsigned int i = 0; i < l1.size(); ++i) {
       if (l1[i]>=int(vsi.size())) {
         cerr << "I have to resize: " << l1[i] << endl;
-        vsi.resize(l1[i]+1);
+        vsi.resize(static_cast<size_t>(l1[i] + 1));
       }
-      map<int,int>& theset = vsi[l1[i]];
+      map<int,int>& theset = vsi[static_cast<size_t>(l1[i])];
       total_elements -= theset.size();
       for (unsigned int j = 0; j < l2.size(); ++j) {
         theset[l2[j]]++;

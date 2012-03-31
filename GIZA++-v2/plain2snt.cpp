@@ -42,11 +42,11 @@ int main(int argc,char**argv)
 
 
   string vocab1(w1),vocab2(w2),snt1,snt2;
-  unsigned int slashpos=vocab1.rfind('/')+1;
+  unsigned int slashpos = static_cast<unsigned int>(vocab1.rfind('/')) + 1;
   if( slashpos>=vocab1.length() ) slashpos=0;
   string vocab1x(vocab1.substr(slashpos,vocab1.length()));
   cout << vocab1 << " -> " << vocab1x << endl;
-  slashpos=vocab2.rfind('/')+1;
+  slashpos = static_cast<unsigned int>(vocab2.rfind('/')) + 1;
   if( slashpos>=vocab2.length() ) slashpos=0;
   string vocab2x(vocab2.substr(slashpos,vocab2.length()));
   cout << vocab2 << " -> " << vocab2x << endl;
@@ -72,7 +72,7 @@ int main(int argc,char**argv)
         if( id1.find(word)==id1.end() )
         {
           iid1.push_back(word);
-          id1[word]=iid1.size()-1;
+          id1[word]= static_cast<int>(iid1.size()) - 1;
         }
       }
       istringstream ii2(line2);
@@ -83,7 +83,7 @@ int main(int argc,char**argv)
         if( id2.find(word)==id2.end() )
         {
           iid2.push_back(word);
-          id2[word]=iid2.size()-1;
+          id2[word]= static_cast<int>(iid2.size()) - 1;
         }
       }
       double w=1.0;
