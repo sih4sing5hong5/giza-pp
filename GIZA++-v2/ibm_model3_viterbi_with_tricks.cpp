@@ -19,7 +19,7 @@
   USA.
 */
 
-#include "model3.h"
+#include "ibm_model3.h"
 
 #include <cassert>
 #include "port/stl_helper.h"
@@ -58,7 +58,7 @@ int PrintHillClimbWarning=0;
 int PrintZeroScoreWarning=0;
 
 
-LogProb Model3::viterbi_model2(const TransPairModelHMM&ef, Alignment&output, int
+LogProb IBMModel3::viterbi_model2(const TransPairModelHMM&ef, Alignment&output, int
 #ifdef STORE_HMM_ALIGNMENTS
                                pair_no
 #endif
@@ -116,7 +116,7 @@ LogProb Model3::viterbi_model2(const TransPairModelHMM&ef, Alignment&output, int
   }
 }
 
-LogProb Model3::_viterbi_model2(const transpair_model2&ef, Alignment&output, int i_peg, int j_peg) const
+LogProb IBMModel3::_viterbi_model2(const transpair_model2&ef, Alignment&output, int i_peg, int j_peg) const
 {
   WordIndex best_i=0;
   LogProb ss=1;
@@ -199,7 +199,7 @@ LogProb Model3::_viterbi_model2(const transpair_model2&ef, Alignment&output, int
   MASSERT(output.valid());
   return ss;
 }
-LogProb Model3::viterbi_model2(const transpair_model3&ef, Alignment&output, int pair_no,int i_peg , int j_peg) const
+LogProb IBMModel3::viterbi_model2(const transpair_model3&ef, Alignment&output, int pair_no,int i_peg , int j_peg) const
 {
   if (h&&UseHMMViterbiAlignmentIfPossible)
   {
@@ -418,7 +418,7 @@ class Als
 inline bool operator<(const Als&x,const Als&y) { return x.v>y.v; }
 
 template<class MODEL_TYPE, class ADDITIONAL_MODEL_DATA_IN,class ADDITIONAL_MODEL_DATA_OUT>
-void Model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp, SentenceHandler& sHandler1,
+void IBMModel3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp, SentenceHandler& sHandler1,
                                       bool dump_files, const char* alignfile,
                                       bool collect_counts, string model, bool final,
                                       ADDITIONAL_MODEL_DATA_IN*dm_in,
@@ -687,7 +687,7 @@ void Model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
 
 #include "coll_counts.cpp"
 #define INSTANTIATE(A,B,C) template                                     \
-  void Model3::viterbi_loop_with_tricks<A,B,C>(Perplexity& perp, Perplexity& viterbiPerp, SentenceHandler& sHandler1, \
+  void IBMModel3::viterbi_loop_with_tricks<A,B,C>(Perplexity& perp, Perplexity& viterbiPerp, SentenceHandler& sHandler1, \
                                                bool dump_files, const char* alignfile,bool collect_counts, string, bool final, \
                                                B*d4m,C*d5m);
 

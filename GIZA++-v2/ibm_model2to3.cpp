@@ -19,7 +19,7 @@
   USA.
 */
 
-#include "model3.h"
+#include "ibm_model3.h"
 
 #include <cmath>
 #include "util/util.h"
@@ -105,7 +105,7 @@ double get_sum_of_partitions(int n, int source_pos,
   return(sum);
 }
 
-void Model3::estimate_t_a_d(SentenceHandler& sHandler1, Perplexity& perp, Perplexity& trainVPerp,
+void IBMModel3::estimate_t_a_d(SentenceHandler& sHandler1, Perplexity& perp, Perplexity& trainVPerp,
                             bool simple, bool dump_files,bool updateT) {
   string tfile, nfile, dfile, p0file, afile, alignfile;
   WordIndex i, j, l, m, max_fertility_here, k;
@@ -278,7 +278,7 @@ void Model3::estimate_t_a_d(SentenceHandler& sHandler1, Perplexity& perp, Perple
   }
 }
 
-void Model3::transferSimple(/*model1& m1, Model2& m2, */ SentenceHandler& sHandler1,
+void IBMModel3::transferSimple(/*model1& m1, IBMModel2& m2, */ SentenceHandler& sHandler1,
                             bool dump_files, Perplexity& perp, Perplexity& trainVPerp,bool updateT) {
   /*
     This function performs simple Model 2 -> Model 3 transfer.
@@ -305,7 +305,7 @@ void Model3::transferSimple(/*model1& m1, Model2& m2, */ SentenceHandler& sHandl
 }
 
 
-void Model3::transfer(SentenceHandler& sHandler1,bool dump_files, Perplexity& perp, Perplexity& trainVPerp,bool updateT) {
+void IBMModel3::transfer(SentenceHandler& sHandler1,bool dump_files, Perplexity& perp, Perplexity& trainVPerp,bool updateT) {
   if (Transfer == kTransferSimple)
     transferSimple(sHandler1,dump_files,perp, trainVPerp,updateT);
   {
@@ -319,8 +319,6 @@ void Model3::transfer(SentenceHandler& sHandler1,bool dump_files, Perplexity& pe
     p1_count = p0_count = 0;
 
     estimate_t_a_d(sHandler1, perp, trainVPerp, false, dump_files,updateT);
-
-
 
     /* Below is a made-up stab at transferring t & a probs to p0/p1.
        (Method not documented in IBM paper).

@@ -55,14 +55,14 @@ LIBOBJECTS = \
 	util/perplexity.o \
 	util/util.o \
 	parameter.o \
-	model1.o \
-	model2.o \
-	model3.o \
+	ibm_model1.o \
+	ibm_model2.o \
+	ibm_model3.o \
 	sentence_handler.o \
 	ttables.o \
 	atables.o \
 	ntables.o \
-	model2to3.o \
+	ibm_model2to3.o \
 	coll_counts.o \
 	alignment.o \
 	vocab.o \
@@ -72,9 +72,9 @@ LIBOBJECTS = \
 	transpair_model5.o \
 	transpair_model_hmm.o \
 	parse.o \
-	model3_viterbi.o \
-	model3_viterbi_with_tricks.o \
-	model345-peg.o \
+	ibm_model3_viterbi.o \
+	ibm_model3_viterbi_with_tricks.o \
+	ibm_model345-peg.o \
 	hmm.o \
 	hmm_tables.o \
 	forward_backward.o

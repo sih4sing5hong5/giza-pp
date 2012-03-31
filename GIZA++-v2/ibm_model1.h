@@ -19,8 +19,8 @@
   USA.
 */
 
-#ifndef GIZAPP_MODEL1_H_
-#define GIZAPP_MODEL1_H_
+#ifndef GIZAPP_IBM_MODEL1_H_
+#define GIZAPP_IBM_MODEL1_H_
 
 #include "globals.h"
 #include "util/util.h"
@@ -61,7 +61,7 @@ class ReportInfo {
   virtual ~ReportInfo() { }
 };
 
-class Model1 : public ReportInfo {
+class IBMModel1 : public ReportInfo {
  public:
   string efFilename;
   VocabList&  Elist;
@@ -77,7 +77,7 @@ class Model1 : public ReportInfo {
   int ALmissingVALI,ALtoomuchVALI,ALeventsMissingVALI,ALeventsToomuchVALI;
   int ALmissingTEST,ALtoomuchTEST,ALeventsMissingTEST,ALeventsToomuchTEST;
 
-  Model1(const char* efname, VocabList& evcblist, VocabList& fvcblist,
+  IBMModel1(const char* efname, VocabList& evcblist, VocabList& fvcblist,
          TModel<COUNT, PROB>&_tTable,Perplexity& _perp,
          SentenceHandler& _sHandler1,
          Perplexity* _testPerp,
@@ -85,7 +85,7 @@ class Model1 : public ReportInfo {
          Perplexity& _trainViterbiPerp,
          Perplexity* _testViterbiPerp);
 
-  virtual ~Model1();
+  virtual ~IBMModel1();
 
   void initialize_table_uniformly(SentenceHandler& sHandler1);
   int em_with_tricks(int noIterations,
@@ -169,8 +169,8 @@ class Model1 : public ReportInfo {
                util::Dictionary& dictionary, bool useDict,
                Perplexity& viterbiperp, bool=false);
 
-  friend class Model2;
+  friend class IBMModel2;
   friend class HMM;
 };
 
-#endif  // GIZAPP_MODEL1_H_
+#endif  // GIZAPP_IBM_MODEL1_H_

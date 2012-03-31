@@ -19,7 +19,7 @@
   USA.
 */
 
-#include "model3.h"
+#include "ibm_model3.h"
 
 #include "alignment.h"
 #include "coll_counts.h"

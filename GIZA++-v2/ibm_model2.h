@@ -19,10 +19,10 @@
   USA.
 */
 
-#ifndef GIZAPP_MODEL2_H_
-#define GIZAPP_MODEL2_H_
+#ifndef GIZAPP_IBM_MODEL2_H_
+#define GIZAPP_IBM_MODEL2_H_
 
-#include "model1.h"
+#include "ibm_model1.h"
 
 #include "ttables.h"
 #include "atables.h"
@@ -30,14 +30,14 @@
 class Perplexity;
 class SentenceHandler;
 
-class Model2 : public Model1 {
+class IBMModel2 : public IBMModel1 {
  public:
   // TODO: Should be private.
   AModel<PROB>& aTable;
   AModel<COUNT>& aCountTable;
 
-  Model2(Model1& m1, AModel<PROB>& _aTable, AModel<COUNT>& _aCountTable);
-  virtual ~Model2();
+  IBMModel2(IBMModel1& m1, AModel<PROB>& _aTable, AModel<COUNT>& _aCountTable);
+  virtual ~IBMModel2();
 
   void initialize_table_uniformly(SentenceHandler&);
 
@@ -55,7 +55,7 @@ class Model2 : public Model1 {
                Perplexity&, bool test);
 
  private:
-  friend class Model3;
+  friend class IBMModel3;
 };
 
-#endif  // GIZAPP_MODEL2_H_
+#endif  // GIZAPP_IBM_MODEL2_H_

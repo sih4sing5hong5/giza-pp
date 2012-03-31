@@ -19,7 +19,7 @@
   USA.
 */
 
-#include "model1.h"
+#include "ibm_model1.h"
 
 #include "util/dictionary.h"
 #include "util/perplexity.h"
@@ -33,7 +33,7 @@ extern int VerboseSentence;
 GLOBAL_PARAMETER2(int,Model1_Dump_Freq,"MODEL 1 DUMP FREQUENCY","t1","dump frequency of Model 1",kParLevOutput,0);
 int NumberOfVALIalignments=100;
 
-Model1::Model1(const char* efname, VocabList& evcblist, VocabList& fvcblist,TModel<COUNT, PROB>&_tTable,Perplexity& _perp,
+IBMModel1::IBMModel1(const char* efname, VocabList& evcblist, VocabList& fvcblist,TModel<COUNT, PROB>&_tTable,Perplexity& _perp,
                SentenceHandler& _sHandler1,
                Perplexity* _testPerp,
                SentenceHandler* _testHandler,
@@ -46,9 +46,9 @@ ReportInfo(_perp, _sHandler1, _testPerp, _testHandler, _trainViterbiPerp, _testV
   evlist(Elist.getVocabList()), fvlist(Flist.getVocabList())
 {}
 
-Model1::~Model1() {}
+IBMModel1::~IBMModel1() {}
 
-void Model1::initialize_table_uniformly(SentenceHandler& sHandler1) {
+void IBMModel1::initialize_table_uniformly(SentenceHandler& sHandler1) {
   WordIndex i, j;
 
   cout << "Initialize tTable\n";
@@ -66,7 +66,7 @@ void Model1::initialize_table_uniformly(SentenceHandler& sHandler1) {
 }
 
 
-int Model1::em_with_tricks(int noIterations, /*Perplexity& perp, SentenceHandler& sHandler1, */
+int IBMModel1::em_with_tricks(int noIterations, /*Perplexity& perp, SentenceHandler& sHandler1, */
                            bool seedModel1, util::Dictionary& dictionary, bool useDict /*Perplexity* testPerp, SentenceHandler* testHandler,
                                                                                          Perplexity& trainViterbiPerp, Perplexity* testViterbiPerp */)
 {
@@ -131,7 +131,7 @@ int Model1::em_with_tricks(int noIterations, /*Perplexity& perp, SentenceHandler
   return minIter;
 }
 
-void Model1::load_table(const char* tname) {
+void IBMModel1::load_table(const char* tname) {
   /* This function loads the t table from the given file; use it
      when you want to load results from previous t training
      without doing any new training.
@@ -143,7 +143,7 @@ void Model1::load_table(const char* tname) {
 
 
 extern float MINCOUNTINCREASE;
-void Model1::em_loop(int it,Perplexity& perp, SentenceHandler& sHandler1, bool seedModel1,
+void IBMModel1::em_loop(int it,Perplexity& perp, SentenceHandler& sHandler1, bool seedModel1,
                      bool dump_alignment, const char* alignfile, util::Dictionary& dict, bool useDict, Perplexity& viterbi_perp, bool test)
 {
   WordIndex i, j, l, m;
@@ -288,7 +288,7 @@ void Model1::em_loop(int it,Perplexity& perp, SentenceHandler& sHandler1, bool s
   errorReportAL(cout, "IBM-1");
 }
 
-void Model1::errorReportAL(ostream& out, const string& m) const {
+void IBMModel1::errorReportAL(ostream& out, const string& m) const {
   if (ALeventsMissing+ALeventsToomuch)
     out << "alignmentErrors (" << m << "): "
         << 100.0*(ALmissing+ALtoomuch)/double(ALeventsMissing+ALeventsToomuch)

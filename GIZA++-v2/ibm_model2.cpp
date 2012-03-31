@@ -20,7 +20,7 @@
 
 */
 
-#include "model2.h"
+#include "ibm_model2.h"
 
 #include "defs.h"
 #include "parameter.h"
@@ -32,12 +32,12 @@ extern short NoEmptyWord;
 
 GLOBAL_PARAMETER2(int,Model2_Dump_Freq,"MODEL 2 DUMP FREQUENCY","t2","dump frequency of Model 2",kParLevOutput,0);
 
-Model2::Model2(Model1& m, AModel<PROB>& _aTable, AModel<COUNT>& _aCountTable)
-: Model1(m), aTable(_aTable), aCountTable(_aCountTable) { }
+IBMModel2::IBMModel2(IBMModel1& m, AModel<PROB>& _aTable, AModel<COUNT>& _aCountTable)
+: IBMModel1(m), aTable(_aTable), aCountTable(_aCountTable) { }
 
-Model2::~Model2() {}
+IBMModel2::~IBMModel2() {}
 
-void Model2::initialize_table_uniformly(SentenceHandler& sHandler1) {
+void IBMModel2::initialize_table_uniformly(SentenceHandler& sHandler1) {
   // initialize the aTable uniformly (run this before running em_with_tricks)
   int n=0;
   SentencePair sent;
@@ -58,7 +58,7 @@ void Model2::initialize_table_uniformly(SentenceHandler& sHandler1) {
   }
 }
 
-int Model2::em_with_tricks(int noIterations)
+int IBMModel2::em_with_tricks(int noIterations)
 {
   double minErrors=1.0;int minIter=0;
   string modelName="Model2",shortModelName="2";
@@ -127,7 +127,7 @@ int Model2::em_with_tricks(int noIterations)
   return minIter;
 }
 
-void Model2::load_table(const char* aname) {
+void IBMModel2::load_table(const char* aname) {
   /* This function loads the a table from the given file; use it
      when you want to load results from previous a training without
      doing any new training.
@@ -138,7 +138,7 @@ void Model2::load_table(const char* aname) {
 }
 
 
-void Model2::em_loop(Perplexity& perp, SentenceHandler& sHandler1,
+void IBMModel2::em_loop(Perplexity& perp, SentenceHandler& sHandler1,
                      bool dump_alignment, const char* alignfile, Perplexity& viterbi_perp,
                      bool test)
 {

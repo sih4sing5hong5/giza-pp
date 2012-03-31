@@ -19,10 +19,10 @@
   USA.
 */
 
-#ifndef GIZAPP_MODEL3_H_
-#define GIZAPP_MODEL3_H_
+#ifndef GIZAPP_IBM_MODEL3_H_
+#define GIZAPP_IBM_MODEL3_H_
 
-#include "model2.h"
+#include "ibm_model2.h"
 #include "ntables.h"
 #include "defs.h"
 
@@ -35,7 +35,7 @@ class transpair_model2;
 class transpair_model3;
 class TransPairModelHMM;
 
-class Model3 : public Model2 {
+class IBMModel3 : public IBMModel2 {
   // TODO: should be private.
  public:
   AModel<PROB>  dTable;
@@ -49,8 +49,8 @@ class Model3 : public Model2 {
   HMM* h;
 
  public:
-  Model3(Model2& m2);
-  ~Model3();
+  IBMModel3(IBMModel2& m2);
+  ~IBMModel3();
 
   void setHMM(HMM*_h) {h = _h; }
 
@@ -158,4 +158,4 @@ class Model3 : public Model2 {
                                 B* d5m);
 };
 
-#endif  // GIZAPP_MODEL3_H_
+#endif  // GIZAPP_IBM_MODEL3_H_

@@ -19,7 +19,7 @@
   USA.
 */
 
-#include "model3.h"
+#include "ibm_model3.h"
 
 #include "util/perplexity.h"
 #include "util/util.h"
@@ -27,7 +27,7 @@
 #include "align_tables.h"
 #include "sentence_handler.h"
 
-LogProb Model3::prob_of_target_and_alignment_given_source(
+LogProb IBMModel3::prob_of_target_and_alignment_given_source(
     Vector<WordIndex>& A,
     Vector<WordIndex>& Fert,
     TModel<COUNT, PROB>& tTable,
@@ -64,7 +64,7 @@ LogProb Model3::prob_of_target_and_alignment_given_source(
   return(total);
 }
 
-LogProb Model3::prob_of_target_given_source(TModel<COUNT, PROB>& tTable,
+LogProb IBMModel3::prob_of_target_given_source(TModel<COUNT, PROB>& tTable,
                                             Vector<WordIndex>& fs,
                                             Vector<WordIndex>& es) {
   WordIndex x, y;
@@ -98,7 +98,7 @@ LogProb Model3::prob_of_target_given_source(TModel<COUNT, PROB>& tTable,
 }
 
 
-LogProb Model3::scoreOfMove(Vector<WordIndex>& es,
+LogProb IBMModel3::scoreOfMove(Vector<WordIndex>& es,
                             Vector<WordIndex>& fs,
                             Vector<WordIndex>& A,
                             Vector<WordIndex>& Fert,
@@ -164,7 +164,7 @@ LogProb Model3::scoreOfMove(Vector<WordIndex>& es,
 }
 
 
-LogProb Model3::scoreOfSwap(Vector<WordIndex>& es,
+LogProb IBMModel3::scoreOfSwap(Vector<WordIndex>& es,
                             Vector<WordIndex>& fs,
                             Vector<WordIndex>& A,
                             TModel<COUNT, PROB>& tTable,
@@ -206,7 +206,7 @@ LogProb Model3::scoreOfSwap(Vector<WordIndex>& es,
 
 
 
-void Model3::hillClimb(Vector<WordIndex>& es,
+void IBMModel3::hillClimb(Vector<WordIndex>& es,
                        Vector<WordIndex>& fs,
                        Vector<WordIndex>& A,
                        Vector<WordIndex>& Fert,
@@ -309,7 +309,7 @@ void Model3::hillClimb(Vector<WordIndex>& es,
 }
 
 
-void Model3::findBestAlignment(Vector<WordIndex>& es,
+void IBMModel3::findBestAlignment(Vector<WordIndex>& es,
                                Vector<WordIndex>& fs,
                                Vector<WordIndex>& A,
                                Vector<WordIndex>& Fert,
@@ -318,7 +318,7 @@ void Model3::findBestAlignment(Vector<WordIndex>& es,
                                  AModel<PROB>& aTable, */
                                int i_peg = -1 ,
                                int j_peg = -1)
-    // This finds the best Model2 alignment (i.e. no fertilities stuff) in A
+    // This finds the best IBMModel2 alignment (i.e. no fertilities stuff) in A
     // for the given sentence pair. Its score is returned in A. Its fertility
     // info in Fert.
     // if j_peg == -1 && i_peg == -1 then No pegging is performed.
@@ -390,7 +390,7 @@ void Model3::findBestAlignment(Vector<WordIndex>& es,
   }
 }
 
-void Model3::collectCountsOverAlignement(const Vector<WordIndex>& es,
+void IBMModel3::collectCountsOverAlignement(const Vector<WordIndex>& es,
                                          const Vector<WordIndex>& fs,
                                          const Vector<WordIndex>& A,
                                          LogProb score,
@@ -422,7 +422,7 @@ void Model3::collectCountsOverAlignement(const Vector<WordIndex>& es,
 
 
 
-void Model3::findAlignmentsNeighborhood(Vector<WordIndex>& es,
+void IBMModel3::findAlignmentsNeighborhood(Vector<WordIndex>& es,
                                         Vector<WordIndex>& fs,
                                         LogProb&align_total_count,
                                         AlignmentModel& neighborhood,
@@ -527,7 +527,7 @@ void Model3::findAlignmentsNeighborhood(Vector<WordIndex>& es,
   } // of else best_score <= 0
 }
 
-void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHandler& sHandler1,
+void IBMModel3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHandler& sHandler1,
                           bool dump_files, const char* alignfile,
                           bool collect_counts, string model)
 {

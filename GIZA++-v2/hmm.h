@@ -26,23 +26,23 @@
 #include <string>
 #include "util/vector.h"
 #include "defs.h"
-#include "model2.h"
+#include "ibm_model2.h"
 #include "word_classes.h"
 #include "hmm_tables.h"
 
-class Model3;
+class IBMModel3;
 class HMMNetwork;
 class Perplexity;
 class SentenceHandler;
 
-class HMM : public Model2 {
+class HMM : public IBMModel2 {
  private:
   WordClasses ewordclasses;
   WordClasses fwordclasses;
   HMMTables<int,WordClasses> counts, probs;
 
  public:
-  HMM(Model2& m2);
+  HMM(IBMModel2& m2);
   ~HMM();
 
   template<class Mapper>
@@ -62,7 +62,7 @@ class HMM : public Model2 {
   HMMNetwork *makeHMMNetwork(const Vector<WordIndex>& es,
                              const Vector<WordIndex>&fs,
                              bool doInit) const;
-  friend class Model3;
+  friend class IBMModel3;
 };
 
 template<class Mapper>

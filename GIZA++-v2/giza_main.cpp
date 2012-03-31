@@ -22,9 +22,9 @@
 #include <sstream>
 #include "sentence_handler.h"
 #include "ttables.h"
-#include "model1.h"
-#include "model2.h"
-#include "model3.h"
+#include "ibm_model1.h"
+#include "ibm_model2.h"
+#include "ibm_model3.h"
 #include "hmm.h"
 #include "port/file_spec.h"
 #include "defs.h"
@@ -215,7 +215,7 @@ void printDecoderConfigFile()
 
 
 void printAllTables(VocabList& eTrainVcbList, VocabList& eTestVcbList,
-                    VocabList& fTrainVcbList, VocabList& fTestVcbList, Model1& m1)
+                    VocabList& fTrainVcbList, VocabList& fTestVcbList, IBMModel1& m1)
 {
   cerr << "writing Final tables to Disk \n";
   string t_inv_file = g_prefix + ".ti.final";
@@ -442,14 +442,14 @@ double StartTraining(int& result) {
   TModel<COUNT, PROB> tTable;
 #endif
 
-  Model1 m1(CorpusFilename.c_str(), eTrainVcbList, fTrainVcbList,tTable,trainPerp,
+  IBMModel1 m1(CorpusFilename.c_str(), eTrainVcbList, fTrainVcbList,tTable,trainPerp,
             *corpus,&testPerp, testCorpus,
             trainViterbiPerp, &testViterbiPerp);
   AModel<PROB>  aTable(false);
   AModel<COUNT> aCountTable(false);
-  Model2 m2(m1,aTable,aCountTable);
+  IBMModel2 m2(m1,aTable,aCountTable);
   HMM h(m2);
-  Model3 m3(m2);
+  IBMModel3 m3(m2);
 
   if (ReadTablePrefix.length()) {
     string number = "final";
