@@ -61,7 +61,6 @@ LIBOBJECTS = \
 	sentence_handler.o \
 	ttables.o \
 	atables.o \
-	giza_main.o \
 	ntables.o \
 	model2to3.o \
 	coll_counts.o \
@@ -91,7 +90,7 @@ $(LIBRARY): $(LIBOBJECTS)
 	$(AR) -rs $@ $(LIBOBJECTS)
 
 GIZA++: $(LIBOBJECTS)
-	$(CXX) $(CFLAGS_OPT) $(LIBOBJECTS) $(LDFLAGS) -o $@
+	$(CXX) $(CFLAGS_OPT) $(LDFLAGS) giza_main.o $(LIBOBJECTS) -o $@
 
 prf: GIZA++.prf
 
@@ -165,14 +164,14 @@ clean:
 backup: clean
 	tar cf - . | gzip -9 > ../GIZA++src.tar.gz
 
-snt2plain.out: snt2plain.cpp
-	$(CXX) $(LDFLAGS) -O3 -W -Wall snt2plain.cpp -o snt2plain.out
+snt2plain.out: snt2plain.o
+	$(CXX) $(LDFLAGS) -O3 -W -Wall snt2plain.o -o snt2plain.out
 
-plain2snt.out: plain2snt.cpp
-	$(CXX) $(LDFLAGS) -O3 -W -Wall plain2snt.cpp -o plain2snt.out
+plain2snt.out: plain2snt.o
+	$(CXX) $(LDFLAGS) -O3 -W -Wall plain2snt.o -o plain2snt.out
 
-snt2cooc.out: snt2cooc.cpp
-	$(CXX) $(LDFLAGS) -O3 -W -Wall snt2cooc.cpp -o snt2cooc.out
+snt2cooc.out: snt2cooc.o
+	$(CXX) $(LDFLAGS) -O3 -W -Wall snt2cooc.o -o snt2cooc.out
 
 TAGS:
 	find . -name \*.h -print -o -name \*.cpp -print | etags -
