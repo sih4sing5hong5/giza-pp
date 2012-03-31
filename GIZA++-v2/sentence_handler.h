@@ -77,7 +77,7 @@ class SentencePair {
 inline ostream&operator<<(ostream&of,const SentencePair&s)
 {
   of << "Sent No: " << s.sentenceNo << " , No. Occurrences: " << s.noOcc << '\n';
-  if( s.noOcc!=s.realCount )
+  if (abs(s.noOcc - s.realCount) < kEPS)
     of << " Used No. Occurrences: " << s.realCount << '\n';
   unsigned int i;
   for(i=0; i < s.eSent.size(); i++)

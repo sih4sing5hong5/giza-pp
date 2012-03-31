@@ -102,10 +102,10 @@ class Model1 : public ReportInfo {
   TModel<COUNT, PROB>& getTTable(void) { return tTable;};
   string& getEFFilename(void) { return efFilename;};
 
-  void addAL(const Vector<WordIndex>& viterbi_alignment,int pair_no,int l) {
-    if ( pair_no<=int(ReferenceAlignment.size()) ) {
+  void addAL(const Vector<WordIndex>& viterbi_alignment, size_t pair_no, int l) {
+    if (pair_no <= ReferenceAlignment.size()) {
       //cerr << "AL: " << viterbi_alignment << " " << pair_no << endl;
-      ErrorsInAlignment(ReferenceAlignment[pair_no-1],
+      ErrorsInAlignment(ReferenceAlignment[pair_no - 1],
                         viterbi_alignment,
                         l,
                         ALmissing,
@@ -114,7 +114,7 @@ class Model1 : public ReportInfo {
                         ALeventsToomuch,
                         pair_no);
 
-      if (pair_no <= NumberOfVALIalignments) {
+      if (static_cast<int>(pair_no) <= NumberOfVALIalignments) {
         ErrorsInAlignment(ReferenceAlignment[pair_no-1],
                           viterbi_alignment,
                           l,
@@ -124,7 +124,7 @@ class Model1 : public ReportInfo {
                           ALeventsToomuchVALI,
                           pair_no);
       }
-      if (pair_no > NumberOfVALIalignments) {
+      if (static_cast<int>(pair_no) > NumberOfVALIalignments) {
         ErrorsInAlignment(ReferenceAlignment[pair_no-1],
                           viterbi_alignment,
                           l,

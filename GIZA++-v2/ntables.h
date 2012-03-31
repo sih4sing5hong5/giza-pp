@@ -71,10 +71,10 @@ class nmodel
       Vector<COUNT> nprob_general(g_max_fertility+1,0.0);
       for(unsigned int i=1;i<min((unsigned int)h1,(unsigned int)evlist.size());i++)
       {
-        int l=evlist[i].word.length();
-        for(int k=0;k<h2;k++)
+        int l = static_cast<int>(evlist[i].word.length());
+        for(int k = 0; k < h2; k++)
         {
-          counts(l,k)+=getValue(i,k);
+          counts(l,k) += getValue(i,k);
           nprob_general[k]+=getValue(i,k);
         }
       }
@@ -102,11 +102,11 @@ class nmodel
       for(unsigned int k=0;k<nprob_general.size();k++)
         nprob_general[k]/=sum2;
 
-      for(int i=1;i<h1;i++)
-      {
-        int l=-1;
-        if((unsigned int)i<evlist.size())
-          l=evlist[i].word.length();
+      for (int i = 1; i < h1; i++) {
+        int l = -1;
+        if (static_cast<unsigned int>(i) < evlist.size())
+          l = static_cast<int>(evlist[i].word.length());
+
         COUNT sum=0.0;
         for(int k=0;k<h2;k++)
           sum+=getValue(i, k)+((l==-1)?0.0:(counts(l,k)*NTablesFactorGraphemes)) + NTablesFactorGeneral*nprob_general[k];

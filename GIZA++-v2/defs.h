@@ -37,6 +37,7 @@ const int kTransferSimple = 1;
 const int kMaxWeight = 457979;
 const int kTrainBufSize = 50000;
 const unsigned int kMaxAllowedSentenceLength = 101;
+const float kEPS = 0.000001;
 
 // TODO: we might want to consider enum type.
 const int kParLevIter    = 1;

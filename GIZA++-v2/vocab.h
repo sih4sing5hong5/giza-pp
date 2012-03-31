@@ -61,7 +61,7 @@ class VocabList {
   ~VocabList() { }
 
   void setName(const char* filename) { fname = filename; }
-  inline WordIndex size() const { return list.size(); }
+  std::size_t size() const { return list.size(); }
   inline WordIndex uniqTokens() const { return noUniqueTokens;};
   inline WordIndex uniqTokensInCorpus() const { return noUniqueTokensInCorpus; }
   inline double totalVocab() const { return total; }
@@ -71,7 +71,7 @@ class VocabList {
 
   void incFreq(WordIndex id , double f) {
     if(id < list.size()){
-      if (list[id].freq == 0)
+      if (list[id].freq < kEPS)
         noUniqueTokensInCorpus++;
       list[id].freq += f;
       total += f;

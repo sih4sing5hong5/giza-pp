@@ -41,17 +41,16 @@
 #include "transpair_model2.h"
 
 extern double factorial(int n);
-inline bool doubleEqual(const double a, const double b)
-{
-  if( a==b )
-    return 1.0;
-  bool bl=fabs(1.0-a/b)<1e-10;
-  if( bl )
-    return 1;
-  else
-  {
+
+inline bool doubleEqual(const double a, const double b) {
+  if (std::abs(a - b) < kEPS)
+    return true;
+  bool bl = fabs(1.0 - a / b ) < 1e-10;
+  if (bl) {
+    return true;
+  } else {
     cerr << "DIFFERENT: " << a << " " << b << " " << a/b << " " << 1.0-a/b << endl;
-    return 0;
+    return false;
   }
 }
 

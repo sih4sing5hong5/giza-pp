@@ -169,8 +169,14 @@ double factorial(int n)
   return f;
 }
 
-double ErrorsInAlignment(const map< pair<int,int>,char >&reference,const Vector<WordIndex>&test,int l,int&missing,int&toomuch,int&eventsMissing,int&eventsToomuch,int pair_no)
-{
+double ErrorsInAlignment(const map< pair<int,int>,char >&reference,
+                         const Vector<WordIndex>&test,
+                         int l,
+                         int& missing,
+                         int& toomuch,
+                         int& eventsMissing,
+                         int& eventsToomuch,
+                         size_t pair_no) {
   int err=0;
   for(unsigned int j=1;j<test.size();j++)
   {

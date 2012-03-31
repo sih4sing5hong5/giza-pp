@@ -41,37 +41,48 @@ class m4_key {
   m4_key(int _deps,int _l,int _m,int _F,int _E,int _prevj,int _v1,int _v2)
       : deps(_deps),l(_l),m(_m),F(_F),E(_E),prevj(_prevj),vacancies1(_v1),vacancies2(_v2) {}
 
-  friend ostream&print1(ostream&out,const m4_key&x,const WordClasses&wce,const WordClasses&wcf) {
-    if(x.deps&DEP_MODEL_l)out << "l: " << x.l<<' ';
-    if(x.deps&DEP_MODEL_m)out << "m: " << x.m<<' ';
-    if(x.deps&DEP_MODEL_F)out << "F: " << wcf.classString(x.F)<< ' ';
-    if(x.deps&DEP_MODEL_E)out << "E: " << wce.classString(x.E)<< ' ';
-    //      if(x.deps&DEP_MODEL_pj)out << "j-1: " << x.prevj<<' ';
-    if(x.vacancies1!=-1)out << "v1: " << x.vacancies1 << ' ';
-    if(x.vacancies2!=-1)out << "v2: " << x.vacancies2 << ' ';
+  friend ostream& print1(ostream& out, const m4_key& x, const WordClasses& wce, const WordClasses& wcf) {
+    if (x.deps&DEP_MODEL_l)
+      out << "l: " << x.l<<' ';
+    if (x.deps&DEP_MODEL_m)
+      out << "m: " << x.m<<' ';
+    if (x.deps&DEP_MODEL_F)
+      out << "F: " << wcf.classString(static_cast<unsigned int>(x.F)) << ' ';
+    if (x.deps&DEP_MODEL_E)
+      out << "E: " << wce.classString(static_cast<unsigned int>(x.E)) << ' ';
+    if (x.vacancies1!=-1)
+      out << "v1: " << x.vacancies1 << ' ';
+    if (x.vacancies2!=-1)
+      out << "v2: " << x.vacancies2 << ' ';
     return out << '\n';
   }
 
   friend ostream&print1_m5(ostream&out,const m4_key&x,const WordClasses&wce,const WordClasses&wcf) {
-    out << ((x.deps&DEP_MODEL_E)?wce.classString(x.E):string("0"))<< ' ';
-    out << ((x.deps&DEP_MODEL_F)?wcf.classString(x.F):string("0"))<< ' ';
+    out << ((x.deps&DEP_MODEL_E) ? wce.classString(static_cast<unsigned int>(x.E)) : string("0")) << ' ';
+    out << ((x.deps&DEP_MODEL_F) ? wcf.classString(static_cast<unsigned int>(x.F)) : string("0")) << ' ';
     out << x.vacancies1 << ' ';
     out << x.vacancies2 << ' ';
     return out;
   }
 
   friend ostream&printb1(ostream&out,const m4_key&x,const WordClasses&wce,const WordClasses&wcf) {
-    if(x.deps&DEP_MODELb_l)out << "l: " << x.l<<' ';
-    if(x.deps&DEP_MODELb_m)out << "m: " << x.m<<' ';
-    if(x.deps&DEP_MODELb_F)out << "F: " << wcf.classString(x.F) << ' ';
-    if(x.deps&DEP_MODELb_E)out << "E: " << wce.classString(x.E) << ' ';
-    if(x.vacancies1!=-1)out << "v1: " << x.vacancies1 << ' ';
-    if(x.vacancies2!=-1)out << "v2: " << x.vacancies2 << ' ';
+    if (x.deps&DEP_MODELb_l)
+      out << "l: " << x.l<<' ';
+    if (x.deps&DEP_MODELb_m)
+      out << "m: " << x.m<<' ';
+    if (x.deps&DEP_MODELb_F)
+      out << "F: " << wcf.classString(static_cast<unsigned int>(x.F)) << ' ';
+    if (x.deps&DEP_MODELb_E)
+      out << "E: " << wce.classString(static_cast<unsigned int>(x.E)) << ' ';
+    if (x.vacancies1!=-1)
+      out << "v1: " << x.vacancies1 << ' ';
+    if (x.vacancies2!=-1)
+      out << "v2: " << x.vacancies2 << ' ';
     return out << '\n';
   }
 
   friend ostream&printb1_m5(ostream&out,const m4_key&x,const WordClasses&wcf) {
-    out << "-1 " << ((x.deps&DEP_MODEL_F)?wcf.classString(x.F):string("0"))<< ' ';
+    out << "-1 " << ((x.deps&DEP_MODEL_F) ? wcf.classString(static_cast<unsigned int>(x.F)) : string("0"))<< ' ';
     out << x.vacancies1 << ' ';
     out << x.vacancies2 << ' ';
     return out;

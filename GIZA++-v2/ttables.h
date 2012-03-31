@@ -181,26 +181,27 @@ class TModel {
   void insert(WordIndex e, WordIndex f, COUNT cval=0.0, PROB pval = 0.0){
     *find(e,f)=CPPair(cval,pval);
   }
-  CPPair*getPtr(int e,int f){return find(e,f);}
-  TModel(const string&fn)
-  {
+  CPPair*getPtr(int e,int f){ return find(e,f); }
+
+  TModel(const string& fn) {
     int count=0,count2=0;
     ifstream infile2(fn.c_str());
     int e,f,olde=-1,oldf=-1;
     pair<unsigned int,CPPair> cp;
     vector< pair<unsigned int,CPPair> > cps;
-    while(infile2>>e>>f)
-    {
-      cp.first=f;
+    while (infile2 >> e >> f) {
+      cp.first = f;
       assert(e>=olde);
       assert(e>olde ||f>oldf);
-      if( e!=olde&&olde>=0 )
-      {
-        int oldsize=lexmat.size();
-        lexmat.resize(olde+1);
-        for(unsigned int i=oldsize;i<lexmat.size();++i)
-          lexmat[i]=0;
-        lexmat[olde]=new vector< pair<unsigned int,CPPair> > (cps);
+
+      if (e != olde && olde >= 0) {
+        size_t oldsize = lexmat.size();
+        lexmat.resize(olde + 1);
+        for (size_t i = oldsize; i < lexmat.size(); ++i) {
+          lexmat[i] = 0;
+        }
+
+        lexmat[olde] = new vector< pair<unsigned int,CPPair> > (cps);
         cps.clear();
         if( !((*lexmat[olde]).size()==(*lexmat[olde]).capacity()) )
           cerr << "eRROR: waste of memory: " << (*lexmat[olde]).size() << " " << (*lexmat[olde]).capacity() << endl;

@@ -36,15 +36,16 @@ inline unsigned int mConvert(const string&s,unsigned int &i)
 {
   if( strcasecmp(s.c_str(),"yes")==0 || strcasecmp(s.c_str(),"y")==0 || strcasecmp(s.c_str(),"true")==0 || strcasecmp(s.c_str(),"t")==0 ) { cerr << "TRUE\n";return i=1; }
   if( strcasecmp(s.c_str(),"no")==0 ||  strcasecmp(s.c_str(),"n")==0 ||  strcasecmp(s.c_str(),"false")==0 ||  strcasecmp(s.c_str(),"f")==0 ) { cerr << "FALSE\n";return i=0;}
-  return i=atoi(s.c_str());
+  return i = static_cast<unsigned int>(atoi(s.c_str()));
 }
+
 inline int mConvert(const string&s,int &i){
   if( strcasecmp(s.c_str(),"yes")==0 ||  strcasecmp(s.c_str(),"y")==0 ||  strcasecmp(s.c_str(),"true")==0 ||  strcasecmp(s.c_str(),"t")==0 ) { cerr << "TRUE\n";return i=1;}
   if( strcasecmp(s.c_str(),"no")==0 ||  strcasecmp(s.c_str(),"n")==0 ||  strcasecmp(s.c_str(),"false")==0 ||  strcasecmp(s.c_str(),"f")==0 ) { cerr << "FALSE\n";return i=0;}
   return i=atoi(s.c_str());
 }
-inline double mConvert(const string&s,double &d) { return d=atof(s.c_str()); }
-inline double mConvert(const string&s,float &d) { return d=atof(s.c_str()); }
+inline double mConvert(const string&s,double &d) { return d = atof(s.c_str()); }
+inline double mConvert(const string&s,float &d) { return d = static_cast<float>(atof(s.c_str())); }
 inline string mConvert(const string&s,string&n) { return n=s; }
 inline bool mConvert(const string&s,bool&n) {
   if( strcasecmp(s.c_str(),"yes")==0 ||  strcasecmp(s.c_str(),"y")==0 ||  strcasecmp(s.c_str(),"true")==0 ||  strcasecmp(s.c_str(),"t")==0 ) { cerr << "TRUE\n";return n=1;}
@@ -54,12 +55,12 @@ inline bool mConvert(const string&s,bool&n) {
 inline short mConvert(const string&s,short&n) {
   if( strcasecmp(s.c_str(),"yes")==0 ||  strcasecmp(s.c_str(),"y")==0 ||  strcasecmp(s.c_str(),"true")==0 ||  strcasecmp(s.c_str(),"t")==0 ) { cerr << "TRUE\n";return n=1;}
   if( strcasecmp(s.c_str(),"no")==0 ||  strcasecmp(s.c_str(),"n")==0 ||  strcasecmp(s.c_str(),"false")==0 ||  strcasecmp(s.c_str(),"f")==0 ) { cerr << "FALSE\n";return n=0;}
-  return n=atoi(s.c_str());
+  return n = static_cast<short>(atoi(s.c_str()));
 }
 inline unsigned short mConvert(const string&s,unsigned short&n) {
   if( strcasecmp(s.c_str(),"yes")==0 ||  strcasecmp(s.c_str(),"y")==0 ||  strcasecmp(s.c_str(),"true")==0 ||  strcasecmp(s.c_str(),"t")==0 ) { cerr << "TRUE\n";return n=1;}
   if( strcasecmp(s.c_str(),"no")==0 ||  strcasecmp(s.c_str(),"n")==0 ||  strcasecmp(s.c_str(),"false")==0 ||  strcasecmp(s.c_str(),"f")==0 ) { cerr << "FALSE\n";return n=0;}
-  return n=atoi(s.c_str());
+  return n = static_cast<unsigned short>(atoi(s.c_str()));
 }
 
 string simpleString(const string s);

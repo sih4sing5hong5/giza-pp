@@ -25,6 +25,9 @@
 #include <map>
 #include <string>
 #include <set>
+#include <istream>
+
+#include "util/vector.h"
 
 class WordClasses {
  private:
@@ -33,19 +36,19 @@ class WordClasses {
   Vector<string> Sint2c;
   Vector<int> w2c;
   unsigned int classes;
+
  public:
-  WordClasses()
-      : classes(1)
-  {
+  WordClasses() : classes(1) {
     Sint2c.push_back("0");
     Sc2int["0"]=0;
   }
-  template<class MAPPER> bool read(istream&in,const MAPPER&m)
-  {
+
+  ~WordClasses() {}
+
+  template<class MAPPER> bool read(std::istream& in, const MAPPER& m) {
     string sline;
     int maxword=0;
-    while(getline(in,sline))
-    {
+    while(getline(in,sline)) {
       string word,wclass;
       //istringstream iline(sline.c_str());
       istringstream iline(sline);
@@ -53,39 +56,37 @@ class WordClasses {
       maxword=max(m(word),maxword);
       assert(Sw2c.count(word)==0);
       Sw2c[word]=wclass;
-      if( !Sc2int.count(wclass) )
-      {
-        Sc2int[wclass]=classes++;
+      if (!Sc2int.count(wclass)) {
+        Sc2int[wclass] = classes++;
         Sint2c.push_back(wclass);
         assert(classes==Sint2c.size());
       }
     }
     w2c=Vector<int>(maxword+1,0);
-    for(map<string,string>::const_iterator i=Sw2c.begin();i!=Sw2c.end();++i)
+    for (map<string,string>::const_iterator i=Sw2c.begin();i!=Sw2c.end();++i)
       w2c[m(i->first)]=Sc2int[i->second];
     cout << "Read classes: #words: " << maxword << " " << " #classes: "<< classes <<endl;
     return 1;
   }
-  int getClass(int w)const
-  {
-    if(w>=0&&int(w)<int(w2c.size()) )
+
+  int getClass(int w) const {
+    if (w >= 0 && w < static_cast<int>(w2c.size()))
       return w2c[w];
     else
       return 0;
   }
-  int operator()(const string&x)const
-  {
-    if( Sc2int.count(x) )
+
+  int operator()(const string& x) const {
+    if (Sc2int.count(x)) {
       return Sc2int.find(x)->second;
-    else
-    {
+    } else {
       cerr << "WARNING:  class " << x << " not found.\n";
       return 0;
     }
   }
-  string classString(unsigned int cnr)const
-  {
-    if( cnr<Sint2c.size())
+
+  string classString(unsigned int cnr) const {
+    if (cnr<Sint2c.size())
       return Sint2c[cnr];
     else
       return string("0");

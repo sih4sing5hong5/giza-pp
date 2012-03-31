@@ -64,7 +64,7 @@ extern double ErrorsInAlignment(const std::map<std::pair<int,int>,char>& referen
                                 int& toomuch,
                                 int& eventsMissing,
                                 int& eventsToomuch,
-                                int pair_no);
+                                size_t pair_no);
 
 extern double factorial(int);
 
