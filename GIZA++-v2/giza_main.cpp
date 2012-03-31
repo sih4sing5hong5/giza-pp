@@ -598,7 +598,11 @@ int main(int argc, char* argv[]) {
   parseArguments(argc, argv);
 
   if (g_enable_logging) {
-    util::Logging::InitLogger(g_log_filename.c_str());
+    if (!util::Logging::InitLogger(g_log_filename.c_str())) {
+      std::cerr << "Cannot initialize logger with specified "
+                << g_log_filename << std::endl;
+      std::exit(1);
+    }
   }
 
   printGIZAPars(cout);
