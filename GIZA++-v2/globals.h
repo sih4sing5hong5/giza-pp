@@ -39,9 +39,9 @@ extern bool Peg, Transfer, Transfer2to3, useDict ;
 
 extern std::string g_log_filename;
 extern std::string g_prefix;
+extern std::string g_output_path;
 
-extern string OPath,
-  SourceVocabFilename, TargetVocabFilename, CorpusFilename, TestCorpusFilename,
+extern string SourceVocabFilename, TargetVocabFilename, CorpusFilename, TestCorpusFilename,
   t_Filename, a_Filename, p0_Filename, d_Filename, n_Filename, dictionary_Filename;
 
 extern double M5P0,P0 ;

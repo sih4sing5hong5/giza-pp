@@ -87,7 +87,7 @@ string CoocurrenceFile;
 string g_log_filename;
 string g_prefix;
 
-string OPath, Usage,
+string g_output_path, Usage,
   SourceVocabFilename, TargetVocabFilename, CorpusFilename,
   TestCorpusFilename, t_Filename, a_Filename, p0_Filename, d_Filename,
   n_Filename, dictionary_Filename;
@@ -579,7 +579,7 @@ int main(int argc, char* argv[]) {
 
   getGlobalParSet().insert(new Parameter<string>("o",ParameterChangedFlag,"output file prefix",g_prefix,kParLevOutput));
   getGlobalParSet().insert(new Parameter<string>("OUTPUT FILE PREFIX",ParameterChangedFlag,"output file prefix",g_prefix,-1));
-  getGlobalParSet().insert(new Parameter<string>("OUTPUT PATH",ParameterChangedFlag,"output path",OPath,kParLevOutput));
+  getGlobalParSet().insert(new Parameter<string>("OUTPUT PATH", ParameterChangedFlag, "output path", g_output_path, kParLevOutput));
 
   time_t st1, fn;
   st1 = time(NULL);                    // starting time
