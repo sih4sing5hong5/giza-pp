@@ -84,12 +84,12 @@ Vector<map< pair<int,int>,char > > ReferenceAlignment;
 
 bool useDict = false;
 string CoocurrenceFile;
-string Prefix, LogFilename, OPath, Usage,
+string g_log_filename;
+string Prefix, OPath, Usage,
   SourceVocabFilename, TargetVocabFilename, CorpusFilename,
   TestCorpusFilename, t_Filename, a_Filename, p0_Filename, d_Filename,
   n_Filename, dictionary_Filename;
 
-ofstream logmsg ;
 const string str2Num(int n){
   string number = "";
   do{
@@ -345,7 +345,7 @@ void ReadAlignment(const string&x,Vector<map< pair<int,int>,char > >&a) {
 void initGlobals() {
   NODUMPS = false ;
   Prefix = port::GetFileSpec();
-  LogFilename= Prefix + ".log";
+  g_log_filename = Prefix + ".log";
   MAX_SENTENCE_LENGTH = kMaxAllowedSentenceLength ;
 }
 
@@ -572,8 +572,8 @@ int main(int argc, char* argv[]) {
   getGlobalParSet().insert(new Parameter<string>("TEST CORPUS FILE",ParameterChangedFlag,"test corpus file name",TestCorpusFilename,-1));
   getGlobalParSet().insert(new Parameter<string>("d",ParameterChangedFlag,"dictionary file name",dictionary_Filename,kParLevInput));
   getGlobalParSet().insert(new Parameter<string>("DICTIONARY",ParameterChangedFlag,"dictionary file name",dictionary_Filename,-1));
-  getGlobalParSet().insert(new Parameter<string>("l",ParameterChangedFlag,"log file name",LogFilename,kParLevOutput));
-  getGlobalParSet().insert(new Parameter<string>("LOG FILE",ParameterChangedFlag,"log file name",LogFilename,-1));
+  getGlobalParSet().insert(new Parameter<string>("l",ParameterChangedFlag,"log file name",g_log_filename,kParLevOutput));
+  getGlobalParSet().insert(new Parameter<string>("LOG FILE",ParameterChangedFlag,"log file name",g_log_filename,-1));
 
   getGlobalParSet().insert(new Parameter<string>("o",ParameterChangedFlag,"output file prefix",Prefix,kParLevOutput));
   getGlobalParSet().insert(new Parameter<string>("OUTPUT FILE PREFIX",ParameterChangedFlag,"output file prefix",Prefix,-1));
@@ -593,9 +593,8 @@ int main(int argc, char* argv[]) {
   initGlobals() ;
   parseArguments(argc, argv);
 
-  // TODO: Use logging factory.
   if (g_enable_logging) {
-    logmsg.open(LogFilename.c_str(), ios::out);
+    util::Logging::InitLogger(g_log_filename.c_str());
   }
 
   printGIZAPars(cout);
@@ -610,5 +609,6 @@ int main(int argc, char* argv[]) {
   cout << '\n' << "Entire Training took: " << difftime(fn, st1) << " seconds\n";
   cout << "Program Finished at: "<< ctime(&fn) << '\n';
   cout << "==========================================================\n";
+
   return 0;
 }

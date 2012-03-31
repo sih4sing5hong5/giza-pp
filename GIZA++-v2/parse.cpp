@@ -26,6 +26,7 @@
 #include <string>
 #include <fstream>
 #include "defs.h"
+#include "util/assert.h"
 #include "util/util.h"
 #include "globals.h"
 #include "d4tables.h"
@@ -145,6 +146,7 @@ void parseArguments(int argc, char *argv[])
   if( OPath.length() )
     OPath+="/";
   Prefix = (OPath + Prefix);
-  LogFilename = (OPath + LogFilename);
+  g_log_filename = (OPath + g_log_filename);
+
   printGIZAPars(cout);
 }

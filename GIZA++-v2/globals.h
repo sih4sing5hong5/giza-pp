@@ -36,10 +36,12 @@ extern bool g_is_verbose;
 extern bool g_enable_logging;
 
 extern bool Peg, Transfer, Transfer2to3, useDict ;
-extern string Prefix, LogFilename, OPath,
+
+extern string g_log_filename;
+extern string Prefix, OPath,
   SourceVocabFilename, TargetVocabFilename, CorpusFilename, TestCorpusFilename,
   t_Filename, a_Filename, p0_Filename, d_Filename, n_Filename, dictionary_Filename;
-extern ofstream logmsg ;
+
 extern double M5P0,P0 ;
 extern bool NODUMPS, FEWDUMPS  ;
 extern string Usage ;

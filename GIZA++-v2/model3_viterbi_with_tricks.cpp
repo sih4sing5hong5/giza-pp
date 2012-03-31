@@ -464,14 +464,14 @@ void Model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
     l = es.size() - 1 ;
     m = fs.size() - 1 ;
     if (g_enable_logging) {
-      logmsg << "Processing sentence pair:\n\t";
-      printSentencePair(es, fs, logmsg);
+      util::Logging::GetLogger() << "Processing sentence pair:\n\t";
+      printSentencePair(es, fs, util::Logging::GetLogger());
       for (i = 0 ; i <= l ; i++)
-        logmsg << Elist.getVocabList()[es[i]].word << " ";
-      logmsg << "\n\t";
+        util::Logging::GetLogger() << Elist.getVocabList()[es[i]].word << " ";
+      util::Logging::GetLogger() << "\n\t";
       for (j = 1 ; j <= m ; j++)
-        logmsg << Flist.getVocabList()[fs[j]].word << " ";
-      logmsg << "\n";
+        util::Logging::GetLogger() << Flist.getVocabList()[fs[j]].word << " ";
+      util::Logging::GetLogger() << "\n";
     }
 
     LogProb align_total_count=0;
@@ -483,7 +483,7 @@ void Model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
     MoveSwapMatrix<MODEL_TYPE> *best = (setOfGoodCenters[0].first  = new MoveSwapMatrix<MODEL_TYPE>(ef, viterbi2alignment));
     MoveSwapMatrix<MODEL_TYPE> _viterbi(*best), *viterbi=&_viterbi; // please, don't delete this line (FJO)
     if (g_enable_logging)
-      logmsg << "VITERBI: " << Alignment(_viterbi);
+      util::Logging::GetLogger() << "VITERBI: " << Alignment(_viterbi);
     if( ef.isSubOptimal() )
       setOfGoodCenters[0].second = hillClimb_std(*best);
     else
@@ -508,8 +508,8 @@ void Model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
         cerr << Alignment(*setOfGoodCenters[bestAlignment].first) ;
         printSentencePair(es, fs, cerr);
         if(g_enable_logging) {
-          logmsg << "WARNING: Hill Climbing yielded a zero score viterbi alignment for the following pair:\n";
-          printSentencePair(es, fs, logmsg);
+          util::Logging::GetLogger() << "WARNING: Hill Climbing yielded a zero score viterbi alignment for the following pair:\n";
+          printSentencePair(es, fs, util::Logging::GetLogger());
         }
       }
       else if(PrintZeroScoreWarning==100)
@@ -656,11 +656,11 @@ void Model3::viterbi_loop_with_tricks(Perplexity& perp, Perplexity& viterbiPerp,
     }
     addAL((setOfGoodCenters[bestAlignment].first)->getAlignment(),sent.sentenceNo,l);
     if (g_enable_logging) {
-      logmsg << "processing this sentence pair (" << l + 1
-             << "x" << m << ") : " << (l+1) * m
-             << " prob : " << align_total_count << " "
-             << (setOfGoodCenters[bestAlignment].second)
-             << Alignment(*setOfGoodCenters[bestAlignment].first) << " \n";
+      util::Logging::GetLogger() << "processing this sentence pair (" << l + 1
+                                 << "x" << m << ") : " << (l+1) * m
+                                 << " prob : " << align_total_count << " "
+                                 << (setOfGoodCenters[bestAlignment].second)
+                                 << Alignment(*setOfGoodCenters[bestAlignment].first) << " \n";
     }
     for(unsigned int i=0;i<setOfGoodCenters.size();i++)
       delete setOfGoodCenters[i].first;

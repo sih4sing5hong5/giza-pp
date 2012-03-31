@@ -229,7 +229,7 @@ void Model3::hillClimb(Vector<WordIndex>& es,
   l = es.size() - 1;
   m = fs.size() - 1;
   if (g_enable_logging) {
-    logmsg << "\nStarting hill climbing with original score: " << best_score <<"\n";
+    util::Logging::GetLogger() << "\nStarting hill climbing with original score: " << best_score <<"\n";
   }
   best_change = 1 ; // overall scaling factor (i.e. from the begining of climb
   do {
@@ -289,20 +289,20 @@ void Model3::hillClimb(Vector<WordIndex>& es,
       }
     } // end of if(!local_minima)
     if (g_enable_logging) {
-      logmsg << "." ;
+      util::Logging::GetLogger() << "." ;
     }
     if (level> 15)
       cerr << "." ;
   } while (local_minima == false);
   if (g_enable_logging) {
-    logmsg << "\n" << "Hill Climb Level: " << level
+    util::Logging::GetLogger() << "\n" << "Hill Climb Level: " << level
            << " score: scaling old: " << (best_score * best_change);
   }
   if (level > 15)
     cerr << "\nHill Climb Level: " << level << " score: scaling old: " <<(best_score*best_change) ;
   best_score = prob_of_target_and_alignment_given_source(A, Fert, tTable, fs, es);
   if (g_enable_logging) {
-    logmsg << " using new calc: " << best_score << '\n';
+    util::Logging::GetLogger() << " using new calc: " << best_score << '\n';
   }
   if (level>15)
     cerr << " using new calc: " << best_score << '\n';
@@ -385,7 +385,7 @@ void Model3::findBestAlignment(Vector<WordIndex>& es,
   }
   best_score = prob_of_target_and_alignment_given_source(A, Fert, tTable, fs, es);
   if (g_enable_logging) {
-    logmsg << "finding best alignment : score : " << ss
+    util::Logging::GetLogger() << "finding best alignment : score : " << ss
            << "p(f, a/e) = "<< best_score << "\n";
   }
 }
@@ -451,8 +451,8 @@ void Model3::findAlignmentsNeighborhood(Vector<WordIndex>& es,
     cerr << "WARNING: Hill Climbing yielded a zero score viterbi alignment for the following pair:\n";
     printSentencePair(es, fs, cerr);
     if(g_enable_logging) {
-      logmsg << "WARNING: Hill Climbing yielded a zero score viterbi alignment for the following pair:\n";
-      printSentencePair(es, fs, logmsg);
+      util::Logging::GetLogger() << "WARNING: Hill Climbing yielded a zero score viterbi alignment for the following pair:\n";
+      printSentencePair(es, fs, util::Logging::GetLogger());
     }
   }
   else { // best_score > 0
@@ -554,14 +554,14 @@ void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHan
     l = es.size() - 1 ;
     m = fs.size() - 1 ;
     if (g_enable_logging) {
-      logmsg << "Processing sentence pair:\n\t";
-      printSentencePair(es, fs, logmsg);
+      util::Logging::GetLogger() << "Processing sentence pair:\n\t";
+      printSentencePair(es, fs, util::Logging::GetLogger());
       for (i = 0 ; i <= l ; i++)
-        logmsg << Elist.getVocabList()[es[i]].word << " ";
-      logmsg << "\n\t";
+        util::Logging::GetLogger() << Elist.getVocabList()[es[i]].word << " ";
+      util::Logging::GetLogger() << "\n\t";
       for (j = 1 ; j <= m ; j++)
-        logmsg << Flist.getVocabList()[fs[j]].word << " ";
-      logmsg << "\n";
+        util::Logging::GetLogger() << Flist.getVocabList()[fs[j]].word << " ";
+      util::Logging::GetLogger() << "\n";
     }
 
     LogProb align_total_count = 0.0;
@@ -589,8 +589,8 @@ void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHan
       cerr << "\nCollecting counts over found alignments, total prob: "
            << align_total_count <<  "\n";
     if (g_enable_logging)
-      logmsg << "\nCollecting counts over found alignments, total prob: "
-             << align_total_count <<  "\n";
+      util::Logging::GetLogger() << "\nCollecting counts over found alignments, total prob: "
+                                 << align_total_count <<  "\n";
     int acount = 0 ;
     if (align_total_count == 0 ){
       cerr << " WARNINIG: For the following sentence pair : \n";
@@ -598,8 +598,8 @@ void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHan
       cerr << "The collection of alignments found have 0 probability!!\n";
       cerr << "No counts will be collected of it \n";
       if (g_enable_logging) {
-        logmsg << "The collection of alignments found have 0 probability!!\n";
-        logmsg << "No counts will be collected of it \n";
+        util::Logging::GetLogger() << "The collection of alignments found have 0 probability!!\n";
+        util::Logging::GetLogger() << "No counts will be collected of it \n";
       }
     }
     else {
@@ -626,10 +626,10 @@ void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHan
             neighborhood.getHash().size() << "\n";
       }
       if (g_enable_logging) {
-        logmsg << "Collected counts over " << acount << " (of "
-               << pow(double(m), double(l+1)) << ") differnet alignments\n";
-        logmsg << "Bucket count of alignments hash: "
-               << neighborhood.getHash().bucket_count() << "\n";
+        util::Logging::GetLogger() << "Collected counts over " << acount << " (of "
+                                   << pow(double(m), double(l+1)) << ") differnet alignments\n";
+        util::Logging::GetLogger() << "Bucket count of alignments hash: "
+                                   << neighborhood.getHash().bucket_count() << "\n";
       }
     } // end of else
     // write best alignment (viterbi) for this sentence pair to alignment file
@@ -646,9 +646,9 @@ void Model3::viterbi_loop(Perplexity& perp, Perplexity& viterbiPerp, SentenceHan
     } // end of if (collect_counts)
     double period = difftime(time(NULL), sent_s);
     if (g_enable_logging) {
-      logmsg << "processing this sentence pair (" << l + 1
-             << "x" << m << ") : " << (l+1) * m
-             << " took : " << period << " seconds\n";
+      util::Logging::GetLogger() << "processing this sentence pair (" << l + 1
+                                 << "x" << m << ") : " << (l+1) * m
+                                 << " took : " << period << " seconds\n";
     }
     if (g_is_verbose) {
       cerr << "processing this sentence pair took : " << period

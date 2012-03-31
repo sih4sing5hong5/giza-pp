@@ -1,6 +1,8 @@
 #ifndef GIZAPP_UTIL_ASSERT_H_
 #define GIZAPP_UTIL_ASSERT_H_
 
+#include <ostream>
+
 namespace util {
 
 class Logging {
@@ -8,6 +10,13 @@ class Logging {
   static void myerror(int line, const char *file, const char *expression);
 
   static void imyerror(int line, const char *file, const char *expression);
+
+  static bool InitLogger(const char* filename,
+                         std::ios_base::openmode mode = std::ios_base::out);
+
+  static void SetLogger(std::ostream* os);
+
+  static std::ostream& GetLogger();
 
  private:
   Logging() {}

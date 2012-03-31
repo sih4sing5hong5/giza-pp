@@ -81,14 +81,14 @@ void Model3::em(int noIterations, SentenceHandler& sHandler1) {
 
   st = time(NULL);
   if (g_enable_logging)
-    logmsg << "\n" << "Starting Model3:  Training";
+    util::Logging::GetLogger() << "\n" << "Starting Model3:  Training";
   cout << "\n" << "Starting Model3:  Training";
   //  SentenceHandler sHandler1(efFilename.c_str());
   sHandler1.rewind();
   for(int it=1; it <= noIterations; it++){
     it_st = time(NULL);
     if (g_enable_logging)
-      logmsg << "\n" << "Model3: Iteration " << it;
+      util::Logging::GetLogger() << "\n" << "Model3: Iteration " << it;
     cout << "\n" << "Model3: Iteration " << it;
 
     // set up the names of the files where the tables will be printed
@@ -280,8 +280,8 @@ int Model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
   cout << "\n==========================================================\n";
   cout << "Starting "<<trainingString<<":  Viterbi Training";
   if (g_enable_logging) {
-    logmsg << "\n==========================================================\n";
-    logmsg << "Starting " << trainingString << ":  Viterbi Training";
+    util::Logging::GetLogger() << "\n==========================================================\n";
+    util::Logging::GetLogger() << "Starting " << trainingString << ":  Viterbi Training";
   }
   cout << "\n "<<trainingString<<" Training Started at: "<< ctime(&st) << '\n';
   for(unsigned int it=1; it < trainingString.length(); it++){
@@ -297,7 +297,8 @@ int Model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
     it_st = time(NULL);
     cout <<"\n---------------------\n"<<modelName<<": Iteration " << it<<'\n';
     if (g_enable_logging) {
-      logmsg << "\n---------------------\n" << modelName << ": Iteration " << it << '\n';
+      util::Logging::GetLogger() << "\n---------------------\n" << modelName
+                                 << ": Iteration " << it << '\n';
     }
     dump_files = (final || ((Model3_Dump_Freq != 0) && ((it % Model3_Dump_Freq) == 0))) && !NODUMPS;
     string d4file2;
