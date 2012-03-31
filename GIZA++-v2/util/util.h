@@ -36,7 +36,7 @@ class WordEntry;
 template <class COUNT, class PROB>
 class TModel;
 
-extern void parseConfigFile (char * fname );
+extern void parseConfigFile (char * fname);
 extern void parseArguments(int argc, char *argv[]);
 
 extern void generatePerplexityReport(const Perplexity& trainperp,

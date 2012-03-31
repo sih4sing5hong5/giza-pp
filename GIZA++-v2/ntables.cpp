@@ -38,13 +38,13 @@ void nmodel<VALTYPE>::printNTable(int noEW, const char* filename,
   ofstream of(filename);
   VALTYPE p;
   WordIndex k, i;
-  for(i=1; int(i) < noEW; i++){
-    if (evlist[i].freq > 0){
+  for (i=1; int(i) < noEW; i++) {
+    if (evlist[i].freq > 0) {
       if (actual)
         of << evlist[i].word << ' ';
       else
         of << i << ' ';
-      for( k=0; k < g_max_fertility; k++){
+      for (k=0; k < g_max_fertility; k++) {
         p = getValue(i, k);
         if (p <= g_smooth_prob)
           p = 0;
@@ -56,7 +56,7 @@ void nmodel<VALTYPE>::printNTable(int noEW, const char* filename,
 }
 
 template <class VALTYPE>
-void nmodel<VALTYPE>::readNTable(const char *filename){
+void nmodel<VALTYPE>::readNTable(const char *filename) {
   /* This function reads the n table from a file.
      Each line is of the format:  source_word_id p0 p1 p2 ... pn
      This is the inverse operation of the printTable function.
@@ -64,7 +64,7 @@ void nmodel<VALTYPE>::readNTable(const char *filename){
   */
   ifstream inf(filename);
   cerr << "Reading fertility table from " << filename << "\n";
-  if(!inf){
+  if (!inf) {
     cerr << "\nERROR: Cannot open " << filename <<"\n";
     return;
   }
@@ -72,15 +72,15 @@ void nmodel<VALTYPE>::readNTable(const char *filename){
   VALTYPE prob;
   WordIndex tok, i;
   int nFert=0;
-  while(!inf.eof()){
+  while (!inf.eof()) {
     nFert++;
     inf >> ws >> tok;
-    if (tok > kMaxVocabSize){
+    if (tok > kMaxVocabSize) {
       cerr << "NTables:readNTable(): unrecognized token id: " << tok
            <<'\n';
       exit(-1);
     }
-    for(i = 0; i < g_max_fertility; i++){
+    for (i = 0; i < g_max_fertility; i++) {
       inf >> ws >> prob;
       getRef(tok, i)=prob;
     }

@@ -46,22 +46,22 @@ double get_sum_of_partitions(int n, int source_pos,
 
   done = false;
   init = true;
-  for (i = 0; i < kMaxFertility; i++){
+  for (i = 0; i < kMaxFertility; i++) {
     part[i] = mult[i] = 0;
   }
 
   //printf("Entering get sum of partitions\n");
-  while(! done){
+  while (! done) {
     total_partitions_considered++;
-    if (init){
+    if (init) {
       part[1] = n;
       mult[1] = 1;
       num_parts = 1;
       init = false;
     }
     else {
-      if ((part[num_parts] > 1) || (num_parts > 1)){
-        if (part[num_parts] == 1){
+      if ((part[num_parts] > 1) || (num_parts > 1)) {
+        if (part[num_parts] == 1) {
           s = part[num_parts-1] + mult[num_parts];
           k = num_parts - 1;
         } else {
@@ -79,7 +79,7 @@ double get_sum_of_partitions(int n, int source_pos,
 
         mult[k1] = u;
         part[k1] = w;
-        if (v == 0){
+        if (v == 0) {
           num_parts = k1;
         } else {
           mult[k1+1] = 1;
@@ -90,8 +90,8 @@ double get_sum_of_partitions(int n, int source_pos,
         done = true;
       }
     }
-    /* of else of if(init) */
-    if (!done){
+    /* of else of if (init) */
+    if (!done) {
       prod = 1.0;
       if (n != 0) {
         for (i = 1; i <= num_parts; i++) {
@@ -124,14 +124,14 @@ void Model3::estimate_t_a_d(SentenceHandler& sHandler1, Perplexity& perp, Perple
   perp.clear();
   trainVPerp.clear();
   ofstream of2;
-  if (dump_files){
+  if (dump_files) {
     alignfile = g_prefix +".A2to3";
     of2.open(alignfile.c_str());
   }
   if (simple) cerr <<"Using simple estimation for fertilties\n";
   sHandler1.rewind();
   SentencePair sent;
-  while(sHandler1.getNextSentence(sent)){
+  while (sHandler1.getNextSentence(sent)) {
     Vector<WordIndex>& es = sent.eSent;
     Vector<WordIndex>& fs = sent.fSent;
     const float count  = sent.getCount();
@@ -141,19 +141,19 @@ void Model3::estimate_t_a_d(SentenceHandler& sHandler1, Perplexity& perp, Perple
     cross_entropy = log(1.0);
     double viterbi_score = 1;
     PROB word_best_score;  // score for the best mapping of fj
-    for(j = 1; j <= m; j++){
+    for (j = 1; j <= m; j++) {
       word_best_score = 0;  // score for the best mapping of fj
       Vector<LpPair<COUNT,PROB> *> sPtrCache(es.size(),0);
       total = 0;
       WordIndex best_i = 0;
-      for(i = 0; i <= l; i++){
+      for (i = 0; i <= l; i++) {
         sPtrCache[i] = tTable.getPtr(es[i], fs[j]);
         if (sPtrCache[i] != 0 &&  (*(sPtrCache[i])).prob > g_smooth_prob) // if valid pointer
           temp_mult[i][j]= (*(sPtrCache[i])).prob * aTable.getValue(i, j, l, m);
         else
           temp_mult[i][j] = g_smooth_prob *  aTable.getValue(i, j, l, m);
         total += temp_mult[i][j];
-        if (temp_mult[i][j] > word_best_score){
+        if (temp_mult[i][j] > word_best_score) {
           word_best_score = temp_mult[i][j];
           best_i = i;
         }
@@ -161,12 +161,12 @@ void Model3::estimate_t_a_d(SentenceHandler& sHandler1, Perplexity& perp, Perple
       viterbi_alignment[j] = best_i;
       viterbi_score *= word_best_score; /// total;
       cross_entropy += log(total);
-      if (total == 0){
+      if (total == 0) {
         cerr << "WARNING: total is zero (TRAIN)\n";
         viterbi_score = 0;
       }
-      if (total > 0){
-        for(i = 0; i <= l; i++){
+      if (total > 0) {
+        for (i = 0; i <= l; i++) {
           temp_mult[i][j] /= total;
           if (temp_mult[i][j] == 1) // smooth to prevent underflow
             temp_mult[i][j] = 0.99;
@@ -174,7 +174,7 @@ void Model3::estimate_t_a_d(SentenceHandler& sHandler1, Perplexity& perp, Perple
             temp_mult[i][j] = g_smooth_prob;
           val = temp_mult[i][j] * PROB(count);
           if (val > g_smooth_prob) {
-            if( updateT )
+            if (updateT)
             {
               if (sPtrCache[i] != 0)
                 (*(sPtrCache[i])).count += val;
@@ -191,13 +191,13 @@ void Model3::estimate_t_a_d(SentenceHandler& sHandler1, Perplexity& perp, Perple
     if (dump_files)
       printAlignToFile(es, fs, Elist.getVocabList(), Flist.getVocabList(), of2, viterbi_alignment, sent.sentenceNo, viterbi_score);
     addAL(viterbi_alignment,sent.sentenceNo,l);
-    if (!simple){
+    if (!simple) {
       max_fertility_here = min(WordIndex(m+1), g_max_fertility);
       for (i = 1; i <= l; i++) {
-        for ( k = 1; k < max_fertility_here; k++){
+        for (k = 1; k < max_fertility_here; k++) {
           beta = 0;
           alpha[k][i] = 0;
-          for (j = 1; j <= m; j++){
+          for (j = 1; j <= m; j++) {
             temp =  temp_mult[i][j];
             if (temp > 0.95) temp = 0.95; // smooth to prevent under/over flow
             else if (temp < 0.05) temp = 0.05;
@@ -206,11 +206,11 @@ void Model3::estimate_t_a_d(SentenceHandler& sHandler1, Perplexity& perp, Perple
           alpha[k][i] = beta * pow((double) -1, (double) (k+1)) / (double) k;
         }
       }
-      for (i = 1; i <= l; i++){
+      for (i = 1; i <= l; i++) {
         r = 1;
         for (j = 1; j <= m; j++)
           r *= (1 - temp_mult[i][j]);
-        for (k = 0; k <  max_fertility_here; k++){
+        for (k = 0; k <  max_fertility_here; k++) {
           sum = get_sum_of_partitions(k, i, alpha);
           temp = r * sum * count;
           nCountTable.getRef(es[i], k)+=temp;
@@ -222,23 +222,23 @@ void Model3::estimate_t_a_d(SentenceHandler& sHandler1, Perplexity& perp, Perple
   } // end of while
   sHandler1.rewind();
   cerr << "Normalizing t, a, d, n count tables now ... ";
-  if( dump_files && OutputInAachenFormat==1 ) {
+  if (dump_files && OutputInAachenFormat==1) {
     tfile = g_prefix + ".t2to3";
     tTable.printCountTable(tfile.c_str(),Elist.getVocabList(),Flist.getVocabList(),1);
   }
-  if( updateT )
+  if (updateT)
     tTable.normalizeTable(Elist, Flist);
   aCountTable.normalize(aTable);
   dCountTable.normalize(dTable);
   if (!simple)
     nCountTable.normalize(nTable,&Elist.getVocabList());
   else {
-    for (i = 0; i< Elist.uniqTokens(); i++){
-      if (0 < g_max_fertility){
+    for (i = 0; i< Elist.uniqTokens(); i++) {
+      if (0 < g_max_fertility) {
         nTable.getRef(i,0)=PROB(0.2);
-        if (1 < g_max_fertility){
+        if (1 < g_max_fertility) {
           nTable.getRef(i,1)=PROB(0.65);
-          if (2 < g_max_fertility){
+          if (2 < g_max_fertility) {
             nTable.getRef(i,2)=PROB(0.1);
             if (3 < g_max_fertility)
               nTable.getRef(i,3)=PROB(0.04);
@@ -252,14 +252,14 @@ void Model3::estimate_t_a_d(SentenceHandler& sHandler1, Perplexity& perp, Perple
   } // end of else (!simple)
   p0 = 0.95;
   p1 = 0.05;
-  if (dump_files){
+  if (dump_files) {
     tfile = g_prefix + ".t2to3";
     afile = g_prefix + ".a2to3";
     nfile = g_prefix + ".n2to3";
     dfile = g_prefix + ".d2to3";
     p0file = g_prefix + ".p0_2to3";
 
-    if( OutputInAachenFormat==0 )
+    if (OutputInAachenFormat==0)
       tTable.printProbTable(tfile.c_str(),Elist.getVocabList(),Flist.getVocabList(),OutputInAachenFormat);
     aTable.printTable(afile.c_str());
     dTable.printTable(dfile.c_str());
@@ -269,7 +269,7 @@ void Model3::estimate_t_a_d(SentenceHandler& sHandler1, Perplexity& perp, Perple
     of.close();
   }
   errorReportAL(cerr,"IBM-2");
-  if(simple) {
+  if (simple) {
     perp.record("T2To3");
     trainVPerp.record("T2To3");
   } else {
@@ -330,8 +330,8 @@ void Model3::transfer(SentenceHandler& sHandler1,bool dump_files, Perplexity& pe
        // compute p0, p1 counts
        Vector<LogProb> nm(Elist.uniqTokens(),0.0);
 
-       for(i=0; i < Elist.uniqTokens(); i++){
-       for(k=1; k < g_max_fertility; k++){
+       for (i=0; i < Elist.uniqTokens(); i++) {
+       for (k=1; k < g_max_fertility; k++) {
        nm[i] += nTable.getValue(i, k) * (LogProb) k;
        }
        }
@@ -340,7 +340,7 @@ void Model3::transfer(SentenceHandler& sHandler1,bool dump_files, Perplexity& pe
        //  SentenceHandler sHandler1(efFilename.c_str());
        //  sentPair sent;
 
-       while(sHandler1.getNextSentence(sent)){
+       while (sHandler1.getNextSentence(sent)) {
        Vector<WordIndex>& es = sent.eSent;
        Vector<WordIndex>& fs = sent.fSent;
        const float count  = sent.noOccurrences;
@@ -348,7 +348,7 @@ void Model3::transfer(SentenceHandler& sHandler1,bool dump_files, Perplexity& pe
        l = es.size() - 1;
        m = fs.size() - 1;
        mprime = 0;
-       for (i = 1; i <= l; i++){
+       for (i = 1; i <= l; i++) {
        mprime +=  nm[es[i]];
        }
        mprime = LogProb((int((double) mprime + 0.5)));  // round mprime to nearest integer
@@ -371,15 +371,15 @@ void Model3::transfer(SentenceHandler& sHandler1,bool dump_files, Perplexity& pe
        // normalize p1, p0
 
        cerr << "p0_count = "<<p0_count << " , p1_count = " << p1_count << endl;
-       p1 = p1_count / (p1_count + p0_count );
+       p1 = p1_count / (p1_count + p0_count);
        p0 = 1 - p1;
        cerr << "p0 = "<<p0 << " , p1 = " << p1 << endl;
        // Smooth p0 probability to avoid getting zero probability.
-       if (0 == p0){
+       if (0 == p0) {
        p0 = (LogProb) SMOOTH_THRESHOLD;
        p1 = p1 - (LogProb) SMOOTH_THRESHOLD;
        }
-       if (0 == p1){
+       if (0 == p1) {
        p1 = (LogProb) SMOOTH_THRESHOLD;
        p0 = p0 - (LogProb) SMOOTH_THRESHOLD;
        }

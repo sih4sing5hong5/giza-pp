@@ -52,7 +52,7 @@ class Model3 : public Model2 {
   Model3(Model2& m2);
   ~Model3();
 
-  void setHMM(HMM*_h) {h = _h;}
+  void setHMM(HMM*_h) {h = _h; }
 
   // methods
   void transfer(SentenceHandler&, bool,
@@ -117,12 +117,12 @@ class Model3 : public Model2 {
                          Alignment&output,
                          int pair_no,
                          int i_peg = -1,
-                         int j_peg = -1 ) const;
+                         int j_peg = -1) const;
 
   LogProb _viterbi_model2(const transpair_model2&ef,
                           Alignment&output,
                           int i_peg = -1,
-                          int j_peg = -1 ) const;
+                          int j_peg = -1) const;
 
   LogProb viterbi_model2(const TransPairModelHMM&ef,
                          Alignment& output,

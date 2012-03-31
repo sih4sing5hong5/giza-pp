@@ -1,7 +1,7 @@
 /*
   Copyright (C) 2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-  This file is part of GIZA++ ( extension of GIZA ).
+  This file is part of GIZA++ ( extension of GIZA).
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -35,27 +35,27 @@ template<class T> class Array4
       : A(m,m,0),M(m),init(_init) {}
   ~Array4()
   {
-    for(int l=0;l<M;++l)
-      for(int m=0;m<M;++m)
+    for (int l=0;l<M;++l)
+      for (int m=0;m<M;++m)
         delete A(l,m);
   }
-  const T&operator()(int i, int j, int l, int m)const
+  const T&operator()(int i, int j, int l, int m) const
   {
-    if( A(l,m)==0 )
+    if (A(l,m)==0)
       return init;
     else
       return (*A(l,m))(i,j);
   }
-  const T&get(int i, int j, int l, int m)const
+  const T&get(int i, int j, int l, int m) const
   {
-    if( A(l,m)==0 )
+    if (A(l,m)==0)
       return init;
     else
       return (*A(l,m))(i,j);
   }
   T&operator()(int i, int j, int l, int m)
   {
-    if( A(l,m)==0 )
+    if (A(l,m)==0)
     {
       A(l,m)=new Array2<T>(max(l+1,m+1),max(l+1,m+1),init);
     }
@@ -63,13 +63,13 @@ template<class T> class Array4
   }
   void clear()
   {
-    for(int l=0;l<M;++l)
-      for(int m=0;m<M;++m)
-        if( A(l,m) )
+    for (int l=0;l<M;++l)
+      for (int m=0;m<M;++m)
+        if (A(l,m))
         {
           Array2<T>&a=*A(l,m);
-          for(int i=0;i<=l;++i)
-            for(int j=0;j<=m;++j)
+          for (int i=0;i<=l;++i)
+            for (int j=0;j<=m;++j)
               a(i,j)=0.0;
         }
   }

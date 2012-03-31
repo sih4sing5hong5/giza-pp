@@ -42,7 +42,7 @@ void AModel<VALTYPE>::printTable(const char *filename) const {
         continue;
       unsigned int L = ((CompactADTable&&is_distortion)?MaxSentLength:(l+1))-1;
       unsigned int M = ((CompactADTable&&!is_distortion)?MaxSentLength:(m+1))-1;
-      if(is_distortion == 0) {
+      if (is_distortion == 0) {
         for (WordIndex j = 1;j <= M; j++) {
           double sum=0.0;
           for (WordIndex i = 0; i <= L; i++) {
@@ -75,13 +75,13 @@ template <class VALTYPE>
 void AModel<VALTYPE>::readTable(const char *filename) {
   ifstream inf(filename);
   cout << "Reading a/d table from " << filename << "\n";
-  if(!inf){
+  if (!inf) {
     cerr << "\nERROR: Cannot open " << filename<<"\n";
     return;
   }
   WordIndex w, x, l, m;
   VALTYPE prob;
-  while(inf >> w >> x >> l >> m >> prob ) {
+  while (inf >> w >> x >> l >> m >> prob) {
     // the NULL word is added to the length
     // of the sentence in the tables, but discount it when you write the tables.
     setValue(w, x, l, m, prob);

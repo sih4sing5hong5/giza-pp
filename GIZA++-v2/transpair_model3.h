@@ -45,7 +45,7 @@ extern double factorial(int n);
 inline bool doubleEqual(const double a, const double b) {
   if (std::abs(a - b) < kEPS)
     return true;
-  bool bl = fabs(1.0 - a / b ) < 1e-10;
+  bool bl = fabs(1.0 - a / b) < 1e-10;
   if (bl) {
     return true;
   } else {
@@ -65,22 +65,20 @@ class transpair_model3 : public transpair_model2
   transpair_model3(const Vector<WordIndex>&es, const Vector<WordIndex>&fs, TModel<COUNT, PROB>&tTable,
                    AModel<PROB>&aTable, AModel<PROB>&dTable, nmodel<PROB>&nTable,
                    double _p1, double _p0, void*x=0);
-  const PROB&get_d(WordIndex i, WordIndex j)const
-  {return d(i, j);}
-  const PROB&get_a(WordIndex i, WordIndex j)const
-  {return a(i, j);}
-  const PROB&get_fertility(WordIndex i, WordIndex f)const
-  {MASSERT(i>0);return (f>=g_max_fertility)?n(i, g_max_fertility):n(i, f);}
-  int modelnr()const{return 3;}
-  LogProb scoreOfAlignmentForChange(const Alignment& a)const
-  {return -1.0; }
-  LogProb scoreOfMove(const Alignment& a, WordIndex new_i, WordIndex j, double thisValue=-1.0,bool withDistortions=1)const;
-  LogProb scoreOfSwap(const Alignment& a, WordIndex j1, WordIndex j2, double thisValue=-1.0,bool withDistortions=1)const;
-  LogProb _scoreOfMove(const Alignment& a, WordIndex new_i, WordIndex j,double thisValue=-1.0)const;
-  LogProb _scoreOfSwap(const Alignment& a, WordIndex j1, WordIndex j2,double thisValue=-1.0)const;
+  const PROB&get_d(WordIndex i, WordIndex j) const { return d(i, j); }
+  const PROB&get_a(WordIndex i, WordIndex j) const { return a(i, j); }
+  const PROB&get_fertility(WordIndex i, WordIndex f) const
+  {MASSERT(i>0); return (f>=g_max_fertility)?n(i, g_max_fertility):n(i, f); }
+  int modelnr() const { return 3; }
+  LogProb scoreOfAlignmentForChange(const Alignment& a) const
+  { return -1.0; }
+  LogProb scoreOfMove(const Alignment& a, WordIndex new_i, WordIndex j, double thisValue=-1.0,bool withDistortions=1) const;
+  LogProb scoreOfSwap(const Alignment& a, WordIndex j1, WordIndex j2, double thisValue=-1.0,bool withDistortions=1) const;
+  LogProb _scoreOfMove(const Alignment& a, WordIndex new_i, WordIndex j,double thisValue=-1.0) const;
+  LogProb _scoreOfSwap(const Alignment& a, WordIndex j1, WordIndex j2,double thisValue=-1.0) const;
   friend ostream&operator<<(ostream&out, const transpair_model3&m);
-  LogProb prob_of_target_and_alignment_given_source(const Alignment&al,bool verb=0)const;
-  bool isSubOptimal()const{return 1;}
-  void computeScores(const Alignment& al, vector<double>&d)const;
+  LogProb prob_of_target_and_alignment_given_source(const Alignment&al,bool verb=0) const;
+  bool isSubOptimal() const { return 1; }
+  void computeScores(const Alignment& al, vector<double>&d) const;
 };
 #endif  // GIZAPP_TRANSPAIR_MODEL3_H_

@@ -1,7 +1,7 @@
 /*
   Copyright (C) 1997,1998,1999,2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-  This file is part of GIZA++ ( extension of GIZA ).
+  This file is part of GIZA++ ( extension of GIZA).
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -34,32 +34,32 @@
 
 inline unsigned int mConvert(const string&s,unsigned int &i)
 {
-  if( strcasecmp(s.c_str(),"yes")==0 || strcasecmp(s.c_str(),"y")==0 || strcasecmp(s.c_str(),"true")==0 || strcasecmp(s.c_str(),"t")==0 ) { cerr << "TRUE\n";return i=1; }
-  if( strcasecmp(s.c_str(),"no")==0 ||  strcasecmp(s.c_str(),"n")==0 ||  strcasecmp(s.c_str(),"false")==0 ||  strcasecmp(s.c_str(),"f")==0 ) { cerr << "FALSE\n";return i=0;}
+  if (strcasecmp(s.c_str(),"yes")==0 || strcasecmp(s.c_str(),"y")==0 || strcasecmp(s.c_str(),"true")==0 || strcasecmp(s.c_str(),"t")==0) { cerr << "TRUE\n"; return i=1; }
+  if (strcasecmp(s.c_str(),"no")==0 ||  strcasecmp(s.c_str(),"n")==0 ||  strcasecmp(s.c_str(),"false")==0 ||  strcasecmp(s.c_str(),"f")==0) { cerr << "FALSE\n"; return i=0; }
   return i = static_cast<unsigned int>(atoi(s.c_str()));
 }
 
-inline int mConvert(const string&s,int &i){
-  if( strcasecmp(s.c_str(),"yes")==0 ||  strcasecmp(s.c_str(),"y")==0 ||  strcasecmp(s.c_str(),"true")==0 ||  strcasecmp(s.c_str(),"t")==0 ) { cerr << "TRUE\n";return i=1;}
-  if( strcasecmp(s.c_str(),"no")==0 ||  strcasecmp(s.c_str(),"n")==0 ||  strcasecmp(s.c_str(),"false")==0 ||  strcasecmp(s.c_str(),"f")==0 ) { cerr << "FALSE\n";return i=0;}
+inline int mConvert(const string&s,int &i) {
+  if (strcasecmp(s.c_str(),"yes")==0 ||  strcasecmp(s.c_str(),"y")==0 ||  strcasecmp(s.c_str(),"true")==0 ||  strcasecmp(s.c_str(),"t")==0) { cerr << "TRUE\n"; return i=1; }
+  if (strcasecmp(s.c_str(),"no")==0 ||  strcasecmp(s.c_str(),"n")==0 ||  strcasecmp(s.c_str(),"false")==0 ||  strcasecmp(s.c_str(),"f")==0) { cerr << "FALSE\n"; return i=0; }
   return i=atoi(s.c_str());
 }
 inline double mConvert(const string&s,double &d) { return d = atof(s.c_str()); }
 inline double mConvert(const string&s,float &d) { return d = static_cast<float>(atof(s.c_str())); }
 inline string mConvert(const string&s,string&n) { return n=s; }
 inline bool mConvert(const string&s,bool&n) {
-  if( strcasecmp(s.c_str(),"yes")==0 ||  strcasecmp(s.c_str(),"y")==0 ||  strcasecmp(s.c_str(),"true")==0 ||  strcasecmp(s.c_str(),"t")==0 ) { cerr << "TRUE\n";return n=1;}
-  if( strcasecmp(s.c_str(),"no")==0 ||  strcasecmp(s.c_str(),"n")==0 ||  strcasecmp(s.c_str(),"false")==0 ||  strcasecmp(s.c_str(),"f")==0 ) { cerr << "FALSE\n";return n=0;}
+  if (strcasecmp(s.c_str(),"yes")==0 ||  strcasecmp(s.c_str(),"y")==0 ||  strcasecmp(s.c_str(),"true")==0 ||  strcasecmp(s.c_str(),"t")==0) { cerr << "TRUE\n"; return n=1; }
+  if (strcasecmp(s.c_str(),"no")==0 ||  strcasecmp(s.c_str(),"n")==0 ||  strcasecmp(s.c_str(),"false")==0 ||  strcasecmp(s.c_str(),"f")==0) { cerr << "FALSE\n"; return n=0; }
   return n=atoi(s.c_str());
 }
 inline short mConvert(const string&s,short&n) {
-  if( strcasecmp(s.c_str(),"yes")==0 ||  strcasecmp(s.c_str(),"y")==0 ||  strcasecmp(s.c_str(),"true")==0 ||  strcasecmp(s.c_str(),"t")==0 ) { cerr << "TRUE\n";return n=1;}
-  if( strcasecmp(s.c_str(),"no")==0 ||  strcasecmp(s.c_str(),"n")==0 ||  strcasecmp(s.c_str(),"false")==0 ||  strcasecmp(s.c_str(),"f")==0 ) { cerr << "FALSE\n";return n=0;}
+  if (strcasecmp(s.c_str(),"yes")==0 ||  strcasecmp(s.c_str(),"y")==0 ||  strcasecmp(s.c_str(),"true")==0 ||  strcasecmp(s.c_str(),"t")==0) { cerr << "TRUE\n"; return n=1; }
+  if (strcasecmp(s.c_str(),"no")==0 ||  strcasecmp(s.c_str(),"n")==0 ||  strcasecmp(s.c_str(),"false")==0 ||  strcasecmp(s.c_str(),"f")==0) { cerr << "FALSE\n"; return n=0; }
   return n = static_cast<short>(atoi(s.c_str()));
 }
 inline unsigned short mConvert(const string&s,unsigned short&n) {
-  if( strcasecmp(s.c_str(),"yes")==0 ||  strcasecmp(s.c_str(),"y")==0 ||  strcasecmp(s.c_str(),"true")==0 ||  strcasecmp(s.c_str(),"t")==0 ) { cerr << "TRUE\n";return n=1;}
-  if( strcasecmp(s.c_str(),"no")==0 ||  strcasecmp(s.c_str(),"n")==0 ||  strcasecmp(s.c_str(),"false")==0 ||  strcasecmp(s.c_str(),"f")==0 ) { cerr << "FALSE\n";return n=0;}
+  if (strcasecmp(s.c_str(),"yes")==0 ||  strcasecmp(s.c_str(),"y")==0 ||  strcasecmp(s.c_str(),"true")==0 ||  strcasecmp(s.c_str(),"t")==0) { cerr << "TRUE\n"; return n=1; }
+  if (strcasecmp(s.c_str(),"no")==0 ||  strcasecmp(s.c_str(),"n")==0 ||  strcasecmp(s.c_str(),"false")==0 ||  strcasecmp(s.c_str(),"f")==0) { cerr << "FALSE\n"; return n=0; }
   return n = static_cast<unsigned short>(atoi(s.c_str()));
 }
 
@@ -69,7 +69,7 @@ inline int Hashstring(const string& s)
 {
   int sum=0;
   string::const_iterator i=s.begin(),end=s.end();
-  for(;i!=end;i++)sum=5*sum+(*i);
+  for (;i!=end;i++)sum=5*sum+(*i);
   return sum;
 }
 
@@ -85,8 +85,8 @@ class _Parameter
   int onlyCopy;
   _Parameter(string n,bool&b,string desc,int _level,bool _onlyCopy)
       : name(simpleString(n)),ifChanged(&b),description(desc),level(_level),filename(0),onlyCopy(_onlyCopy) {}
-  virtual ~_Parameter(){};
-  bool operator==(const string&s)const
+  virtual ~_Parameter() {};
+  bool operator==(const string&s) const
   { return name== simpleString(s); }
   void setChanged()
   { *ifChanged=true; }
@@ -94,9 +94,9 @@ class _Parameter
   virtual ostream&printAt(ostream&out)=0;
   virtual ostream&printValue(ostream&out)=0;
   const string&getString() const { return name; }
-  int getLevel() const { return level;}
-  bool isFilename() { return filename;}
-  void setFilename(bool x=1) { filename=x;}
+  int getLevel() const { return level; }
+  bool isFilename() { return filename; }
+  void setFilename(bool x=1) { filename=x; }
   friend bool operator==(const _Parameter&a,const _Parameter&b)
   { return a.name==b.name; }
   friend bool operator<(const _Parameter&a,const _Parameter&b)
@@ -104,7 +104,7 @@ class _Parameter
   friend int Hash(const _Parameter&aaa)
   { return Hashstring(aaa.name); }
   friend ostream&operator<<(ostream&out,const _Parameter&p)
-  { return out<<"Parameter: "<<p.name <<endl;}
+  { return out<<"Parameter: "<<p.name <<endl; }
 };
 
 template<class T>
@@ -115,30 +115,28 @@ class Parameter : public _Parameter
  public:
   Parameter(string n,bool&b,string desc,T&_t,int level=0,bool onlyCopy=0)
       : _Parameter(n,b,desc,level,onlyCopy),t(&_t) {}
-  virtual ~Parameter(){}
+  virtual ~Parameter() {}
   virtual bool setParameter(string s2,int verb)
   {
     T x;
-    if( !(*t==mConvert(s2,x)))
+    if (!(*t==mConvert(s2,x)))
     {
       bool printedFirst=0;
-      if( verb>1 )
+      if (verb>1)
       {
         cout << "Parameter '"<<name <<"' changed from '"<<*t<<"' to '";
         printedFirst=1;
       }
       mConvert(s2,*t);
-      if( printedFirst )
+      if (printedFirst)
         cout << *t <<"'\n";
       setChanged();
       return 1;
     }
     return 0;
   }
-  virtual ostream&printAt(ostream&out)
-  {return out << name << " = " << *t << "  (" << description << ")";}
-  virtual ostream&printValue(ostream&out)
-  {return out << *t;}
+  virtual ostream&printAt(ostream&out) { return out << name << " = " << *t << "  (" << description << ")"; }
+  virtual ostream&printValue(ostream&out) { return out << *t; }
 };
 
 typedef MP<_Parameter> ParPtr;
@@ -148,7 +146,7 @@ class ParSet : public set<ParPtr>
  public:
   void insert(const ParPtr&x)
   {
-    if( count(x)!=0 )
+    if (count(x)!=0)
       cerr << "ERROR: element " << x->getString() << " already inserted.\n";
     set<ParPtr>::insert(x);
   }

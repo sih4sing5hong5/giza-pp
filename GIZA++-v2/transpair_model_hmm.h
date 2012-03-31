@@ -1,7 +1,7 @@
 /*
   Copyright (C) 2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-  This file is part of GIZA++ ( extension of GIZA ).
+  This file is part of GIZA++ ( extension of GIZA).
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -92,7 +92,7 @@ class TransPairModelHMM : public transpair_model2
 
     if (a_prob) {
       return b_prob / a_prob;
-    } else if( b_prob ) {
+    } else if (b_prob) {
       return 1e20;
     } else {
       return 1.0;

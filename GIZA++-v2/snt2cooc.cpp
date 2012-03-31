@@ -56,10 +56,10 @@ bool ConvertSnt(const char* filename, int max_elements, bool counts,
     eingabe1 >> count;
     vector<int>l1,l2;
 
-    while(eingabe2 >> word) {
+    while (eingabe2 >> word) {
       l1.push_back(atoi(word.c_str()));
     }
-    while(eingabe3 >> word) {
+    while (eingabe3 >> word) {
       l2.push_back(atoi(word.c_str()));
     }
 
@@ -68,7 +68,7 @@ bool ConvertSnt(const char* filename, int max_elements, bool counts,
     }
 
     total_elements -= vsi[0].size();
-    for(unsigned int j=0;j<l2.size();++j) {
+    for (unsigned int j=0;j<l2.size();++j) {
       vsi[0][l2[j]]++;
     }
     total_elements += vsi[0].size();

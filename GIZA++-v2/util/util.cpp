@@ -74,10 +74,10 @@ void printAlignToFile(const Vector<WordIndex>& es,
   // of zero or more translations .
   l = es.size() - 1;
   m = fs.size() - 1;
-  if( CompactAlignmentFormat )
+  if (CompactAlignmentFormat)
   {
     for (WordIndex j = 1; j <= m; j++)
-      if( viterbi_alignment[j] )
+      if (viterbi_alignment[j])
         of2 << viterbi_alignment[j]-1 << ' ' << j-1 << ' ';
     of2 << '\n';
   }
@@ -85,13 +85,13 @@ void printAlignToFile(const Vector<WordIndex>& es,
   {
     of2 << "# Sentence pair (" << pair_no <<") source length " << l << " target length "<< m <<
         " alignment score : "<< alignment_score << '\n';
-    for (WordIndex j = 1; j <= m; j++){
+    for (WordIndex j = 1; j <= m; j++) {
       of2 << fvlist[fs[j]].word << " ";
       translations[viterbi_alignment[j]].push_back(j);
     }
     of2 << '\n';
 
-    for (WordIndex i = 0; i <= l; i++){
+    for (WordIndex i = 0; i <= l; i++) {
       of2 << evlist[es[i]].word << " ({ ";
       for (WordIndex j = 0; j < translations[i].size(); j++)
         of2 << translations[i][j] << " ";
@@ -115,14 +115,14 @@ void printOverlapReport(const TModel<COUNT, PROB>& tTable,
   */
   testHandler.rewind();
   int seen_coocur = 0, unseen_coocur = 0, srcUnk = 0, trgUnk = 0;
-  while(testHandler.getNextSentence(s)){
+  while (testHandler.getNextSentence(s)) {
     for (WordIndex i = 1; i < s.eSent.size(); i++)
       for (WordIndex j = 1; j < s.fSent.size(); j++)
         testCoocur.insert(WordIDPair(s.eSent[i], s.fSent[j]));
   }
   set<WordIDPair>::const_iterator i;
-  for (i = testCoocur.begin(); i != testCoocur.end(); ++i){
-    if (tTable.getProb((*i).first, (*i).second) > g_smooth_prob){
+  for (i = testCoocur.begin(); i != testCoocur.end(); ++i) {
+    if (tTable.getProb((*i).first, (*i).second) > g_smooth_prob) {
       seen_coocur ++;
       //      of_seenCoocur << (*i).first << ' ' << (*i).second << '\n';
     }
@@ -136,7 +136,7 @@ void printOverlapReport(const TModel<COUNT, PROB>& tTable,
   ofstream of_trgUnk(trgUnkFile.c_str());
 
   for (WordIndex i = 0; i <  testFList.getVocabList().size() && i < testFList.uniqTokens();i++)
-    if (testFList.getVocabList()[i].freq > 0 && trainFList.getVocabList()[i].freq <= 0){
+    if (testFList.getVocabList()[i].freq > 0 && trainFList.getVocabList()[i].freq <= 0) {
       of_trgUnk << i << ' ' << testFList.getVocabList()[i].word << ' ' << testFList.getVocabList()[i].freq
                 << '\n';
       trgUnk++;
@@ -145,7 +145,7 @@ void printOverlapReport(const TModel<COUNT, PROB>& tTable,
   ofstream of_srcUnk(srcUnkFile.c_str());
 
   for (WordIndex j = 0; j <  testEList.getVocabList().size() && j < testEList.uniqTokens();j++)
-    if (testEList.getVocabList()[j].freq > 0 && trainEList.getVocabList()[j].freq <= 0){
+    if (testEList.getVocabList()[j].freq > 0 && trainEList.getVocabList()[j].freq <= 0) {
       srcUnk++;
       of_srcUnk << j << ' ' << testEList.getVocabList()[j].word << ' ' << testEList.getVocabList()[j].freq
                 << '\n';
@@ -164,7 +164,7 @@ void printOverlapReport(const TModel<COUNT, PROB>& tTable,
 double factorial(int n)
 {
   double  f=1;
-  for(int i=2; i <= n; i++)
+  for (int i=2; i <= n; i++)
     f *= i;
   return f;
 }
@@ -178,33 +178,33 @@ double ErrorsInAlignment(const map< pair<int,int>,char >&reference,
                          int& eventsToomuch,
                          size_t pair_no) {
   int err=0;
-  for(unsigned int j=1;j<test.size();j++)
+  for (unsigned int j=1;j<test.size();j++)
   {
-    if( test[j]>0 )
+    if (test[j]>0)
     {
       map< pair<int,int>,char >::const_iterator i=reference.find(make_pair(test[j]-1,j-1));
-      if( i==reference.end() )
+      if (i==reference.end())
       {
         toomuch++;
         err++;
       }
       else
-        if( !(i->second=='S' || i->second=='P'))
+        if (!(i->second=='S' || i->second=='P'))
           cerr << "ERROR: wrong symbol in reference alignment '" << i->second << ' ' << int(i->second) << " no:" << pair_no<< "'\n";
       eventsToomuch++;
     }
   }
-  for(map< pair<int,int>,char >::const_iterator i=reference.begin();i!=reference.end();++i)
+  for (map< pair<int,int>,char >::const_iterator i=reference.begin();i!=reference.end();++i)
   {
-    if( i->second=='S' )
+    if (i->second=='S')
     {
       unsigned int J=i->first.second+1;
       unsigned int I=i->first.first+1;
-      if( int(J)>=int(test.size())||int(I)>int(l)||int(J)<1||int(I)<1 )
+      if (int(J)>=int(test.size())||int(I)>int(l)||int(J)<1||int(I)<1)
         cerr << "ERROR: alignment outside of range in reference alignment" << J << " " << test.size() << " (" << I << " " << l << ") no:" << pair_no << '\n';
       else
       {
-        if(test[J]!=I)
+        if (test[J]!=I)
         {
           missing++;
           err++;
@@ -215,7 +215,7 @@ double ErrorsInAlignment(const map< pair<int,int>,char >&reference,
   }
   if (g_is_verbose)
     cout << err << " errors in sentence\n";
-  if( eventsToomuch+eventsMissing )
+  if (eventsToomuch+eventsMissing)
     return (toomuch+missing)/(eventsToomuch+eventsMissing);
   else
     return 1.0;

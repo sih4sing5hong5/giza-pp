@@ -1,7 +1,7 @@
 /*
   Copyright (C) 1999,2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-  This file is part of GIZA++ ( extension of GIZA ).
+  This file is part of GIZA++ ( extension of GIZA).
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -68,7 +68,7 @@ inline std::ostream& operator<<(std::ostream& out, const OneMoveSwap&o) {
 }
 
 inline std::ostream& operator<<(std::ostream& out, const std::set<OneMoveSwap>& s) {
-  for(std::set<OneMoveSwap>::const_iterator it = s.begin();
+  for (std::set<OneMoveSwap>::const_iterator it = s.begin();
       it != s.end(); ++it)
     cout << *it << ' ';
   return out;

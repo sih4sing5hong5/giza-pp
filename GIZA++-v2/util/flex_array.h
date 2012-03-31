@@ -1,7 +1,7 @@
 /*
   Copyright (C) 1988,1999,2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-  This file is part of GIZA++ ( extension of GIZA ).
+  This file is part of GIZA++ ( extension of GIZA).
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -42,8 +42,8 @@ class FlexArray {
 
   const T& operator[](int i) const { return array_[i - start_]; }
 
-  int low() const {return start_; }
-  int high() const {return end_; }
+  int low() const { return start_; }
+  int high() const { return end_; }
 
   T* begin() { return conv<double>(array_.begin()); }
   T* end() { return conv<double>(array_.end()); }

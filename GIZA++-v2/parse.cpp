@@ -36,7 +36,7 @@
 
 extern bool ONLYALDUMPS;
 
-void parseConfigFile (char * fname )
+void parseConfigFile (char * fname)
     // This functions reads in the configuration file to set up some run-time
     // parameters. The parameters are global variables that are defined in
     // main.cc and used all over the place in the program
@@ -63,24 +63,24 @@ void parseConfigFile (char * fname )
 
   string line, word, attrib, attribval;
   ifstream Config_File(fname);
-  if(!Config_File){
+  if (!Config_File) {
     cerr << "ERROR:  Cannot open configuration file " << fname << "!\n";
     exit(1);
   }
 
   cout << "The following options are from the config file and will be overwritten by any command line options.\n";
 
-  while(getline(Config_File, line)){
+  while (getline(Config_File, line)) {
 
     istringstream buffer(line);
     word = attrib = attribval = "";
     buffer >> word;
-    if (word != "//"){ // if line does not start with "//" (i.e. not a comment)
+    if (word != "//") { // if line does not start with "//" (i.e. not a comment)
       attrib = word;
-      while((buffer >> word) && (word != ":")){
+      while ((buffer >> word) && (word != ":")) {
         attrib += " " + word;
       }
-      if(!(buffer >> attribval))
+      if (!(buffer >> attribval))
       {
         istringstream buffer2(line);
         buffer2>>attrib;
@@ -90,28 +90,28 @@ void parseConfigFile (char * fname )
       // This# is where (1) the configuration file is defined and
       //               (2) parsing of its attributes occurs.
 
-      if(attrib == "t FILE"){
+      if (attrib == "t FILE") {
         t_Filename = attribval;
         cout << "\tt file:  " << t_Filename << '\n';
       }
-      else if(attrib ==  "a FILE"){
+      else if (attrib ==  "a FILE") {
         a_Filename = attribval;
         cout << "\ta file:  " << a_Filename << '\n';
       }
-      else if(attrib == "d FILE"){
+      else if (attrib == "d FILE") {
         d_Filename = attribval;
         cout << "\td file:  " << d_Filename << '\n';
       }
-      else if(attrib == "n FILE"){
+      else if (attrib == "n FILE") {
         n_Filename = attribval;
         cout << "\tn file:  " << n_Filename << '\n';
       }
-      else if(attrib == "p0 FILE"){
+      else if (attrib == "p0 FILE") {
         p0_Filename = attribval;
         cout << "\tp0 file:  " << p0_Filename << '\n';
       }
-      else if ( line == ""){}
-      else if(  !makeSetCommand(attrib,attribval,getGlobalParSet(),2) )
+      else if (line == "") {}
+      else if ( !makeSetCommand(attrib,attribval,getGlobalParSet(),2))
         cerr << "ERROR: Unrecognized attribute :" << attrib << '\n';
     }
   }
@@ -122,21 +122,21 @@ void parseArguments(int argc, char *argv[])
 {
   int arg = 1;
 
-  if(!strcmp(argv[1], "--h") || !strcmp(argv[1], "--help")){
+  if (!strcmp(argv[1], "--h") || !strcmp(argv[1], "--help")) {
     printHelp();
     exit(0);
   }
-  if( argv[1][0]=='-' )
+  if (argv[1][0]=='-')
     arg=0;
   else
     parseConfigFile(argv[1]);
-  while(++arg<argc){
-    if( strlen(argv[arg])>2 && argv[arg][0]=='-' && argv[arg][1]=='-' )
+  while (++arg<argc) {
+    if (strlen(argv[arg])>2 && argv[arg][0]=='-' && argv[arg][1]=='-')
     {
-      if( !makeSetCommand(argv[arg]+1,"1",getGlobalParSet(),2))
+      if (!makeSetCommand(argv[arg]+1,"1",getGlobalParSet(),2))
         cerr << "WARNING: ignoring unrecognized option:  "<< argv[arg] << '\n';
     }
-    else if( arg+1<argc && !makeSetCommand(argv[arg],argv[arg+1],getGlobalParSet(),2))
+    else if (arg+1<argc && !makeSetCommand(argv[arg],argv[arg+1],getGlobalParSet(),2))
       cerr << "WARNING: ignoring unrecognized option:  "<< argv[arg] << '\n';
     else
     {

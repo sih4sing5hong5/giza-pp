@@ -63,14 +63,14 @@ class SentencePair {
   SentencePair() { }
   ~SentencePair() { }
 
-  void clear(){ eSent.clear(); fSent.clear(); noOcc=0; realCount=0; sentenceNo=0;};
-  const Vector<WordIndex>&get_eSent()const
+  void clear() { eSent.clear(); fSent.clear(); noOcc=0; realCount=0; sentenceNo=0; };
+  const Vector<WordIndex>&get_eSent() const
   { return eSent; }
-  const Vector<WordIndex>&get_fSent()const
+  const Vector<WordIndex>&get_fSent() const
   { return fSent; }
-  int getSentenceNo()const
+  int getSentenceNo() const
   { return sentenceNo; }
-  double getCount()const
+  double getCount() const
   { return realCount; }
 };
 
@@ -80,10 +80,10 @@ inline ostream&operator<<(ostream&of,const SentencePair&s)
   if (abs(s.noOcc - s.realCount) < kEPS)
     of << " Used No. Occurrences: " << s.realCount << '\n';
   unsigned int i;
-  for(i=0; i < s.eSent.size(); i++)
+  for (i=0; i < s.eSent.size(); i++)
     of << s.eSent[i] << ' ';
   of <<  '\n';
-  for(i=1; i < s.fSent.size(); i++)
+  for (i=1; i < s.fSent.size(); i++)
     of << s.fSent[i] << ' ';
   of << '\n';
   return of;
@@ -111,8 +111,8 @@ class SentenceHandler {
 
   void rewind();
   bool getNextSentence(SentencePair&, VocabList* = 0, VocabList* = 0);  // will be defined in the definition file, this
-  int getTotalNoPairs1()const {return totalPairs1;};
-  double getTotalNoPairs2()const {return totalPairs2;};
+  int getTotalNoPairs1() const { return totalPairs1; }
+  double getTotalNoPairs2() const { return totalPairs2; }
   // method will read the next pair of sentence from memory buffer
   bool readNextSentence(SentencePair&);  // will be defined in the definition file, this
   void setProbOfSentence(const SentencePair&s,double d);

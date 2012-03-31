@@ -1,7 +1,7 @@
 /*
   Copyright (C) 2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-  This file is part of GIZA++ ( extension of GIZA ).
+  This file is part of GIZA++ ( extension of GIZA).
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -47,11 +47,11 @@ class transpair_model1
       : verboseTP(0),t(es.size(), fs.size()),l(es.size()-1), m(fs.size()-1),E(es),F(fs)
   {
     WordIndex l=es.size()-1,m=fs.size()-1;
-    for(WordIndex i=0;i<=l;i++)
-      for(WordIndex j=1;j<=m;j++)
+    for (WordIndex i=0;i<=l;i++)
+      for (WordIndex j=1;j<=m;j++)
       {
         t(i, j)=tTable.getProb(es[i], fs[j]);
-        if( !(t(i,j)>=g_smooth_prob) )
+        if (!(t(i,j)>=g_smooth_prob))
           cerr << "ERROR IN PROBABILITY: " << t(i,j) << " " << g_smooth_prob << endl;
       }
   }
@@ -59,20 +59,20 @@ class transpair_model1
       : verboseTP(0),t(es.size(), fs.size()),l(es.size()-1), m(fs.size()-1),E(es),F(fs)
       {
       WordIndex l=es.size()-1,m=fs.size()-1;
-      for(WordIndex i=0;i<=l;i++)
-      for(WordIndex j=1;j<=m;j++)
+      for (WordIndex i=0;i<=l;i++)
+      for (WordIndex j=1;j<=m;j++)
       {
       const string&estr=globeTrainVcbList->getVocabList()[es[i]].word;
       const string&fstr=globfTrainVcbList->getVocabList()[fs[j]].word;
-      if( lev(estr,fstr)==0 )
+      if (lev(estr,fstr)==0)
       t(i,j)=1.0;
       else
       t(i,j)=1/100.0;
-      MASSERT( t(i,j)>=g_smooth_prob );
+      MASSERT( t(i,j)>=g_smooth_prob);
       }
       }*/
   WordIndex get_l() const { return l; }
-  WordIndex get_m()const { return m; }
+  WordIndex get_m() const { return m; }
 
   const PROB& get_t(WordIndex i, WordIndex j) const {
     MASSERT(t(i,j) >= g_smooth_prob);
@@ -84,7 +84,7 @@ class transpair_model1
 
   bool greedyHillClimbing() const { return 0; }
 
-  void computeScores(const Alignment&, vector<double>&)const { }
+  void computeScores(const Alignment&, vector<double>&) const { }
 
   LogProb scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j, double=-1.0) const {
     int old_i = a(j);
@@ -100,7 +100,7 @@ class transpair_model1
     LogProb prob = 1.0;
     int lp1 = al.get_l()+1;
 
-    for(unsigned int j = 1; j <= al.get_m(); ++j)
+    for (unsigned int j = 1; j <= al.get_m(); ++j)
       prob *= t(al(j),j) / lp1;
     return prob;
   }

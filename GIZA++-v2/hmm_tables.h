@@ -1,7 +1,7 @@
 /*
   Copyright (C) 1999,2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-  This file is part of GIZA++ ( extension of GIZA ).
+  This file is part of GIZA++ ( extension of GIZA).
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -29,10 +29,10 @@
 template<class T>
 T normalize_if_possible(T* a, T* b) {
   T sum=0;
-  for(T*i=a;i!=b;++i)
+  for (T*i=a;i!=b;++i)
     sum+=*i;
-  if( sum )
-    for(T*i=a;i!=b;++i)
+  if (sum)
+    for (T*i=a;i!=b;++i)
       *i/=sum;
   else
     fill(a,b,1.0/(b-a));
@@ -57,21 +57,21 @@ class AlDeps {
   ~AlDeps() {}
 
   friend bool operator<(const AlDeps&x,const AlDeps&y) {
-    if( (CompareAlDeps&1) && x.englishSentenceLength<y.englishSentenceLength ) return 1;
-    if( (CompareAlDeps&1) && y.englishSentenceLength<x.englishSentenceLength ) return 0;
-    if( (CompareAlDeps&2) && x.classPrevious<y.classPrevious ) return 1;
-    if( (CompareAlDeps&2) && y.classPrevious<x.classPrevious ) return 0;
-    if( (CompareAlDeps&4) && x.previous<y.previous ) return 1;
-    if( (CompareAlDeps&4) && y.previous<x.previous ) return 0;
-    if( (CompareAlDeps&8) && x.j<y.j ) return 1;
-    if( (CompareAlDeps&8) && y.j<x.j ) return 0;
-    if( (CompareAlDeps&16) && x.Cj<y.Cj ) return 1;
-    if( (CompareAlDeps&16) && y.Cj<x.Cj ) return 0;
+    if ((CompareAlDeps&1) && x.englishSentenceLength<y.englishSentenceLength) return 1;
+    if ((CompareAlDeps&1) && y.englishSentenceLength<x.englishSentenceLength) return 0;
+    if ((CompareAlDeps&2) && x.classPrevious<y.classPrevious) return 1;
+    if ((CompareAlDeps&2) && y.classPrevious<x.classPrevious) return 0;
+    if ((CompareAlDeps&4) && x.previous<y.previous) return 1;
+    if ((CompareAlDeps&4) && y.previous<x.previous) return 0;
+    if ((CompareAlDeps&8) && x.j<y.j) return 1;
+    if ((CompareAlDeps&8) && y.j<x.j) return 0;
+    if ((CompareAlDeps&16) && x.Cj<y.Cj) return 1;
+    if ((CompareAlDeps&16) && y.Cj<x.Cj) return 0;
     return 0;
   }
 
   friend bool operator==(const AlDeps&x,const AlDeps&y) {
-    return !( x<y || y<x );
+    return !( x<y || y<x);
   }
 };
 
@@ -80,11 +80,11 @@ class Hash_AlDeps {
  public:
   unsigned int operator()(const AlDeps<CLS>&x) const {
     unsigned int hash=0;
-    if( (CompareAlDeps&1) ) { hash=hash+x.englishSentenceLength;hash*=31;}
-    if( (CompareAlDeps&2) ) { hash=hash+x.classPrevious;hash*=31;}
-    if( (CompareAlDeps&4) ) { hash=hash+x.previous;hash*=31;}
-    if( (CompareAlDeps&8) ) { hash=hash+x.j;hash*=31;}
-    if( (CompareAlDeps&16) ) { hash=hash+x.Cj;hash*=31;}
+    if ((CompareAlDeps&1)) { hash=hash+x.englishSentenceLength;hash*=31; }
+    if ((CompareAlDeps&2)) { hash=hash+x.classPrevious;hash*=31; }
+    if ((CompareAlDeps&4)) { hash=hash+x.previous;hash*=31; }
+    if ((CompareAlDeps&8)) { hash=hash+x.j;hash*=31; }
+    if ((CompareAlDeps&16)) { hash=hash+x.Cj;hash*=31; }
     return hash;
   }
 };
@@ -135,15 +135,15 @@ template<class CLS, class MAPPERCLASSTOSTRING>
 void HMMTables<CLS, MAPPERCLASSTOSTRING>::performGISIteration(
     const HMMTables<CLS,MAPPERCLASSTOSTRING>*old) {
   cout << "OLDSIZE: " << (old?(old->alProb.size()):0) << " NEWSIZE:"<< alProb.size()<< endl;
-  for(typename std::map<AlDeps<CLS>,FlexArray<double> >::iterator i=alProb.begin();i!=alProb.end();++i) {
-    if( alProbPredicted.count(i->first)) {
+  for (typename std::map<AlDeps<CLS>,FlexArray<double> >::iterator i=alProb.begin();i!=alProb.end();++i) {
+    if (alProbPredicted.count(i->first)) {
       normalize_if_possible(i->second.begin(),i->second.end());
       normalize_if_possible(alProbPredicted[i->first].begin(),alProbPredicted[i->first].end());
-      for(int j=i->second.low();j<=i->second.high();++j) {
-        if( i->second[j] ) {
-          if(alProbPredicted[i->first][j]>0.0 ) {
+      for (int j=i->second.low();j<=i->second.high();++j) {
+        if (i->second[j]) {
+          if (alProbPredicted[i->first][j]>0.0) {
             double op=1.0;
-            if( old && old->alProb.count(i->first) )
+            if (old && old->alProb.count(i->first))
               op=(old->alProb.find(i->first)->second)[j];
             //cerr << "GIS: " << j << ' ' << " OLD:"
             //     << op << "*true:"

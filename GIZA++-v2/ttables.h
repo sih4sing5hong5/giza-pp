@@ -71,7 +71,7 @@ class HashPair : public unary_function<WordIDPair, size_t > {
    Class Name: TModel
    Objective: This defines the underlying data structur for t Tables and t
    Count Tables. They are defined as a hash table. Each entry in the hash table
-   is the probability (P(fj/ei) ) or count collected for ( C(fj/ei)). The
+   is the probability (P(fj/ei)) or count collected for (C(fj/ei)). The
    probability and the count are represented as log integer probability as
    defined by the class LogProb .
 
@@ -89,8 +89,8 @@ class LpPair {
   COUNT count;
   PROB  prob;
  public: // constructor
-  LpPair():count(0), prob(0){};
-  LpPair(COUNT c, PROB p):count(c), prob(p){};
+  LpPair():count(0), prob(0) {};
+  LpPair(COUNT c, PROB p):count(c), prob(p) {};
 };
 
 #ifdef BINARY_SEARCH_FOR_TTABLE
@@ -99,14 +99,14 @@ class LpPair {
 template<class T>
 T*mbinary_search(T*x,T*y,unsigned int val)
 {
-  if( y-x==0 )
+  if (y-x==0)
     return 0;
-  if( x->first==val)
+  if (x->first==val)
     return x;
-  if( y-x<2 )
+  if (y-x<2)
     return 0;
   T*mid=x+(y-x)/2;
-  if( val < mid->first )
+  if (val < mid->first)
     return mbinary_search(x,mid,val);
   else
     return mbinary_search(mid,y,val);
@@ -116,14 +116,14 @@ T*mbinary_search(T*x,T*y,unsigned int val)
 template<class T>
 const T*mbinary_search(const T*x,const T*y,unsigned int val)
 {
-  if( y-x==0 )
+  if (y-x==0)
     return 0;
-  if( x->first==val)
+  if (x->first==val)
     return x;
-  if( y-x<2 )
+  if (y-x<2)
     return 0;
   const T*mid=x+(y-x)/2;
-  if( val < mid->first )
+  if (val < mid->first)
     return mbinary_search(x,mid,val);
   else
     return mbinary_search(mid,y,val);
@@ -143,7 +143,7 @@ class TModel {
   void erase(WordIndex e, WordIndex f)
   {
     CPPair *p=find(e,f);
-    if(p)
+    if (p)
       *p=CPPair(0,0);
   };
   CPPair*find(int e,int f)
@@ -153,7 +153,7 @@ class TModel {
     pair<unsigned int,CPPair> *be=&(*lexmat[e])[0];
     pair<unsigned int,CPPair> *en=&(*lexmat[e])[0]+(*lexmat[e]).size();
     pair<unsigned int,CPPair> *x= mbinary_search(be,en,f);
-    if( x==0 )
+    if (x==0)
     {
       //cerr << "A:DID NOT FIND ENTRY: " << e << " " << f << '\n';
       //abort();
@@ -161,14 +161,14 @@ class TModel {
     }
     return &(x->second);
   }
-  const CPPair*find(int e,int f)const
+  const CPPair*find(int e,int f) const
   {
     const pair<unsigned int,CPPair> *be=&(*lexmat[e])[0];
     const pair<unsigned int,CPPair> *en=&(*lexmat[e])[0]+(*lexmat[e]).size();
     //const pair<unsigned int,CPPair> *be=&(fs[0])+es[e];
     //const pair<unsigned int,CPPair> *en=&(fs[0])+es[e+1];
     const pair<unsigned int,CPPair> *x= mbinary_search(be,en,f);
-    if( x==0 )
+    if (x==0)
     {
       //cerr << "B:DID NOT FIND ENTRY: " << e << " " << f << '\n';
       //abort();
@@ -178,10 +178,10 @@ class TModel {
     return &(x->second);
   }
  public:
-  void insert(WordIndex e, WordIndex f, COUNT cval=0.0, PROB pval = 0.0){
+  void insert(WordIndex e, WordIndex f, COUNT cval=0.0, PROB pval = 0.0) {
     *find(e,f)=CPPair(cval,pval);
   }
-  CPPair*getPtr(int e,int f){ return find(e,f); }
+  CPPair*getPtr(int e,int f) { return find(e,f); }
 
   TModel(const string& fn) {
     int count=0,count2=0;
@@ -203,7 +203,7 @@ class TModel {
 
         lexmat[olde] = new vector< pair<unsigned int,CPPair> > (cps);
         cps.clear();
-        if( !((*lexmat[olde]).size()==(*lexmat[olde]).capacity()) )
+        if (!((*lexmat[olde]).size()==(*lexmat[olde]).capacity()))
           cerr << "eRROR: waste of memory: " << (*lexmat[olde]).size() << " " << (*lexmat[olde]).capacity() << endl;
         count2+=lexmat[olde]->capacity();
       }
@@ -225,13 +225,13 @@ class TModel {
       size_t count=0;
       {
       ifstream infile1(fn.c_str());
-      if( !infile1 )
+      if (!infile1)
       {
       cerr << "ERROR: can't read coocurrence file " << fn << '\n';
       abort();
       }
       int e,f;
-      while(infile1>>e>>f)
+      while (infile1>>e>>f)
       count++;
       }
       cout << "There are " << count << " entries in table" << '\n';
@@ -240,14 +240,14 @@ class TModel {
       int e,f,olde=-1,oldf=-1;
       pair<unsigned int,CPPair> cp;
       count=0;
-      while(infile2>>e>>f)
+      while (infile2>>e>>f)
       {
       assert(e>=olde);
       assert(e>olde ||f>oldf);
-      if( e!=olde )
+      if (e!=olde)
       {
       es.resize(e+1);
-      for(unsigned int i=olde+1;int(i)<=e;++i)
+      for (unsigned int i=olde+1;int(i)<=e;++i)
       es[i]=count;
       }
       cp.first=f;
@@ -264,10 +264,10 @@ class TModel {
       }*/
   void incCount(WordIndex e, WordIndex f, COUNT inc)
   {
-    if( inc )
+    if (inc)
     {
       CPPair *p=find(e,f);
-      if( p )
+      if (p)
         p->count += inc;
     }
   }
@@ -275,7 +275,7 @@ class TModel {
   PROB getProb(WordIndex e, WordIndex f) const
   {
     const CPPair *p=find(e,f);
-    if( p )
+    if (p)
       return max(p->prob, g_smooth_prob);
     else
       return g_smooth_prob;
@@ -284,7 +284,7 @@ class TModel {
   COUNT getCount(WordIndex e, WordIndex f) const
   {
     const CPPair *p=find(e,f);
-    if( p )
+    if (p)
       return p->count;
     else
       return 0.0;
@@ -297,7 +297,7 @@ class TModel {
                              const Vector<WordEntry>& fvlist,
                              const double eTotal,
                              const double fTotal,
-                             const bool actual = false ) const;
+                             const bool actual = false) const;
   void normalizeTable(const VocabList&engl, const VocabList&french, int iter=2);
   void readProbTable(const char *filename);
 };
@@ -327,14 +327,14 @@ class TModel {
   // methods;
 
   // insert: add entry P(fj/ei) to the hash function, Default value is 0.0
-  void insert(WordIndex e, WordIndex f, COUNT cval=0.0, PROB pval = 0.0){
+  void insert(WordIndex e, WordIndex f, COUNT cval=0.0, PROB pval = 0.0) {
     ef[WordIDPair(e, f)].count = cval;
     ef[WordIDPair(e, f)].prob = pval;
   }
 
   // returns a reference to the word pair, if does not exists, it creates it.
   CPPair&getRe(WordIndex e, WordIndex f)
-  {return ef[WordIDPair(e, f)];}
+  { return ef[WordIDPair(e, f)]; }
 
   // returns a pointer to an existing word pair. if pair does not exists,
   // the method returns the zero pointer (NULL)
@@ -343,7 +343,7 @@ class TModel {
   {
     // look up this pair and return its position
     typename hash_map<WordIDPair, CPPair, HashPair, equal_to<WordIDPair> >::iterator i = ef.find(WordIDPair(e, f));
-    if(i != ef.end())  // if it exists, return a pointer to it.
+    if (i != ef.end())  // if it exists, return a pointer to it.
       return(&((*i).second));
     else return(0); // else return NULL pointer
   }
@@ -352,7 +352,7 @@ class TModel {
   // increments the count of the given word pair. if the pair does not exist,
   // it creates it with the given value.
   {
-    if( inc )
+    if (inc)
       ef[WordIDPair(e, f)].count += inc;
   }
 
@@ -361,7 +361,7 @@ class TModel {
       // if pair does not exist, return floor value g_smooth_prob
   {
     typename hash_map<WordIDPair, CPPair, HashPair, equal_to<WordIDPair> >::const_iterator i= ef.find(WordIDPair(e, f));
-    if(i == ef.end())
+    if (i == ef.end())
       return g_smooth_prob;
     else
       return max(((*i).second).prob, g_smooth_prob);
@@ -371,15 +371,15 @@ class TModel {
       /* read count value for entry pair (fj/ei) from the hash table */
   {
     typename hash_map<WordIDPair, CPPair, HashPair, equal_to<WordIDPair> >::const_iterator i= ef.find(WordIDPair(e, f));
-    if(i == ef.end())
+    if (i == ef.end())
       return 0;
     else
       return ((*i).second).count;
   }
 
-  inline const hash_map<WordIDPair, CPPair, HashPair, equal_to<WordIDPair> >& getHash(void) const {return ef;};
+  inline const hash_map<WordIDPair, CPPair, HashPair, equal_to<WordIDPair> >& getHash(void) const { return ef; };
   /* get a refernece to the hash table */
-  //inline void resize(WordIndex n) {ef.resize(n);};
+  //inline void resize(WordIndex n) {ef.resize(n); };
   // to resize he hash table
 
   void printProbTable(const char* filename, const Vector<WordEntry>&, const Vector<WordEntry>&,bool actual) const;
@@ -392,7 +392,7 @@ class TModel {
                              const Vector<WordEntry>& fvlist,
                              const double eTotal,
                              const double fTotal,
-                             const bool actual = false ) const;
+                             const bool actual = false) const;
   // dump  inverse of t table (i.e P(ei/fj)) to the given file name,
   //  if the given flag is true then actual words are printed not token ids
 

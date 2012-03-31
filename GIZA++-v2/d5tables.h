@@ -1,7 +1,7 @@
 /*
   Copyright (C) 2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-  This file is part of GIZA++ ( extension of GIZA ).
+  This file is part of GIZA++ ( extension of GIZA).
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -43,11 +43,11 @@ class d5model {
   template<class MAPPER>
   void makeWordClasses(const MAPPER&m1,const MAPPER&m2,string efile,string ffile) {
     ifstream estrm(efile.c_str()),fstrm(ffile.c_str());
-    if( !estrm )
+    if (!estrm)
       cerr << "ERROR: can not read classes from " << efile << endl;
     else
       ewordclasses.read(estrm,m1);
-    if( !fstrm )
+    if (!fstrm)
       cerr << "ERROR: can not read classes from " << ffile << endl;
     else
       fwordclasses.read(fstrm,m2);
@@ -87,7 +87,7 @@ class d5model {
     MASSERT (vacancies_j-vacancies_jp <= vacancies_total);
     m4_key key(M5_Dependencies,l,m,F,0,0,-1,vacancies_total);
     map<m4_key,Vpff,compareb1 >::iterator p=Db1.find(key);
-    if(p==Db1.end())
+    if (p==Db1.end())
       p=Db1.insert(make_pair(key,Vpff(vacancies_total+1,make_pair(0,UNSEENPROB)))).first; // !!! constrain length
     MASSERT(p!=Db1.end());
     return (p->second)[vacancies_j - vacancies_jp].first;
@@ -103,7 +103,7 @@ class d5model {
     MASSERT(vacancies_total<=m);
     m4_key key(M5_Dependencies,l,m,F,0,0,vacancies_jp,vacancies_total);
     map<m4_key,Vpff,compare1 >::const_iterator p=D1.find(key);
-    if( p==D1.end() )
+    if (p==D1.end())
       return UNSEENPROB;
     else
       return max(g_smooth_prob,d5modelsmooth_factor/(vacancies_total)+(1-d5modelsmooth_factor)*(p->second)[vacancies_j].second);
@@ -118,7 +118,7 @@ class d5model {
     MASSERT(vacancies_j-vacancies_jp <= vacancies_total);
     m4_key key(M5_Dependencies,l,m,F,0,0,-1,vacancies_total);
     map<m4_key,Vpff,compareb1 >::const_iterator p=Db1.find(key);
-    if(p==Db1.end())
+    if (p==Db1.end())
       return UNSEENPROB;
     else
       return max(g_smooth_prob, d5modelsmooth_factor/(vacancies_total)+(1-d5modelsmooth_factor)*(p->second)[vacancies_j - vacancies_jp].second);
@@ -138,7 +138,7 @@ class d5model {
       }
     }
 
-    for(map<m4_key,Vpff,compareb1 >::iterator i=Db1.begin();i!=Db1.end();++i) {
+    for (map<m4_key,Vpff,compareb1 >::iterator i=Db1.begin();i!=Db1.end();++i) {
       Vpff&db1=i->second;
       double sum=0.0;
       for (PositionIndex i=0;i<db1.size();i++)
@@ -154,11 +154,11 @@ class d5model {
   friend ostream&operator<<(ostream&out, d5model&d5m) {
     out << "# Translation tables for Model 5 .\n";
     out << "# Table for head of cept.\n";
-    for(map<m4_key,Vpff,compare1 >::const_iterator i=d5m.D1.begin();
+    for (map<m4_key,Vpff,compare1 >::const_iterator i=d5m.D1.begin();
         i != d5m.D1.end();++i) {
       const Vpff&d1=i->second;
       COUNT sum=0.0;
-      for(PositionIndex ii=0;ii<d1.size();ii++)
+      for (PositionIndex ii=0;ii<d1.size();ii++)
         sum+=d1[ii].first;
 
       if (sum) {
@@ -191,17 +191,17 @@ class d5model {
   void readProbTable(const char*x) {
     ifstream f(x);
     string l;
-    while(getline(f,l)) {
-      if(l.length()&&l[0]=='#') continue;
+    while (getline(f,l)) {
+      if (l.length()&&l[0]=='#') continue;
       istringstream is(l.c_str());
       string E,F;
       int v1,v2,ii;
       double prob,count;
 
-      if(is >> E >> F >> v1 >> v2 >> ii >> prob >> count) {
+      if (is >> E >> F >> v1 >> v2 >> ii >> prob >> count) {
         //cerr << "Read: " << E << " " << F << " " << v1 << " " << v2 << " " << prob<< endl;
-        if ( count>0 ) {
-          if( E=="-1")
+        if (count>0) {
+          if (E=="-1")
             getCountRef_bigger(ii,0,fwordclasses(F),1000,1000,v2) += count;
           else
             getCountRef_first(ii,v1,fwordclasses(F),1000,1000,v2) += count;
@@ -217,14 +217,14 @@ class d5model {
     for (map<m4_key,Vpff,compare1 >::iterator i=D1.begin();
          i!=D1.end();++i) {
       Vpff&d1=i->second;
-      for(PositionIndex i=0;i<d1.size();i++)
+      for (PositionIndex i=0;i<d1.size();i++)
         d1[i].first=0.0;
     }
 
-    for(map<m4_key,Vpff,compareb1 >::iterator i=Db1.begin();
+    for (map<m4_key,Vpff,compareb1 >::iterator i=Db1.begin();
         i!=Db1.end();++i) {
       Vpff&db1=i->second;
-      for(PositionIndex i=0;i<db1.size();i++)
+      for (PositionIndex i=0;i<db1.size();i++)
         db1[i].first=0.0;
     }
   }

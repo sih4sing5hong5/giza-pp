@@ -94,11 +94,11 @@ string Usage, CorpusFilename,
   TestCorpusFilename, t_Filename, a_Filename, p0_Filename, d_Filename,
   n_Filename, dictionary_Filename;
 
-const string str2Num(int n){
+const string str2Num(int n) {
   string number = "";
   do{
     number.insert((size_t)0, 1, (char)(n % 10 + '0'));
-  } while((n /= 10) > 0);
+  } while ((n /= 10) > 0);
   return(number);
 }
 
@@ -114,8 +114,8 @@ const char*stripPath(const char*fullpath)
     // strip the path info from the file name
 {
   const char *ptr = fullpath + strlen(fullpath) - 1;
-  while(ptr && ptr > fullpath && *ptr != '/'){ptr--;}
-  if( *ptr=='/' )
+  while (ptr && ptr > fullpath && *ptr != '/') {ptr--; }
+  if (*ptr=='/')
     return(ptr+1);
   else
     return ptr;
@@ -127,7 +127,7 @@ void printDecoderConfigFile()
   string decoder_config_file = g_prefix + ".Decoder.config";
   cerr << "writing decoder configuration file to " <<  decoder_config_file.c_str() <<'\n';
   ofstream decoder(decoder_config_file.c_str());
-  if(!decoder){
+  if (!decoder) {
     cerr << "\nCannot write to " << decoder_config_file <<'\n';
     exit(1);
   }
@@ -148,7 +148,7 @@ void printDecoderConfigFile()
           << "#          the default directory.\n\n";
   // strip file prefix info and leave only the path name in Prefix
   string path = g_prefix.substr(0, g_prefix.find_last_of("/")+1);
-  if( path=="" )
+  if (path=="")
     path=".";
   decoder << "TM_RawDataDir = " << path << '\n';
   decoder << "TM_BinDataDir = " << path << '\n' << '\n';
@@ -219,13 +219,13 @@ void printAllTables(VocabList& eTrainVcbList, VocabList& eTestVcbList,
 {
   cerr << "writing Final tables to Disk \n";
   string t_inv_file = g_prefix + ".ti.final";
-  if( !FEWDUMPS)
+  if (!FEWDUMPS)
     m1.getTTable().printProbTableInverse(t_inv_file.c_str(), m1.getEnglishVocabList(),
                                          m1.getFrenchVocabList(),
                                          m1.getETotalWCount(),
                                          m1.getFTotalWCount());
   t_inv_file = g_prefix + ".actual.ti.final";
-  if ( !FEWDUMPS ) {
+  if (!FEWDUMPS) {
     m1.getTTable().printProbTableInverse(t_inv_file.c_str(),
                                          eTrainVcbList.getVocabList(),
                                          fTrainVcbList.getVocabList(),
@@ -237,7 +237,7 @@ void printAllTables(VocabList& eTrainVcbList, VocabList& eTestVcbList,
   ofstream of_perp(perp_filename.c_str());
 
   cout << "Writing PERPLEXITY report to: " << perp_filename << '\n';
-  if (!of_perp){
+  if (!of_perp) {
     cerr << "\nERROR: Cannot write to " << perp_filename <<'\n';
     exit(1);
   }
@@ -255,7 +255,7 @@ void printAllTables(VocabList& eTrainVcbList, VocabList& eTestVcbList,
   string eTrainVcbFile = g_prefix + ".trn.src.vcb";
   ofstream of_eTrainVcb(eTrainVcbFile.c_str());
   cout << "Writing source vocabulary list to : " << eTrainVcbFile << '\n';
-  if (!of_eTrainVcb){
+  if (!of_eTrainVcb) {
     cerr << "\nERROR: Cannot write to " << eTrainVcbFile <<'\n';
     exit(1);
   }
@@ -264,7 +264,7 @@ void printAllTables(VocabList& eTrainVcbList, VocabList& eTestVcbList,
   string fTrainVcbFile = g_prefix + ".trn.trg.vcb";
   ofstream of_fTrainVcb(fTrainVcbFile.c_str());
   cout << "Writing source vocabulary list to : " << fTrainVcbFile << '\n';
-  if(!of_fTrainVcb){
+  if (!of_fTrainVcb) {
     cerr << "\nERROR: Cannot write to " << fTrainVcbFile <<'\n';
     exit(1);
   }
@@ -275,7 +275,7 @@ void printAllTables(VocabList& eTrainVcbList, VocabList& eTestVcbList,
   string eTestVcbFile = g_prefix + ".tst.src.vcb";
   ofstream of_eTestVcb(eTestVcbFile.c_str());
   cout << "Writing source vocabulary list to : " << eTestVcbFile << '\n';
-  if(!of_eTestVcb){
+  if (!of_eTestVcb) {
     cerr << "\nERROR: Cannot write to " << eTestVcbFile <<'\n';
     exit(1);
   }
@@ -284,7 +284,7 @@ void printAllTables(VocabList& eTrainVcbList, VocabList& eTestVcbList,
   string fTestVcbFile = g_prefix + ".tst.trg.vcb";
   ofstream of_fTestVcb(fTestVcbFile.c_str());
   cout << "Writing source vocabulary list to : " << fTestVcbFile << '\n';
-  if(!of_fTestVcb){
+  if (!of_fTestVcb) {
     cerr << "\nERROR: Cannot write to " << fTestVcbFile <<'\n';
     exit(1);
   }
@@ -297,14 +297,14 @@ void printAllTables(VocabList& eTrainVcbList, VocabList& eTestVcbList,
 
 bool readNextSent(istream&is,map< pair<int,int>,char >&s,int&number) {
   string x;
-  if( !(is >> x) ) return 0;
-  if( x=="SENT:" ) is >> x;
+  if (!(is >> x)) return 0;
+  if (x=="SENT:") is >> x;
   int n=atoi(x.c_str());
 
-  if ( number==-1 ) {
+  if (number==-1) {
     number = n;
   } else {
-    if( number!=n ) {
+    if (number!=n) {
       cerr << "ERROR: readNextSent: DIFFERENT NUMBERS: " << number << " " << n << '\n';
       return 0;
     }
@@ -312,12 +312,12 @@ bool readNextSent(istream&is,map< pair<int,int>,char >&s,int&number) {
   int nS,nP,nO;
   nS=nP=nO=0;
   while (is >> x) {
-    if( x=="SENT:" )
+    if (x=="SENT:")
       return 1;
     int n1,n2;
     is >> n1 >> n2;
     map< pair<int,int>,char >::const_iterator i=s.find(pair<int,int>(n1,n2));
-    if( i==s.end()||i->second=='P' )
+    if (i==s.end()||i->second=='P')
       s[pair<int,int>(n1,n2)]=x[0];
     MASSERT(x[0]=='S'||x[0]=='P');
     nS+= (x[0]=='S');
@@ -338,7 +338,7 @@ void ReadAlignment(const string&x,Vector<map< pair<int,int>,char > >&a) {
   map< pair<int,int>,char >sent;
   int number=0;
   while (emptySent(sent) && (readNextSent(infile,sent,number))) {
-    if( int(a.size())!=number )
+    if (int(a.size())!=number)
       cerr << "ERROR: ReadAlignment: " << a.size() << " " << number << '\n';
     a.push_back(sent);
     number++;
@@ -356,9 +356,9 @@ void initGlobals() {
 void convert(const map< pair<int,int>,char >&reference,Alignment&x) {
   int l=x.get_l();
   int m=x.get_m();
-  for(map< pair<int,int>,char >::const_iterator i=reference.begin();
+  for (map< pair<int,int>,char >::const_iterator i=reference.begin();
       i!=reference.end();++i) {
-    if( i->first.first+1>int(m) ) {
+    if (i->first.first+1>int(m)) {
       cerr << "ERROR m to big: " << i->first.first << " " << i->first.second+1 << " " << l << " " << m << " is wrong.\n";
       continue;
     }
@@ -368,7 +368,7 @@ void convert(const map< pair<int,int>,char >&reference,Alignment&x) {
       continue;
     }
 
-    if( x(i->first.first+1)!=0 )
+    if (x(i->first.first+1)!=0)
       cerr << "ERROR: position " << i->first.first+1 << " already set\n";
     x.set(i->first.first+1,i->first.second+1);
   }
@@ -403,7 +403,7 @@ double StartTraining(int& result) {
   if (TestCorpusFilename == "NONE")
     TestCorpusFilename = "";
 
-  if (TestCorpusFilename != ""){
+  if (TestCorpusFilename != "") {
     cout << "Test corpus will be read from: " << TestCorpusFilename << '\n';
     testCorpus= new SentenceHandler(TestCorpusFilename.c_str(),
                                     &eTestVcbList, &fTestVcbList);
@@ -432,7 +432,7 @@ double StartTraining(int& result) {
   else dictionary = new util::Dictionary("");
   int minIter=0;
 #ifdef BINARY_SEARCH_FOR_TTABLE
-  if( CoocurrenceFile.length()==0 ) {
+  if (CoocurrenceFile.length()==0) {
     cerr << "ERROR: NO COOCURRENCE FILE GIVEN!\n";
     abort();
   }
@@ -451,7 +451,7 @@ double StartTraining(int& result) {
   HMM h(m2);
   Model3 m3(m2);
 
-  if (ReadTablePrefix.length() ) {
+  if (ReadTablePrefix.length()) {
     string number = "final";
     string tfile,afilennfile,dfile,d4file,p0file,afile,nfile; //d5file
     tfile = ReadTablePrefix + ".t3." + number;
@@ -477,9 +477,9 @@ double StartTraining(int& result) {
     //d5m.readProbTable(d5file.c_str());
     makeSetCommand("model4smoothfactor","0.0",getGlobalParSet(),2);
     //makeSetCommand("model5smoothfactor","0.0",getGlobalParSet(),2);
-    if( corpus||testCorpus ) {
+    if (corpus||testCorpus) {
       SentenceHandler *x=corpus;
-      if(x==0)
+      if (x==0)
         x=testCorpus;
       cout << "Text corpus exists.\n";
       x->rewind();
@@ -507,8 +507,8 @@ double StartTraining(int& result) {
   } else {
     // initialize model1
     bool seedModel1 = false;
-    if(Model1_Iterations > 0){
-      if (t_Filename != "NONE" && t_Filename != ""){
+    if (Model1_Iterations > 0) {
+      if (t_Filename != "NONE" && t_Filename != "") {
         seedModel1 = true;
         m1.load_table(t_Filename.c_str());
       }
@@ -517,12 +517,12 @@ double StartTraining(int& result) {
     }
 
     {
-      if(Model2_Iterations > 0){
+      if (Model2_Iterations > 0) {
         m2.initialize_table_uniformly(*corpus);
         minIter=m2.em_with_tricks(Model2_Iterations);
         errors=m2.errorsAL();
       }
-      if(HMM_Iterations > 0){
+      if (HMM_Iterations > 0) {
         cout << "NOTE: I am doing iterations with the HMM model!\n";
         h.makeWordClasses(m1.Elist, m1.Flist, g_source_vocab_filename + ".classes", g_target_vocab_filename + ".classes");
         h.initialize_table_uniformly(*corpus);
@@ -530,8 +530,8 @@ double StartTraining(int& result) {
         errors=h.errorsAL();
       }
 
-      if(Transfer2to3||HMM_Iterations==0){
-        if( HMM_Iterations>0 )
+      if (Transfer2to3||HMM_Iterations==0) {
+        if (HMM_Iterations>0)
           cout << "WARNING: transfor is not needed, as results are overwritten bei transfer from HMM.\n";
         string test_alignfile = g_prefix +".tst.A2to3";
         if (testCorpus)
@@ -545,7 +545,7 @@ double StartTraining(int& result) {
         errors=m3.errorsAL();
       }
 
-      if( HMM_Iterations>0 )
+      if (HMM_Iterations>0)
         m3.setHMM(&h);
       if (Model3_Iterations > 0 || Model4_Iterations > 0 ||
          Model5_Iterations || Model6_Iterations) {
@@ -553,7 +553,7 @@ double StartTraining(int& result) {
         errors=m3.errorsAL();
       }
       if (FEWDUMPS || !NODUMPS) {
-        printAllTables(eTrainVcbList,eTestVcbList,fTrainVcbList,fTestVcbList,m1 );
+        printAllTables(eTrainVcbList,eTestVcbList,fTrainVcbList,fTestVcbList,m1);
       }
     }
   }
@@ -610,7 +610,7 @@ int main(int argc, char* argv[]) {
   double errors = 0.0;
   if (OldADBACKOFF != 0)
     cerr << "WARNING: Parameter -adBackOff does not exist further; use CompactADTable instead.\n";
-  if( MAX_SENTENCE_LENGTH > kMaxAllowedSentenceLength )
+  if (MAX_SENTENCE_LENGTH > kMaxAllowedSentenceLength)
     cerr << "ERROR: MAX_SENTENCE_LENGTH is too big " << MAX_SENTENCE_LENGTH << " > " << kMaxAllowedSentenceLength << '\n';
   errors=StartTraining(a);
   fn = time(NULL);    // finish time

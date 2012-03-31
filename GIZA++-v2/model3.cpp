@@ -61,7 +61,7 @@ void Model3::load_tables(const char *nfile, const char *dfile, const char *p0fil
   nTable.readNTable(nfile);
   dTable.readTable(dfile);
   ifstream inf(p0file);
-  if( !inf ) {
+  if (!inf) {
     cerr << "Can not open: " << p0file << '\n';
   }
   else {
@@ -85,7 +85,7 @@ void Model3::em(int noIterations, SentenceHandler& sHandler1) {
   cout << "\n" << "Starting Model3:  Training";
   //  SentenceHandler sHandler1(efFilename.c_str());
   sHandler1.rewind();
-  for(int it=1; it <= noIterations; it++){
+  for (int it=1; it <= noIterations; it++) {
     it_st = time(NULL);
     if (g_enable_logging)
       util::Logging::GetLogger() << "\n" << "Model3: Iteration " << it;
@@ -97,7 +97,7 @@ void Model3::em(int noIterations, SentenceHandler& sHandler1) {
     do {
       //mj changed next line
       number.insert((size_t) 0, 1, (char)(n % 10 + '0'));
-    } while((n /= 10) > 0);
+    } while ((n /= 10) > 0);
     tfile = g_prefix + ".t3." + number;
     afile = g_prefix + ".a3." + number;
     nfile = g_prefix + ".n3." + number;
@@ -109,7 +109,7 @@ void Model3::em(int noIterations, SentenceHandler& sHandler1) {
     p0_count = p1_count = 0;
     all_prob = 0;
     SentencePair sent;
-    while(sHandler1.getNextSentence(sent)){
+    while (sHandler1.getNextSentence(sent)) {
       Vector<WordIndex>& es = sent.eSent;
       Vector<WordIndex>& fs = sent.fSent;
       const float count  = sent.getCount();
@@ -125,28 +125,28 @@ void Model3::em(int noIterations, SentenceHandler& sHandler1) {
       if (all_prob == 0)
         cout << "\n" <<"all_prob = 0";
 
-      for ( x = 0; x < pow(l+1.0, double(m)); x++){ // For all possible alignmets A
+      for (x = 0; x < pow(l+1.0, double(m)); x++) { // For all possible alignmets A
         y = x;
-        for (j = 1; j <= m; j++){
+        for (j = 1; j <= m; j++) {
           A[j] = y % (l+1);
           y /= (l+1);
         }
-        for(i = 0; i <= l; i++)
+        for (i = 0; i <= l; i++)
           Fert[i] = 0;
         for (j = 1; j <= m; j++)
           Fert[A[j]]++;
-        if (2 * Fert[0] <= m){ /* consider alignments that has Fert[0] less than
+        if (2 * Fert[0] <= m) { /* consider alignments that has Fert[0] less than
                                   half the number of words in French sentence */
           aprob = prob_of_target_and_alignment_given_source(A, Fert, tTable, fs, es);
           temp = aprob/all_prob;
           LogProb templcount = temp*lcount;
 
-          for (j = 1; j <= m; j++){
+          for (j = 1; j <= m; j++) {
             tTable.incCount(es[A[j]], fs[j], templcount);
             if (0 != A[j])
               dCountTable.getRef(j, A[j], l, m)+=templcount;
           }
-          for(i = 0; i <= l; i++)
+          for (i = 0; i <= l; i++)
           {
             nCountTable.getRef(es[i], Fert[i])+=templcount;
             //cout << "AFTER INC2: " << templcount << " " << nCountTable.getRef(es[i], Fert[i]) << '\n';
@@ -159,7 +159,7 @@ void Model3::em(int noIterations, SentenceHandler& sHandler1) {
     sHandler1.rewind();
 
     // normalize tables
-    if( OutputInAachenFormat==1 )
+    if (OutputInAachenFormat==1)
       tTable.printCountTable(tfile.c_str(),Elist.getVocabList(),Flist.getVocabList(),1);
     tTable.normalizeTable(Elist, Flist);
     aCountTable.normalize(aTable);
@@ -168,15 +168,15 @@ void Model3::em(int noIterations, SentenceHandler& sHandler1) {
 
     // normalize p1 & p0
 
-    if (p1_count + p0_count != 0){
-      p1 = p1_count / ( p1_count + p0_count );
+    if (p1_count + p0_count != 0) {
+      p1 = p1_count / ( p1_count + p0_count);
       p0 = 1 - p1;
     }
     else {
       p1 = p0 = 0;
     }
     // print tables
-    if( OutputInAachenFormat==0 )
+    if (OutputInAachenFormat==0)
       tTable.printProbTable(tfile.c_str(),Elist.getVocabList(),Flist.getVocabList(),OutputInAachenFormat);
     dTable.printTable(dfile.c_str());
     nTable.printNTable(Elist.uniqTokens(), nfile.c_str(), Elist.getVocabList(),OutputInAachenFormat);
@@ -217,37 +217,37 @@ void Model3::em(int noIterations, SentenceHandler& sHandler1) {
   PositionIndex prev_cept=0;
   PositionIndex vac_all=m;
   Vector<char> vac(m+1,0);
-  for(PositionIndex i=1;i<=l;i++)
+  for (PositionIndex i=1;i<=l;i++)
   {
   PositionIndex cur_j=al.als_i[i];
   cout << "LOOP: " << i << " " << cur_j << '\n';
   PositionIndex prev_j=0;
   PositionIndex k=0;
-  if(cur_j) { // process first word of cept
+  if (cur_j) { // process first word of cept
   k++;
   vac_all--;
   assert(vac[cur_j]==0);
   vac[cur_j]=1;
-  for(unsigned int q=0;q<vac.size();q++)cout << (vac[q]?'1':'0') << ' ';
+  for (unsigned int q=0;q<vac.size();q++)cout << (vac[q]?'1':'0') << ' ';
   cout << '\n';
   cout << i << " " << cur_j << ": d1(" << vacancies(vac,cur_j) << "|" << vacancies(vac,al.get_center(prev_cept)) << "," << vac_all << "+" << -al.fert(i)<< "+" << +k << ")\n" << '\n';
   prev_j=cur_j;
   cur_j=al.als_j[cur_j].next;
   }
-  while(cur_j) { // process following words of cept
+  while (cur_j) { // process following words of cept
   k++;
   vac_all--;
   vac[cur_j]=1;
   int vprev=vacancies(vac,prev_j);
   cout << "PREV: " << prev_j << '\n';
-  for(unsigned int q=0;q<vac.size();q++)cout << (vac[q]?'1':'0') << ' ';
+  for (unsigned int q=0;q<vac.size();q++)cout << (vac[q]?'1':'0') << ' ';
   cout << '\n';
   cout << i << " " << cur_j << ": d>1(" << vacancies(vac,cur_j) << "-" << vprev << "|" << vac_all<< "+" << -al.fert(i)<< "+" << +k << ")\n" << '\n';
   prev_j=cur_j;
   cur_j=al.als_j[cur_j].next;
   }
   assert(k==al.fert(i));
-  if( k )
+  if (k)
   prev_cept=i;
   }
   assert(vac_all==al.fert(0));
@@ -272,10 +272,10 @@ int Model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
     (*testHandler).rewind();
   string trainingString;
   trainingString+=(h?'H':'3');
-  for(int i=0;i<noIterationsModel3;++i) trainingString+='3';
-  for(int i=0;i<noIterationsModel4;++i) trainingString+='4';
-  for(int i=0;i<noIterationsModel5;++i) trainingString+='5';
-  for(int i=0;i<noIterationsModel6;++i) trainingString+='6';
+  for (int i=0;i<noIterationsModel3;++i) trainingString+='3';
+  for (int i=0;i<noIterationsModel4;++i) trainingString+='4';
+  for (int i=0;i<noIterationsModel5;++i) trainingString+='5';
+  for (int i=0;i<noIterationsModel6;++i) trainingString+='6';
 
   cout << "\n==========================================================\n";
   cout << "Starting "<<trainingString<<":  Viterbi Training";
@@ -284,13 +284,13 @@ int Model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
     util::Logging::GetLogger() << "Starting " << trainingString << ":  Viterbi Training";
   }
   cout << "\n "<<trainingString<<" Training Started at: "<< ctime(&st) << '\n';
-  for(unsigned int it=1; it < trainingString.length(); it++){
+  for (unsigned int it=1; it < trainingString.length(); it++) {
     bool final=0;
-    if( it==trainingString.length()-1 )
+    if (it==trainingString.length()-1)
       final=1;
     string modelName;
     char fromModel=trainingString[it-1],toModel=trainingString[it];
-    if(fromModel==toModel)
+    if (fromModel==toModel)
       modelName=string("Model")+fromModel;
     else
       modelName=string("T")+fromModel+"To"+toModel;
@@ -309,8 +309,8 @@ int Model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
       do{
         //mj changed next line
         number.insert((size_t) 0, 1, (char)(n % 10 + '0'));
-      } while((n /= 10) > 0);
-      if( final )
+      } while ((n /= 10) > 0);
+      if (final)
         number="final";
       tfile = g_prefix + ".t3." + number;
       tfile_actual = g_prefix + ".actual.t3." + number;
@@ -340,7 +340,7 @@ int Model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
 #define TEST_ARGS  *testPerp, *testViterbiPerp, *testHandler, dump_files, test_alignfile.c_str(),false, modelName,final
 
 
-    switch (toModel ) {
+    switch (toModel) {
       case '3':
         switch (fromModel) {
           case 'H':
@@ -379,7 +379,7 @@ int Model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
           }
 
           d4m.normalizeTable();
-          if( dump_files )
+          if (dump_files)
             d4m.printProbTable(d4file.c_str(),d4file2.c_str());
         }
         break;
@@ -410,10 +410,10 @@ int Model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
             default: abort();
           }
           d5m.d4m.normalizeTable();
-          if( dump_files )
+          if (dump_files)
             d5m.d4m.printProbTable(d4file.c_str(),d4file2.c_str());
           d5m.normalizeTable();
-          if( dump_files )
+          if (dump_files)
           {
             ofstream d5output(d5file.c_str());
             d5output << d5m;
@@ -432,13 +432,13 @@ int Model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
                    dump_files, test_alignfile.c_str(), false, model);
 
 #endif
-    if( errorsAL()<minErrors ) {
+    if (errorsAL()<minErrors) {
       minErrors=errorsAL();
       minIter=it;
     }
 
     // now normalize count tables
-    if( dump_files&&OutputInAachenFormat==1 )
+    if (dump_files&&OutputInAachenFormat==1)
       tTable.printCountTable(tfile.c_str(),Elist.getVocabList(),Flist.getVocabList(),1);
     tTable.normalizeTable(Elist, Flist);
     aCountTable.normalize(aTable);
@@ -457,8 +457,8 @@ int Model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
       p1 = 1-P0;
     }
     else {
-      if (p1_count + p0_count != 0){
-        p1 = p1_count / ( p1_count + p0_count );
+      if (p1_count + p0_count != 0) {
+        p1 = p1_count / ( p1_count + p0_count);
         p0 = 1 - p1;
       } else {
         p1 = p0 = 0;
@@ -480,7 +480,7 @@ int Model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
            << " PERPLEXITY " << (*testViterbiPerp).perplexity() << " Sum: " << (*testViterbiPerp).getSum() <<
           " wc: " << (*testViterbiPerp).word_count() << '\n';
     if (dump_files) {
-      if( OutputInAachenFormat==0 )
+      if (OutputInAachenFormat==0)
         tTable.printProbTable(tfile.c_str(),Elist.getVocabList(),Flist.getVocabList(),OutputInAachenFormat);
       aTable.printTable(afile.c_str());
       dTable.printTable(dfile.c_str());
@@ -498,9 +498,9 @@ int Model3::viterbi(int noIterationsModel3, int noIterationsModel4,int noIterati
   cout << trainingString <<" Training Finished at: " << ctime(&fn) << "\n";
   cout << "\n" << "Entire Viterbi "<<trainingString<<" Training took: " << difftime(fn, st) << " seconds\n";
   cout << "==========================================================\n";
-  if( noIterationsModel4||noIterationsModel5 )
+  if (noIterationsModel4||noIterationsModel5)
     minIter-=noIterationsModel3;
-  if( noIterationsModel5 )
+  if (noIterationsModel5)
     minIter-=noIterationsModel4;
   return minIter;
 }

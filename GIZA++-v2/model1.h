@@ -93,14 +93,14 @@ class Model1 : public ReportInfo {
   void load_table(const char* tname);
   void readVocabFile(const char* fname, Vector<WordEntry>& vlist, int& vsize,
                      int& total);
-  Vector<WordEntry>& getEnglishVocabList(void) const { return Elist.getVocabList();};
-  Vector<WordEntry>& getFrenchVocabList(void) const  { return Flist.getVocabList();};
-  double getETotalWCount(void) const { return eTotalWCount;};
-  double getFTotalWCount(void) const { return fTotalWCount;};
-  int getNoEnglishWords(void) const  { return noEnglishWords;};
-  int getNoFrenchWords(void)  const { return noFrenchWords;};
-  TModel<COUNT, PROB>& getTTable(void) { return tTable;};
-  string& getEFFilename(void) { return efFilename;};
+  Vector<WordEntry>& getEnglishVocabList(void) const { return Elist.getVocabList(); }
+  Vector<WordEntry>& getFrenchVocabList(void) const  { return Flist.getVocabList(); }
+  double getETotalWCount(void) const { return eTotalWCount; }
+  double getFTotalWCount(void) const { return fTotalWCount; }
+  int getNoEnglishWords(void) const  { return noEnglishWords; }
+  int getNoFrenchWords(void)  const { return noFrenchWords; }
+  TModel<COUNT, PROB>& getTTable(void) { return tTable; }
+  string& getEFFilename(void) { return efFilename; }
 
   void addAL(const Vector<WordIndex>& viterbi_alignment, size_t pair_no, int l) {
     if (pair_no <= ReferenceAlignment.size()) {

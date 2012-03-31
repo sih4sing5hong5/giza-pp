@@ -2,7 +2,7 @@
 
   Copyright (C) 1998,1999,2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-  This file is part of GIZA++ ( extension of GIZA ).
+  This file is part of GIZA++ ( extension of GIZA).
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -31,14 +31,14 @@
 template<class CLS,class MAPPERCLASSTOSTRING>
 void HMMTables<CLS,MAPPERCLASSTOSTRING>::writeJumps(ostream&out) const {
   double ssum=0.0;
-  for(typename map<AlDeps<CLS>,FlexArray<double> >::const_iterator i=alProb.begin();i!=alProb.end();++i)
+  for (typename map<AlDeps<CLS>,FlexArray<double> >::const_iterator i=alProb.begin();i!=alProb.end();++i)
   {
     double sum=0.0;
     out << "\n\nDistribution for: ";
     printAlDeps(out,i->first,*mapper1,*mapper2);
     out << ' ';
-    for(int a=i->second.low();a<=i->second.high();++a)
-      if( i->second[a] )
+    for (int a=i->second.low();a<=i->second.high();++a)
+      if (i->second[a])
       {
         out << a << ':' << i->second[a] << ';' << ' ';
         sum+=i->second[a];
@@ -82,7 +82,7 @@ double HMMTables<CLS,MAPPERCLASSTOSTRING>::getAlProb(int istrich,int k,int sentL
   if (p!=alProb.end()) {
     return (p->second)[pos];
   } else {
-    if( iter>0&&iter<5000 )
+    if (iter>0&&iter<5000)
       cout << "WARNING: Not found: " << ' ' << J << ' ' << sentLength << '\n';;
     return 1.0/(2*sentLength-1);
   }
@@ -114,8 +114,8 @@ void HMMTables<CLS,MAPPERCLASSTOSTRING>::addAlCount(int istrich,int k,int sentLe
 
   {
     typename map<AlDeps<CLS>,FlexArray<double> >::iterator p=alProb.find(deps);
-    if( p==alProb.end() ) {
-      if( (CompareAlDeps&1)==0 )
+    if (p==alProb.end()) {
+      if ((CompareAlDeps&1)==0)
         p=alProb.insert(make_pair(deps,FlexArray<double> (-MAX_SENTENCE_LENGTH,MAX_SENTENCE_LENGTH,0.0))).first;
       else
         p=alProb.insert(make_pair(deps,FlexArray<double> (-sentLength,sentLength,0.0))).first;
@@ -123,10 +123,10 @@ void HMMTables<CLS,MAPPERCLASSTOSTRING>::addAlCount(int istrich,int k,int sentLe
     p->second[pos]+=value;
   }
 
-  if ( valuePredicted ) {
+  if (valuePredicted) {
     typename map<AlDeps<CLS>,FlexArray<double> >::iterator p=alProbPredicted.find(deps);
-    if( p==alProbPredicted.end() ) {
-      if( (CompareAlDeps&1)==0 )
+    if (p==alProbPredicted.end()) {
+      if ((CompareAlDeps&1)==0)
         p=alProbPredicted.insert(make_pair(deps,FlexArray<double> (-MAX_SENTENCE_LENGTH,MAX_SENTENCE_LENGTH,0.0))).first;
       else
         p=alProbPredicted.insert(make_pair(deps,FlexArray<double> (-sentLength,sentLength,0.0))).first;
@@ -137,14 +137,14 @@ void HMMTables<CLS,MAPPERCLASSTOSTRING>::addAlCount(int istrich,int k,int sentLe
 
 template<class CLS,class MAPPERCLASSTOSTRING>
 Array<double>&HMMTables<CLS,MAPPERCLASSTOSTRING>::doGetAlphaInit(int I) {
-  if( !init_alpha.count(I) )
+  if (!init_alpha.count(I))
     init_alpha[I]=Array<double>(I,0);
   return init_alpha[I];
 }
 
 template<class CLS,class MAPPERCLASSTOSTRING>
 Array<double>&HMMTables<CLS,MAPPERCLASSTOSTRING>::doGetBetaInit(int I) {
-  if( !init_beta.count(I) )
+  if (!init_beta.count(I))
     init_beta[I]=Array<double>(I,0);
   return init_beta[I];
 }
@@ -152,11 +152,11 @@ Array<double>&HMMTables<CLS,MAPPERCLASSTOSTRING>::doGetBetaInit(int I) {
 template<class CLS,class MAPPERCLASSTOSTRING>
 bool HMMTables<CLS,MAPPERCLASSTOSTRING>::getAlphaInit(int I,Array<double>&x) const {
   hash_map<int,Array<double> >::const_iterator i=init_alpha.find(I);
-  if( i==init_alpha.end() ) {
+  if (i==init_alpha.end()) {
     return 0;
   } else {
     x=i->second;
-    for(unsigned int j=x.size()/2+1;j<x.size();++j) // only first empty word can be chosen
+    for (unsigned int j=x.size()/2+1;j<x.size();++j) // only first empty word can be chosen
       x[j]=0;
     return 1;
   }
@@ -165,7 +165,7 @@ bool HMMTables<CLS,MAPPERCLASSTOSTRING>::getAlphaInit(int I,Array<double>&x) con
 template<class CLS,class MAPPERCLASSTOSTRING>
 bool HMMTables<CLS,MAPPERCLASSTOSTRING>::getBetaInit(int I,Array<double>&x) const {
   hash_map<int,Array<double> >::const_iterator i=init_beta.find(I);
-  if( i==init_beta.end() ) {
+  if (i==init_beta.end()) {
     return 0;
   } else {
     x=i->second;
@@ -182,4 +182,3 @@ HMMTables<CLS,MAPPERCLASSTOSTRING>::HMMTables(double _probForEmpty,const MAPPERC
 
 template<class CLS,class MAPPERCLASSTOSTRING>
 HMMTables<CLS,MAPPERCLASSTOSTRING>::~HMMTables() { }
-

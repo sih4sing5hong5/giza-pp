@@ -1,7 +1,7 @@
 /*
   Copyright (C) 2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-  This file is part of GIZA++ ( extension of GIZA ).
+  This file is part of GIZA++ ( extension of GIZA).
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -46,18 +46,18 @@ class transpair_model4 : public transpair_model3
       : transpair_model3(es, fs, tTable, aTable, dTable, nTable, _p1, _p0),
         d4m(*_d4m),probSecond(m+1,m+1,0.0),probFirst(l+1)
   {
-    for(unsigned int j1=1;j1<=m;++j1)
-      for(unsigned int j2=1;j2<j1;++j2)
+    for (unsigned int j1=1;j1<=m;++j1)
+      for (unsigned int j2=1;j2<j1;++j2)
       {
         probSecond(j1,j2)=d4m.getProb_bigger(j1,j2,0,d4m.fwordclasses.getClass(get_fs(j1)),l,m);
       }
-    for(unsigned int i=0;i<=l;++i)
+    for (unsigned int i=0;i<=l;++i)
     {
       Array2<double> &pf=probFirst[i]=Array2<double>(m+1,m+1,0.0);
-      for(unsigned int j1=1;j1<=m;++j1)
+      for (unsigned int j1=1;j1<=m;++j1)
       {
         map<m4_key,d4model::Vpff,compare1 >::const_iterator ci=d4m.getProb_first_iterator(d4m.ewordclasses.getClass(get_es(i)),d4m.fwordclasses.getClass(get_fs(j1)),l,m);
-        for(unsigned int j2=0;j2<=m;++j2)
+        for (unsigned int j2=0;j2<=m;++j2)
         {
           pf(j1,j2)=d4m.getProb_first_withiterator(j1,j2,m,ci);
           MASSERT(pf(j1,j2)==d4m.getProb_first(j1,j2,d4m.ewordclasses.getClass(get_es(i)),d4m.fwordclasses.getClass(get_fs(j1)),l,m));
@@ -65,15 +65,15 @@ class transpair_model4 : public transpair_model3
       }
     }
   }
-  LogProb prob_of_target_and_alignment_given_source_1(const Alignment&al,bool verb)const;
-  LogProb scoreOfAlignmentForChange(const Alignment&a)const
-  {return prob_of_target_and_alignment_given_source(a,2); }
-  LogProb scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j,double thisValue=-1.0)const;
-  LogProb scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double thisValue=-1.0)const;
-  LogProb _scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j,double thisValue=-1.0)const;
-  LogProb _scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double thisValue=-1.0)const;
-  int modelnr()const{return 4;}
-  LogProb prob_of_target_and_alignment_given_source(const Alignment&al, short distortionType=3,bool verb=0)const;
-  void computeScores(const Alignment&al,vector<double>&d)const;
+  LogProb prob_of_target_and_alignment_given_source_1(const Alignment&al,bool verb) const;
+  LogProb scoreOfAlignmentForChange(const Alignment&a) const
+  { return prob_of_target_and_alignment_given_source(a,2); }
+  LogProb scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j,double thisValue=-1.0) const;
+  LogProb scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double thisValue=-1.0) const;
+  LogProb _scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j,double thisValue=-1.0) const;
+  LogProb _scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double thisValue=-1.0) const;
+  int modelnr() const { return 4; }
+  LogProb prob_of_target_and_alignment_given_source(const Alignment&al, short distortionType=3,bool verb=0) const;
+  void computeScores(const Alignment&al,vector<double>&d) const;
 };
 #endif  // GIZAPP_TRANSPAIR_MODEL4_H_

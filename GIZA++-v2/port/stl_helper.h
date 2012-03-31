@@ -34,12 +34,12 @@ using namespace std::tr1;
 #include <vector>
 #include <iostream>
 
-#define over_string(a,i) for(unsigned int i=0;i<a.length();i++)
-#define over_array(a,i) for(i=(a).low();i<=(a).high();i++)
-#define backwards_array(a,i) for(i=(a).high();i>=(a).low();i--)
-#define over_arr(a,i) for(int i=(a).low();i<=(a).high();i++)
-#define over_arrMAX(a,i,max) for(int i=(a).low();i<=min((a).high(),max-1);i++)
-#define backwards_arr(a,i) for(int i=(a).high();i>=(a).low();i--)
+#define over_string(a,i) for (unsigned int i=0;i<a.length();i++)
+#define over_array(a,i) for (i=(a).low();i<=(a).high();i++)
+#define backwards_array(a,i) for (i=(a).high();i>=(a).low();i--)
+#define over_arr(a,i) for (int i=(a).low();i<=(a).high();i++)
+#define over_arrMAX(a,i,max) for (int i=(a).low();i<=min((a).high(),max-1);i++)
+#define backwards_arr(a,i) for (int i=(a).high();i>=(a).low();i--)
 
 extern double n1mult,n2mult,n3mult;
 
@@ -47,26 +47,26 @@ inline double realProb(int n1,int n2)
 {
   MASSERT(n1<=n2);
   IASSERT(n1>=0&&n2>0);
-  if(n2==0)n2=1;
+  if (n2==0)n2=1;
   return ((double)n1)/(double)n2;
 }
 
 inline double verfProb(int n1,int n2)
 {
   double prob = realProb(n1,n2);
-  if( n1==1 )return prob*n1mult;
-  else if( n1==2 )return prob*n2mult;
-  else if( n1==3 )return prob*n3mult;
+  if (n1==1) return prob*n1mult;
+  else if (n1==2) return prob*n2mult;
+  else if (n1==3) return prob*n3mult;
   else
     return prob;
 }
 
 inline bool prefix(const string&x,const string&y)
 {
-  if(y.size()>x.size() )
+  if (y.size()>x.size())
     return 0;
-  for(unsigned int i=0;i<y.size();++i)
-    if( y[i]!=x[i] )
+  for (unsigned int i=0;i<y.size();++i)
+    if (y[i]!=x[i])
       return 0;
   return 1;
 }
@@ -85,7 +85,7 @@ inline int Hash(const string& s)
 {
   int sum=0;
   string::const_iterator i=s.begin(),end=s.end();
-  for(;i!=end;i++)sum=5*sum+(*i);
+  for (;i!=end;i++)sum=5*sum+(*i);
   return sum;
 }
 template<class A,class B,class C>
@@ -95,23 +95,23 @@ class tri
   A a;
   B b;
   C c;
-  tri(){};
+  tri() {};
   tri(const A&_a,const B&_b,const C&_c)
       : a(_a),b(_b),c(_c) {}
 };
 template<class A,class B,class C>
 bool operator==(const tri<A,B,C>&x,const tri<A,B,C>&y)
-{ return x.a==y.a&&x.b==y.b&&x.c==y.c;}
+{ return x.a==y.a&&x.b==y.b&&x.c==y.c; }
 
 template<class A,class B,class C>
 bool operator<(const tri<A,B,C>&x,const tri<A,B,C>&y)
 {
-  if(x.a<y.a)return 1;
-  if(y.a<x.a)return 0;
-  if(x.b<y.b)return 1;
-  if(y.b<x.b)return 0;
-  if(x.c<y.c)return 1;
-  if(y.c<x.c)return 0;
+  if (x.a<y.a) return 1;
+  if (y.a<x.a) return 0;
+  if (x.b<y.b) return 1;
+  if (y.b<x.b) return 0;
+  if (x.c<y.c) return 1;
+  if (y.c<x.c) return 0;
   return 0;
 }
 
@@ -121,7 +121,7 @@ template<class T>
 class my_hash
 {
  public:
-  int operator()(const T&t)const {return Hash(t);}
+  int operator()(const T&t) const { return Hash(t); }
 };
 
 inline int Hash(int value) { return value; }
@@ -138,10 +138,10 @@ class leda_h_array : public MY_HASH_BASE
   : MY_HASH_BASE(),init(_init) {}
   bool defined(const A&a) const
   { return find(a)!=this->end(); }
-  const B&operator[](const A&a)const
+  const B&operator[](const A&a) const
   {
     typename MY_HASH_BASE::const_iterator pos=find(a);
-    if( pos==this->end() )
+    if (pos==this->end())
       return init;
     else
       return pos->second;
@@ -149,7 +149,7 @@ class leda_h_array : public MY_HASH_BASE
   B&operator[](const A&a)
   {
     typename MY_HASH_BASE::iterator pos=find(a);
-    if( pos==this->end() )
+    if (pos==this->end())
     {
       insert(MY_HASH_BASE::value_type(a,init));
       pos=find(a);
@@ -157,11 +157,11 @@ class leda_h_array : public MY_HASH_BASE
     }
     return pos->second;
   }
-  const B&initValue()const
-  {return init;}
+
+  const B&initValue() const { return init; }
 };
 
-#define forall_defined_h(a,b,c,d) for(typename leda_h_array<a,b>::const_iterator __jj__=(d).begin();__jj__!=(d).end()&&((c=__jj__->first),1); ++__jj__)
+#define forall_defined_h(a,b,c,d) for (typename leda_h_array<a,b>::const_iterator __jj__=(d).begin();__jj__!=(d).end()&&((c=__jj__->first),1); ++__jj__)
 template<class T,class U>
 ostream & operator<<(ostream&out,const leda_h_array<T,U>&w)
 {
@@ -170,7 +170,7 @@ ostream & operator<<(ostream&out,const leda_h_array<T,U>&w)
   out << "h_array{";
   forall_defined_h(T,U,t,w)
   {
-    if( makeNl )
+    if (makeNl)
       out << "\n       ";
     out << "EL:" << t << " INH:" << w[t] << ".";
     makeNl=1;
@@ -189,9 +189,9 @@ bool operator==(const leda_h_array<A,B>&p1,const leda_h_array<A,B>&p2)
 {
   A v;
   forall_defined_h(A,B,v,p1)
-      if( !( p1[v]==p2[v]) ) return 0;
+      if (!( p1[v]==p2[v])) return 0;
   forall_defined_h(A,B,v,p2)
-      if( !( p1[v]==p2[v]) ) return 0;
+      if (!( p1[v]==p2[v])) return 0;
   return 1;
 }
 
@@ -199,7 +199,7 @@ template<class T>
 int count_elements(T a,T b)
 {
   int c=0;
-  while(a!=b)
+  while (a!=b)
   {
     a++;
     c++;
@@ -211,15 +211,15 @@ template<class T>
 T normalize_if_possible_with_increment(T*a,T*b,int increment)
 {
   T sum=0;
-  for(T*i=a;i!=b;i+=increment)
+  for (T*i=a;i!=b;i+=increment)
     sum+=*i;
-  if( sum )
-    for(T*i=a;i!=b;i+=increment)
+  if (sum)
+    for (T*i=a;i!=b;i+=increment)
       *i/=sum;
   else
   {
     T factor=increment/(b-a);
-    for(T*i=a;i!=b;i+=increment)
+    for (T*i=a;i!=b;i+=increment)
       *i=factor;
   }
   return sum;
@@ -229,12 +229,12 @@ template<class T>
 inline int m_comp_3way(T a,T b,int n)
 {
   int _n=0;
-  while((_n++<n) && a && b)
+  while ((_n++<n) && a && b)
   {
     const typename T::value_type &aa=*a;
     const typename T::value_type &bb=*b;
-    if( aa<bb )return 1;
-    if( bb<aa )return -1;
+    if (aa<bb) return 1;
+    if (bb<aa) return -1;
     ++a;
     ++b;
   }
@@ -245,10 +245,10 @@ template<class T>
 void smooth_standard(T*a,T*b,double p)
 {
   int n=b-a;
-  if( n==0 )
+  if (n==0)
     return;
   double pp=p/n;
-  for(T*i=a;i!=b;++i)
+  for (T*i=a;i!=b;++i)
     *i = (1.0-p)*(*i)+pp;
 }
 

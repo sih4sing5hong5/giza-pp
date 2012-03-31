@@ -62,7 +62,7 @@ class VocabList {
 
   void setName(const char* filename) { fname = filename; }
   std::size_t size() const { return list.size(); }
-  inline WordIndex uniqTokens() const { return noUniqueTokens;};
+  inline WordIndex uniqTokens() const { return noUniqueTokens; };
   inline WordIndex uniqTokensInCorpus() const { return noUniqueTokensInCorpus; }
   inline double totalVocab() const { return total; }
   inline Vector<WordEntry>& getVocabList() { return(list); }
@@ -70,7 +70,7 @@ class VocabList {
   void readVocabList();
 
   void incFreq(WordIndex id , double f) {
-    if(id < list.size()){
+    if (id < list.size()) {
       if (list[id].freq < kEPS)
         noUniqueTokensInCorpus++;
       list[id].freq += f;
@@ -87,7 +87,7 @@ class VocabList {
 
   int operator()(const string& x) const {
     map<string,int>::const_iterator i=s2i.find(x);
-    if( i!=s2i.end() )
+    if (i!=s2i.end())
       return i->second;
     else {
       cerr << "ERROR: no word index for '"<<x<<"'\n";
@@ -108,7 +108,7 @@ class VocabList {
   }
 
   void printVocabList(ostream& of) {
-    for (WordIndex i = 1; i < list.size(); i++){
+    for (WordIndex i = 1; i < list.size(); i++) {
       if (list[i].word != "" && list[i].freq > 0)
         of << i << ' ' << list[i].word << ' ' << list[i].freq << '\n';
     }

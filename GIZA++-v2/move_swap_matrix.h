@@ -55,7 +55,7 @@ class MoveSwapMatrix : public Alignment {
   const TRANSPAIR& get_ef() const { return ef; }
 
   bool isCenterDeleted() const { return centerDeleted; }
-  bool isLazy()const { return lazyEvaluation; }
+  bool isLazy() const { return lazyEvaluation; }
 
   void updateJ(WordIndex j, bool,double thisValue);
   void updateI(WordIndex i, double thisValue);
@@ -80,9 +80,9 @@ class MoveSwapMatrix : public Alignment {
   }
 
   LogProb cmove(WordIndex x, WordIndex y) const {
-    MASSERT( get_al(y)!=x );
-    MASSERT( delmove(x,y)==0 );
-    if (lazyEvaluation ) {
+    MASSERT( get_al(y)!=x);
+    MASSERT( delmove(x,y)==0);
+    if (lazyEvaluation) {
       return ef.scoreOfMove(*this,x,y);
     } else {
       return _cmove(x, y);

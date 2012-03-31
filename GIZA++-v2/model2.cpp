@@ -42,17 +42,17 @@ void Model2::initialize_table_uniformly(SentenceHandler& sHandler1) {
   int n=0;
   SentencePair sent;
   sHandler1.rewind();
-  while(sHandler1.getNextSentence(sent)){
+  while (sHandler1.getNextSentence(sent)) {
     Vector<WordIndex>& es = sent.eSent;
     Vector<WordIndex>& fs = sent.fSent;
     WordIndex l = es.size() - 1;
     WordIndex m = fs.size() - 1;
     n++;
-    if(1<=m&&aTable.getValue(l,m,l,m)<=g_smooth_prob)
+    if (1<=m&&aTable.getValue(l,m,l,m)<=g_smooth_prob)
     {
       PROB uniform_val = 1.0 / (l+1);
-      for(WordIndex j=1; j <= m; j++)
-        for(WordIndex i=0; i <= l; i++)
+      for (WordIndex j=1; j <= m; j++)
+        for (WordIndex i=0; i <= l; i++)
           aTable.setValue(i,j, l, m, uniform_val);
     }
   }
@@ -71,7 +71,7 @@ int Model2::em_with_tricks(int noIterations)
   sHandler1.rewind();
   cout << "\n==========================================================\n";
   cout << modelName << " Training Started at: " << ctime(&st) << " iter: " << noIterations << "\n";
-  for(int it=1; it <= noIterations; it++){
+  for (int it=1; it <= noIterations; it++) {
     pair_no = 0;
     it_st = time(NULL);
     cout << endl << "-----------\n" << modelName << ": Iteration " << it << '\n';
@@ -80,7 +80,7 @@ int Model2::em_with_tricks(int noIterations)
     int n = it;
     do{
       number.insert((size_t)0, 1, (char)(n % 10 + '0'));
-    } while((n /= 10) > 0);
+    } while ((n /= 10) > 0);
     tfile = g_prefix + ".t" + shortModelName + "." + number;
     afile = g_prefix + ".a" + shortModelName + "." + number;
     alignfile = g_prefix + ".A" + shortModelName + "." + number;
@@ -88,7 +88,7 @@ int Model2::em_with_tricks(int noIterations)
     aCountTable.clear();
     initAL();
     em_loop(perp, sHandler1, dump_files, alignfile.c_str(), trainViterbiPerp, false);
-    if( errorsAL()<minErrors ) {
+    if (errorsAL()<minErrors) {
       minErrors=errorsAL();
       minIter=it;
     }
@@ -111,7 +111,7 @@ int Model2::em_with_tricks(int noIterations)
            << " PERPLEXITY " << testViterbiPerp->perplexity()
            << '\n';
     if (dump_files) {
-      if(OutputInAachenFormat==0)
+      if (OutputInAachenFormat==0)
         tTable.printProbTable(tfile.c_str(),Elist.getVocabList(),Flist.getVocabList(),OutputInAachenFormat);
       aCountTable.printTable(afile.c_str());
     }
@@ -151,14 +151,14 @@ void Model2::em_loop(Perplexity& perp, SentenceHandler& sHandler1,
   viterbi_perp.clear();
   ofstream of2;
   // for each sentence pair in the corpus
-  if (dump_alignment||FEWDUMPS )
+  if (dump_alignment||FEWDUMPS)
     of2.open(alignfile);
   SentencePair sent;
 
   vector<double> ferts(evlist.size());
 
   sHandler1.rewind();
-  while(sHandler1.getNextSentence(sent)){
+  while (sHandler1.getNextSentence(sent)) {
     Vector<WordIndex>& es = sent.eSent;
     Vector<WordIndex>& fs = sent.fSent;
     const float so  = sent.getCount();
@@ -167,20 +167,20 @@ void Model2::em_loop(Perplexity& perp, SentenceHandler& sHandler1,
     cross_entropy = log(1.0);
     Vector<WordIndex> viterbi_alignment(fs.size());
     double viterbi_score = 1;
-    for(j=1; j <= m; j++){
+    for (j=1; j <= m; j++) {
       Vector<LpPair<COUNT,PROB> *> sPtrCache(es.size(),0); // cache pointers to table
       // entries  that map fs to all possible ei in this sentence.
       PROB denom = 0.0;
       PROB e = 0.0, word_best_score = 0;
       WordIndex best_i = 0; // i for which fj is best maped to ei
-      for(i=0; i <= l; i++){
+      for (i=0; i <= l; i++) {
         sPtrCache[i] = tTable.getPtr(es[i], fs[j]);
-        if (sPtrCache[i] != 0 &&(*(sPtrCache[i])).prob > g_smooth_prob )
+        if (sPtrCache[i] != 0 &&(*(sPtrCache[i])).prob > g_smooth_prob)
           e = (*(sPtrCache[i])).prob * aTable.getValue(i,j, l, m);
         else
           e = g_smooth_prob * aTable.getValue(i,j, l, m);
         denom += e;
-        if (e > word_best_score){
+        if (e > word_best_score) {
           word_best_score = e;
           best_i = i;
         }
@@ -188,16 +188,16 @@ void Model2::em_loop(Perplexity& perp, SentenceHandler& sHandler1,
       viterbi_alignment[j] = best_i;
       viterbi_score *= word_best_score; ///denom;
       cross_entropy += log(denom);
-      if (denom == 0){
+      if (denom == 0) {
         if (test)
           cerr << "WARNING: denom is zero (TEST)\n";
         else
           cerr << "WARNING: denom is zero (TRAIN)\n";
       }
-      if (!test){
-        if(denom > 0){
+      if (!test) {
+        if (denom > 0) {
           COUNT val = COUNT(so) / (COUNT) double(denom);
-          for( i=0; i <= l; i++){
+          for (i=0; i <= l; i++) {
             PROB e(0.0);
             if (sPtrCache[i] != 0 &&  (*(sPtrCache[i])).prob > g_smooth_prob)
               e = (*(sPtrCache[i])).prob;
@@ -205,7 +205,7 @@ void Model2::em_loop(Perplexity& perp, SentenceHandler& sHandler1,
               e = g_smooth_prob;
             e *= aTable.getValue(i,j, l, m);
             COUNT temp = COUNT(e) * val;
-            if( NoEmptyWord==0 || i!=0 )
+            if (NoEmptyWord==0 || i!=0)
               if (sPtrCache[i] != 0)
                 (*(sPtrCache[i])).count += temp;
               else
@@ -218,7 +218,7 @@ void Model2::em_loop(Perplexity& perp, SentenceHandler& sHandler1,
     sHandler1.setProbOfSentence(sent,cross_entropy);
     perp.addFactor(cross_entropy, so, l, m,1);
     viterbi_perp.addFactor(log(viterbi_score), so, l, m,1);
-    if (dump_alignment||(FEWDUMPS&&sent.sentenceNo<1000) )
+    if (dump_alignment||(FEWDUMPS&&sent.sentenceNo<1000))
       printAlignToFile(es, fs, Elist.getVocabList(), Flist.getVocabList(), of2, viterbi_alignment, sent.sentenceNo, viterbi_score);
     addAL(viterbi_alignment,sent.sentenceNo,l);
     pair_no++;

@@ -51,19 +51,19 @@ Dictionary::Dictionary(const char *filename)
 Dictionary::~Dictionary() {}
 
 bool Dictionary::Open(const char* filename) {
-  if(!std::strcmp(filename, "")){
+  if (!std::strcmp(filename, "")) {
     is_dead_ = true;
     return false;
   }
   std::cout << "Reading dictionary from:  " << filename << '\n';
   std::ifstream ifs(filename);
-  if(!ifs){
+  if (!ifs) {
     std::cerr << "ERROR: Can't open dictionary: " << filename << '\n';
     return false;
   }
 
   int p, q;
-  while((ifs >> p >> q)){
+  while ((ifs >> p >> q)) {
     pairs_[0].push_back(p);
     pairs_[1].push_back(q);
   }
@@ -77,25 +77,25 @@ bool Dictionary::indict(int p, int q) {
   if (p == 0 && q == 0) return false;
 
   if (cur_val_ == p) {
-    for(int i = cur_index_min_; i <= cur_index_max_; i++)
+    for (int i = cur_index_min_; i <= cur_index_max_; i++)
       if (pairs_[1][i] == q) return true;
     return false;
   } else{
     int begin = 0, end = pairs_[0].size() - 1, middle = 0;
     unsigned int t;
     bool ret = false;
-    while(begin <= end){
+    while (begin <= end) {
       middle = begin + ((end - begin) >> 1);
       if (p < pairs_[0][middle]) {
         end = middle - 1;
-      } else if(p > pairs_[0][middle]) {
+      } else if (p > pairs_[0][middle]) {
         begin = middle + 1;
       } else {
         break;
       }
     }
     t = middle;
-    while (pairs_[0][t] == p ) {
+    while (pairs_[0][t] == p) {
       if (pairs_[1][t--] == q) ret = true;
     }
     cur_index_min_ = t + 1;

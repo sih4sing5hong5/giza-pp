@@ -40,8 +40,8 @@
 #define Vector vector
 template<class T> ostream& operator<<(ostream&o, const Vector<T>&a)
 {
-  o << "Vector(" << a.size() << "){ ";
-  for(unsigned int iii=0;iii<a.size();iii++)
+  o << "Vector(" << a.size() << ") { ";
+  for (unsigned int iii=0;iii<a.size();iii++)
     o << " " << iii<< ": " << a[iii]<<";";
   return o << "}\n";
 }
@@ -92,7 +92,7 @@ template<class T> class Vector
       : p(new T[n]), realSize(n), maxWritten(n-1)
   {
     memo_new(p);
-    for(int iii=0;iii<n;iii++)p[iii]=_init;
+    for (int iii=0;iii<n;iii++)p[iii]=_init;
 #ifdef VERY_ARRAY_DEBUG
     cout << "MAKE ARRAY with parameter n and init: " << this << " " << realSize<<" "<<(void*)p << '\n';
 #endif
@@ -112,7 +112,7 @@ template<class T> class Vector
 
   Vector<T>& operator=(const Vector<T>&x)
   {
-    if( this!= &x )
+    if (this!= &x)
     {
 #ifdef VERY_ARRAY_DEBUG
       cout << "FREE ARRAY because of operator=: " << this << " " << realSize<<" "<<(void*)p << '\n';
@@ -133,7 +133,7 @@ template<class T> class Vector
 
   Vector<T>& operator=(Vector<T>&x)
   {
-    if( this!= &x )
+    if (this!= &x)
     {
 #ifdef VERY_ARRAY_DEBUG
       cout << "FREE ARRAY because of operator=: " << this << " " << realSize<<" "<<(void*)p << '\n';
@@ -154,14 +154,14 @@ template<class T> class Vector
 
   void allowAccess(int n)
   {
-    while( realSize<=n )
+    while (realSize<=n)
       _expand();
     maxWritten=max(maxWritten, n);
-    assert( maxWritten<realSize );
+    assert( maxWritten<realSize);
   }
   void resize(int n)
   {
-    while( realSize<n )
+    while (realSize<n)
       _expand();
     maxWritten=n-1;
   }
@@ -177,12 +177,12 @@ template<class T> class Vector
   }
   void sort(int until=-1)
   {
-    if( until== -1 ) until=size();
+    if (until== -1) until=size();
     std::sort(p, p+until);
   }
   void invsort(int until=-1)
   {
-    if( until== -1 ) until=size();
+    if (until== -1) until=size();
     std::sort(p, p+until, greater<T>());
   }
   void init(int n, const T&_init)
@@ -196,14 +196,14 @@ template<class T> class Vector
     memo_new(p);
     realSize=n;
     maxWritten=n-1;
-    for(int iii=0;iii<n;iii++)p[iii]=_init;
+    for (int iii=0;iii<n;iii++)p[iii]=_init;
 #ifdef VERY_ARRAY_DEBUG
     cout << "NEW ARRAY because of init: " << this << " " << realSize<<" "<<(void*)p << '\n';
 #endif
   }
   inline unsigned int size() const
-  {assert( maxWritten<realSize );
-    return maxWritten+1;}
+  {assert( maxWritten<realSize);
+    return maxWritten+1; }
   inline int low() const
   { return 0; }
   inline int high() const
@@ -211,13 +211,13 @@ template<class T> class Vector
   int findMax() const;
   int findMin() const;
   void errorAccess(int n) const;
-  inline T*getPointerToData(){return p;}
-  inline T*begin(){return p;}
-  inline T*end(){return p+maxWritten+1;}
+  inline T*getPointerToData() { return p; }
+  inline T*begin() { return p; }
+  inline T*end() { return p+maxWritten+1; }
   inline T& operator[](int n)
   {
 #ifndef NDEBUG
-    if( n<0 || n>maxWritten )
+    if (n<0 || n>maxWritten)
       errorAccess(n);
 #endif
     return p[n];
@@ -225,7 +225,7 @@ template<class T> class Vector
   inline const T& operator[](int n) const
   {
 #ifndef NDEBUG
-    if(n<0 || n>maxWritten )
+    if (n<0 || n>maxWritten)
       errorAccess(n);
 #endif
     return p[n];
@@ -233,19 +233,16 @@ template<class T> class Vector
   inline const T& get(int n) const
   {
 #ifndef NDEBUG
-    if(n<0 || n>maxWritten )
+    if (n<0 || n>maxWritten)
       errorAccess(n);
 #endif
     return p[n];
   }
-  const T&top(int n=0) const
-  {return (*this)[maxWritten-n];}
-  T&top(int n=0)
-  {return (*this)[maxWritten-n];}
-  const T&back(int n=0) const
-  {return (*this)[maxWritten-n];}
-  T&back(int n=0)
-  {return (*this)[maxWritten-n];}
+  const T&top(int n=0) const { return (*this)[maxWritten-n]; }
+  T&top(int n=0) { return (*this)[maxWritten-n]; }
+  const T&back(int n=0) const{ return (*this)[maxWritten-n]; }
+  T&back(int n=0) { return (*this)[maxWritten-n]; }
+
   T&push_back(const T&x)
   {
     allowAccess(maxWritten+1);
@@ -258,7 +255,7 @@ template<class T> class Vector
     out << "Vector ";
     out << size() << " ";
     out << a << '\n';
-    for(int iv=0;iv<=maxWritten;iv++)
+    for (int iv=0;iv<=maxWritten;iv++)
     {
     writeOb(out, (*this)[iv]);
     out << '\n';
@@ -270,13 +267,13 @@ template<class T> class Vector
   bool readFrom(istream&in)
   {
     string s;
-    if( !in )
+    if (!in)
     {
       cerr << "ERROR(Vector): file cannot be opened.\n";
       return 0;
     }
     in >> s;
-    if( !(s=="Vector") )
+    if (!(s=="Vector"))
     {
       cerr << "ERROR(Vector): Vector!='"<<s<<"'\n";
       return 0;
@@ -285,7 +282,7 @@ template<class T> class Vector
     in >> biggest;
     // in >> a;
     resize(biggest);
-    for(int iv=0;iv<size();iv++)
+    for (int iv=0;iv<size();iv++)
     {
       readOb(in, (*this)[iv]);
     }
@@ -295,16 +292,16 @@ template<class T> class Vector
 
 template<class T> bool operator==(const Vector<T> &x, const Vector<T> &y)
 {
-  if( &x == &y )
+  if (&x == &y)
     return 1;
   else
   {
-    if( y.size()!=x.size() )
+    if (y.size()!=x.size())
       return 0;
     else
     {
-      for(unsigned int iii=0;iii<x.size();iii++)
-        if( !(x[iii]==y[iii]) )
+      for (unsigned int iii=0;iii<x.size();iii++)
+        if (!(x[iii]==y[iii]))
           return 0;
       return 1;
     }
@@ -317,18 +314,18 @@ template<class T> bool operator!=(const Vector<T> &x, const Vector<T> &y)
 
 template<class T> bool operator<(const Vector<T> &x, const Vector<T> &y)
 {
-  if( &x == &y )
+  if (&x == &y)
     return 0;
   else
   {
-    if( y.size()<x.size() )
+    if (y.size()<x.size())
       return !(y<x);
-    for(int iii=0;iii<x.size();iii++)
+    for (int iii=0;iii<x.size();iii++)
     {
-      assert( iii!=y.size() );
-      if( x[iii]<y[iii] )
+      assert( iii!=y.size());
+      if (x[iii]<y[iii])
         return 1;
-      else if( y[iii]<x[iii] )
+      else if (y[iii]<x[iii])
         return 0;
     }
     return x.size()!=y.size();//??
@@ -350,30 +347,29 @@ template<class T> void Vector<T>:: errorAccess(int n) const
 
 template<class T> ostream& operator<<(ostream&o, const Vector<T>&a)
 {
-  o << "Vector(" << a.size() << "){ ";
-  for(unsigned int iii=0;iii<a.size();iii++)
+  o << "Vector(" << a.size() << ") { ";
+  for (unsigned int iii=0;iii<a.size();iii++)
     o << " " << iii<< ": " << a[iii]<< ";";
   return o << "}\n";
 }
 
-template<class T> istream& operator>>(istream&in, Vector<T>&)
-{return in;}
+template<class T> istream& operator>>(istream&in, Vector<T>&) { return in; }
 
 template<class T> int Hash(const Vector<T>&a)
 {
   int n=0;
-  for(int iii=0;iii<a.size();iii++)
+  for (int iii=0;iii<a.size();iii++)
     n+=Hash(a[iii])*(iii+1);
   return n+a.size()*47;
 }
 template<class T> void Vector<T>::copy(T *aa, const T *bb, int n)
 {
-  for(int iii=0;iii<n;iii++)
+  for (int iii=0;iii<n;iii++)
     aa[iii]=bb[iii];
 }
 template<class T> void Vector<T>::copy(T *aa, T *bb, int n)
 {
-  for(int iii=0;iii<n;iii++)
+  for (int iii=0;iii<n;iii++)
     aa[iii]=bb[iii];
 }
 
@@ -397,26 +393,24 @@ template<class T> void Vector<T>::_expand()
 
 template<class T> int Vector<T>::findMax() const
 {
-  if( size()==0 )
+  if (size()==0)
     return -1;
-  else
-  {
+  else {
     int maxPos=0;
-    for(int iii=1;iii<size();iii++)
-      if( (*this)[maxPos]<(*this)[iii] )
+    for (int iii=1;iii<size();iii++)
+      if ((*this)[maxPos]<(*this)[iii])
         maxPos=iii;
     return maxPos;
   }
 }
 template<class T> int Vector<T>::findMin() const
 {
-  if( size()==0 )
+  if (size()==0)
     return -1;
-  else
-  {
+  else {
     int minPos=0;
-    for(int iii=1;iii<size();iii++)
-      if( (*this)[iii]<(*this)[minPos] )
+    for (int iii=1;iii<size();iii++)
+      if ((*this)[iii]<(*this)[minPos])
         minPos=iii;
     return minPos;
   }

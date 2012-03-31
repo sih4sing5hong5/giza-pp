@@ -48,19 +48,19 @@ ReportInfo(_perp, _sHandler1, _testPerp, _testHandler, _trainViterbiPerp, _testV
 
 Model1::~Model1() {}
 
-void Model1::initialize_table_uniformly(SentenceHandler& sHandler1){
+void Model1::initialize_table_uniformly(SentenceHandler& sHandler1) {
   WordIndex i, j;
 
   cout << "Initialize tTable\n";
 
   SentencePair sent;
   sHandler1.rewind();
-  while(sHandler1.getNextSentence(sent)){
+  while (sHandler1.getNextSentence(sent)) {
     Vector<WordIndex>& es = sent.eSent;
     Vector<WordIndex>& fs = sent.fSent;
     PROB uniform = 1.0/es.size();
-    for( i=0; i < es.size(); i++)
-      for(j=1; j < fs.size(); j++)
+    for (i=0; i < es.size(); i++)
+      for (j=1; j < fs.size(); j++)
         tTable.insert(es[i],fs[j],0,uniform);
   }
 }
@@ -68,7 +68,7 @@ void Model1::initialize_table_uniformly(SentenceHandler& sHandler1){
 
 int Model1::em_with_tricks(int noIterations, /*Perplexity& perp, SentenceHandler& sHandler1, */
                            bool seedModel1, util::Dictionary& dictionary, bool useDict /*Perplexity* testPerp, SentenceHandler* testHandler,
-                                                                                         Perplexity& trainViterbiPerp, Perplexity* testViterbiPerp */ )
+                                                                                         Perplexity& trainViterbiPerp, Perplexity* testViterbiPerp */)
 {
   double minErrors=1.0;int minIter=0;
   string modelName="Model1",shortModelName="1";
@@ -80,7 +80,7 @@ int Model1::em_with_tricks(int noIterations, /*Perplexity& perp, SentenceHandler
   sHandler1.rewind();
   cout << "==========================================================\n";
   cout << modelName << " Training Started at: "<< ctime(&st) << "\n";
-  for(int it = 1; it <= noIterations; it++){
+  for (int it = 1; it <= noIterations; it++) {
     pair_no = 0;
     it_st = time(NULL);
     cout <<  "-----------\n" << modelName << ": Iteration " << it << '\n';
@@ -89,7 +89,7 @@ int Model1::em_with_tricks(int noIterations, /*Perplexity& perp, SentenceHandler
     int n = it;
     do{
       number.insert((size_t)0, 1, (char)(n % 10 + '0'));
-    } while((n /= 10) > 0);
+    } while ((n /= 10) > 0);
     tfile = g_prefix + ".t" + shortModelName + "." + number;
     alignfile = g_prefix + ".A" + shortModelName + "." + number;
     test_alignfile = g_prefix +".tst.A" + shortModelName + "." + number;
@@ -97,13 +97,13 @@ int Model1::em_with_tricks(int noIterations, /*Perplexity& perp, SentenceHandler
     em_loop(it,perp, sHandler1, seedModel1, dump_files, alignfile.c_str(), dictionary, useDict, trainViterbiPerp);
     if (testPerp && testHandler) // calculate test perplexity
       em_loop(it,*testPerp, *testHandler, seedModel1, dump_files, test_alignfile.c_str(), dictionary, useDict, *testViterbiPerp, true);
-    if( errorsAL()<minErrors )
+    if (errorsAL()<minErrors)
     {
       minErrors=errorsAL();
       minIter=it;
     }
-    if (dump_files){
-      if( OutputInAachenFormat==1 )
+    if (dump_files) {
+      if (OutputInAachenFormat==1)
         tTable.printCountTable(tfile.c_str(),Elist.getVocabList(),Flist.getVocabList(),1);
     }
     tTable.normalizeTable(Elist, Flist);
@@ -119,8 +119,8 @@ int Model1::em_with_tricks(int noIterations, /*Perplexity& perp, SentenceHandler
       cout << modelName << ": ("<<it<<") VITERBI TEST CROSS-ENTROPY " << (*testViterbiPerp).cross_entropy()
            << " PERPLEXITY " << (*testViterbiPerp).perplexity()
            << '\n';
-    if (dump_files){
-      if( OutputInAachenFormat==0 )
+    if (dump_files) {
+      if (OutputInAachenFormat==0)
         tTable.printProbTable(tfile.c_str(),Elist.getVocabList(),Flist.getVocabList(),OutputInAachenFormat);
     }
     it_fn = time(NULL);
@@ -131,7 +131,7 @@ int Model1::em_with_tricks(int noIterations, /*Perplexity& perp, SentenceHandler
   return minIter;
 }
 
-void Model1::load_table(const char* tname){
+void Model1::load_table(const char* tname) {
   /* This function loads the t table from the given file; use it
      when you want to load results from previous t training
      without doing any new training.
@@ -158,7 +158,7 @@ void Model1::em_loop(int it,Perplexity& perp, SentenceHandler& sHandler1, bool s
   PROB uniform = 1.0/noFrenchWords;
   SentencePair sent;
   sHandler1.rewind();
-  while(sHandler1.getNextSentence(sent)){
+  while (sHandler1.getNextSentence(sent)) {
     Vector<WordIndex>& es = sent.eSent;
     Vector<WordIndex>& fs = sent.fSent;
     const float so  = sent.getCount();
@@ -171,21 +171,21 @@ void Model1::em_loop(int it,Perplexity& perp, SentenceHandler& sHandler1, bool s
     bool eindict[l + 1];
     bool findict[m + 1];
     bool indict[m + 1][l + 1];
-    if(it == 1 && useDict){
-      for(unsigned int dummy = 0; dummy <= l; dummy++) eindict[dummy] = false;
-      for(unsigned int dummy = 0; dummy <= m; dummy++){
+    if (it == 1 && useDict) {
+      for (unsigned int dummy = 0; dummy <= l; dummy++) eindict[dummy] = false;
+      for (unsigned int dummy = 0; dummy <= m; dummy++) {
         findict[dummy] = false;
-        for(unsigned int dummy2 = 0; dummy2 <= l; dummy2++)
+        for (unsigned int dummy2 = 0; dummy2 <= l; dummy2++)
           indict[dummy][dummy2] = false;
       }
-      for(j = 0; j <= m; j++)
-        for(i = 0; i <= l; i++)
-          if(dict.indict(fs[j], es[i])){
+      for (j = 0; j <= m; j++)
+        for (i = 0; i <= l; i++)
+          if (dict.indict(fs[j], es[i])) {
             eindict[i] = findict[j] = indict[j][i] = true;
           }
     }
 
-    for(j=1; j <= m; j++){
+    for (j=1; j <= m; j++) {
       // entries  that map fs to all possible ei in this sentence.
       Vector<LpPair<COUNT,PROB> *> sPtrCache(es.size(),0); // cache pointers to table
       LpPair<COUNT,PROB> **sPtrCachePtr;
@@ -193,33 +193,33 @@ void Model1::em_loop(int it,Perplexity& perp, SentenceHandler& sHandler1, bool s
       PROB denom = 0.0;
       WordIndex best_i = 0; // i for which fj is best maped to ei
       PROB word_best_score = 0;  // score for the best mapping of fj
-      if (it == 1 && !seedModel1){
+      if (it == 1 && !seedModel1) {
         denom = uniform  * es.size();
         word_best_score = uniform;
       }
       else
-        for((i=0),(sPtrCachePtr=&sPtrCache[0]); i <= l; i++,sPtrCachePtr++){
+        for ((i=0),(sPtrCachePtr=&sPtrCache[0]); i <= l; i++,sPtrCachePtr++) {
           PROB e(0.0);
           (*sPtrCachePtr) = tTable.getPtr(es[i], fs[j]);
           if ((*sPtrCachePtr) != 0 && (*((*sPtrCachePtr))).prob > g_smooth_prob)
             e = (*((*sPtrCachePtr))).prob;
           else e = g_smooth_prob;
           denom += e;
-          if (e > word_best_score){
+          if (e > word_best_score) {
             word_best_score = e;
             best_i = i;
           } }
       viterbi_alignment[j] = best_i;
       viterbi_score *= word_best_score; /// denom;
-      if (denom == 0){
+      if (denom == 0) {
         if (test)
           cerr << "WARNING: denom is zero (TEST)\n";
         else
           cerr << "WARNING: denom is zero (TRAIN)\n";
       }
       cross_entropy += log(denom);
-      if (!test){
-        if(denom > 0){
+      if (!test) {
+        if (denom > 0) {
           COUNT val = COUNT(so) / (COUNT) double(denom);
           /* this if loop implements a constraint on counting:
              count(es[i], fs[j]) is implemented if and only if
@@ -228,9 +228,9 @@ void Model1::em_loop(int it,Perplexity& perp, SentenceHandler& sHandler1, bool s
              es[i] does not occur in the dictionary with any fs[x] and
              fs[j] does not occur in the dictionary with any es[y]
           */
-          if(it == 1 && useDict){
-            for((i=0),(sPtrCachePtr=&sPtrCache[0]); i <= l; i++,sPtrCachePtr++){
-              if(indict[j][i] || (!findict[j] && !eindict[i])){
+          if (it == 1 && useDict) {
+            for ((i=0),(sPtrCachePtr=&sPtrCache[0]); i <= l; i++,sPtrCachePtr++) {
+              if (indict[j][i] || (!findict[j] && !eindict[i])) {
                 PROB e(0.0);
                 if (it == 1 && !seedModel1)
                   e =  uniform;
@@ -238,7 +238,7 @@ void Model1::em_loop(int it,Perplexity& perp, SentenceHandler& sHandler1, bool s
                   e = (*((*sPtrCachePtr))).prob;
                 else e = g_smooth_prob;
                 COUNT x=e*val;
-                if( it==1||x>MINCOUNTINCREASE )
+                if (it==1||x>MINCOUNTINCREASE)
                   if ((*sPtrCachePtr) != 0)
                     (*((*sPtrCachePtr))).count += x;
                   else
@@ -248,8 +248,8 @@ void Model1::em_loop(int it,Perplexity& perp, SentenceHandler& sHandler1, bool s
           } /* end of it == 1 */
           // Old code:
           else{
-            for((i=0),(sPtrCachePtr=&sPtrCache[0]); i <= l; i++,sPtrCachePtr++){
-              //for(i=0; i <= l; i++) {
+            for ((i=0),(sPtrCachePtr=&sPtrCache[0]); i <= l; i++,sPtrCachePtr++) {
+              //for (i=0; i <= l; i++) {
               PROB e(0.0);
               if (it == 1 && !seedModel1)
                 e =  uniform;
@@ -257,13 +257,13 @@ void Model1::em_loop(int it,Perplexity& perp, SentenceHandler& sHandler1, bool s
                 e = (*((*sPtrCachePtr))).prob;
               else
                 e = g_smooth_prob;
-              //if( !(i==0) )
+              //if (!(i==0))
               //cout << "COUNT(e): " << e << " " << MINCOUNTINCREASE << endl;
               COUNT x=e*val;
-              if( pair_no==VerboseSentence )
+              if (pair_no==VerboseSentence)
                 cout << i << "(" << evlist[es[i]].word << ")," << j << "(" << fvlist[fs[j]].word << ")=" << x << endl;
-              if( it==1||x>MINCOUNTINCREASE )
-                if( NoEmptyWord==0 || i!=0 )
+              if (it==1||x>MINCOUNTINCREASE)
+                if (NoEmptyWord==0 || i!=0)
                   if ((*sPtrCachePtr) != 0)
                     (*((*sPtrCachePtr))).count += x;
                   else
@@ -289,21 +289,21 @@ void Model1::em_loop(int it,Perplexity& perp, SentenceHandler& sHandler1, bool s
 }
 
 void Model1::errorReportAL(ostream& out, const string& m) const {
-  if( ALeventsMissing+ALeventsToomuch )
+  if (ALeventsMissing+ALeventsToomuch)
     out << "alignmentErrors (" << m << "): "
         << 100.0*(ALmissing+ALtoomuch)/double(ALeventsMissing+ALeventsToomuch)
         << " recall: " << 100.0*(1.0-ALmissing/double(ALeventsMissing))
         << " precision: " << 100.0*(1.0-ALtoomuch/double(ALeventsToomuch))
         << " (missing:" << ALmissing << "/" << ALeventsMissing << " " << ALtoomuch
         << " " << ALeventsToomuch << ")\n";
-  if( ALeventsMissingVALI+ALeventsToomuchVALI )
+  if (ALeventsMissingVALI+ALeventsToomuchVALI)
     out << "alignmentErrors VALI (" << m << "): "
         << 100.0*(ALmissingVALI+ALtoomuchVALI)/double(ALeventsMissingVALI+ALeventsToomuchVALI)
         << " recall: " << 100.0*(1.0-ALmissingVALI/double(ALeventsMissingVALI))
         << " precision: " << 100.0*(1.0-ALtoomuchVALI/double(ALeventsToomuchVALI))
         << " (missing:" << ALmissingVALI << "/" << ALeventsMissingVALI << " " << ALtoomuchVALI
         << " " << ALeventsToomuchVALI << ")\n";
-  if( ALeventsMissingTEST+ALeventsToomuchTEST )
+  if (ALeventsMissingTEST+ALeventsToomuchTEST)
     out << "alignmentErrors TEST(" << m << "): "
         << 100.0*(ALmissingTEST+ALtoomuchTEST)/double(ALeventsMissingTEST+ALeventsToomuchTEST)
         << " recall: " << 100.0*(1.0-ALmissingTEST/double(ALeventsMissingTEST))

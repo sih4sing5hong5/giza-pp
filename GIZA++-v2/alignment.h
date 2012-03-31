@@ -114,7 +114,7 @@ class Alignment {
     for (PositionIndex j = 1; j <= m; j++)
       if (a[j] == i)
         sum += j;
-    return (sum + fert(i) - 1 ) / fert(i);
+    return (sum + fert(i) - 1) / fert(i);
   }
 
   PositionIndex prev_cept(PositionIndex i) const {

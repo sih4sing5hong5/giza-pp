@@ -1,7 +1,7 @@
 /*
   Copyright (C) 1999,2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-  This file is part of GIZA++ ( extension of GIZA ).
+  This file is part of GIZA++ ( extension of GIZA).
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -44,13 +44,13 @@ int collectCountsOverNeighborhood(const MoveSwapMatrix<TRANSPAIR>&msc,
   Array2<LogProb,Vector<LogProb> > cmove(l+1,m+1),cswap(l+1,m+1);
   Vector<LogProb> negmove(m+1),negswap(m+1),plus1fert(l+1),minus1fert(l+1);
   LogProb total_move,total_swap;
-  if( msc.isCenterDeleted()==0 ) {
+  if (msc.isCenterDeleted()==0) {
     total_move+=ascore;
     nAl++;
   }
-  for(PositionIndex j=1;j<=m;j++) {
-    for(PositionIndex i=0;i<=l;i++) {
-      if( msc(j)!=i && !msc.isDelMove(i,j)) {
+  for (PositionIndex j=1;j<=m;j++) {
+    for (PositionIndex i=0;i<=l;i++) {
+      if (msc(j)!=i && !msc.isDelMove(i,j)) {
         LogProb newscore=ascore*msc.cmove(i,j);
         total_move+=newscore;
         nAl++;
@@ -64,7 +64,7 @@ int collectCountsOverNeighborhood(const MoveSwapMatrix<TRANSPAIR>&msc,
 
   for (PositionIndex j1=1;j1<=m;j1++) {
     for (PositionIndex j2=j1+1;j2<=m;j2++) {
-      if (msc(j1)!=msc(j2) && !msc.isDelSwap(j1,j2) ) {
+      if (msc(j1)!=msc(j2) && !msc.isDelSwap(j1,j2)) {
         LogProb newscore=ascore*msc.cswap(j1,j2);
         total_swap+=newscore;
         nAl++;
@@ -78,22 +78,22 @@ int collectCountsOverNeighborhood(const MoveSwapMatrix<TRANSPAIR>&msc,
 
   total_count += total_move+total_swap;
 
-  for(PositionIndex j=1;j<=m;j++) {
-    for(PositionIndex i=0;i<=l;i++) {
+  for (PositionIndex j=1;j<=m;j++) {
+    for (PositionIndex i=0;i<=l;i++) {
       dtcount(i,j) += ((i==msc(j)) ? (total_count-(negmove[j]+negswap[j])) : (cswap(i,j)+cmove(i,j)));
     }
   }
 
-  for(PositionIndex i=1;i<=l;i++) {
+  for (PositionIndex i=1;i<=l;i++) {
     LogProb temp=minus1fert[i]+plus1fert[i];
-    if( msc.fert(i)<g_max_fertility )
+    if (msc.fert(i)<g_max_fertility)
       ncount(i,msc.fert(i))+=total_count-temp;
-    if(msc.fert(i)>0&&msc.fert(i)-1<g_max_fertility)
+    if (msc.fert(i)>0&&msc.fert(i)-1<g_max_fertility)
       ncount(i,msc.fert(i)-1)+=minus1fert[i];
     else
-      if( minus1fert[i]!=0.0 )
+      if (minus1fert[i]!=0.0)
         cerr << "ERROR: M1Fa: " << minus1fert[i] << ' ' << i << ' ' << msc.fert(i)<< endl;
-    if(msc.fert(i)+1<g_max_fertility)
+    if (msc.fert(i)+1<g_max_fertility)
       ncount(i,msc.fert(i)+1)+=plus1fert[i];
   }
 
@@ -105,7 +105,7 @@ int collectCountsOverNeighborhood(const MoveSwapMatrix<TRANSPAIR>&msc,
     p1count += (minus1fert[0])*(LogProb)(msc.fert(0)-1);
     p0count += (minus1fert[0])*(LogProb)(m-2*(msc.fert(0)-1));
   } else
-    if( minus1fert[0]!=0.0 )
+    if (minus1fert[0]!=0.0)
       cerr << "ERROR: M1Fb: " << minus1fert[0] << endl;
 
   if (int(m)-2*(int(msc.fert(0))+1)>=0) {
@@ -130,8 +130,8 @@ void _collectCountsOverNeighborhoodForSophisticatedModels(const MoveSwapMatrix<T
   Mmsc.check();
   const PositionIndex m = msc.get_m(), l = msc.get_l();
   for (PositionIndex j=1;j<=m;++j) {
-    if ( msc(j)!=0 ) {
-      if( msc.get_head(msc(j))==j) {
+    if (msc(j)!=0) {
+      if (msc.get_head(msc(j))==j) {
         int ep=msc.prev_cept(msc(j));
         d4Table->getCountRef_first(j,msc.get_center(ep),d4Table->ewordclasses.getClass(ef.get_es(ep)),d4Table->fwordclasses.getClass(ef.get_fs(j)),l,m)+=normalized_ascore;
       } else {
@@ -155,11 +155,11 @@ void _collectCountsOverNeighborhoodForSophisticatedModels(const MoveSwapMatrix<T
   PositionIndex vac_all=m;
   Vector<char> vac(m+1,0);
 
-  for(PositionIndex i=1;i<=l;i++) {
+  for (PositionIndex i=1;i<=l;i++) {
     PositionIndex cur_j=msc.als_i[i];
     PositionIndex prev_j=0;
     PositionIndex k=0;
-    if(cur_j) { // process first word of cept
+    if (cur_j) { // process first word of cept
       k++;
       d5Table->getCountRef_first(vacancies(vac,cur_j),vacancies(vac,msc.get_center(prev_cept)),
                                  d5Table->fwordclasses.getClass(ef.get_fs(cur_j)),l,m,vac_all-msc.fert(i)+k)+=normalized_ascore;
@@ -171,7 +171,7 @@ void _collectCountsOverNeighborhoodForSophisticatedModels(const MoveSwapMatrix<T
       cur_j=msc.als_j[cur_j].next;
     }
 
-    while(cur_j) { // process following words of cept
+    while (cur_j) { // process following words of cept
       k++;
       int vprev=vacancies(vac,prev_j);
       d5Table->getCountRef_bigger(vacancies(vac,cur_j),vprev,d5Table->fwordclasses.getClass(ef.get_fs(cur_j)),l,m,vac_all-vprev/*war weg*/-msc.fert(i)+k)+=normalized_ascore;
@@ -183,7 +183,7 @@ void _collectCountsOverNeighborhoodForSophisticatedModels(const MoveSwapMatrix<T
     }
 
     assert(k==msc.fert(i));
-    if( k )
+    if (k)
       prev_cept=i;
   }
   assert(vac_all==msc.fert(0));
@@ -197,7 +197,7 @@ double collectCountsOverNeighborhoodForSophisticatedModels(const MoveSwapMatrix<
   Alignment x(msc);
   double sum=0;
   msc.check();
-  if( !msc.isCenterDeleted() ) {
+  if (!msc.isCenterDeleted()) {
     _collectCountsOverNeighborhoodForSophisticatedModels<TRANSPAIR>(msc,x,msc.get_ef(),normalized_ascore,d5Table);
     NumberOfAlignmentsInSophisticatedCountCollection++;
     sum+=normalized_ascore;
@@ -225,7 +225,7 @@ double collectCountsOverNeighborhoodForSophisticatedModels(const MoveSwapMatrix<
 
   for (PositionIndex j1=1;j1<=m;j1++) {
     for (PositionIndex j2=j1+1;j2<=m;j2++) {
-      if( msc(j1)!=msc(j2) && !msc.isDelSwap(j1,j2) ) {
+      if (msc(j1)!=msc(j2) && !msc.isDelSwap(j1,j2)) {
         double c=msc.cswap(j1,j2)*normalized_ascore;
         msc.check();
 
@@ -277,21 +277,21 @@ int collectCountsOverNeighborhood(const Vector<pair<MoveSwapMatrix<TRANSPAIR>*,L
   double sum2=0;
 
   if (addCounts && d4Table) {
-    for(unsigned int i=0;i<smsc.size();++i) {
-      //for(WordIndex j=1;j<=m;j++)for(WordIndex ii=0;ii<=l;ii++)
+    for (unsigned int i=0;i<smsc.size();++i) {
+      //for (WordIndex j=1;j<=m;j++)for (WordIndex ii=0;ii<=l;ii++)
       //  (*smsc[i].first).cmove(ii,j);
       sum2+=collectCountsOverNeighborhoodForSophisticatedModels(*smsc[i].first,smsc[i].second/all_total,d4Table);
     }
 
-    if(!(fabs(count-sum2)<0.05))
+    if (!(fabs(count-sum2)<0.05))
       cerr << "WARNING: DIFFERENT SUMS: (" << count << ") (" << sum2 << ")\n";
   }
 
   if (addCounts) {
-    for(PositionIndex i=0;i<=l;i++) {
-      for(PositionIndex j=1;j<=m;j++) {
+    for (PositionIndex i=0;i<=l;i++) {
+      for (PositionIndex j=1;j<=m;j++) {
         LogProb ijadd=dtcount(i,j)/all_total;
-        if( ijadd>COUNTINCREASE_CUTOFF_AL ) {
+        if (ijadd>COUNTINCREASE_CUTOFF_AL) {
           tTable.incCount(es[i],fs[j],ijadd);
           dCountTable.getRef(j,i,l,m)+=ijadd;
           aCountTable.getRef(i,j,l,m)+=ijadd;
@@ -299,7 +299,7 @@ int collectCountsOverNeighborhood(const Vector<pair<MoveSwapMatrix<TRANSPAIR>*,L
       }
 
       if (i > 0) {
-        for(PositionIndex n=0;n<g_max_fertility;n++)
+        for (PositionIndex n=0;n<g_max_fertility;n++)
           nCountTable.getRef(es[i],n) += ncount(i,n) / all_total;
       }
     }

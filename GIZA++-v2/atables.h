@@ -83,16 +83,16 @@ class AModel {
   ~AModel() {}
 
   VALTYPE get(WordIndex aj, WordIndex j, WordIndex l, WordIndex m) const {
-    MASSERT( (!is_distortion) || aj<=m );MASSERT( (!is_distortion) || j<=l );MASSERT( (!is_distortion) || aj!=0 );
-    MASSERT( is_distortion    || aj<=l );MASSERT( is_distortion    || j<=m );MASSERT( (is_distortion) || j!=0 );
-    MASSERT( l<MaxSentLength );MASSERT( m<MaxSentLength );
+    MASSERT( (!is_distortion) || aj<=m);MASSERT( (!is_distortion) || j<=l);MASSERT( (!is_distortion) || aj!=0);
+    MASSERT( is_distortion    || aj<=l);MASSERT( is_distortion    || j<=m);MASSERT( (is_distortion) || j!=0);
+    MASSERT( l<MaxSentLength);MASSERT( m<MaxSentLength);
     return a.get(aj, j, (CompactADTable&&is_distortion)?MaxSentLength:(l+1),(CompactADTable&&!is_distortion)?MaxSentLength:(m+1));
   }
 
   VALTYPE&getRef(WordIndex aj, WordIndex j, WordIndex l, WordIndex m) {
-    MASSERT( (!is_distortion) || aj<=m );MASSERT( (!is_distortion) || j<=l );
-    MASSERT( is_distortion    || aj<=l );MASSERT( is_distortion    || j<=m );MASSERT( (is_distortion) || j!=0 );
-    MASSERT( l<MaxSentLength );MASSERT( m<MaxSentLength );
+    MASSERT( (!is_distortion) || aj<=m);MASSERT( (!is_distortion) || j<=l);
+    MASSERT( is_distortion    || aj<=l);MASSERT( is_distortion    || j<=m);MASSERT( (is_distortion) || j!=0);
+    MASSERT( l<MaxSentLength);MASSERT( m<MaxSentLength);
     return a(aj, j, (CompactADTable&&is_distortion)?MaxSentLength:(l+1),(CompactADTable&&!is_distortion)?MaxSentLength:(m+1));
   }
 
@@ -132,12 +132,12 @@ class AModel {
             for (i = 0; i <= L; i++) {
               total += get(i, j, L, M);
             }
-            if (total ) {
+            if (total) {
               for (i=0;i<=L;i++) {
                 nParam++;
                 aTable.getRef(i, j, L, M)=get(i, j, L, M)/total;
                 MASSERT(aTable.getRef(i,j,L,M)<=1.0);
-                if( NoEmptyWord&&i==0 )
+                if (NoEmptyWord&&i==0)
                   aTable.getRef(i,j,L,M)=0;
               }
             }
@@ -153,7 +153,7 @@ class AModel {
                 aTable.getRef(j, i, L, M) = amodel_smooth_factor / M + (1.0-amodel_smooth_factor) * get(j, i, L, M) / total;
                 nParam++;
                 MASSERT(aTable.getRef(j,i,L,M)<=1.0);
-                if( NoEmptyWord&&i==0 )
+                if (NoEmptyWord&&i==0)
                   aTable.getRef(j,i,L,M)=0;
               }
             }

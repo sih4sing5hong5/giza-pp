@@ -34,7 +34,7 @@ void VocabList::readVocabList()
   cerr << "Reading vocabulary file from:" << fname << "\n";
   //  total = 0;
   ifstream vFile(fname);
-  if(!vFile){
+  if (!vFile) {
     cerr <<  "\nCannot open vocabulary file " << fname << "file";
     exit(1);
   }
@@ -44,9 +44,9 @@ void VocabList::readVocabList()
 
   while (getline(vFile, line)) {
     istringstream buffer(line);
-    if(!(buffer >> word_id >> word >> freq))
+    if (!(buffer >> word_id >> word >> freq))
       cerr << "ERROR: reading vocabulary; " << word_id << ' ' << word << ' ' << freq << endl;
-    if (word_id == 0){
+    if (word_id == 0) {
       cerr << "ERROR: TOKEN ID 0 is reserved for special token NULL, in line: \n"<< line<<"\n";
       exit(-1);
     } else if (word_id >= kMaxVocabSize) {
@@ -57,13 +57,13 @@ void VocabList::readVocabList()
       cerr << "ERROR: frequency must be a positive integer, in line :\n"
            << line <<"\n";
       exit(-1);
-    } else if(word_id >= list.size()) {
+    } else if (word_id >= list.size()) {
       list.resize(word_id+1);
       list[word_id].word = word;
       s2i[word]=word_id;
       list[word_id].freq = 0;
       noUniqueTokens = word_id + 1;
-    } else if(list[word_id].word != "\0") {
+    } else if (list[word_id].word != "\0") {
       cerr << "ERROR: TOKEN ID must be unique for each token, in line :\n"
            << line <<"\n";
       cerr << "TOKEN ID " << word_id << " has already been assigned to: " <<

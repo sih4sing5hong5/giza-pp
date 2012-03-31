@@ -27,10 +27,10 @@ class Logging {
 
 #define IASSERT(expression) \
   do {if (!(expression)) \
-    { util::Logging::imyerror(__LINE__, __FILE__, #expression);}} while (0)
+    { util::Logging::imyerror(__LINE__, __FILE__, #expression); }} while (0)
 
-#define MASSERT(expr) do {} while(0)
+#define MASSERT(expr) do {} while (0)
 
-#define VASSERT(expr) do {} while(0)
+#define VASSERT(expr) do {} while (0)
 
 #endif  // GIZAPP_UTIL_ASSERT_H_

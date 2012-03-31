@@ -1,7 +1,7 @@
 /*
   Copyright (C) 2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-  This file is part of GIZA++ ( extension of GIZA ).
+  This file is part of GIZA++ ( extension of GIZA).
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -48,7 +48,7 @@ class WordClasses {
   template<class MAPPER> bool read(std::istream& in, const MAPPER& m) {
     string sline;
     int maxword=0;
-    while(getline(in,sline)) {
+    while (getline(in,sline)) {
       string word,wclass;
       //istringstream iline(sline.c_str());
       istringstream iline(sline);

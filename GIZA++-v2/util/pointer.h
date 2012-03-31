@@ -1,7 +1,7 @@
 /*
   Copyright (C) 1997,1998,1999,2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-  This file is part of GIZA++ ( extension of GIZA ).
+  This file is part of GIZA++ ( extension of GIZA).
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -154,7 +154,7 @@ inline bool operator==(const MPConst<T>& s1, const MPConst<T>& s2) {
 }
 
 template <class T>
-inline bool operator<(const MPConst<T>& s1, const MPConst<T>& s2){
+inline bool operator<(const MPConst<T>& s1, const MPConst<T>& s2) {
   assert(s1); assert(s2); return *s1 < *s2;
 }
 

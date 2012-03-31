@@ -1,7 +1,7 @@
 /*
   Copyright (C) 2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-  This file is part of GIZA++ ( extension of GIZA ).
+  This file is part of GIZA++ ( extension of GIZA).
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -41,12 +41,12 @@ class transpair_model2 : public transpair_model1
                    const AModel<PROB>&aTable)
       : transpair_model1(es,fs,tTable),a(es.size(),fs.size())
   {
-    for(WordIndex i=0;i<=l;i++)
-      for(WordIndex j=1;j<=m;j++)
+    for (WordIndex i=0;i<=l;i++)
+      for (WordIndex j=1;j<=m;j++)
         a(i, j)=aTable.getValue(i, j, l, m);
   }
-  const PROB&get_a(WordIndex i, WordIndex j)const
-  {return a(i, j);}
+
+  const PROB&get_a(WordIndex i, WordIndex j) const { return a(i, j); }
 };
 
 #endif  // GIZAPP_TRANSPAIR_MODEL2_H_

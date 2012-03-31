@@ -56,7 +56,7 @@ SentenceHandler::SentenceHandler(const char*  filename, VocabList* elist,
   inputFilename = filename;
   inputFile = new ifstream(filename);
   pair_no = 0;
-  if(!(*inputFile)){
+  if (!(*inputFile)) {
     cerr << "\nERROR:(a) Cannot open " << filename;
     exit(1);
   }
@@ -67,7 +67,7 @@ SentenceHandler::SentenceHandler(const char*  filename, VocabList* elist,
   noSentInBuffer = 0;
   Buffer.clear();
   bool isNegative=0;
-  if (elist && flist){
+  if (elist && flist) {
     cout << "Calculating vocabulary frequencies from corpus " << filename << '\n';
     SentencePair s;
     while (getNextSentence(s, elist, flist))
@@ -77,11 +77,11 @@ SentenceHandler::SentenceHandler(const char*  filename, VocabList* elist,
       // NOTE: this value might change during training
       // for words from the manual dictionary, yet this is ignored!
 
-      if( s.noOcc<0 )
+      if (s.noOcc<0)
         isNegative=1;
     }
   }
-  if( isNegative==1 )
+  if (isNegative==1)
   {
     cerr << "WARNING: corpus contains negative occurrency frequencies => these are interpreted as entries of a manual dictionary.\n";
     realCount=new Vector<double>(totalPairs1,1.0);
@@ -97,7 +97,7 @@ void SentenceHandler::rewind()
   currentSentence = 0;
   readflag = false;
   if (!allInMemory ||
-      !(Buffer.size() >= 1 && Buffer[currentSentence].sentenceNo == 1)){
+      !(Buffer.size() >= 1 && Buffer[currentSentence].sentenceNo == 1)) {
     // check if the buffer doe not already has the first chunk of pairs
     if (Buffer.size() > 0)
       cerr << ' ' <<  Buffer[currentSentence].sentenceNo << '\n';
@@ -106,10 +106,10 @@ void SentenceHandler::rewind()
     noSentInBuffer = 0;
     Buffer.clear();
   }
-  if (!allInMemory){
+  if (!allInMemory) {
     delete inputFile;
     inputFile = new ifstream(inputFilename);
-    if(!(*inputFile)){
+    if (!(*inputFile)) {
       cerr << "\nERROR:(b) Cannot open " << inputFilename << " " << (int)errno;
     }
   }
@@ -119,12 +119,12 @@ void SentenceHandler::rewind()
 bool SentenceHandler::getNextSentence(SentencePair& sent, VocabList* elist, VocabList* flist)
 {
   SentencePair s;
-  if (readflag){
+  if (readflag) {
     cerr << "Attempting to read from the end of corpus, rewinding\n";
     rewind();
     return(false);
   }
-  if (currentSentence >= noSentInBuffer){
+  if (currentSentence >= noSentInBuffer) {
     if (allInMemory)
       return(false);
     /* no more sentences in buffer */
@@ -132,8 +132,8 @@ bool SentenceHandler::getNextSentence(SentencePair& sent, VocabList* elist, Voca
     currentSentence = 0;
     Buffer.clear();
     cout << "Reading more sentence pairs into memory ... \n";
-    while((noSentInBuffer < kTrainBufSize) && readNextSentence(s)){
-      if ((s.fSent.size()-1) > (g_max_fertility-1) * (s.eSent.size()-1)){
+    while ((noSentInBuffer < kTrainBufSize) && readNextSentence(s)) {
+      if ((s.fSent.size()-1) > (g_max_fertility-1) * (s.eSent.size()-1)) {
         cerr << "WARNING: The following sentence pair has source/target sentence length ration more than\n"<<
             "the maximum allowed limit for a source word fertility\n"<<
             " source length = " << s.eSent.size()-1 << " target length = " << s.fSent.size()-1 <<
@@ -145,19 +145,19 @@ bool SentenceHandler::getNextSentence(SentencePair& sent, VocabList* elist, Voca
         s.fSent.resize(min(s.eSent.size(),s.fSent.size()));
       }
       Buffer.push_back(s);
-      if (elist && flist){
+      if (elist && flist) {
         if ((*elist).size() > 0)
-          for (WordIndex i= 0; i < s.eSent.size(); i++){
-            if (s.eSent[i] >= (*elist).uniqTokens()){
-              if( PrintedTooLong++<100)
+          for (WordIndex i= 0; i < s.eSent.size(); i++) {
+            if (s.eSent[i] >= (*elist).uniqTokens()) {
+              if (PrintedTooLong++<100)
                 cerr << "ERROR: source word " << s.eSent[i] << " is not in the vocabulary list \n";
               exit(-1);
             }
             (*elist).incFreq(s.eSent[i], s.realCount);
           }
         if ((*flist).size() > 0)
-          for (WordIndex j= 1; j < s.fSent.size(); j++){
-            if (s.fSent[j] >= (*flist).uniqTokens()){
+          for (WordIndex j= 1; j < s.fSent.size(); j++) {
+            if (s.fSent[j] >= (*flist).uniqTokens()) {
               cerr << "ERROR: target word " << s.fSent[j] << " is not in the vocabulary list \n";
               exit(-1);
             }
@@ -166,7 +166,7 @@ bool SentenceHandler::getNextSentence(SentencePair& sent, VocabList* elist, Voca
       }
       noSentInBuffer++;
     }
-    if (inputFile->eof()){
+    if (inputFile->eof()) {
       allInMemory = (Buffer.size() >= 1 &&
                      Buffer[currentSentence].sentenceNo == 1);
       if (allInMemory)
@@ -174,17 +174,17 @@ bool SentenceHandler::getNextSentence(SentencePair& sent, VocabList* elist, Voca
             " sentence pairs.\n";
     }
   }
-  if(noSentInBuffer <= 0 ){
+  if (noSentInBuffer <= 0) {
     //cerr << "# sent in buffer " << noSentInBuffer << '\n';
     readflag = true;
     return(false);
   }
   sent = Buffer[currentSentence++];
-  if( sent.noOcc<0 && realCount )
+  if (sent.noOcc<0 && realCount)
   {
-    if( Manlexfactor1 && sent.noOcc==-1.0 )
+    if (Manlexfactor1 && sent.noOcc==-1.0)
       sent.realCount=Manlexfactor1;
-    else if( Manlexfactor2 && sent.noOcc==-2.0 )
+    else if (Manlexfactor2 && sent.noOcc==-2.0)
       sent.realCount=Manlexfactor2;
     else
       sent.realCount=(*realCount)[sent.getSentenceNo()-1];
@@ -203,16 +203,16 @@ bool SentenceHandler::readNextSentence(SentencePair& sent)
   bool fail(false);
 
   sent.clear();
-  if (getline(*inputFile, line)){
+  if (getline(*inputFile, line)) {
     istringstream buffer(line);
     buffer >> sent.noOcc;
-    if( sent.noOcc<0 )
+    if (sent.noOcc<0)
     {
-      if( realCount )
+      if (realCount)
       {
-        if( Manlexfactor1 && sent.noOcc==-1.0 )
+        if (Manlexfactor1 && sent.noOcc==-1.0)
           sent.realCount=Manlexfactor1;
-        else if( Manlexfactor2 && sent.noOcc==-2.0 )
+        else if (Manlexfactor2 && sent.noOcc==-2.0)
           sent.realCount=Manlexfactor2;
         else
         {
@@ -228,16 +228,16 @@ bool SentenceHandler::readNextSentence(SentencePair& sent)
   else {
     fail = true;;
   }
-  if (getline(*inputFile, line)){
+  if (getline(*inputFile, line)) {
     istringstream buffer(line);
     WordIndex w;  // w is a local variabe for token id
     sent.eSent.push_back(0); // each source word is assumed to have 0 ==
     // a null word (id 0) at the begining of the sentence.
-    while(buffer>>w){ // read source sentece , word by word .
+    while (buffer>>w) { // read source sentece , word by word .
       if (sent.eSent.size() < MAX_SENTENCE_LENGTH)
         sent.eSent.push_back(w);
       else {
-        if( PrintedTooLong++<100)
+        if (PrintedTooLong++<100)
           cerr << "{WARNING:(a)truncated sentence "<<pair_no<<"}";
         //cerr << "ERROR: getSentence.cc:getNextSentence(): sentence exceeds preset length limit of : " << MAX_SENTENCE_LENGTH << '\n';
         //cerr << "The following sentence will be truncated\n" << line;
@@ -248,15 +248,15 @@ bool SentenceHandler::readNextSentence(SentencePair& sent)
   else {
     fail = true;
   }
-  if (getline(*inputFile, line)){
+  if (getline(*inputFile, line)) {
     istringstream buffer(line);
     WordIndex w;  // w is a local variabe for token id
     sent.fSent.push_back(0); //0 is inserted for program uniformity
-    while(buffer>>w){ // read target sentece , word by word .
+    while (buffer>>w) { // read target sentece , word by word .
       if (sent.fSent.size() < MAX_SENTENCE_LENGTH)
         sent.fSent.push_back(w);
       else {
-        if( PrintedTooLong++<100)
+        if (PrintedTooLong++<100)
           cerr << "{WARNING:(b)truncated sentence "<<pair_no<<"}";
         //cerr << "ERROR: getSentence.cc:getNextSentence(): sentence exceeds preset length limit of : " << MAX_SENTENCE_LENGTH << '\n';
         //cerr << "The following sentence will be truncated\n" << line;
@@ -267,7 +267,7 @@ bool SentenceHandler::readNextSentence(SentencePair& sent)
   else {
     fail = true;
   }
-  if (fail){
+  if (fail) {
     sent.eSent.clear();
     sent.fSent.clear();
     sent.sentenceNo = 0;
@@ -275,10 +275,10 @@ bool SentenceHandler::readNextSentence(SentencePair& sent)
     sent.realCount=0;
     return(false);
   }
-  if( sent.eSent.size()==1||sent.fSent.size()==1 )
+  if (sent.eSent.size()==1||sent.fSent.size()==1)
     cerr << "ERROR: Forbidden zero sentence length " << sent.sentenceNo << endl;
   sent.sentenceNo = ++pair_no;
-  if(pair_no % 100000 == 0)
+  if (pair_no % 100000 == 0)
     cout << "[sent:" << sent.sentenceNo  << "]"<< '\n';
   return true;
 }
@@ -286,20 +286,20 @@ bool SentenceHandler::readNextSentence(SentencePair& sent)
 double optimize_lambda(Vector<double>&vd)
 {
   Vector<double> l;
-  for(double lambda=1.0;lambda<ManlexMAX_MULTIPLICITY;lambda+=0.33)
+  for (double lambda=1.0;lambda<ManlexMAX_MULTIPLICITY;lambda+=0.33)
   {
     double prod=0.0;
-    for(unsigned int i=0;i<vd.size();++i)
+    for (unsigned int i=0;i<vd.size();++i)
     {
       prod += vd[i]*exp(lambda*vd[i])/(exp(lambda*vd[i])-1.0);
     }
     l.push_back(fabs(prod-1.0));
   }
   double lam=double(min_element(l.begin(),l.end())-l.begin())*0.33+1.0;
-  if( lam<1.0 )
+  if (lam<1.0)
   {
     cerr << "ERROR: lambda is smaller than one: " << lam << endl;
-    for(unsigned int i=0;i<vd.size();++i)
+    for (unsigned int i=0;i<vd.size();++i)
       cerr << vd[i] << ' ';
     cerr << endl;
   }
@@ -308,19 +308,19 @@ double optimize_lambda(Vector<double>&vd)
 
 void SentenceHandler::setProbOfSentence(const SentencePair&s,double d)
 {
-  if( realCount==0 )
+  if (realCount==0)
     return;
   else
   {
-    if( s.noOcc<=0 )
+    if (s.noOcc<=0)
     {
       double ed=exp(d);
-      if( oldPairs.size()>0&&(oldPairs.back().get_eSent()!=s.get_eSent()||oldPairs.back().getSentenceNo()>=s.getSentenceNo()) )
+      if (oldPairs.size()>0&&(oldPairs.back().get_eSent()!=s.get_eSent()||oldPairs.back().getSentenceNo()>=s.getSentenceNo()))
       {
         double lambda=optimize_lambda(oldProbs);
-        for(unsigned int i=0;i<oldPairs.size();++i)
+        for (unsigned int i=0;i<oldPairs.size();++i)
         {
-          if( oldProbs[i]<1e-5 )
+          if (oldProbs[i]<1e-5)
             (*realCount)[oldPairs[i].getSentenceNo()-1]=1.0;
           else
             (*realCount)[oldPairs[i].getSentenceNo()-1]=lambda*oldProbs[i]/(1-exp(-lambda*oldProbs[i]));

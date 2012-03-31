@@ -1,7 +1,7 @@
 /*
   Copyright (C) 2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-  This file is part of GIZA++ ( extension of GIZA ).
+  This file is part of GIZA++ ( extension of GIZA).
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -39,7 +39,7 @@ inline int vacancies(const Vector<char>&vac,int u)
   int n=0;
   const char *i=&(vac[0])+1;
   const char *end=&(vac[0])+u+1;
-  while(i<end)
+  while (i<end)
     n+= ((*i++)==0);
   return n;
 }
@@ -56,19 +56,19 @@ class transpair_model5 : public transpair_model4
                    AModel<PROB>&aTable, AModel<PROB>&dTable, nmodel<PROB>&nTable, double _p1, double _p0,
                    const d5model*_d5m)
       : transpair_model4(es, fs, tTable, aTable, dTable, nTable, _p1, _p0,&_d5m->d4m),d5m(*_d5m),doModel4Scoring(0) {}
-  LogProb scoreOfAlignmentForChange(const Alignment& a)const
+  LogProb scoreOfAlignmentForChange(const Alignment& a) const
   {
-    if( doModel4Scoring )
+    if (doModel4Scoring)
       return transpair_model4::prob_of_target_and_alignment_given_source(a,2);
     else
       return prob_of_target_and_alignment_given_source(a,2);
   }
-  LogProb scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j,double thisValue=-1.0)const;
-  LogProb scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double thisValue=-1.0)const;
-  LogProb _scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j,double thisValue=-1.0)const;
-  LogProb _scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double thisValue=-1.0)const;
-  int modelnr()const{return 5;}
-  LogProb prob_of_target_and_alignment_given_source(const Alignment&al, short distortionType=3,bool verb=0)const;
-  void computeScores(const Alignment&al,vector<double>&d)const;
+  LogProb scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j,double thisValue=-1.0) const;
+  LogProb scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double thisValue=-1.0) const;
+  LogProb _scoreOfMove(const Alignment&a, WordIndex new_i, WordIndex j,double thisValue=-1.0) const;
+  LogProb _scoreOfSwap(const Alignment&a, WordIndex j1, WordIndex j2,double thisValue=-1.0) const;
+  int modelnr() const { return 5; }
+  LogProb prob_of_target_and_alignment_given_source(const Alignment&al, short distortionType=3,bool verb=0) const;
+  void computeScores(const Alignment&al,vector<double>&d) const;
 };
 #endif  // GIZAPP_TRANSPAIR_MODEL5_H_

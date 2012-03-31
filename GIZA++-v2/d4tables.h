@@ -1,7 +1,7 @@
 /*
   Copyright (C) 1999,2000,2001  Franz Josef Och (RWTH Aachen - Lehrstuhl fuer Informatik VI)
 
-  This file is part of GIZA++ ( extension of GIZA ).
+  This file is part of GIZA++ ( extension of GIZA).
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -96,13 +96,13 @@ class compare1 {
  public:
   compare1(int _deps) : deps(_deps) {}
   bool operator()(const m4_key&a,const m4_key&b) const {
-    if(deps&DEP_MODEL_l){if( a.l<b.l )return 1;if( b.l<a.l )return 0;}
-    if(deps&DEP_MODEL_m){if( a.m<b.m )return 1;if( b.m<a.m )return 0;}
-    if(deps&DEP_MODEL_F){if( a.F<b.F )return 1;if( b.F<a.F )return 0;}
-    if(deps&DEP_MODEL_E){if( a.E<b.E )return 1;if( b.E<a.E )return 0;}
-    //if(deps&DEP_MODEL_pj){if( a.prevj<b.prevj )return 1;if( b.prevj<a.prevj )return 0;}
-    if(a.vacancies1<b.vacancies1)return 1;if(b.vacancies1<a.vacancies1)return 0;
-    if(a.vacancies2<b.vacancies2)return 1;if(b.vacancies2<a.vacancies2)return 0;
+    if (deps&DEP_MODEL_l) {if (a.l<b.l) return 1;if (b.l<a.l) return 0; }
+    if (deps&DEP_MODEL_m) {if (a.m<b.m) return 1;if (b.m<a.m) return 0; }
+    if (deps&DEP_MODEL_F) {if (a.F<b.F) return 1;if (b.F<a.F) return 0; }
+    if (deps&DEP_MODEL_E) {if (a.E<b.E) return 1;if (b.E<a.E) return 0; }
+    //if (deps&DEP_MODEL_pj) {if (a.prevj<b.prevj) return 1;if (b.prevj<a.prevj) return 0; }
+    if (a.vacancies1<b.vacancies1) return 1;if (b.vacancies1<a.vacancies1) return 0;
+    if (a.vacancies2<b.vacancies2) return 1;if (b.vacancies2<a.vacancies2) return 0;
     return 0;
   }
 };
@@ -115,13 +115,13 @@ class compareb1 {
   compareb1(int _deps) : deps(_deps) {}
 
   bool operator()(const m4_key& a, const m4_key& b) const {
-    if(deps&DEP_MODELb_l){if( a.l<b.l )return 1;if( b.l<a.l )return 0;}
-    if(deps&DEP_MODELb_m){if( a.m<b.m )return 1;if( b.m<a.m )return 0;}
-    if(deps&DEP_MODELb_F){if( a.F<b.F )return 1;if( b.F<a.F )return 0;}
-    if(deps&DEP_MODELb_E){if( a.E<b.E )return 1;if( b.E<a.E )return 0;}
-    //if(deps&DEP_MODELb_pj){if( a.prevJ<b.prevJ )return 1;if( b.prevJ<a.prevJ )return 0;}
-    if(a.vacancies1<b.vacancies1)return 1;if(b.vacancies1<a.vacancies1)return 0;
-    if(a.vacancies2<b.vacancies2)return 1;if(b.vacancies2<a.vacancies2)return 0;
+    if (deps&DEP_MODELb_l) {if (a.l<b.l) return 1;if (b.l<a.l) return 0; }
+    if (deps&DEP_MODELb_m) {if (a.m<b.m) return 1;if (b.m<a.m) return 0; }
+    if (deps&DEP_MODELb_F) {if (a.F<b.F) return 1;if (b.F<a.F) return 0; }
+    if (deps&DEP_MODELb_E) {if (a.E<b.E) return 1;if (b.E<a.E) return 0; }
+    //if (deps&DEP_MODELb_pj) {if (a.prevJ<b.prevJ) return 1;if (b.prevJ<a.prevJ) return 0; }
+    if (a.vacancies1<b.vacancies1) return 1;if (b.vacancies1<a.vacancies1) return 0;
+    if (a.vacancies2<b.vacancies2) return 1;if (b.vacancies2<a.vacancies2) return 0;
     return 0;
   }
 };
@@ -129,7 +129,7 @@ class compareb1 {
 inline void tokenize(const string&in,Vector<string>&out) {
   string s;
   istringstream l(in);
-  while(l>>s)
+  while (l>>s)
     out.push_back(s);
 }
 
@@ -145,7 +145,7 @@ class d4model {
   template<class MAPPER>
   void makeWordClasses(const MAPPER&m1,const MAPPER&m2,string efile,string ffile) {
     ifstream estrm(efile.c_str()),fstrm(ffile.c_str());
-    if( !estrm ) {
+    if (!estrm) {
       cerr << "ERROR: can not read " << efile << endl;
     } else {
       ewordclasses.read(estrm,m1);
@@ -165,7 +165,7 @@ class d4model {
     assert(j>=1);
     m4_key key(M4_Dependencies,l,m,F,E,j_cp,-1,-1);
     map<m4_key,Vpff,compare1 >::iterator p=D1.find(key);
-    if(p==D1.end())
+    if (p==D1.end())
       p = D1.insert(make_pair(key,Vpff(msl*2+1,pair<COUNT,PROB>(0.0,0.0)))).first;
     assert(p!=D1.end());
     return (p->second)[j-j_cp+msl].first;
@@ -176,7 +176,7 @@ class d4model {
     assert(j_prev>=1);
     m4_key key(M4_Dependencies,l,m,F,E,j_prev,-1,-1);
     map<m4_key,Vpff,compareb1 >::iterator p=Db1.find(key);
-    if(p==Db1.end())
+    if (p==Db1.end())
       p = Db1.insert(make_pair(key,Vpff(msl*2+1,pair<COUNT,PROB>(0.0,0.0)))).first;
     assert(p!=Db1.end());
     return (p->second)[j-j_prev+msl].first;
@@ -189,7 +189,7 @@ class d4model {
   PROB getProb_first_withiterator(WordIndex j,WordIndex j_cp,int m,const map<m4_key,Vpff,compare1 >::const_iterator& p) const {
     assert(j>=1);//assert(j_cp>=0);
     assert(j<=msl);assert(j_cp<=msl);
-    if(p==D1.end()) {
+    if (p==D1.end()) {
       return g_smooth_prob;
     } else {
       MASSERT((p->second)[j-j_cp+msl].second<=1.0);
@@ -203,7 +203,7 @@ class d4model {
     m4_key key(M4_Dependencies,l,m,F,E,j_cp,-1,-1);
     map<m4_key,Vpff,compare1 >::const_iterator p=D1.find(key);
 
-    if(p==D1.end()) {
+    if (p==D1.end()) {
       return g_smooth_prob;
     } else {
       MASSERT((p->second)[j-j_cp+msl].second<=1.0);
@@ -219,10 +219,10 @@ class d4model {
     MASSERT(j>=1);MASSERT(j_prev>=1);
     MASSERT(j>j_prev);
     MASSERT(j<=msl);MASSERT(j_prev<=msl);
-    if(p==Db1.end()) {
+    if (p==Db1.end()) {
       return g_smooth_prob;
     } else {
-      MASSERT((p->second)[j-j_prev+msl].second<=1.0 );
+      MASSERT((p->second)[j-j_prev+msl].second<=1.0);
       return max(g_smooth_prob,d4modelsmooth_factor/(m-1)+(1-d4modelsmooth_factor)*(p->second)[j-j_prev+msl].second);
     }
   }
@@ -233,34 +233,34 @@ class d4model {
     MASSERT(j<=msl);MASSERT(j_prev<=msl);
     m4_key key(M4_Dependencies,l,m,F,E,j_prev,-1,-1);
     map<m4_key,Vpff,compareb1 >::const_iterator p=Db1.find(key);
-    if(p==Db1.end()) {
+    if (p==Db1.end()) {
       return g_smooth_prob;
     } else {
-      MASSERT((p->second)[j-j_prev+msl].second<=1.0 );
+      MASSERT((p->second)[j-j_prev+msl].second<=1.0);
       return max(g_smooth_prob, d4modelsmooth_factor/(m-1)+(1-d4modelsmooth_factor)*(p->second)[j-j_prev+msl].second);
     }
   }
 
   void normalizeTable() {
     int nParams=0;
-    for(map<m4_key,Vpff,compare1 >::iterator i=D1.begin();i!=D1.end();++i) {
+    for (map<m4_key,Vpff,compare1 >::iterator i=D1.begin();i!=D1.end();++i) {
       Vpff&d1=i->second;
       double sum=0.0;
-      for(PositionIndex i=0;i<d1.size();i++)
+      for (PositionIndex i=0;i<d1.size();i++)
         sum+=d1[i].first;
 
-      for(PositionIndex i=0;i<d1.size();i++) {
+      for (PositionIndex i=0;i<d1.size();i++) {
         d1[i].second=sum?(d1[i].first/sum):(1.0/d1.size());
         nParams++;
       }
     }
 
-    for(map<m4_key,Vpff,compareb1 >::iterator i=Db1.begin();i!=Db1.end();++i) {
+    for (map<m4_key,Vpff,compareb1 >::iterator i=Db1.begin();i!=Db1.end();++i) {
       Vpff&db1=i->second;
       double sum=0.0;
-      for(PositionIndex i=0;i<db1.size();i++)
+      for (PositionIndex i=0;i<db1.size();i++)
         sum+=db1[i].first;
-      for(PositionIndex i=0;i<db1.size();i++) {
+      for (PositionIndex i=0;i<db1.size();i++) {
         db1[i].second=sum?(db1[i].first/sum):(1.0/db1.size());
         nParams++;
       }
@@ -270,15 +270,15 @@ class d4model {
   }
 
   void clear() {
-    for(map<m4_key,Vpff,compare1 >::iterator i=D1.begin();i!=D1.end();++i) {
+    for (map<m4_key,Vpff,compare1 >::iterator i=D1.begin();i!=D1.end();++i) {
       Vpff&d1=i->second;
-      for(PositionIndex i=0;i<d1.size();i++)
+      for (PositionIndex i=0;i<d1.size();i++)
         d1[i].first=0.0;
     }
 
-    for(map<m4_key,Vpff,compareb1 >::iterator i=Db1.begin();i!=Db1.end();++i) {
+    for (map<m4_key,Vpff,compareb1 >::iterator i=Db1.begin();i!=Db1.end();++i) {
       Vpff&db1=i->second;
-      for(PositionIndex i=0;i<db1.size();i++)
+      for (PositionIndex i=0;i<db1.size();i++)
         db1[i].first=0.0;
     }
   }
@@ -298,8 +298,8 @@ class d4model {
       if (sum) {
         print1(out,i->first,ewordclasses,fwordclasses);
         out << "SUM: " << sum << ' '<< '\n';
-        for(unsigned ii=0;ii<d1.size();ii++) {
-          if( d1[ii].first )
+        for (unsigned ii=0;ii<d1.size();ii++) {
+          if (d1[ii].first)
             out << (int)(ii)-(int)(msl) << ' ' << d1[ii].first << '\n';
         }
         out << endl;
@@ -308,11 +308,11 @@ class d4model {
     }
 
     out << "# Table for non-head of cept.\n";
-    for(map<m4_key,Vpff,compareb1 >::const_iterator i=Db1.begin();
+    for (map<m4_key,Vpff,compareb1 >::const_iterator i=Db1.begin();
         i!=Db1.end();++i) {
       const Vpff&db1=i->second;
       double sum=0.0;
-      for(PositionIndex ii=0;ii<db1.size();++ii)
+      for (PositionIndex ii=0;ii<db1.size();++ii)
         sum+=db1[ii].first;
       if (sum) {
         printb1(out,i->first,ewordclasses,fwordclasses);
@@ -331,11 +331,11 @@ class d4model {
     if (M4_Dependencies == 76) {
       ofstream out2(fname2);
 
-      for(map<m4_key,Vpff,compare1 >::const_iterator i=D1.begin();
+      for (map<m4_key,Vpff,compare1 >::const_iterator i=D1.begin();
           i != D1.end(); ++i) {
         const Vpff&d1=i->second;
-        for(unsigned ii=0;ii<d1.size();ii++) {
-          if( d1[ii].first ) {
+        for (unsigned ii=0;ii<d1.size();ii++) {
+          if (d1[ii].first) {
             out2 << ewordclasses.classString(i->first.E) << ' '
                  << fwordclasses.classString(i->first.F) << ' '
                  << (int)(ii)-(int)(msl) << ' ' << d1[ii].second << '\n';
@@ -343,12 +343,12 @@ class d4model {
         }
       }
 
-      for(map<m4_key,Vpff,compareb1 >::const_iterator i=Db1.begin();
+      for (map<m4_key,Vpff,compareb1 >::const_iterator i=Db1.begin();
           i != Db1.end();++i) {
         const Vpff& db1 = i->second;
 
-        for(unsigned ii=0;ii<db1.size();ii++) {
-          if( db1[ii].first ) {
+        for (unsigned ii=0;ii<db1.size();ii++) {
+          if (db1[ii].first) {
             out2 << -1 << ' ' << fwordclasses.classString(i->first.F) << ' '
                  << (int)(ii)-(int)(msl) << ' ' << db1[ii].second << '\n';
           }
@@ -363,11 +363,11 @@ class d4model {
     string line;
     do {
       getline(file,line);
-    } while(line.length()&&line[0]=='#');
+    } while (line.length()&&line[0]=='#');
 
     do {
 
-      while(line.length()==0)
+      while (line.length()==0)
         getline(file,line);
 
       if (line[0]=='#') break;
@@ -376,7 +376,7 @@ class d4model {
       tokenize(line,linestr);
       m4_key k(M4_Dependencies,0,0,0,0,0,-1,-1);
 
-      for(unsigned int i=0;i<linestr.size();i+=2) {
+      for (unsigned int i=0;i<linestr.size();i+=2) {
         if (linestr[i]=="l:") {
           k.l = atoi(linestr[i+1].c_str());
           IASSERT(M4_Dependencies&DEP_MODEL_l);
@@ -395,7 +395,7 @@ class d4model {
           k.E = ewordclasses(linestr[i+1]);
           IASSERT(M4_Dependencies&DEP_MODEL_E);
         }
-        //if( linestr[i]=="j-1:" ){k.prevj=atoi(linestr[i+1].c_str());IASSERT(M4_Dependencies&DEP_MODEL_pj);}
+        //if (linestr[i]=="j-1:") {k.prevj=atoi(linestr[i+1].c_str());IASSERT(M4_Dependencies&DEP_MODEL_pj); }
       }
 
       string str;
@@ -412,8 +412,8 @@ class d4model {
         double count;
         getline(file,line);
         istringstream twonumbers(line);
-        if(twonumbers >> value >> count) {
-          if( D1.count(k)==0 )
+        if (twonumbers >> value >> count) {
+          if (D1.count(k)==0)
             D1.insert(make_pair(k,Vpff(msl*2+1,pair<COUNT,PROB>(0.0,0.0))));
           D1[k][value+msl]=make_pair(count,count/sum);
         }
@@ -436,7 +436,7 @@ class d4model {
       m4_key k(M4_Dependencies,0,0,0,0,0,-1,-1);
       bool sumRead=0;
       for (unsigned int i=0;i<linestr.size();i+=2) {
-        if ( linestr[i]=="l:" ){
+        if (linestr[i]=="l:") {
           k.l=atoi(linestr[i+1].c_str());
           IASSERT(M4_Dependencies&DEP_MODELb_l);
         } else if (linestr[i]=="m:") {
@@ -451,7 +451,7 @@ class d4model {
         } else if (linestr[i]=="SUM:") {
           cerr << "Warning: obviously no dependency.\n";
           sumRead=1;
-        } else if(linestr[i]=="FULL-SUM:") {
+        } else if (linestr[i]=="FULL-SUM:") {
           break;
         } else {
           cerr << "ERROR: error in reading d4 tables: "
@@ -484,8 +484,8 @@ class d4model {
           Db1[k][value+msl]=make_pair(count,count/sum);
         }
 
-      } while(file&&line.length());
-    } while(file);
+      } while (file&&line.length());
+    } while (file);
     return 1;
   }
 };

@@ -43,7 +43,7 @@ typedef myset intset;
 
 int main(int argc,char **argv)
 {
-  if( argc!=2 )
+  if (argc!=2)
   {
     cerr << "Usage: " << argv[0] << " snt12 \n";
     cerr << "Converts GIZA++ snt-format into plain text.\n";
@@ -54,38 +54,37 @@ int main(int argc,char **argv)
   vector<intset> vsi(400000);
   int nLine=0;
   int totalElems=0;
-  while(getline(t,line1)&&getline(t,line2)&&getline(t,line3))
+  while (getline(t,line1)&&getline(t,line2)&&getline(t,line3))
   {
     istringstream eingabe1(line1.c_str()),eingabe2(line2.c_str()),eingabe3(line3.c_str());
     double count;
     string word;
     eingabe1>>count;
     vector<int>l1,l2;
-    while(eingabe2>>word)
+    while (eingabe2>>word)
       l1.push_back(atoi(word.c_str()));
-    while(eingabe3>>word)
+    while (eingabe3>>word)
       l2.push_back(atoi(word.c_str()));
-    if( ((++nLine)%1000)==0 )
+    if (((++nLine)%1000)==0)
       cerr << "line " << nLine << '\n';
-    for(unsigned int j=0;j<l2.size();++j)
+    for (unsigned int j=0;j<l2.size();++j)
       vsi[0].insert(l2[j]);
-    for(unsigned int i=0;i<l1.size();++i)
+    for (unsigned int i=0;i<l1.size();++i)
     {
-      if( l1[i]>=int(vsi.size()) )
+      if (l1[i]>=int(vsi.size()))
       {
         cerr << "I have to resize: " << l1[i] << endl;
         vsi.resize(l1[i]+1000);
       }
       intset&theset=vsi[l1[i]];
-      for(unsigned int j=0;j<l2.size();++j)
+      for (unsigned int j=0;j<l2.size();++j)
         theset.insert(l2[j]);
     }
   }
   int vi = 0;
-  for(vector<intset>::iterator i=vsi.begin();i != vsi.end(); ++i) {
-    for(intset::iterator j=i->begin();j!=i->end();++j)
+  for (vector<intset>::iterator i=vsi.begin();i != vsi.end(); ++i) {
+    for (intset::iterator j=i->begin();j!=i->end();++j)
       cout << vi << " " << *j << endl;
     ++vi;
   }
 }
-
