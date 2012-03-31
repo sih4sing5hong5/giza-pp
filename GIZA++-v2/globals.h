@@ -41,7 +41,9 @@ extern std::string g_log_filename;
 extern std::string g_prefix;
 extern std::string g_output_path;
 
-extern string SourceVocabFilename, TargetVocabFilename, CorpusFilename, TestCorpusFilename,
+extern std::string g_source_vocab_filename;
+
+extern string TargetVocabFilename, CorpusFilename, TestCorpusFilename,
   t_Filename, a_Filename, p0_Filename, d_Filename, n_Filename, dictionary_Filename;
 
 extern double M5P0,P0 ;
