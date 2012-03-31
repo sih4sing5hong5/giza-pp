@@ -57,11 +57,6 @@ void nmodel<VALTYPE>::printNTable(int noEW, const char* filename,
 
 template <class VALTYPE>
 void nmodel<VALTYPE>::readNTable(const char *filename) {
-  /* This function reads the n table from a file.
-     Each line is of the format:  source_word_id p0 p1 p2 ... pn
-     This is the inverse operation of the printTable function.
-     NAS, 7/11/99
-  */
   ifstream inf(filename);
   cerr << "Reading fertility table from " << filename << "\n";
   if (!inf) {

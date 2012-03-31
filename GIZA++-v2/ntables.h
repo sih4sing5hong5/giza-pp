@@ -142,6 +142,11 @@ class nmodel
   }
 
   void printNTable(int noEW, const char* filename, const Vector<WordEntry>& evlist, bool) const;
+
+  // Reads the n table from a file.
+  // Each line is of the format:  source_word_id p0 p1 p2 ... pn
+  // This is the inverse operation of the printTable function.
+  // NAS, 7/11/99
   void readNTable(const char *filename);
 
 };

@@ -299,6 +299,11 @@ class TModel {
                              const double fTotal,
                              const bool actual = false) const;
   void normalizeTable(const VocabList&engl, const VocabList&french, int iter=2);
+
+  // Reads the t table from a file.
+  // Each line is of the format:  source_word_id target_word_id p(target_word|source_word)
+  // This is the inverse operation of the printTable function.
+  // NAS, 7/11/99
   void readProbTable(const char *filename);
 };
 

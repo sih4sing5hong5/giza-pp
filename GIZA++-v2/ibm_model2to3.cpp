@@ -280,11 +280,6 @@ void IBMModel3::estimate_t_a_d(SentenceHandler& sHandler1, Perplexity& perp, Per
 
 void IBMModel3::transferSimple(/*model1& m1, IBMModel2& m2, */ SentenceHandler& sHandler1,
                             bool dump_files, Perplexity& perp, Perplexity& trainVPerp,bool updateT) {
-  /*
-    This function performs simple Model 2 -> Model 3 transfer.
-    It sets values for n and p without considering Model 2's ideas.
-    It sets d values based on a.
-  */
   time_t st, fn;
   // just inherit these from the previous models, to avoid data duplication
 

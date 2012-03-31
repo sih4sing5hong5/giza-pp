@@ -293,11 +293,6 @@ void TModel<COUNT, PROB>::normalizeTable(const VocabList&engl, const VocabList&f
 
 template <class COUNT, class PROB>
 void TModel<COUNT, PROB>::readProbTable(const char *filename) {
-  /* This function reads the t table from a file.
-     Each line is of the format:  source_word_id target_word_id p(target_word|source_word)
-     This is the inverse operation of the printTable function.
-     NAS, 7/11/99
-  */
   ifstream inf(filename);
   cerr << "Reading t prob. table from " << filename << "\n";
   if (!inf) {

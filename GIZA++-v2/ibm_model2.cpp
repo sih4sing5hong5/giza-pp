@@ -128,11 +128,6 @@ int IBMModel2::em_with_tricks(int noIterations)
 }
 
 void IBMModel2::load_table(const char* aname) {
-  /* This function loads the a table from the given file; use it
-     when you want to load results from previous a training without
-     doing any new training.
-     NAS, 7/11/99
-  */
   cout << "Model2: loading a table \n";
   aTable.readTable(aname);
 }

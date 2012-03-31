@@ -90,7 +90,13 @@ class IBMModel1 : public ReportInfo {
   void initialize_table_uniformly(SentenceHandler& sHandler1);
   int em_with_tricks(int noIterations,
                      bool seedModel1, util::Dictionary& dictionary, bool useDict);
+
+  // Loads the t table from the given file; use it
+  // when you want to load results from previous t training
+  // without doing any new training.
+  // NAS, 7/11/99
   void load_table(const char* tname);
+
   void readVocabFile(const char* fname, Vector<WordEntry>& vlist, int& vsize,
                      int& total);
   Vector<WordEntry>& getEnglishVocabList(void) const { return Elist.getVocabList(); }

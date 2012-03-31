@@ -43,6 +43,10 @@ class IBMModel2 : public IBMModel1 {
 
   int em_with_tricks(int);
 
+  // Loads the a table from the given file; use it
+  // when you want to load results from previous a training without
+  // doing any new training.
+  // NAS, 7/11/99
   void load_table(const char* aname);
 
   AModel<PROB>& getATable() { return aTable; }

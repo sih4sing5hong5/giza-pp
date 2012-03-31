@@ -132,11 +132,6 @@ int IBMModel1::em_with_tricks(int noIterations, /*Perplexity& perp, SentenceHand
 }
 
 void IBMModel1::load_table(const char* tname) {
-  /* This function loads the t table from the given file; use it
-     when you want to load results from previous t training
-     without doing any new training.
-     NAS, 7/11/99
-  */
   cout << "Model1: loading t table \n";
   tTable.readProbTable(tname);
 }

@@ -60,6 +60,9 @@ class IBMModel3 : public IBMModel2 {
                 Perplexity&,
                 bool updateT = true);
 
+  // Performs simple Model 2 -> Model 3 transfer.
+  // It sets values for n and p without considering Model 2's ideas.
+  // It sets d values based on a.
   void transferSimple(SentenceHandler&, bool,
                       Perplexity&, Perplexity&,
                       bool updateT = true);
