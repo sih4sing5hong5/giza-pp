@@ -83,7 +83,7 @@ LIBRARY = libgizapp.a
 
 PROGRAMS = GIZA++ snt2plain.out plain2snt.out snt2cooc.out
 
-opt: $(PROGRAMS) $(LIBRARY)
+opt: $(LIBRARY) $(PROGRAMS)
 
 $(LIBRARY): $(LIBOBJECTS)
 	rm -f $@
